@@ -1,5 +1,5 @@
 {% extends 'admin/generic/page_fluid.html' %}
-{% load i18n generic_tags %}
+{% load i18n admin_tags %}
 
 {% block page_content_inner %}
     <table class="table table--clickable">
@@ -7,17 +7,12 @@
             {% for column in column_headers %}
                 <th class="table-head-cell">{{column}}</th>
             {% endfor %}
-            <th class="table-head-cell"></th>
         </tr>
-
         {% for object in object_list %}
             <tr>
                 {% for column in columns %}
                     {% render_column column %}
                 {% endfor %}
-                <td>
-                    <a href="{% url 'team-admin:team-update' object.id %}">{% trans "Update" %}</a>
-                </td>
             </tr>
         {% endfor %}
     </table>
