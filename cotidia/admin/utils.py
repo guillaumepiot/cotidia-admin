@@ -1,5 +1,3 @@
-import importlib
-
 from cotidia.account.conf import settings
 from django.shortcuts import redirect
 from django.core.exceptions import PermissionDenied
@@ -22,10 +20,8 @@ class UserCheckMixin(object):
 class StaffPermissionRequiredMixin(UserCheckMixin):
     permission_required = None
 
-    #
-    # The user must be staff and have the required permissions
-    #
     def check_user(self, user):
+        """Check if the user has the relevant permissions."""
         if user.is_superuser:
             return True
         return user.is_staff and user.has_perm(self.permission_required)
