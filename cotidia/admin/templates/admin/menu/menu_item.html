@@ -1,0 +1,10 @@
+<li class="menu__item{% if item.nav_items %} menu__item--sub-nav{% endif %} menu-item{% if item.align_right %} menu-item--right{% endif %}">
+    <a href="{{item.url}}" class="menu-item__link{% if item.nav_items %} menu-item__link--drop-arrow{% endif %}">{% if item.icon %}<span class="fa fa-{{item.icon}}"></span> {% endif %}{% if item.text %}{{item.text}}{% endif %}</a>
+    {% if item.nav_items %}
+    <ul class="menu__sub-nav">
+    {% for item in item.nav_items %}
+        {% include "admin/menu/menu_item.html" %}
+    {% endfor %}
+    </ul>
+    {% endif %}
+</li>

@@ -1,0 +1,13 @@
+<menu class="menu">
+    <header class="menu__item menu__item--open menu-item">
+        <a href="#" class="menu-item__link">Menu</a>
+    </header>
+    <ul class="menu__container">
+        <li class="menu__item menu__item--close menu-item">
+            <a href="#" class="menu-item__link">Close</a>
+        </li>
+        {% for item in menu %}
+            {% include "admin/menu/menu_item.html" %}
+        {% endfor %}
+    </ul>
+</menu>
