@@ -1,0 +1,24 @@
+{% extends "admin/base.html" %}
+{% block title %}Access denied{% endblock %}
+{% block content %}
+<div class="dialog">
+    <div class="dialog__content dialog__content--shadow">
+        <div class="dialog__header dialog-header">
+            <div class="dialog-header__title dialog-header__title--center">
+                Page not found
+            </div>
+        </div>
+        <div class="dialog__body dialog__body--padded">
+            <p class="text-center">
+                Sorry, but this page does not exist.<br>
+                Please go back to the home page and follow to the navigation.
+            </p>
+        </div>
+        <div class="dialog__footer dialog-footer">
+            <div class="dialog-footer__actions dialog-footer__actions--center">
+                <a href="/" class="btn btn--create">Back to home page</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
