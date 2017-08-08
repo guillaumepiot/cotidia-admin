@@ -10,12 +10,10 @@ def can_view_item(context, item):
     request = context["request"]
     # If there's a url, then we look up the matching permission
     if item.get("url"):
-        if item.get("permissions"):
-            if item.get("permissions") == []:
-                return True
-            elif request.user.has_perms(item.get("permissions")):
-                return True
-        else:
+        perms = item.get("permissions", [])
+        if perms == []:
+            return True
+        elif request.user.has_perms(perms):
             return True
     # If it has sub items, then check it can access at least one item
     elif item.get("nav_items"):
