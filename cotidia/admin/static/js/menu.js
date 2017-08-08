@@ -10,10 +10,8 @@
   // For each instance of .menu
   function initMenu() {
     var menus = document.querySelectorAll('.menu')
-    console.log(menus)
     for (i = 0; i < menus.length; i++) {
       var menu = menus[i]
-      console.log(menu)
       menuOpenButton = menu.querySelector('.menu__item--open a')
       menuOpenButton.addEventListener('touchend', showMenu.bind(null, menu))
       menuOpenButton.addEventListener('click', showMenu.bind(null, menu))

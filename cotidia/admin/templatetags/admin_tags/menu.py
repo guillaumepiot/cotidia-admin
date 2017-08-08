@@ -1,6 +1,8 @@
+import importlib
+
 from django import template
 from django.template.loader import get_template
-from cotidia.admin.menu import admin_menu
+from django.apps import apps
 
 register = template.Library()
 
@@ -42,7 +44,6 @@ def build_permitted_item(context, item):
 def build_permitted_menu(context, menu, permitted_menu):
     """Build a menu with only the permitted links."""
     for item in menu:
-        print("Check can view item", item, can_view_item(context, item))
         if can_view_item(context, item):
             permitted_menu.append(build_permitted_item(context, item))
     return permitted_menu
@@ -52,11 +53,18 @@ def build_permitted_menu(context, menu, permitted_menu):
 def menu(context):
     permitted_menu = []
 
-    # for app in apps:
-    #     call_menu(context)
+    # For each app, try to find an admin_menu function inside menu.py
+    for app in apps.get_app_configs():
 
-    menu = admin_menu(context)
-    permitted_menu = build_permitted_menu(context, menu, permitted_menu)
+        try:
+            module = importlib.import_module("{}.menu".format(app.name))
+            admin_menu = module.admin_menu
+        except (ModuleNotFoundError, AttributeError):
+            admin_menu = None
+
+        if admin_menu:
+            menu = admin_menu(context)
+            permitted_menu = build_permitted_menu(context, menu, permitted_menu)
 
     context = context.flatten()
     context["menu"] = permitted_menu
