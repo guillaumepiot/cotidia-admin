@@ -17,6 +17,14 @@ module.exports = function (grunt) {
                     '<%= pkg.static %>/css/backend.min.css': '<%= pkg.static %>/css/backend.css'
                 }
             }
+        },
+        'watch': {
+            'backend-styles': {
+                'files': [
+                    'styles/*.scss'
+                ],
+                'tasks': ['backend-styles']
+            }
         }
     })
 
