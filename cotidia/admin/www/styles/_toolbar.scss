@@ -4,11 +4,12 @@
  */
 
 .toolbar{
+    background-color: $grey--lighter;
     border-bottom: 1px solid darken(#e8e8e8, 3%);
     padding: $vertical_padding $horizontal_padding;
 
-    &__title{
-        font-size: $font_size--emphasis;
+    &__breadcrumbs{
+
     }
 
     &__item{

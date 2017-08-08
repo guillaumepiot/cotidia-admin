@@ -1,0 +1,61 @@
+/**
+ * Defines the extra form styles required for the administration.
+ *
+ */
+
+.form{
+    &--action-fixed-bottom{
+        padding-bottom: $vertical_padding * 8;
+        .form__actions{
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: $grey--lighter;
+            border-top: 1px solid $grey--light;
+        }
+    }
+    &__label{
+        &--inline{
+            display: inline-block;
+            padding: $vertical_padding;
+            float: right;
+        }
+    }
+    &__control{
+        ul{
+            margin: $vertical_padding 0;
+            padding: 0;
+            list-style: none;
+        }
+    }
+    &__actions{
+        padding-bottom: $vertical_padding
+    }
+    &__actions-inner{
+        padding-top: $vertical_padding;
+    }
+}
+
+fieldset{
+    border-radius: $border_radius;
+    padding: $vertical_padding $horizontal_padding;
+    border: 1px solid darken(#e7e7e7, 3%);
+    background-color: $grey--lighter;
+    margin: $vertical_padding 0;
+
+    legend{
+        font-size: $font-size--emphasis;
+        border-bottom: 1px solid $grey--light;
+        padding-bottom: $vertical_padding;
+        margin-bottom: $vertical_padding * 2;
+        width: 100%;
+        float: left;
+        display: block;
+        &:after{
+            content: "";
+            display: block;
+            clear: both;
+        }
+    }
+}

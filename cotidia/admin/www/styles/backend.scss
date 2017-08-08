@@ -5,7 +5,7 @@
 @import "../node_modules/font-awesome/scss/font-awesome";
 
 // Sixteen framework
-@import "../node_modules/sixteen/src/sixteen/settings";
+@import "settings";
 @import "../node_modules/sixteen/src/sixteen/components/reset";
 @import "../node_modules/sixteen/src/sixteen/components/util";
 @import "../node_modules/sixteen/src/sixteen/components/animation";
@@ -24,3 +24,5 @@
 @import "../node_modules/sixteen/src/sixteen/components/menu";
 
 @import "toolbar";
+@import "content";
+@import "form";

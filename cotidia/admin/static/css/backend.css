@@ -2937,7 +2937,7 @@ table {
   color: #fff;
   padding: 0.75rem 1rem;
   font-family: "Helvetica Neue", sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   text-align: center;
   font-weight: 400;
@@ -3216,7 +3216,7 @@ table {
       color: #fff;
       padding: 0.75rem 1rem;
       font-family: "Helvetica Neue", sans-serif;
-      font-size: 16px;
+      font-size: 14px;
       font-style: normal;
       text-align: center;
       font-weight: 400;
@@ -3281,7 +3281,7 @@ table {
   top: -1px; }
 .form__text {
   font-family: "Helvetica Neue", sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   position: relative;
   width: 100%;
   margin: 0;
@@ -3296,7 +3296,7 @@ table {
     border: 1px solid #666666; }
 .form__select {
   font-family: "Helvetica Neue", sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   position: relative;
   width: 100%;
   margin: 0;
@@ -3438,7 +3438,7 @@ table {
   color: #fff;
   padding: 0.75rem 1rem;
   font-family: "Helvetica Neue", sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   text-align: center;
   font-weight: 400;
@@ -3808,7 +3808,7 @@ table {
  *
  */
 html {
-  font-size: 16px; }
+  font-size: 14px; }
 
 body {
   color: #444444;
@@ -3837,12 +3837,12 @@ h6 {
  */
 h1 {
   font-size: 2.441em;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.3em; }
 
 h2 {
   font-size: 1.953em;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.3em; }
 
 h3 {
@@ -3898,8 +3898,8 @@ blockquote {
   color: #666666;
   font-family: Georgia, serif;
   font-style: italic;
-  font-size: 20px;
-  line-height: 25px;
+  font-size: 17.5px;
+  line-height: 21.875px;
   border-left: 4px solid #aaaaaa;
   margin: 0.75rem 0;
   padding-left: 1rem; }
@@ -4293,12 +4293,12 @@ hr {
  * Menu
  */
 .menu {
-  background-color: #fafafa; }
+  background-color: #333333; }
   .menu__container {
     padding: 0; }
     @media screen and (max-width: 767px) {
       .menu__container {
-        background-color: #fafafa;
+        background-color: #333333;
         position: fixed;
         top: 0;
         left: -100%;
@@ -4342,7 +4342,7 @@ hr {
     display: none;
     position: absolute;
     width: auto;
-    background-color: #fafafa;
+    background-color: #333333;
     z-index: 10; }
     @media screen and (min-width: 768px) {
       .menu__sub-nav {
@@ -4361,14 +4361,14 @@ hr {
       right: 0; } }
 .menu-item__link {
   position: relative;
-  color: #333333;
+  color: #fff;
   background-color: transparent;
   padding: 0.75rem 1rem;
   display: block; }
   .menu-item__link:hover {
-    background-color: #eeeeee; }
+    background-color: #00abd3; }
   .menu-item__link--active {
-    background-color: #eeeeee; }
+    background-color: #666666; }
   .menu-item__link--drop-arrow:after {
     content: "";
     display: inline-block;
@@ -4379,19 +4379,73 @@ hr {
     width: 0;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-    border-top: 4px solid #666666; }
+    border-top: 4px solid #fff; }
 
 /**
  * Defines the toolbar.
  *
  */
 .toolbar {
+  background-color: #fafafa;
   border-bottom: 1px solid #e0e0e0;
   padding: 0.75rem 1rem; }
-  .toolbar__title {
-    font-size: 1.25em; }
   .toolbar__item {
     margin-left: 1rem;
     float: right; }
+
+body.content-centered .content, body.content-centered .form__actions-inner {
+  max-width: 1024px;
+  margin: 0 auto; }
+
+.content__inner {
+  padding: 0 1rem; }
+
+.messages {
+  margin-top: 0.75rem; }
+
+/**
+ * Defines the extra form styles required for the administration.
+ *
+ */
+.form--action-fixed-bottom {
+  padding-bottom: 6rem; }
+  .form--action-fixed-bottom .form__actions {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fafafa;
+    border-top: 1px solid #eeeeee; }
+.form__label--inline {
+  display: inline-block;
+  padding: 0.75rem;
+  float: right; }
+.form__control ul {
+  margin: 0.75rem 0;
+  padding: 0;
+  list-style: none; }
+.form__actions {
+  padding-bottom: 0.75rem; }
+.form__actions-inner {
+  padding-top: 0.75rem; }
+
+fieldset {
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  border: 1px solid #dfdfdf;
+  background-color: #fafafa;
+  margin: 0.75rem 0; }
+  fieldset legend {
+    font-size: 1.25em;
+    border-bottom: 1px solid #eeeeee;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    float: left;
+    display: block; }
+    fieldset legend:after {
+      content: "";
+      display: block;
+      clear: both; }
 
 /*# sourceMappingURL=backend.css.map */

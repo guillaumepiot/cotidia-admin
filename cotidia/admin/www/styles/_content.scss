@@ -1,0 +1,18 @@
+body{
+    &.content-centered{
+        .content, .form__actions-inner{
+            max-width: $laptop_width;
+            margin: 0 auto;
+        }
+    }
+}
+
+.content{
+    &__inner{
+        padding: 0 $horizontal_padding;
+    }
+}
+
+.messages{
+    margin-top: $vertical_padding;
+}
