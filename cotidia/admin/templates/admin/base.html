@@ -1,4 +1,4 @@
-{% load staticfiles %}<!doctype html>
+{% load staticfiles admin_menu_tags %}<!doctype html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -14,9 +14,9 @@
         <link rel="apple-touch-icon" sizes="152x152" href="{% static "apple-touch-icon-152x152.png" %}">
         <!-- Place favicon.ico in the root directory -->
         {% if DEBUG %}
-            <link rel="stylesheet" href="{% static "css/backend.css" %}">
+            <link rel="stylesheet" href="{% static "css/admin.css" %}">
         {% else %}
-            <link rel="stylesheet" href="{% static "css/backend.min.css" %}">
+            <link rel="stylesheet" href="{% static "css/admin.min.css" %}">
         {% endif %}
         {% block header_scripts %}{% endblock header_scripts %}
     </head>
@@ -24,7 +24,7 @@
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-
+        {% menu %}
         {% block content %}{% endblock content %}
 
         <script src="{% static "js/es5-shim.min.js" %}"></script>
@@ -32,9 +32,9 @@
         <script src="{% static "js/menu.js" %}"></script>
 
         {% if DEBUG %}
-            <script src="{% static "js/backend.js" %}"></script>
+            <script src="{% static "js/admin.js" %}"></script>
         {% else %}
-            <script src="{% static "js/backend.min.js" %}"></script>
+            <script src="{% static "js/admin.min.js" %}"></script>
         {% endif %}
 
         {% block footer_scripts %}{% endblock footer_scripts %}

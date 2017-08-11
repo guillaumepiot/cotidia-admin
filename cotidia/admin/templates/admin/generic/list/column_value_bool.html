@@ -1,0 +1,6 @@
+{% load admin_list_tags %}
+{% if object|get_attr:column %}
+    <span class="fa fa-check"></span>
+{% else %}
+    <span class="fa fa-close"></span>
+{% endif %}

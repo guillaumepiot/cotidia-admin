@@ -1,20 +1,24 @@
-{% extends 'admin/generic/page_fluid.html' %}
-{% load i18n admin_tags %}
-
-{% block page_content_inner %}
-    <table class="table table--clickable">
-        <tr class="table-row">
-            {% for column in column_headers %}
-                <th class="table-head-cell">{{column}}</th>
+{% load i18n admin_list_tags %}
+<table class="table table--clickable table--stack-mobile">
+    <thead>
+        <tr>
+            {% for column in columns %}
+                <th>{{column.0}}</th>
             {% endfor %}
         </tr>
-        {% for object in object_list %}
-            <tr>
-                {% for column in columns %}
-                    {% render_column column %}
-                {% endfor %}
-            </tr>
+    </thead>
+    <tbody>
+    {% for object in object_list %}
+    <tr onclick="window.location = '{% get_admin_url app_label model_name object %}'">
+        {% for column in columns %}
+            {% render_column column %}
         {% endfor %}
-    </table>
-    {% include 'admin/includes/pagination.html' %}
-{% endblock %}
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="{{columns|length}}">{% trans "No items." %}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% include 'admin/includes/pagination.html' %}

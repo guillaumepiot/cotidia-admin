@@ -1,2 +1,4 @@
-{% load admin_tags %}
-{{object|get_attr:column}}
+{% load admin_list_tags %}
+{% with object|get_attr:column as value %}
+    {% if value %}{{value}}{% else %}&nbsp;{% endif %}
+{% endwith %}

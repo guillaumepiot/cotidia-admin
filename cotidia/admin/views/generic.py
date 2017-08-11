@@ -6,12 +6,13 @@ from cotidia.admin.utils import StaffPermissionRequiredMixin
 class AdminListView(StaffPermissionRequiredMixin, ListView):
     columns = ()
     paginate_by = 25
+    template_type = "fluid"  # Options: fluid, centered
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context["column_headers"] = (column[0] for column in self.columns)
-        context["columns"] = (column[1] for column in self.columns)
+        context["columns"] = self.columns
+        context["template_type"] = self.template_type
 
         context["app_label"] = self.model._meta.app_label
         context["model_name"] = self.model._meta.model_name

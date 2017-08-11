@@ -1,7 +1,11 @@
-{% extends "admin/account/page.html" %}{% load i18n admin_tags %}
+{% extends "admin/page.html" %}{% load i18n admin_toolbar_tags %}
 {% block title %}
     {{object_name}}
 {% endblock title %}
+
+{% block body_class %}
+    {% if template_type == "centered" %}content-centered{% endif %}
+{% endblock body_class %}
 
 {% block toolbar %}
     {% toolbar_action_button app_label model_name "add" "Add item" %}
@@ -9,5 +13,7 @@
 {% endblock toolbar %}
 
 {% block page_content %}
+<div class="content__list">
     {% include 'admin/generic/list/list.html' %}
+</div>
 {% endblock page_content %}
