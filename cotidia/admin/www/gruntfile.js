@@ -7,14 +7,14 @@ module.exports = function (grunt) {
                     'loadPath': require('node-neat').includePaths.concat(require('node-bourbon').includePaths)
                 },
                 'files': {
-                    '<%= pkg.static %>/css/backend.css': 'styles/backend.scss'
+                    '<%= pkg.static %>/css/admin.css': 'styles/admin.scss'
                 }
             }
         },
         'cssmin': {
             'dist': {
                 'files': {
-                    '<%= pkg.static %>/css/backend.min.css': '<%= pkg.static %>/css/backend.css'
+                    '<%= pkg.static %>/css/admin.min.css': '<%= pkg.static %>/css/admin.css'
                 }
             }
         },

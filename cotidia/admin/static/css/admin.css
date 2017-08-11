@@ -3963,12 +3963,12 @@ hr {
     width: 91.66667%; }
   .table td.span-12, .table th.span-12 {
     width: 100%; }
-  .table--clickable .table-cell:hover {
+  .table--clickable td:hover {
     cursor: pointer; }
   @media screen and (max-width: 767px) {
     .table--stack-mobile thead {
       display: none; }
-    .table--stack-mobile .table-row {
+    .table--stack-mobile tr {
       display: block;
       margin-bottom: 0.75rem;
       margin-left: 1rem;
@@ -3976,34 +3976,31 @@ hr {
       border: 1px solid #eeeeee;
       border-bottom: none;
       border-radius: 4px; }
-    .table--stack-mobile .table-head-cell {
-      display: none; }
-    .table--stack-mobile .table-cell {
-      display: block;
-      text-align: right; }
-      .table--stack-mobile .table-cell:before {
+      .table--stack-mobile tr th {
+        display: none; }
+      .table--stack-mobile tr td {
         display: block;
-        float: left;
-        font-weight: bold;
-        content: attr(data-header); } }
-
-.table-row {
-  background-color: #fff; }
-  .table-row:hover, .table-row:active, .table-row:focus {
-    background-color: #fafafa; }
-  @media screen and (min-width: 768px) {
-    .table-row:last-child td {
-      border-bottom: none; } }
-
-.table-head-cell {
-  background-color: #eeeeee;
-  padding: 0.53571rem 1rem;
-  font-weight: 700;
-  text-align: left; }
-
-.table-cell {
-  padding: 0.53571rem 1rem;
-  border-bottom: 1px solid #eeeeee; }
+        text-align: right; }
+        .table--stack-mobile tr td:before {
+          display: block;
+          float: left;
+          font-weight: bold;
+          content: attr(data-header); } }
+  .table tr {
+    background-color: #fff; }
+    .table tr:hover, .table tr:active, .table tr:focus {
+      background-color: #fafafa; }
+    @media screen and (min-width: 768px) {
+      .table tr:last-child td {
+        border-bottom: none; } }
+    .table tr th {
+      background-color: #eeeeee;
+      padding: 0.53571rem 1rem;
+      font-weight: 700;
+      text-align: left; }
+    .table tr td {
+      padding: 0.53571rem 1rem;
+      border-bottom: 1px solid #eeeeee; }
 
 /** ---- FORM ----
  * CSS styles for alerts.
@@ -4300,6 +4297,7 @@ hr {
       .menu__container {
         background-color: #333333;
         position: fixed;
+        z-index: 10;
         top: 0;
         left: -100%;
         width: 100%;
@@ -4399,6 +4397,8 @@ body.content-centered .content, body.content-centered .form__actions-inner {
 
 .content__inner {
   padding: 0 1rem; }
+.content__list {
+  margin-top: 0.75rem; }
 
 .messages {
   margin-top: 0.75rem; }
@@ -4441,11 +4441,10 @@ fieldset {
     padding-bottom: 0.75rem;
     margin-bottom: 1.5rem;
     width: 100%;
-    float: left;
-    display: block; }
+    float: left; }
     fieldset legend:after {
       content: "";
       display: block;
       clear: both; }
 
-/*# sourceMappingURL=backend.css.map */
+/*# sourceMappingURL=admin.css.map */

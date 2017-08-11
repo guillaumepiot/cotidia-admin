@@ -11,6 +11,9 @@ body{
     &__inner{
         padding: 0 $horizontal_padding;
     }
+    &__list{
+        margin-top: $vertical_padding;
+    }
 }
 
 .messages{
