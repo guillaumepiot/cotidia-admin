@@ -12,7 +12,6 @@ def get_attr(obj, column):
 
     # If the column is a display function, call it with the object as first
     # argument
-    print(column, callable(column))
     if callable(column):
         return column(obj)
 
