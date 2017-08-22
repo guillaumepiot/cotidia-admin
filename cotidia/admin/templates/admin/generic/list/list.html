@@ -1,5 +1,5 @@
 {% load i18n admin_list_tags %}
-<table class="table table--clickable table--stack-mobile">
+<table class="table table--clickable table--admin-mobile-view">
     <thead>
         <tr>
             {% for column in columns %}
@@ -21,4 +21,4 @@
     {% endfor %}
     </tbody>
 </table>
-{% include 'admin/includes/pagination.html' %}
+{% include 'admin/generic/pagination.html' %}

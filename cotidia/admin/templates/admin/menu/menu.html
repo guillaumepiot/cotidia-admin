@@ -1,13 +1,26 @@
 <menu class="menu">
     <header class="menu__item menu__item--open menu-item">
-        <a href="#" class="menu-item__link">Menu</a>
+        <a href="#" class="menu-item__link"><span class="fa fa-bars"></span></a>
+        <span class="menu__title">{{SITE_NAME}}</span>
     </header>
     <ul class="menu__container">
         <li class="menu__item menu__item--close menu-item">
-            <a href="#" class="menu-item__link">Close</a>
+            <a href="#" class="menu-item__link"><span class="fa fa-close"></span></a>
+        </li>
+        <li class="menu__item menu-item menu-item--home">
+            <a href="{% url 'dashboard' %}" class="menu-item__link">
+                <span class="fa fa-home"></span>
+                <span class="menu-item__link-text">{{SITE_NAME}}</span>
+            </a>
         </li>
         {% for item in menu %}
             {% include "admin/menu/menu_item.html" %}
         {% endfor %}
+        <li class="menu__item menu__item--sidebar-expand">
+            <a href="#" class="menu-item__link"><span class="fa fa-chevron-right"></span></a>
+        </li>
+        <li class="menu__item menu__item--sidebar-collapse">
+            <a href="#" class="menu-item__link"><span class="fa fa-chevron-left"></span> <span class="menu-item__link-text">Compact</span></a>
+        </li>
     </ul>
 </menu>

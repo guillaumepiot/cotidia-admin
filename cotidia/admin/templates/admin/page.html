@@ -1,5 +1,6 @@
-{% extends "admin/base.html" %}{% load i18n %}
+{% extends "admin/base.html" %}{% load i18n admin_menu_tags %}
 {% block content %}
+    {% menu %}
     <div class="toolbar">
         {% block toolbar %}{% endblock toolbar %}
     </div>

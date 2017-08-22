@@ -1,0 +1,14 @@
+<div class="form__group{% if field.errors %} form__group--error{% endif %}{% if field.field.required %} form__group--required{% endif %}">
+    {% block form_group_content %}{% endblock %}
+    {% block form_group_footer %}
+    {% if field.errors %}
+        <div class="form__error">
+        {% for error in field.errors %}
+            {{error}}{% if not forloop.last %}<br>{% endif %}
+        {% endfor %}
+        </div>
+    {% elif field.help_text %}
+        <div class="form__help">{{field.help_text|safe}}</div>
+    {% endif %}
+    {% endblock %}
+</div>
