@@ -1,0 +1,49 @@
+{% extends "admin/page.html" %}{% load i18n %}
+{% block title %}
+    {% trans "Delete" %} {{object_name}}
+{% endblock title %}
+
+{% block body_class %}
+    {% if template_type == "centered" %}content-centered{% endif %}
+{% endblock body_class %}
+
+{% block toolbar %}
+    <span class="toolbar__breadcrumbs">
+        <a href="{% url 'team-admin:team-list' %}">
+            {{object_name}}
+        </a>
+        &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
+        <a href="{% url 'team-admin:team-detail' object.id %}">
+            {{object}}
+        </a>
+        &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
+        {% trans "Confirm delete" %}
+    </span>
+{% endblock toolbar %}
+
+{% block page_content %}
+<div class="content__delete">
+    <fieldset>
+        <h3>{% blocktrans with object_name|lower as object_name %}
+            Are you sure to delete the following {{object_name}}?
+            {% endblocktrans %}
+        </h3>
+        <p>
+        {{object}}
+        </p>
+        <p>{% trans "The operation is not reversible." %}</p>
+    </fieldset>
+
+    <div class="content__inner">
+        <form method="post" action="">
+            {% csrf_token %}
+            <button type="submit" class="btn btn--delete">
+                {% trans "Confirm Delete" %}
+            </button>
+            <a href="{% url 'team-admin:team-detail' object.id %}" class="btn btn--transparent pull-right">
+                {% trans "Cancel" %}
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock page_content %}
