@@ -23,6 +23,8 @@
 @import "../node_modules/sixteen/src/sixteen/components/tag";  // < 1KB
 @import "../node_modules/sixteen/src/sixteen/components/menu";
 
+@import "menu";
 @import "toolbar";
 @import "content";
 @import "form";
+@import "table";

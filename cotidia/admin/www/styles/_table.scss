@@ -1,0 +1,12 @@
+.table{
+    &--admin-mobile-view{
+        @media screen and (max-width: $mobile-width) {
+            thead th, tbody td{
+                display: none;
+            }
+            thead th:first-child, tbody td:first-child{
+                display: table-cell;
+            }
+        }
+    }
+}

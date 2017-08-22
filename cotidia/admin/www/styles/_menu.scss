@@ -1,0 +1,193 @@
+/*
+ * Specific styles to create a sidebar menu
+ */
+
+body.menu--sidebar {
+
+    @media screen and (min-width: $tablet-width) {
+        .menu {
+            width: $menu_sidebar_width;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: calc(100% - #{$toolbar_height / 2});
+            z-index: 2;
+            padding-top: $toolbar_height;
+            padding-bottom: $toolbar_height;
+            &__title{
+                display: none;
+            }
+        }
+        .menu__container{
+
+        }
+        .menu__item {
+            float: none;
+        }
+        .menu__sub-nav {
+            left: 100%;
+            top: 0;
+        }
+        .menu-item__link--drop-arrow:after {
+            top: 50%;
+            right: $horizontal_padding;
+            position: absolute;
+            margin-top: -3px;
+            @include triangle(8px, $menu_link_color, right);
+        }
+        .menu-item--home {
+            font-size: $font_size--emphasis;
+            width: $menu_sidebar_width;
+            height: $toolbar_height;
+            background-color: $menu_background_color;
+            position: fixed;
+            top: 0;
+            z-index: 1;
+            .menu-item__link{
+                height: $toolbar_height;
+            }
+            .fa {
+                display: none;
+            }
+        }
+        .menu__item--sidebar-collapse{
+            background-color: $menu_background_color;
+            position: fixed;
+            bottom: 0;
+            display: block;
+            width: $menu_sidebar_width;
+            z-index: 1;
+        }
+        .menu__item--sidebar-expand{
+            background-color: $menu_background_color;
+            position: fixed;
+            bottom: 0;
+            display: none;
+            width: $menu_sidebar_width;
+            z-index: 1;
+        }
+        .toolbar {
+            font-size: $font_size--emphasis;
+            top: 0;
+            left: $menu_sidebar_width;
+            width: calc(100% - #{$menu_sidebar_width});
+        }
+        .content {
+            margin-left: $menu_sidebar_width;
+            padding-top: $toolbar_height;
+        }
+        .form__actions {
+            width: calc(100% - #{$menu_sidebar_width});
+            left: $menu_sidebar_width;
+        }
+    }
+    @media screen and (max-width: $mobile-width) {
+        .menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            min-height: $toolbar_height;
+            width: 100%;
+            z-index: 2;
+            overflow-y: scroll;
+            &__title{
+                font-size: $font_size--emphasis;
+                color: $menu_link_color;
+            }
+        }
+        .menu__item--open {
+            width: 100%;
+            display: flex;
+            .menu__title{
+                text-align: center;
+                align-self: center;
+                flex: 1;
+                margin-right: $toolbar_height;
+            }
+            .menu-item__link {
+                height: $toolbar_height;
+                width: $toolbar_height;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+        .toolbar{
+            top: $toolbar_height;
+            left: 0;
+            width: 100%;
+        }
+        .content{
+            padding-top: $toolbar_height * 2;
+        }
+    }
+    .menu-item__link {
+        .fa{
+            width: 16px;
+        }
+    }
+    .toolbar{
+        height: $toolbar_height;
+        position: fixed;
+        z-index: 1;
+    }
+    .messages {
+        margin-top: 0;
+    }
+    .content .alert {
+        margin-bottom: 0;
+        border-radius: 0;
+    }
+}
+
+body.menu--sidebar-collapse {
+    @media screen and (min-width: $tablet-width) {
+        .menu {
+            width: $toolbar_height;
+        }
+        .menu-item__link {
+            width: $toolbar_height;
+            height: $toolbar_height;
+            text-align: center;
+        }
+        .menu__sub-nav .menu-item__link{
+            width: auto;
+            height: auto;
+            text-align: left;
+        }
+        .menu-item__link-text{
+            display: none;
+        }
+        .menu__sub-nav .menu-item__link-text{
+            display: block;
+        }
+        .menu-item__link--drop-arrow:after {
+            content: none;
+        }
+        .menu__item--sidebar-collapse{
+            width: $toolbar_height;
+            display: none;
+        }
+        .menu__item--sidebar-expand{
+            width: $toolbar_height;
+            display: block;
+        }
+        .menu-item--home {
+            width: $toolbar_height;
+            .fa {
+                display: inline-block;
+            }
+        }
+        .toolbar {
+            left: $toolbar_height;
+            width: calc(100% - #{$toolbar_height});
+        }
+        .content {
+            margin-left: $toolbar_height;
+        }
+    }
+}
+
+.menu__item--sidebar-collapse, .menu__item--sidebar-expand{
+    display: none;
+}

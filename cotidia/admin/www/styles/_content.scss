@@ -1,8 +1,18 @@
 body{
     &.content-centered{
-        .content, .form__actions-inner{
+        .content__list,
+        .content__detail,
+        .content__delete,
+        .form,
+        .form__actions-inner,
+        .messages .alert .errorlist{
             max-width: $laptop_width;
             margin: 0 auto;
+        }
+        .messages .alert .errorlist{
+            li{
+                margin: 0 $horizontal_padding * 2;
+            }
         }
     }
 }
@@ -12,7 +22,10 @@ body{
         padding: 0 $horizontal_padding;
     }
     &__list{
-        margin-top: $vertical_padding;
+    }
+    &__detail{
+    }
+    &__delete{
     }
 }
 

@@ -5,11 +5,13 @@
 
 .toolbar{
     background-color: $grey--lighter;
-    border-bottom: 1px solid darken(#e8e8e8, 3%);
+    border-bottom: 1px solid darken($grey--lighter, 5%);
     padding: $vertical_padding $horizontal_padding;
 
     &__breadcrumbs{
-
+        .fa.fa-angle-right{
+            color: lighten($grey--medium, 10%);
+        }
     }
 
     &__item{

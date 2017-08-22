@@ -13,6 +13,7 @@
             width: 100%;
             background-color: $grey--lighter;
             border-top: 1px solid $grey--light;
+            width: 100%;
         }
     }
     &__label{
@@ -30,31 +31,103 @@
         }
     }
     &__actions{
-        padding-bottom: $vertical_padding
+
     }
     &__actions-inner{
-        padding-top: $vertical_padding;
+        padding: $vertical_padding $horizontal_padding;
     }
 }
 
 fieldset{
     border-radius: $border_radius;
+    background-color: #fff;
     padding: $vertical_padding $horizontal_padding;
     border: 1px solid darken(#e7e7e7, 3%);
-    background-color: $grey--lighter;
-    margin: $vertical_padding 0;
+    margin: $vertical_padding $horizontal_padding;
 
     legend{
+        background-color: $grey--light;
         font-size: $font-size--emphasis;
-        border-bottom: 1px solid $grey--light;
+        width: calc(100% + #{$horizontal_padding * 2});
+        margin-left: -$horizontal_padding;
+        margin-right: -$horizontal_padding;
+        margin-top: -$vertical_padding;
+        margin-bottom: $vertical_padding;
+        padding-left: $horizontal_padding;
+        padding-right: $horizontal_padding;
+        padding-top: $vertical_padding;
         padding-bottom: $vertical_padding;
-        margin-bottom: $vertical_padding * 2;
-        width: 100%;
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+        border-bottom: 1px solid darken($grey--light, 3%);
         float: left;
-        &:after{
-            content: "";
-            display: block;
-            clear: both;
+        display: block;
+    }
+
+    &.table-view {
+        padding-bottom: 0;
+        padding-left: 0;
+        padding-right: 0;
+
+        legend {
+            margin-left: 0;
+            margin-right: 0;
+            margin-bottom: 0;
+            width: 100%;
+        }
+
+        .table {
+            border: none;
+            border-bottom-left-radius: $border-radius;
+            border-bottom-right-radius: $border-radius;
+            thead {
+                tr {
+                    th {
+                        background-color: $grey--lighter;
+                        border-bottom: 1px solid darken($grey--lighter, 5%);
+                    }
+                }
+            }
+            tbody {
+                tr {
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+}
+
+.errorlist {
+    padding: 0;
+    li{
+        margin: 0 $horizontal_padding;
+    }
+}
+
+.head-filter{
+    padding: $vertical_padding $horizontal_padding;
+    display: flex;
+    .form__group {
+        margin-bottom: 0;
+                flex: 1;
+    }
+    &__item{
+        display: flex;
+        margin-right: $horizontal_padding;
+        &:last-child {
+            margin-right: 0;
+        }
+        &--search{
+            flex: 1;
+            .form__text {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                border-right: none;
+            }
+            .btn {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
         }
     }
 }
