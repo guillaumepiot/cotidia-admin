@@ -1,5 +1,16 @@
-<div class="form__group{% if field.errors %} form__group--error{% endif %}{% if field.field.required %} form__group--required{% endif %}">
-    {% block form_group_content %}{% endblock %}
+{% load admin_form_tags %}<div class="form__group{% if field.errors %} form__group--error{% endif %}{% if field.field.required %} form__group--required{% endif %}">
+    {% block form_group_content %}
+    {% if field|is_checkbox %}
+    <div class="form__control{% if field|is_select %} form__control--select{% endif %}">
+    {% include "admin/generic/form/label.html" with checkbox=field %}
+    </div>
+    {% else %}
+    {% include "admin/generic/form/label.html" %}
+    <div class="form__control{% if field|is_select %} form__control--select{% endif %}">
+        {{field}}
+    </div>
+    {% endif %}
+    {% endblock %}
     {% block form_group_footer %}
     {% if field.errors %}
         <div class="form__error">

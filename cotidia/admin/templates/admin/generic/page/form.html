@@ -1,0 +1,70 @@
+{% extends "admin/page.html" %}{% load i18n admin_toolbar_tags admin_list_tags %}
+{% block title %}
+    {% if object %}
+        {% blocktrans with object_name as object_name %}
+            Edit {{object_name}}
+        {% endblocktrans %}
+    {% else %}
+        {% blocktrans with object_name as object_name %}
+            Add {{object_name}}
+        {% endblocktrans %}
+    {% endif %}
+{% endblock title %}
+
+{% block body_class %}
+    {% if template_type == "centered" %}content-centered{% endif %}
+{% endblock body_class %}
+
+{% block toolbar %}
+    <span class="toolbar__breadcrumbs">
+        <a href="{% get_admin_url app_label model_name "list" %}">{{object_name}}</a>
+        &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
+        {% if object %}
+            <a href="{% get_admin_url app_label model_name "detail" object %}">{{object}}</a>
+            &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
+            {% blocktrans with object_name as object_name %}
+                Edit {{object_name}}
+            {% endblocktrans %}
+        {% else %}
+            {% blocktrans with object_name as object_name %}
+                Add {{object_name}}
+            {% endblocktrans %}
+        {% endif %}
+    </span>
+{% endblock toolbar %}
+
+
+{% block page_content %}
+{% include "admin/generic/form/non_field_errors.html" %}
+{% include "admin/generic/form/errors.html" %}
+<form action="" method="post" class="form" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+
+    {% with fieldset_template_name="admin/generic/form/fieldset_as_div.html" field_template_name="admin/generic/form/field_as_div.html" %}
+        {% for elm in form %}
+            {% if elm.is_fieldset %}
+                {% include fieldset_template_name with fieldset=elm %}
+            {% else %}
+                {% include field_template_name with field=elm %}
+            {% endif %}
+        {% endfor %}
+    {% endwith %}
+
+    <div class="form__actions">
+        <div class="form__actions-inner">
+            <button type="submit" class="btn btn--primary">
+                {% trans "Save" %}
+            </button>
+            {% if object %}
+            <a href="{% get_admin_url app_label model_name "detail" object %}" class="btn btn--transparent pull-right">
+                {% trans "Cancel" %}
+            </a>
+            {% else %}
+            <a href="{% get_admin_url app_label model_name "list" %}" class="btn btn--transparent pull-right">
+                {% trans "Cancel" %}
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</form>
+{% endblock page_content %}

@@ -1,4 +1,4 @@
-{% extends "admin/page.html" %}{% load i18n %}
+{% extends "admin/page.html" %}{% load i18n admin_list_tags %}
 {% block title %}
     {% trans "Delete" %} {{object_name}}
 {% endblock title %}
@@ -9,11 +9,11 @@
 
 {% block toolbar %}
     <span class="toolbar__breadcrumbs">
-        <a href="{% url 'team-admin:team-list' %}">
+        <a href="{% get_admin_url app_label model_name "list" %}">
             {{object_name}}
         </a>
         &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
-        <a href="{% url 'team-admin:team-detail' object.id %}">
+        <a href="{% get_admin_url app_label model_name "detail" object %}">
             {{object}}
         </a>
         &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
@@ -24,14 +24,14 @@
 {% block page_content %}
 <div class="content__delete">
     <fieldset>
-        <h3>{% blocktrans with object_name|lower as object_name %}
+        <legend>{% blocktrans with object_name|lower as object_name %}
             Are you sure to delete the following {{object_name}}?
             {% endblocktrans %}
-        </h3>
+        </legend>
         <p>
         {{object}}
         </p>
-        <p>{% trans "The operation is not reversible." %}</p>
+        <p class="text-italic">{% trans "The operation is not reversible." %}</p>
     </fieldset>
 
     <div class="content__inner">
@@ -40,7 +40,7 @@
             <button type="submit" class="btn btn--delete">
                 {% trans "Confirm Delete" %}
             </button>
-            <a href="{% url 'team-admin:team-detail' object.id %}" class="btn btn--transparent pull-right">
+            <a href="{% get_admin_url app_label model_name "detail" object %}" class="btn btn--transparent pull-right">
                 {% trans "Cancel" %}
             </a>
         </form>

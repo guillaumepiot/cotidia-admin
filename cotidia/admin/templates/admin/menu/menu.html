@@ -9,7 +9,9 @@
         </li>
         <li class="menu__item menu-item menu-item--home">
             <a href="{% url 'dashboard' %}" class="menu-item__link">
-                <span class="fa fa-home"></span>
+                <span class="menu-item__link-icon">
+                    <span class="fa fa-home"></span>
+                </span>
                 <span class="menu-item__link-text">{{SITE_NAME}}</span>
             </a>
         </li>
@@ -17,10 +19,19 @@
             {% include "admin/menu/menu_item.html" %}
         {% endfor %}
         <li class="menu__item menu__item--sidebar-expand">
-            <a href="#" class="menu-item__link"><span class="fa fa-chevron-right"></span></a>
+            <a href="#" class="menu-item__link">
+                <span class="menu-item__link-icon">
+                    <span class="fa fa-chevron-right"></span>
+                </span>
+            </a>
         </li>
         <li class="menu__item menu__item--sidebar-collapse">
-            <a href="#" class="menu-item__link"><span class="fa fa-chevron-left"></span> <span class="menu-item__link-text">Compact</span></a>
+            <a href="#" class="menu-item__link">
+                <span class="menu-item__link-icon">
+                    <span class="fa fa-chevron-left"></span>
+                </span>
+                <span class="menu-item__link-text">Compact</span>
+            </a>
         </li>
     </ul>
 </menu>

@@ -51,12 +51,18 @@
   function bootstrap () {
     document.removeEventListener('readystatechange', bootstrap)
 
-    initMenu()
-
     // Automatically add the sidebar collapse class if we are in collapse mode.
     if (getSidebarCookieValue() == "collapse") {
+      document.body.classList.add('menu--sidebar-hidden')
       document.body.classList.add('menu--sidebar-collapse')
+      // Allow time to apply the class before removing it
+      setTimeout(function(){
+        document.body.classList.remove('menu--sidebar-hidden')
+      }, 1)
+
     }
+
+    initMenu()
   }
 
   // Initialize our menu if the document is ready, otherwise listen to its

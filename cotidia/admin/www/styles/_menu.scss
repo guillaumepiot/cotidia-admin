@@ -10,10 +10,11 @@ body.menu--sidebar {
             position: fixed;
             top: 0;
             left: 0;
-            height: calc(100% - #{$toolbar_height / 2});
+            height: 100%;
             z-index: 2;
             padding-top: $toolbar_height;
             padding-bottom: $toolbar_height;
+            transition: width 0.3s ease;
             &__title{
                 display: none;
             }
@@ -29,42 +30,47 @@ body.menu--sidebar {
             top: 0;
         }
         .menu-item__link--drop-arrow:after {
-            top: 50%;
-            right: $horizontal_padding;
-            position: absolute;
-            margin-top: -3px;
             @include triangle(8px, $menu_link_color, right);
+        }
+        .menu-item__link-text {
+            padding-top: 0.1em;
         }
         .menu-item--home {
             font-size: $font_size--emphasis;
-            width: $menu_sidebar_width;
+            width: 100%;
             height: $toolbar_height;
             background-color: $menu_background_color;
-            position: fixed;
+            position: absolute;
             top: 0;
+            left: 0;
             z-index: 1;
-            .menu-item__link{
+            white-space: nowrap;
+            .menu-item__link {
                 height: $toolbar_height;
             }
-            .fa {
+            .menu-item__link-icon {
                 display: none;
             }
         }
         .menu__item--sidebar-collapse{
             background-color: $menu_background_color;
-            position: fixed;
+            position: absolute;
             bottom: 0;
+            left: 0;
             display: block;
-            width: $menu_sidebar_width;
+            width: 100%;
             z-index: 1;
+            white-space: nowrap;
         }
         .menu__item--sidebar-expand{
             background-color: $menu_background_color;
-            position: fixed;
+            position: absolute;
             bottom: 0;
+            left: 0;
             display: none;
-            width: $menu_sidebar_width;
+            width: 100%;
             z-index: 1;
+            white-space: nowrap;
         }
         .toolbar {
             font-size: $font_size--emphasis;
@@ -75,10 +81,6 @@ body.menu--sidebar {
         .content {
             margin-left: $menu_sidebar_width;
             padding-top: $toolbar_height;
-        }
-        .form__actions {
-            width: calc(100% - #{$menu_sidebar_width});
-            left: $menu_sidebar_width;
         }
     }
     @media screen and (max-width: $mobile-width) {
@@ -121,11 +123,6 @@ body.menu--sidebar {
             padding-top: $toolbar_height * 2;
         }
     }
-    .menu-item__link {
-        .fa{
-            width: 16px;
-        }
-    }
     .toolbar{
         height: $toolbar_height;
         position: fixed;
@@ -138,6 +135,25 @@ body.menu--sidebar {
         margin-bottom: 0;
         border-radius: 0;
     }
+    .menu-item__link {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .menu-item__link-icon {
+        width: 16px;
+        height: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: $horizontal_padding / 2;
+    }
+    .menu-item__link--drop-arrow:after {
+        top: 50%;
+        right: $horizontal_padding;
+        position: absolute;
+        margin-top: -3px;
+    }
 }
 
 body.menu--sidebar-collapse {
@@ -149,11 +165,18 @@ body.menu--sidebar-collapse {
             width: $toolbar_height;
             height: $toolbar_height;
             text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .menu__sub-nav .menu-item__link{
             width: auto;
             height: auto;
             text-align: left;
+            display: block;
+        }
+        .menu-item__link-icon {
+            margin-right: 0;
         }
         .menu-item__link-text{
             display: none;
@@ -174,8 +197,8 @@ body.menu--sidebar-collapse {
         }
         .menu-item--home {
             width: $toolbar_height;
-            .fa {
-                display: inline-block;
+            .menu-item__link-icon {
+                display: block;
             }
         }
         .toolbar {
@@ -184,6 +207,18 @@ body.menu--sidebar-collapse {
         }
         .content {
             margin-left: $toolbar_height;
+        }
+        .form__actions {
+            width: calc(100% - #{$toolbar_height});
+            left: $toolbar_height;
+        }
+    }
+}
+
+body.menu--sidebar-hidden {
+    @media screen and (min-width: $tablet-width) {
+        .menu {
+            transition: none;
         }
     }
 }

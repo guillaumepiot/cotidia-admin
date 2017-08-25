@@ -9,7 +9,7 @@
     </thead>
     <tbody>
     {% for object in object_list %}
-    <tr onclick="window.location = '{% get_admin_url app_label model_name object %}'">
+    <tr onclick="window.location = '{% get_admin_url app_label model_name "detail" object %}'">
         {% for column in columns %}
             {% render_column column %}
         {% endfor %}

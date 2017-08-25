@@ -36,6 +36,17 @@
     &__actions-inner{
         padding: $vertical_padding $horizontal_padding;
     }
+    &__row {
+        display: flex;
+        clear: both;
+        .form__group {
+            flex: 1;
+            margin-right: $horizontal_padding;
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
 }
 
 fieldset{
@@ -106,10 +117,25 @@ fieldset{
 
 .head-filter{
     padding: $vertical_padding $horizontal_padding;
-    display: flex;
+
+    @media screen and (min-width: $tablet-width) {
+        display: flex;
+    }
     .form__group {
-        margin-bottom: 0;
-                flex: 1;
+        @media screen and (min-width: $tablet-width) {
+            margin-right: $horizontal_padding;
+            flex: 1;
+        }
+    }
+    .btn {
+        @media screen and (min-width: $tablet-width) {
+            align-self: center;
+            margin-right: $horizontal_padding;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
     }
     &__item{
         display: flex;

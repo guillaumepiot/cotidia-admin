@@ -1,0 +1,9 @@
+  <div class="form__row">
+    {% for thing in row %}
+      {% if thing.is_fieldset %}
+        {% include "admin/generic/form/form_row.html" with row=thing %}
+      {% else %}
+        {% include field_template_name with field=thing %}
+      {% endif %}
+    {% endfor %}
+  </div>

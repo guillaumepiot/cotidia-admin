@@ -1,0 +1,57 @@
+{% extends "admin/page.html" %}{% load i18n admin_list_tags admin_toolbar_tags %}
+{% block title %}
+    {% blocktrans with object_name as object_name %}
+        {{object_name}} details
+    {% endblocktrans %}
+{% endblock title %}
+
+{% block body_class %}
+    {% if template_type == "centered" %}content-centered{% endif %}
+{% endblock body_class %}
+
+{% block toolbar %}
+    {% toolbar_action_button app_label model_name "change" "Edit item" object.id %}
+    <span class="toolbar__breadcrumbs">
+        <a href="{% get_admin_url app_label model_name "list" %}">{{object_name}}</a>
+        &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
+        {% blocktrans with object_name as object_name %}
+            {{object_name}} details
+        {% endblocktrans %}
+    </span>
+{% endblock toolbar %}
+
+{% block page_content %}
+<div class="form">
+    {% for fieldset in fieldsets %}
+        {% if fieldset.template_name %}
+            {% include fieldset.template_name with object=object %}
+        {% else %}
+        <fieldset>
+            {% if fieldset.legend %}
+                <legend>{{fieldset.legend}}</legend>
+            {% endif %}
+            {% for field in fieldset.fields %}
+                {% if field|is_list %}
+                    <div class="form__row">
+                    {% for f in field %}
+                        {% include "admin/generic/detail/field.html" with field=f %}
+                    {% endfor %}
+                    </div>
+                {% else %}
+                {% include "admin/generic/detail/field.html" with field=field %}
+                {% endif %}
+            {% endfor %}
+        </fieldset>
+        {% endif %}
+    {% endfor %}
+    <div class="form__actions">
+        <div class="form__actions-inner">
+            <a href="{% get_admin_url app_label model_name "change" object %}" class="btn btn--change">
+                {% blocktrans with object_name as object_name %}
+                    Edit {{object_name}}
+                {% endblocktrans %}
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock page_content %}
