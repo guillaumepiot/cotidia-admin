@@ -37,7 +37,7 @@
 {% block page_content %}
 {% include "admin/generic/form/non_field_errors.html" %}
 {% include "admin/generic/form/errors.html" %}
-<form action="" method="post" class="form" enctype="multipart/form-data" novalidate>
+<form action="" method="post" class="form" enctype="multipart/form-data">
     {% csrf_token %}
 
     {% with fieldset_template_name="admin/generic/form/fieldset_as_div.html" field_template_name="admin/generic/form/field_as_div.html" %}
@@ -45,26 +45,32 @@
             {% if elm.is_fieldset %}
                 {% include fieldset_template_name with fieldset=elm %}
             {% else %}
-                {% include field_template_name with field=elm %}
+                <div class="form__row">
+                    {% include field_template_name with field=elm %}
+                </div>
             {% endif %}
         {% endfor %}
     {% endwith %}
-
+    {% block form_actions %}
     <div class="form__actions">
         <div class="form__actions-inner">
             <button type="submit" class="btn btn--primary">
                 {% trans "Save" %}
             </button>
             {% if object %}
-            <a href="{% get_admin_url app_label model_name "detail" object %}" class="btn btn--transparent pull-right">
+            <a href="{% get_admin_url app_label model_name "detail" object %}" class="btn btn--transparent">
                 {% trans "Cancel" %}
             </a>
+            <a href="{% get_admin_url app_label model_name "detail" object %}" class="btn btn--delete pull-right">
+                {% trans "Delete" %}
+            </a>
             {% else %}
-            <a href="{% get_admin_url app_label model_name "list" %}" class="btn btn--transparent pull-right">
+            <a href="{% get_admin_url app_label model_name "list" %}" class="btn btn--transparent">
                 {% trans "Cancel" %}
             </a>
             {% endif %}
         </div>
     </div>
+    {% endblock form_actions %}
 </form>
 {% endblock page_content %}

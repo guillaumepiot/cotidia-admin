@@ -28,12 +28,17 @@
             Are you sure to delete the following {{verbose_name}}?
             {% endblocktrans %}
         </legend>
-        <p>
-        {{object}}
-        </p>
-        <p class="text-italic">{% trans "The operation is not reversible." %}</p>
+        <div class="form__row">
+            <p>
+                {{object}}
+            </p>
+        </div>
+        <div class="form__row">
+            <p class="text-italic">{% trans "The operation is not reversible." %}</p>
+        </div>
     </fieldset>
 
+    {% block form_actions %}
     <div class="content__inner">
         <form method="post" action="">
             {% csrf_token %}
@@ -45,5 +50,6 @@
             </a>
         </form>
     </div>
+    {% endblock form_actions %}
 </div>
 {% endblock page_content %}

@@ -13,8 +13,8 @@
 {% endblock toolbar %}
 
 {% block page_content %}
+{% include 'admin/generic/utils/head-filter.html' %}
 <div class="content__list">
-    {% include 'admin/generic/utils/head-filter.html' %}
     {% include 'admin/generic/list/list.html' %}
 </div>
 {% endblock page_content %}

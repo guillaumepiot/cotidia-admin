@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n %}{% if filter %}
 <form action="" method="get" class="head-filter">
     {% for field in filter.form %}
         {% include "admin/generic/form/form_group.html" %}
@@ -6,3 +6,4 @@
     <input type="submit" value="{% trans "Filter" %}" class="btn btn--primary btn--transparent">
     <a href="{{request.path}}" class="btn btn--transparent" title="Reset filters"><span class="fa fa-refresh"></span></a>
 </form>
+{% endif %}
