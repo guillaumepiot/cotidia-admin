@@ -12,7 +12,7 @@ def toolbar_action_button(
 
     actions = {
         "add": ("plus", "create"),
-        "change": ("pencil", "change"),
+        "update": ("pencil", "update"),
         "delete": ("trash-o", "delete"),
     }
 

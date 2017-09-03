@@ -55,7 +55,7 @@ def render_column(context, column):
 
 @register.simple_tag
 def get_admin_url(app_label, model_name, url_type, obj=None):
-    if url_type in ["detail", "change", "delete"]:
+    if url_type in ["detail", "update", "delete"]:
         return reverse(
             "{}-admin:{}-{}".format(app_label, model_name, url_type),
             args=[obj.pk]
