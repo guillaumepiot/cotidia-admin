@@ -1,4 +1,4 @@
-{% load admin_list_tags %}<div class="form__group">
-    <label class="form__label">{{field.label}}</label>
-    <div class="form__control">{{object|get_attr:field.field}}</div>
+<div class="form__group">
+    <label class="form__label">{{label}}</label>
+    <div class="form__control">{% if value %}{{value}}{% endif %}</div>
 </div>

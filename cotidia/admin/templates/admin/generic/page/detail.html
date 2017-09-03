@@ -1,7 +1,7 @@
-{% extends "admin/page.html" %}{% load i18n admin_list_tags admin_toolbar_tags %}
+{% extends "admin/page.html" %}{% load i18n admin_list_tags admin_toolbar_tags admin_detail_tags %}
 {% block title %}
-    {% blocktrans with object_name as object_name %}
-        {{object_name}} details
+    {% blocktrans with verbose_name as verbose_name %}
+        {{verbose_name}} details
     {% endblocktrans %}
 {% endblock title %}
 
@@ -10,12 +10,12 @@
 {% endblock body_class %}
 
 {% block toolbar %}
-    {% toolbar_action_button app_label model_name "change" "Edit item" object.id %}
+    {% toolbar_action_button app_label model_name "update" "Edit item" object.id %}
     <span class="toolbar__breadcrumbs">
-        <a href="{% get_admin_url app_label model_name "list" %}">{{object_name}}</a>
+        <a href="{% get_admin_url app_label model_name "list" %}">{{verbose_name}}</a>
         &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
-        {% blocktrans with object_name as object_name %}
-            {{object_name}} details
+        {% blocktrans with verbose_name as verbose_name %}
+            {{verbose_name}} details
         {% endblocktrans %}
     </span>
 {% endblock toolbar %}
@@ -26,7 +26,7 @@
         {% if fieldset.template_name %}
             {% include fieldset.template_name with object=object %}
         {% else %}
-        <fieldset>
+        <fieldset class="detail">
             {% if fieldset.legend %}
                 <legend>{{fieldset.legend}}</legend>
             {% endif %}
@@ -34,11 +34,13 @@
                 {% if field|is_list %}
                     <div class="form__row">
                     {% for f in field %}
-                        {% include "admin/generic/detail/field.html" with field=f %}
+                        {% render_detail_field object f %}
                     {% endfor %}
                     </div>
                 {% else %}
-                {% include "admin/generic/detail/field.html" with field=field %}
+                <div class="form__row">
+                    {% render_detail_field object field %}
+                </div>
                 {% endif %}
             {% endfor %}
         </fieldset>
@@ -46,7 +48,7 @@
     {% endfor %}
     <div class="form__actions">
         <div class="form__actions-inner">
-            <a href="{% get_admin_url app_label model_name "change" object %}" class="btn btn--change">
+            <a href="{% get_admin_url app_label model_name "update" object %}" class="btn btn--change">
                 {% blocktrans with object_name as object_name %}
                     Edit {{object_name}}
                 {% endblocktrans %}
