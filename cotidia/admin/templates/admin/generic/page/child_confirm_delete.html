@@ -1,0 +1,29 @@
+{% extends "admin/generic/page/confirm_delete.html" %}{% load i18n admin_list_tags %}
+
+{% block toolbar %}
+    <span class="toolbar__breadcrumbs">
+        <a href="{% get_admin_url parent_app_label parent_model_name "detail" parent %}">
+            {{parent}}
+        </a>
+        &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
+        <a href="{% get_child_admin_url app_label model_name "update" parent object %}">
+            {{object}}
+        </a>
+        &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
+        {% trans "Confirm delete" %}
+    </span>
+{% endblock toolbar %}
+
+{% block form_actions %}
+<div class="content__inner">
+    <form method="post" action="">
+        {% csrf_token %}
+        <button type="submit" class="btn btn--delete">
+            {% trans "Confirm Delete" %}
+        </button>
+        <a href="{% get_child_admin_url app_label model_name "update" parent object %}" class="btn btn--transparent pull-right">
+            {% trans "Cancel" %}
+        </a>
+    </form>
+</div>
+{% endblock form_actions %}

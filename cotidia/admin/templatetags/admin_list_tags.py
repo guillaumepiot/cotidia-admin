@@ -66,7 +66,20 @@ def get_admin_url(app_label, model_name, url_type, obj=None):
         )
 
 
+@register.simple_tag
+def get_child_admin_url(app_label, model_name, url_type, parent, obj=None):
+    if url_type in ["detail", "update", "delete"]:
+        return reverse(
+            "{}-admin:{}-{}".format(app_label, model_name, url_type),
+            args=[parent.pk, obj.pk]
+        )
+    else:
+        return reverse(
+            "{}-admin:{}-{}".format(app_label, model_name, url_type),
+            args=[parent.pk]
+        )
+
+
 @register.filter()
 def is_list(obj):
-    print(obj, "is list", isinstance(obj, list))
     return isinstance(obj, list)

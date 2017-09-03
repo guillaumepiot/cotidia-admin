@@ -9,16 +9,7 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 
 from cotidia.admin.utils import StaffPermissionRequiredMixin
-
-
-class ContextMixin:
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["app_label"] = self.model._meta.app_label
-        context["model_name"] = self.model._meta.model_name
-        context["object_name"] = self.model._meta.object_name
-        context["template_type"] = self.template_type
-        return context
+from cotidia.admin.views.mixin import ContextMixin, ChildMixin
 
 
 class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
@@ -134,7 +125,7 @@ class AdminCreateView(StaffPermissionRequiredMixin, ContextMixin, CreateView):
     def get_success_url(self):
         messages.success(
             self.request,
-            '{} has been created.'.format(self.model._meta.object_name)
+            '{} has been created.'.format(self.model._meta.verbose_name)
         )
         return self.build_success_url()
 
@@ -177,7 +168,7 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
     def get_success_url(self):
         messages.success(
             self.request,
-            '{} has been updated.'.format(self.model._meta.object_name)
+            '{} has been updated.'.format(self.model._meta.verbose_name)
         )
         return self.build_success_url()
 
@@ -204,7 +195,7 @@ class AdminDeleteView(StaffPermissionRequiredMixin, ContextMixin, DeleteView):
     def get_success_url(self):
         messages.success(
             self.request,
-            '{} has been deleted.'.format(self.model._meta.object_name)
+            '{} has been deleted.'.format(self.model._meta.verbose_name)
         )
         return self.build_success_url()
 
@@ -230,4 +221,26 @@ class AdminDeleteView(StaffPermissionRequiredMixin, ContextMixin, DeleteView):
         return [
             template,
             "admin/generic/page/confirm_delete.html",
+        ]
+
+
+class AdminChildCreateView(ChildMixin, AdminCreateView):
+    pass
+
+
+class AdminChildUpdateView(ChildMixin, AdminUpdateView):
+    pass
+
+
+class AdminChildDeleteView(ChildMixin, AdminDeleteView):
+    def get_template_names(self):
+
+        template = "admin/{app}/{model}/child_confirm_delete.html".format(
+            app=self.model._meta.app_label,
+            model=self.model._meta.model_name
+        )
+
+        return [
+            template,
+            "admin/generic/page/child_confirm_delete.html",
         ]
