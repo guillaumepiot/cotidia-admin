@@ -42,8 +42,10 @@
         .form__group {
             flex: 1;
             margin-right: $horizontal_padding;
+            padding-right: $horizontal_padding;
             &:last-child {
                 margin-right: 0;
+                padding-right: 0;
             }
         }
     }
@@ -52,18 +54,17 @@
 fieldset{
     border-radius: $border_radius;
     background-color: #fff;
-    padding: $vertical_padding $horizontal_padding;
     border: 1px solid darken(#e7e7e7, 3%);
     margin: $vertical_padding $horizontal_padding;
 
     legend{
         background-color: $grey--light;
         font-size: $font-size--emphasis;
-        width: calc(100% + #{$horizontal_padding * 2});
-        margin-left: -$horizontal_padding;
-        margin-right: -$horizontal_padding;
-        margin-top: -$vertical_padding;
-        margin-bottom: $vertical_padding;
+        width: 100%;
+        // margin-left: -$horizontal_padding;
+        // margin-right: -$horizontal_padding;
+        // margin-top: -$vertical_padding;
+        // margin-bottom: $vertical_padding;
         padding-left: $horizontal_padding;
         padding-right: $horizontal_padding;
         padding-top: $vertical_padding;
@@ -73,6 +74,28 @@ fieldset{
         border-bottom: 1px solid darken($grey--light, 3%);
         float: left;
         display: block;
+    }
+
+    > .form__row {
+        padding: 0 $horizontal_padding;
+        .form__group {
+            margin-bottom: 0;
+            padding-top: $vertical_padding;
+            padding-bottom: $vertical_padding;
+        }
+    }
+
+    &.detail > .form__row {
+        border-bottom: 1px solid $grey--light;
+        &:last-child {
+            border-bottom: 0;
+        }
+        .form__group {
+            border-right: 1px solid $grey--light;
+            &:last-child {
+                border-right: 0;
+            }
+        }
     }
 
     &.table-view {
@@ -116,7 +139,8 @@ fieldset{
 }
 
 .head-filter{
-    padding: $vertical_padding $horizontal_padding;
+    margin: 0 $horizontal_padding;
+    padding: $vertical_padding 0;
 
     @media screen and (min-width: $tablet-width) {
         display: flex;

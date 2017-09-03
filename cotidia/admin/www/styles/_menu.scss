@@ -209,7 +209,7 @@ body.menu--sidebar-collapse {
             margin-left: $toolbar_height;
         }
         .form__actions {
-            width: calc(100% - #{$toolbar_height});
+            width: 100%;
             left: $toolbar_height;
         }
     }
