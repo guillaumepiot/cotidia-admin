@@ -18,10 +18,12 @@ class UserCheckMixin(object):
 
 
 class StaffPermissionRequiredMixin(UserCheckMixin):
-    permission_required = None
+
+    def get_permission_required(self):
+        return None
 
     def check_user(self, user):
         """Check if the user has the relevant permissions."""
         if user.is_superuser:
             return True
-        return user.is_staff and user.has_perm(self.permission_required)
+        return user.is_staff and user.has_perm(self.get_permission_required())

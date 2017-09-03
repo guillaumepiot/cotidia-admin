@@ -25,6 +25,16 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
     columns = ()
     paginate_by = 25
     template_type = "fluid"  # Options: fluid, centered
+    filterset = None
+
+    def get_permission_required(self):
+        if self.permission_required is None:
+            return self.permission_required
+        else:
+            return "{}.add_{}".format(
+                self.model._meta.app_label,
+                self.model._meta.object_name
+            )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -57,6 +67,15 @@ class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):
     template_type = "centered"  # Options: fluid, centered
     fieldsets = []
 
+    def get_permission_required(self):
+        if self.permission_required is None:
+            return self.permission_required
+        else:
+            return "{}.add_{}".format(
+                self.model._meta.app_label,
+                self.model._meta.object_name
+            )
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -79,6 +98,15 @@ class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):
 
 class AdminCreateView(StaffPermissionRequiredMixin, ContextMixin, CreateView):
     template_type = "centered"  # Options: fluid, centered
+
+    def get_permission_required(self):
+        if self.permission_required is None:
+            return self.permission_required
+        else:
+            return "{}.add_{}".format(
+                self.model._meta.app_label,
+                self.model._meta.object_name
+            )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -114,6 +142,15 @@ class AdminCreateView(StaffPermissionRequiredMixin, ContextMixin, CreateView):
 class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
     template_type = "centered"  # Options: fluid, centered
 
+    def get_permission_required(self):
+        if self.permission_required is None:
+            return self.permission_required
+        else:
+            return "{}.change_{}".format(
+                self.model._meta.app_label,
+                self.model._meta.object_name
+            )
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
@@ -147,6 +184,15 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
 
 class AdminDeleteView(StaffPermissionRequiredMixin, ContextMixin, DeleteView):
     template_type = "centered"
+
+    def get_permission_required(self):
+        if self.permission_required is None:
+            return self.permission_required
+        else:
+            return "{}.delete_{}".format(
+                self.model._meta.app_label,
+                self.model._meta.object_name
+            )
 
     def build_success_url(self):
         url_name = "{}-admin:{}-list".format(
