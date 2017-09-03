@@ -1,6 +1,6 @@
 {% extends "admin/page.html" %}{% load i18n admin_list_tags %}
 {% block title %}
-    {% trans "Delete" %} {{object_name}}
+    {% trans "Delete" %} {{verbose_name}}
 {% endblock title %}
 
 {% block body_class %}
@@ -10,7 +10,7 @@
 {% block toolbar %}
     <span class="toolbar__breadcrumbs">
         <a href="{% get_admin_url app_label model_name "list" %}">
-            {{object_name}}
+            {{verbose_name}}
         </a>
         &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
         <a href="{% get_admin_url app_label model_name "detail" object %}">
@@ -24,8 +24,8 @@
 {% block page_content %}
 <div class="content__delete">
     <fieldset>
-        <legend>{% blocktrans with object_name|lower as object_name %}
-            Are you sure to delete the following {{object_name}}?
+        <legend>{% blocktrans with verbose_name|lower as verbose_name %}
+            Are you sure to delete the following {{verbose_name}}?
             {% endblocktrans %}
         </legend>
         <p>

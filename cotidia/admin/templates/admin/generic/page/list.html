@@ -1,6 +1,6 @@
 {% extends "admin/page.html" %}{% load i18n admin_toolbar_tags %}
 {% block title %}
-    {{object_name}}
+    {{verbose_name}}
 {% endblock title %}
 
 {% block body_class %}
@@ -9,7 +9,7 @@
 
 {% block toolbar %}
     {% toolbar_action_button app_label model_name "add" "Add item" %}
-    <span class="toolbar__title">{{object_name}}</span>
+    <span class="toolbar__title">{{verbose_name}}</span>
 {% endblock toolbar %}
 
 {% block page_content %}

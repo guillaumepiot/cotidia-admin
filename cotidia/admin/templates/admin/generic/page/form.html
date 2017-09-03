@@ -1,12 +1,12 @@
 {% extends "admin/page.html" %}{% load i18n admin_toolbar_tags admin_list_tags %}
 {% block title %}
     {% if object %}
-        {% blocktrans with object_name as object_name %}
-            Edit {{object_name}}
+        {% blocktrans with verbose_name as verbose_name %}
+            Edit {{verbose_name}}
         {% endblocktrans %}
     {% else %}
-        {% blocktrans with object_name as object_name %}
-            Add {{object_name}}
+        {% blocktrans with verbose_name as verbose_name %}
+            Add {{verbose_name}}
         {% endblocktrans %}
     {% endif %}
 {% endblock title %}
@@ -22,12 +22,12 @@
         {% if object %}
             <a href="{% get_admin_url app_label model_name "detail" object %}">{{object}}</a>
             &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
-            {% blocktrans with object_name as object_name %}
-                Edit {{object_name}}
+            {% blocktrans with verbose_name as verbose_name %}
+                Edit {{verbose_name}}
             {% endblocktrans %}
         {% else %}
-            {% blocktrans with object_name as object_name %}
-                Add {{object_name}}
+            {% blocktrans with verbose_name as verbose_name %}
+                Add {{verbose_name}}
             {% endblocktrans %}
         {% endif %}
     </span>
