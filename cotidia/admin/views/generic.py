@@ -120,7 +120,7 @@ class AdminCreateView(StaffPermissionRequiredMixin, ContextMixin, CreateView):
             self.model._meta.app_label,
             self.model._meta.model_name
         )
-        return reverse(url_name, args=[self.get_object().id])
+        return reverse(url_name, args=[self.object.id])
 
     def get_success_url(self):
         messages.success(
