@@ -4660,6 +4660,36 @@ body.content-centered .messages .alert .errorlist li {
 .messages {
   margin-top: 0.75rem; }
 
+.pagination {
+  padding: 0.75rem 0; }
+  .pagination__link {
+    display: block;
+    float: left;
+    border: 1px solid #c4c4c4;
+    padding: 0 0.75rem;
+    line-height: 2em;
+    text-transform: uppercase; }
+    .pagination__link--previous {
+      border-right: none;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      background-color: #f2f2f3;
+      color: #444444; }
+      .pagination__link--previous:hover {
+        background-color: #d7d7db; }
+    .pagination__link--next {
+      border-left: none;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      background-color: #f2f2f3;
+      color: #444444; }
+      .pagination__link--next:hover {
+        background-color: #d7d7db; }
+  .pagination:after {
+    content: "";
+    display: block;
+    clear: both; }
+
 /**
  * Defines the extra form styles required for the administration.
  *

@@ -45,4 +45,44 @@ body{
     margin-top: $vertical_padding;
 }
 
+.pagination{
+    padding: $vertical_padding 0;
+    &__link{
+        display: block;
+        float: left;
+        border: 1px solid lighten($grey--medium, 10%);
+        padding: 0 $vertical_padding;
+        line-height: 2em;
+        text-transform: uppercase;
+        &--current{
+
+        }
+        &--previous{
+            border-right: none;
+            border-top-left-radius: $border-radius;
+            border-bottom-left-radius: $border-radius;
+            background-color: $grey--light;
+            color: $font_color;
+            &:hover{
+                background-color: darken($grey--light, 10%);
+            }
+        }
+        &--next{
+            border-left: none;
+            border-top-right-radius: $border-radius;
+            border-bottom-right-radius: $border-radius;
+            background-color: $grey--light;
+            color: $font_color;
+            &:hover{
+                background-color: darken($grey--light, 10%);
+            }
+        }
+    }
+    &:after{
+        content: "";
+        display: block;
+        clear: both;
+    }
+}
+
 
