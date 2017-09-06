@@ -11,9 +11,9 @@ def toolbar_action_button(
 ):
 
     actions = {
-        "add": ("plus", "create"),
-        "update": ("pencil", "update"),
-        "delete": ("trash-o", "delete"),
+        "add": ("plus", "add", "add", "create"),
+        "update": ("pencil", "change", "update", "change"),
+        "delete": ("trash-o", "delete", "delete", "delete"),
     }
 
     if action not in actions.keys():
@@ -22,13 +22,13 @@ def toolbar_action_button(
     permission = "{app_label}.{action}_{model_name}".format(
         app_label=app_label,
         model_name=model_name,
-        action=action
+        action=actions[action][1]
     )
 
     url_name = "{app_label}-admin:{model_name}-{action}".format(
         app_label=app_label,
         model_name=model_name,
-        action=action
+        action=actions[action][2]
     )
     if object_id:
         url = reverse(url_name, args=[object_id])
@@ -41,7 +41,7 @@ def toolbar_action_button(
         text,
         permission,
         actions[action][0],
-        actions[action][1]
+        actions[action][3]
     )
 
 
