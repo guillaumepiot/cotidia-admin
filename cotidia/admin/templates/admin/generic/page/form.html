@@ -61,7 +61,7 @@
             <a href="{% get_admin_url app_label model_name "detail" object %}" class="btn btn--transparent">
                 {% trans "Cancel" %}
             </a>
-            <a href="{% get_admin_url app_label model_name "detail" object %}" class="btn btn--delete pull-right">
+            <a href="{% get_admin_url app_label model_name "delete" object %}" class="btn btn--delete pull-right">
                 {% trans "Delete" %}
             </a>
             {% else %}
