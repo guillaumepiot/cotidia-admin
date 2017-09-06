@@ -33,7 +33,8 @@ setup(
     namespace_packages=['cotidia'],
     include_package_data=True,
     install_requires=[
-        "django-betterforms>=1.1.4"
+        "django-betterforms>=1.1.4",
+        "django-filter>=1.0.4"
     ],
     classifiers=[
         'Framework :: Django',
