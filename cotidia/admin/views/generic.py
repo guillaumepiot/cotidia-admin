@@ -17,9 +17,12 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
     paginate_by = 25
     template_type = "fluid"  # Options: fluid, centered
     filterset = None
+    # TODO
+    # Option to show or not the detail view from the list
+    # detail_view = True
 
     def get_permission_required(self):
-        if self.permission_required is None:
+        if hasattr(self, "permission_required"):
             return self.permission_required
         else:
             return "{}.add_{}".format(
@@ -59,7 +62,7 @@ class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):
     fieldsets = []
 
     def get_permission_required(self):
-        if self.permission_required is None:
+        if hasattr(self, "permission_required"):
             return self.permission_required
         else:
             return "{}.add_{}".format(
@@ -91,7 +94,7 @@ class AdminCreateView(StaffPermissionRequiredMixin, ContextMixin, CreateView):
     template_type = "centered"  # Options: fluid, centered
 
     def get_permission_required(self):
-        if self.permission_required is None:
+        if hasattr(self, "permission_required"):
             return self.permission_required
         else:
             return "{}.add_{}".format(
@@ -132,9 +135,11 @@ class AdminCreateView(StaffPermissionRequiredMixin, ContextMixin, CreateView):
 
 class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
     template_type = "centered"  # Options: fluid, centered
+    # TODO
+    # fixed actions bar
 
     def get_permission_required(self):
-        if self.permission_required is None:
+        if hasattr(self, "permission_required"):
             return self.permission_required
         else:
             return "{}.change_{}".format(
@@ -159,6 +164,14 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
         ]
 
     def build_success_url(self):
+        url_name = "{}-admin:{}-list".format(
+            self.model._meta.app_label,
+            self.model._meta.model_name
+        )
+        return reverse(url_name)
+        # return reverse(url_name, args=[self.get_object().id])
+
+    def build_detail_url(self):
         url_name = "{}-admin:{}-detail".format(
             self.model._meta.app_label,
             self.model._meta.model_name
@@ -168,7 +181,10 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
     def get_success_url(self):
         messages.success(
             self.request,
-            '{} has been updated.'.format(self.model._meta.verbose_name)
+            '{} has been updated. <a href="{}">View</a>'.format(
+                self.model._meta.verbose_name,
+                self.build_detail_url()
+            )
         )
         return self.build_success_url()
 
@@ -177,7 +193,7 @@ class AdminDeleteView(StaffPermissionRequiredMixin, ContextMixin, DeleteView):
     template_type = "centered"
 
     def get_permission_required(self):
-        if self.permission_required is None:
+        if hasattr(self, "permission_required"):
             return self.permission_required
         else:
             return "{}.delete_{}".format(
