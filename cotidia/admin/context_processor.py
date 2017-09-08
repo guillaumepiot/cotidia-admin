@@ -1,4 +1,4 @@
-from cotidia.account.conf import settings
+from django.conf import settings
 
 
 def admin_settings(request):
