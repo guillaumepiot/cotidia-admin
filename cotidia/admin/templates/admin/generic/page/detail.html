@@ -10,7 +10,19 @@
 {% endblock body_class %}
 
 {% block toolbar %}
-    {% toolbar_action_button app_label model_name "update" "Edit item" object.id %}
+
+    <a href="{% get_admin_url app_label model_name "delete" object %}" class="btn btn--delete btn--small toolbar__item">
+        <span class="fa fa-times"></span>
+        {% blocktrans with verbose_name as verbose_name %}
+            Delete
+        {% endblocktrans %}
+    </a>
+     <a href="{% get_admin_url app_label model_name "update" object %}" class="btn btn--change btn--small toolbar__item">
+        <span class="fa fa-pencil"></span>
+        {% blocktrans with verbose_name as verbose_name %}
+            Edit
+        {% endblocktrans %}
+    </a>
     <span class="toolbar__breadcrumbs">
         <a href="{% get_admin_url app_label model_name "list" %}">{{verbose_name}}</a>
         &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
@@ -50,8 +62,11 @@
         <div class="form__actions-inner">
             <a href="{% get_admin_url app_label model_name "update" object %}" class="btn btn--change">
                 {% blocktrans with object_name as object_name %}
-                    Edit {{object_name}}
+                    Edit
                 {% endblocktrans %}
+            </a>
+            <a href="{% get_admin_url app_label model_name "list" %}" class="btn btn--transparent pull-right">
+                {% trans "Back" %}
             </a>
         </div>
     </div>

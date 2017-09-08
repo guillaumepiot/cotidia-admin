@@ -9,10 +9,9 @@ body{
         .messages .message,
         .head-filter {
             max-width: $laptop_width;
+            padding-left: $horizontal_padding;
+            padding-right: $horizontal_padding;
             margin: 0 auto;
-        }
-        .messages .message{
-            padding: 0 $horizontal_padding;
         }
         .messages .alert .errorlist{
             li{

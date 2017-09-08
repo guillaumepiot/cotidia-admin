@@ -5,14 +5,19 @@
             {% for column in columns %}
                 <th>{{column.0}}</th>
             {% endfor %}
+            <th class="text-right"><span class="sr-only">{% trans "Actions" %}</span></th>
         </tr>
     </thead>
     <tbody>
     {% for object in object_list %}
-    <tr onclick="window.location = '{% get_admin_url app_label model_name "detail" object %}'">
+    <tr onclick="window.location = '{% get_admin_url app_label model_name "update" object %}'">
         {% for column in columns %}
             {% render_column column %}
         {% endfor %}
+        <td class="text-right">
+            <a href="{% get_admin_url app_label model_name "detail" object %}" class="btn btn--small btn--primary">{% trans "View" %}</a>
+            <a href="{% get_admin_url app_label model_name "delete" object %}" class="btn btn--small btn--delete">{% trans "Delete" %}</a>
+        </td>
     </tr>
     {% empty %}
     <tr>

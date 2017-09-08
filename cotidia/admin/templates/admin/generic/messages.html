@@ -2,7 +2,7 @@
 <div class="messages">
     <div class="alert alert--success">
     {% for message in messages %}
-        <div class="message">{{ message }}</div>
+        <div class="message">{{ message|safe }}</div>
     {% endfor %}
     </div>
 </div>

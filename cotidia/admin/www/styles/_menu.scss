@@ -4,6 +4,16 @@
 
 body.menu--sidebar {
 
+    .menu__section {
+        // border-top: 1px solid desaturate(lighten($menu_background_color, 30%), 30%);
+        text-transform: uppercase;
+        // font-variant: small-caps;
+        font-size: 0.9rem;//$font_size--small;
+        // margin-top: -1px;
+        padding: $vertical_padding / 2 $horizontal_padding 0 $horizontal_padding;
+        color: desaturate(lighten($menu_background_color, 30%), 30%);
+    }
+
     @media screen and (min-width: $tablet-width) {
         .menu {
             width: $menu_sidebar_width;
@@ -12,7 +22,7 @@ body.menu--sidebar {
             left: 0;
             height: 100%;
             z-index: 2;
-            padding-top: $toolbar_height;
+            // padding-top: $toolbar_height;
             padding-bottom: $toolbar_height;
             transition: width 0.3s ease;
             &__title{
@@ -40,10 +50,10 @@ body.menu--sidebar {
             width: 100%;
             height: $toolbar_height;
             background-color: $menu_background_color;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
+            // position: absolute;
+            // top: 0;
+            // left: 0;
+            // z-index: 1;
             white-space: nowrap;
             .menu-item__link {
                 height: $toolbar_height;
@@ -174,6 +184,9 @@ body.menu--sidebar-collapse {
             height: auto;
             text-align: left;
             display: block;
+        }
+        .menu__section {
+            display: none;
         }
         .menu-item__link-icon {
             margin-right: 0;

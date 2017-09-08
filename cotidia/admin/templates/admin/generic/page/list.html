@@ -1,4 +1,4 @@
-{% extends "admin/page.html" %}{% load i18n admin_toolbar_tags %}
+{% extends "admin/page.html" %}{% load i18n admin_toolbar_tags admin_list_tags %}
 {% block title %}
     {{verbose_name}}
 {% endblock title %}
@@ -8,7 +8,12 @@
 {% endblock body_class %}
 
 {% block toolbar %}
-    {% toolbar_action_button app_label model_name "add" "Add item" %}
+    <a href="{% get_admin_url app_label model_name "add" %}" class="btn btn--create btn--small pull-right">
+        <span class="fa fa-plus"></span>
+        {% blocktrans with verbose_name as verbose_name %}
+            Add {{verbose_name}}
+        {% endblocktrans %}
+    </a>
     <span class="toolbar__title">{{verbose_name}}</span>
 {% endblock toolbar %}
 
