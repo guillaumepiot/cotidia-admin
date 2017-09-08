@@ -16,7 +16,11 @@
             </a>
         </li>
         {% for item in menu %}
-            {% include "admin/menu/menu_item.html" %}
+            {% if not item.url and not item.nav_items %}
+                {% include "admin/menu/menu_section.html" %}
+            {% else %}
+                {% include "admin/menu/menu_item.html" %}
+            {% endif %}
         {% endfor %}
         <li class="menu__item menu__item--sidebar-expand">
             <a href="#" class="menu-item__link">

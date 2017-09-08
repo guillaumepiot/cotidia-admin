@@ -4,6 +4,8 @@ from django import template
 from django.template.loader import get_template
 from django.apps import apps
 
+from cotidia.admin.conf import settings
+
 register = template.Library()
 
 
@@ -51,20 +53,47 @@ def build_permitted_menu(context, menu, permitted_menu):
 
 @register.simple_tag(takes_context=True)
 def menu(context):
+    """For each app, try to find an admin_menu function inside menu.py."""
+
     permitted_menu = []
 
-    # For each app, try to find an admin_menu function inside menu.py
-    for app in apps.get_app_configs():
+    # Build a list of app string names
+    app_name_list = [app.name for app in apps.get_app_configs()]
 
-        try:
-            module = importlib.import_module("{}.menu".format(app.name))
-            admin_menu = module.admin_menu
-        except (ModuleNotFoundError, AttributeError):
-            admin_menu = None
+    # If we have an admin menu order specified, re-order accordingly
 
-        if admin_menu:
-            menu = admin_menu(context)
-            permitted_menu = build_permitted_menu(context, menu, permitted_menu)
+    processed_apps = []
+
+    for section, section_apps in settings.ADMIN_MENU_DEFINITION.items():
+        permitted_menu.append({'text': section})
+
+        for app in section_apps:
+            processed_apps.append(app)
+
+            try:
+                module = importlib.import_module("{}.menu".format(app))
+                admin_menu = module.admin_menu
+            except (ModuleNotFoundError, AttributeError):
+                admin_menu = None
+
+            if admin_menu:
+                menu = admin_menu(context)
+                permitted_menu = build_permitted_menu(context, menu, permitted_menu)
+
+    # Add en empty break for the remaining unordered apps
+    permitted_menu.append({'text': ''})
+
+    for app in app_name_list:
+        if app not in processed_apps:
+            try:
+                module = importlib.import_module("{}.menu".format(app))
+                admin_menu = module.admin_menu
+            except (ModuleNotFoundError, AttributeError):
+                admin_menu = None
+
+            if admin_menu:
+                menu = admin_menu(context)
+                permitted_menu = build_permitted_menu(context, menu, permitted_menu)
 
     context = context.flatten()
     context["menu"] = permitted_menu
