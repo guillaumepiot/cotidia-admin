@@ -17,7 +17,7 @@
             Delete
         {% endblocktrans %}
     </a>
-     <a href="{% get_admin_url app_label model_name "update" object %}" class="btn btn--change btn--small toolbar__item">
+    <a href="{% get_admin_url app_label model_name "update" object %}" class="btn btn--change btn--small toolbar__item">
         <span class="fa fa-pencil"></span>
         {% blocktrans with verbose_name as verbose_name %}
             Edit
