@@ -27,7 +27,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
         else:
             return "{}.add_{}".format(
                 self.model._meta.app_label,
-                self.model._meta.object_name
+                self.model._meta.model_name
             )
 
     def get_context_data(self, **kwargs):
@@ -67,7 +67,7 @@ class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):
         else:
             return "{}.add_{}".format(
                 self.model._meta.app_label,
-                self.model._meta.object_name
+                self.model._meta.model_name
             )
 
     def get_context_data(self, **kwargs):
@@ -99,7 +99,7 @@ class AdminCreateView(StaffPermissionRequiredMixin, ContextMixin, CreateView):
         else:
             return "{}.add_{}".format(
                 self.model._meta.app_label,
-                self.model._meta.object_name
+                self.model._meta.model_name
             )
 
     def get_context_data(self, **kwargs):
@@ -144,7 +144,7 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
         else:
             return "{}.change_{}".format(
                 self.model._meta.app_label,
-                self.model._meta.object_name
+                self.model._meta.model_name
             )
 
     def get_context_data(self, **kwargs):
@@ -198,7 +198,7 @@ class AdminDeleteView(StaffPermissionRequiredMixin, ContextMixin, DeleteView):
         else:
             return "{}.delete_{}".format(
                 self.model._meta.app_label,
-                self.model._meta.object_name
+                self.model._meta.model_name
             )
 
     def build_success_url(self):
