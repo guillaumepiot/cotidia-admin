@@ -35,6 +35,11 @@
     }
     &__actions-inner{
         padding: $vertical_padding $horizontal_padding;
+        &:after {
+            content: "";
+            clear: both;
+            display: block;
+        }
     }
     &__row {
         display: flex;

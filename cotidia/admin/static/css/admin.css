@@ -4737,6 +4737,10 @@ body.content-centered .messages .alert .errorlist li {
   list-style: none; }
 .form__actions-inner {
   padding: 0.75rem 1rem; }
+  .form__actions-inner:after {
+    content: "";
+    clear: both;
+    display: block; }
 .form__row {
   display: flex;
   clear: both; }
