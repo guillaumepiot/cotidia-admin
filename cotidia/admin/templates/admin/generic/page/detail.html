@@ -58,6 +58,7 @@
         </fieldset>
         {% endif %}
     {% endfor %}
+    {% block form_actions %}
     <div class="form__actions">
         <div class="form__actions-inner">
             <a href="{% get_admin_url app_label model_name "update" object %}" class="btn btn--change">
@@ -70,5 +71,6 @@
             </a>
         </div>
     </div>
+    {% endblock form_actions %}
 </div>
 {% endblock page_content %}
