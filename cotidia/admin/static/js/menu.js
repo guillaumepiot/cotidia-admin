@@ -36,12 +36,16 @@
       menuCloseButton.addEventListener('click', hideMenu.bind(null, menu))
     }
     var collapseSidebarBtn = document.querySelector('.menu__item--sidebar-collapse')
-    collapseSidebarBtn.addEventListener('touchend', collapseSidebar)
-    collapseSidebarBtn.addEventListener('click', collapseSidebar)
+    if (collapseSidebarBtn) {
+      collapseSidebarBtn.addEventListener('touchend', collapseSidebar)
+      collapseSidebarBtn.addEventListener('click', collapseSidebar)
+    }
 
     var expandSidebarBtn = document.querySelector('.menu__item--sidebar-expand')
-    expandSidebarBtn.addEventListener('touchend', expandSidebar)
-    expandSidebarBtn.addEventListener('click', expandSidebar)
+    if (expandSidebarBtn) {
+      expandSidebarBtn.addEventListener('touchend', expandSidebar)
+      expandSidebarBtn.addEventListener('click', expandSidebar)
+    }
   }
 
   function documentReady () {
