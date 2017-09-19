@@ -41,19 +41,6 @@
             display: block;
         }
     }
-    &__row {
-        display: flex;
-        clear: both;
-        .form__group {
-            flex: 1;
-            margin-right: $horizontal_padding;
-            padding-right: $horizontal_padding;
-            &:last-child {
-                margin-right: 0;
-                padding-right: 0;
-            }
-        }
-    }
 }
 
 fieldset{
