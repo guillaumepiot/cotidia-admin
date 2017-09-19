@@ -1,5 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
+from django.contrib import messages
 
 
 class ContextMixin:
@@ -41,6 +42,13 @@ class ChildMixin:
             self.parent_model._meta.model_name
         )
         return reverse(url_name, args=[self.parent.id])
+
+    def get_success_url(self):
+        messages.success(
+            self.request,
+            '{} has been updated.'.format(self.model._meta.verbose_name)
+        )
+        return self.build_success_url()
 
     def form_valid(self, form):
         """Assign the parent instance automatically on save."""
