@@ -20,6 +20,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
     # TODO
     # Option to show or not the detail view from the list
     # detail_view = True
+    add_view = True
 
     def get_permission_required(self):
         if hasattr(self, "permission_required"):
@@ -34,6 +35,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
         context = super().get_context_data(**kwargs)
 
         context["columns"] = self.columns
+        context["add_view"] = self.add_view
 
         if self.filterset:
             context["filter"] = self.filterset(
