@@ -20,6 +20,8 @@ class UserCheckMixin(object):
 class StaffPermissionRequiredMixin(UserCheckMixin):
 
     def get_permission_required(self):
+        if hasattr(self, "permission_required"):
+            return self.permission_required
         return None
 
     def check_user(self, user):
