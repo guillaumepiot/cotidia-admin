@@ -3,10 +3,13 @@ from django.views.generic import (
     DetailView,
     DeleteView,
     CreateView,
-    UpdateView
+    UpdateView,
+    View
 )
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
+from django.contrib.contenttypes.models import ContentType
 
 from cotidia.admin.utils import StaffPermissionRequiredMixin
 from cotidia.admin.views.mixin import ContextMixin, ChildMixin
@@ -262,3 +265,24 @@ class AdminChildDeleteView(ChildMixin, AdminDeleteView):
             template,
             "admin/generic/page/child_confirm_delete.html",
         ]
+
+
+class AdminOrderableView(View):
+    def post(self, *args, **kwargs):
+        content_type_id = kwargs.get("content_type_id")
+        object_id = kwargs.get("object_id")
+        content_type = ContentType.objects.get_for_id(content_type_id)
+        item = content_type.get_object_for_this_type(id=object_id)
+        action = self.request.POST.get("action")
+
+        if action == "move-up":
+            item.move_up()
+        elif action == "move-down":
+            item.move_down()
+
+        messages.success(
+            self.request,
+            "Item has been reordered."
+        )
+
+        return HttpResponseRedirect(self.request.META["HTTP_REFERER"])

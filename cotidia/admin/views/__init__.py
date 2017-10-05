@@ -6,7 +6,8 @@ from .generic import (
     AdminDeleteView,
     AdminChildCreateView,
     AdminChildUpdateView,
-    AdminChildDeleteView
+    AdminChildDeleteView,
+    AdminOrderableView
 )
 
 __all__ = [
@@ -17,5 +18,6 @@ __all__ = [
     "AdminDeleteView",
     "AdminChildCreateView",
     "AdminChildUpdateView",
-    "AdminChildDeleteView"
+    "AdminChildDeleteView",
+    "AdminOrderableView"
 ]
