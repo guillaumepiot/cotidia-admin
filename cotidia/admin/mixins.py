@@ -10,17 +10,28 @@ class OrderableMixin:
 
     def move_up(self):
         # Find previous sibling
-        item = self.orderable_queryset().filter(
-            order_id__lt=self.order_id
-        ).order_by("-order_id").first()
+        queryset = self.orderable_queryset()
+
+        if self.order_id is not None:
+            queryset = queryset.filter(order_id__lt=self.order_id)
+        else:
+            raise Exception("Item must have an order_id to be re-ordered")
+
+        item = queryset.order_by("-order_id").first()
+
         if item:
             self.swap(item)
 
     def move_down(self):
         # Find next sibling
-        item = self.orderable_queryset().filter(
-            order_id__gt=self.order_id
-        ).order_by("order_id").first()
+        queryset = self.orderable_queryset()
+
+        if self.order_id is not None:
+            queryset = queryset.filter(order_id__gt=self.order_id)
+        else:
+            raise Exception("Item must have an order_id to be re-ordered")
+
+        item = queryset.order_by("order_id").first()
         if item:
             self.swap(item)
 
