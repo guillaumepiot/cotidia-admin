@@ -25,7 +25,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
     # Option to show or not the detail view from the list
     # detail_view = True
     add_view = True
-    actions = True
+    actions = []
 
     def get_permission_required(self):
         if hasattr(self, "permission_required"):
