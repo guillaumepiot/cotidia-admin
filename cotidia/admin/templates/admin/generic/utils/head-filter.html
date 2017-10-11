@@ -1,5 +1,5 @@
 {% load i18n %}{% if filter %}
-<form action="" method="get" class="head-filter">
+<form action="" method="get" class="head-bar head-bar--filter">
     {% for field in filter.form %}
         {% include "admin/generic/form/form_group.html" %}
     {% endfor %}

@@ -13,6 +13,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from cotidia.admin.utils import StaffPermissionRequiredMixin
 from cotidia.admin.views.mixin import ContextMixin, ChildMixin
+from cotidia.admin.forms import ActionForm
 
 
 class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
@@ -24,6 +25,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
     # Option to show or not the detail view from the list
     # detail_view = True
     add_view = True
+    actions = True
 
     def get_permission_required(self):
         if hasattr(self, "permission_required"):
@@ -39,6 +41,16 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
 
         context["columns"] = self.columns
         context["add_view"] = self.add_view
+
+        if self.actions:
+            action_list = ()
+            for action in self.actions:
+                action_func = getattr(self, action)
+                action_name = getattr(action_func, "action_name", action)
+                action_list += (action, action_name),
+            context["actions"] = {
+                "form": ActionForm(action_list=action_list)
+            }
 
         if self.filterset:
             context["filter"] = self.filterset(
@@ -60,6 +72,32 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
             template,
             "admin/generic/page/list.html",
         ]
+
+    def post(self, *args, **kwargs):
+        action = self.request.POST.get("actions")
+        action_items = self.request.POST.getlist("action_items")
+        action_func = getattr(self, action)
+        action_name = getattr(action_func, "action_name", action)
+
+        for object_id in action_items:
+            item = self.get_queryset().get(pk=object_id)
+            action_func(item)
+
+        return HttpResponseRedirect(self.get_success_url(action_name))
+
+    def build_success_url(self):
+        url_name = "{}-admin:{}-list".format(
+            self.model._meta.app_label,
+            self.model._meta.model_name
+        )
+        return reverse(url_name)
+
+    def get_success_url(self, action):
+        messages.success(
+            self.request,
+            '"{}" has been executed successfully.'.format(action)
+        )
+        return self.build_success_url()
 
 
 class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):

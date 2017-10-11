@@ -2388,8 +2388,8 @@ time, mark, audio, video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
   font: inherit;
+  font-size: 100%;
   vertical-align: baseline; }
 
 article, aside, details, figcaption, figure,
@@ -2416,7 +2416,6 @@ table {
 
 /*
  * Util mixins and classes
- *
  */
 /*
  * Completely hide the content using display none.
@@ -2451,43 +2450,35 @@ table {
   height: 1px !important;
   overflow: hidden !important; }
 
-/**
- *
- * All animations must live in their own file
- * in the animations directory and be included
- * here.
- *
+/*
+ * Alignment.
  */
+.pull-left {
+  float: left; }
+
+.pull-right {
+  float: right; }
+
 @-webkit-keyframes rotate {
-  /* line 150, /Users/Connor/Repos/personal/personal-website/bower/loaders.css/loaders.css */
   0% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg); }
-  /* line 154, /Users/Connor/Repos/personal/personal-website/bower/loaders.css/loaders.css */
   50% {
     -webkit-transform: rotate(180deg);
     transform: rotate(180deg); }
-  /* line 158, /Users/Connor/Repos/personal/personal-website/bower/loaders.css/loaders.css */
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
 @keyframes rotate {
-  /* line 206, /Users/Connor/Repos/personal/personal-website/bower/loaders.css/loaders.css */
   0% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg); }
-  /* line 210, /Users/Connor/Repos/personal/personal-website/bower/loaders.css/loaders.css */
   50% {
     -webkit-transform: rotate(180deg);
     transform: rotate(180deg); }
-  /* line 214, /Users/Connor/Repos/personal/personal-website/bower/loaders.css/loaders.css */
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
-/**
- * Create a loading animation.
- *
- */
 .loader {
   display: inline-block;
   height: 1rem;
@@ -2530,168 +2521,168 @@ table {
     width: calc(8.33333% - 21.66667px);
     float: left;
     margin-left: 20px; }
-  .grid__shift-1 {
-    left: calc(8.33333% - 21.66667px + 20px);
-    position: relative; }
-  .grid__unshift-1 {
-    left: calc(-8.33333% - 18.33333px + 20px);
-    position: relative; }
-  .grid__push-1 {
-    margin-left: calc(8.33333% - 21.66667px + 40px); }
-  .grid__pull-1 {
-    margin-left: calc(-8.33333% - 18.33333px + 40px); }
   .grid__span-2 {
     width: calc(16.66667% - 23.33333px);
     float: left;
     margin-left: 20px; }
-  .grid__shift-2 {
-    left: calc(16.66667% - 23.33333px + 20px);
-    position: relative; }
-  .grid__unshift-2 {
-    left: calc(-16.66667% - 16.66667px + 20px);
-    position: relative; }
-  .grid__push-2 {
-    margin-left: calc(16.66667% - 23.33333px + 40px); }
-  .grid__pull-2 {
-    margin-left: calc(-16.66667% - 16.66667px + 40px); }
   .grid__span-3 {
     width: calc(25% - 25px);
     float: left;
     margin-left: 20px; }
-  .grid__shift-3 {
-    left: calc(25% - 25px + 20px);
-    position: relative; }
-  .grid__unshift-3 {
-    left: calc(-25% - 15px + 20px);
-    position: relative; }
-  .grid__push-3 {
-    margin-left: calc(25% - 25px + 40px); }
-  .grid__pull-3 {
-    margin-left: calc(-25% - 15px + 40px); }
   .grid__span-4 {
     width: calc(33.33333% - 26.66667px);
     float: left;
     margin-left: 20px; }
-  .grid__shift-4 {
-    left: calc(33.33333% - 26.66667px + 20px);
-    position: relative; }
-  .grid__unshift-4 {
-    left: calc(-33.33333% - 13.33333px + 20px);
-    position: relative; }
-  .grid__push-4 {
-    margin-left: calc(33.33333% - 26.66667px + 40px); }
-  .grid__pull-4 {
-    margin-left: calc(-33.33333% - 13.33333px + 40px); }
   .grid__span-5 {
     width: calc(41.66667% - 28.33333px);
     float: left;
     margin-left: 20px; }
-  .grid__shift-5 {
-    left: calc(41.66667% - 28.33333px + 20px);
-    position: relative; }
-  .grid__unshift-5 {
-    left: calc(-41.66667% - 11.66667px + 20px);
-    position: relative; }
-  .grid__push-5 {
-    margin-left: calc(41.66667% - 28.33333px + 40px); }
-  .grid__pull-5 {
-    margin-left: calc(-41.66667% - 11.66667px + 40px); }
   .grid__span-6 {
     width: calc(50% - 30px);
     float: left;
     margin-left: 20px; }
-  .grid__shift-6 {
-    left: calc(50% - 30px + 20px);
-    position: relative; }
-  .grid__unshift-6 {
-    left: calc(-50% - 10px + 20px);
-    position: relative; }
-  .grid__push-6 {
-    margin-left: calc(50% - 30px + 40px); }
-  .grid__pull-6 {
-    margin-left: calc(-50% - 10px + 40px); }
   .grid__span-7 {
     width: calc(58.33333% - 31.66667px);
     float: left;
     margin-left: 20px; }
-  .grid__shift-7 {
-    left: calc(58.33333% - 31.66667px + 20px);
-    position: relative; }
-  .grid__unshift-7 {
-    left: calc(-58.33333% - 8.33333px + 20px);
-    position: relative; }
-  .grid__push-7 {
-    margin-left: calc(58.33333% - 31.66667px + 40px); }
-  .grid__pull-7 {
-    margin-left: calc(-58.33333% - 8.33333px + 40px); }
   .grid__span-8 {
     width: calc(66.66667% - 33.33333px);
     float: left;
     margin-left: 20px; }
-  .grid__shift-8 {
-    left: calc(66.66667% - 33.33333px + 20px);
-    position: relative; }
-  .grid__unshift-8 {
-    left: calc(-66.66667% - 6.66667px + 20px);
-    position: relative; }
-  .grid__push-8 {
-    margin-left: calc(66.66667% - 33.33333px + 40px); }
-  .grid__pull-8 {
-    margin-left: calc(-66.66667% - 6.66667px + 40px); }
   .grid__span-9 {
     width: calc(75% - 35px);
     float: left;
     margin-left: 20px; }
-  .grid__shift-9 {
-    left: calc(75% - 35px + 20px);
-    position: relative; }
-  .grid__unshift-9 {
-    left: calc(-75% - 5px + 20px);
-    position: relative; }
-  .grid__push-9 {
-    margin-left: calc(75% - 35px + 40px); }
-  .grid__pull-9 {
-    margin-left: calc(-75% - 5px + 40px); }
   .grid__span-10 {
     width: calc(83.33333% - 36.66667px);
     float: left;
     margin-left: 20px; }
-  .grid__shift-10 {
-    left: calc(83.33333% - 36.66667px + 20px);
-    position: relative; }
-  .grid__unshift-10 {
-    left: calc(-83.33333% - 3.33333px + 20px);
-    position: relative; }
-  .grid__push-10 {
-    margin-left: calc(83.33333% - 36.66667px + 40px); }
-  .grid__pull-10 {
-    margin-left: calc(-83.33333% - 3.33333px + 40px); }
   .grid__span-11 {
     width: calc(91.66667% - 38.33333px);
     float: left;
     margin-left: 20px; }
-  .grid__shift-11 {
-    left: calc(91.66667% - 38.33333px + 20px);
-    position: relative; }
-  .grid__unshift-11 {
-    left: calc(-91.66667% - 1.66667px + 20px);
-    position: relative; }
-  .grid__push-11 {
-    margin-left: calc(91.66667% - 38.33333px + 40px); }
-  .grid__pull-11 {
-    margin-left: calc(-91.66667% - 1.66667px + 40px); }
   .grid__span-12 {
     width: calc(100% - 40px);
     float: left;
     margin-left: 20px; }
+  .grid__shift-1 {
+    left: calc(8.33333% - 21.66667px + 20px);
+    position: relative; }
+  .grid__shift-2 {
+    left: calc(16.66667% - 23.33333px + 20px);
+    position: relative; }
+  .grid__shift-3 {
+    left: calc(25% - 25px + 20px);
+    position: relative; }
+  .grid__shift-4 {
+    left: calc(33.33333% - 26.66667px + 20px);
+    position: relative; }
+  .grid__shift-5 {
+    left: calc(41.66667% - 28.33333px + 20px);
+    position: relative; }
+  .grid__shift-6 {
+    left: calc(50% - 30px + 20px);
+    position: relative; }
+  .grid__shift-7 {
+    left: calc(58.33333% - 31.66667px + 20px);
+    position: relative; }
+  .grid__shift-8 {
+    left: calc(66.66667% - 33.33333px + 20px);
+    position: relative; }
+  .grid__shift-9 {
+    left: calc(75% - 35px + 20px);
+    position: relative; }
+  .grid__shift-10 {
+    left: calc(83.33333% - 36.66667px + 20px);
+    position: relative; }
+  .grid__shift-11 {
+    left: calc(91.66667% - 38.33333px + 20px);
+    position: relative; }
   .grid__shift-12 {
     left: calc(100% - 40px + 20px);
+    position: relative; }
+  .grid__unshift-1 {
+    left: calc(-8.33333% - 18.33333px + 20px);
+    position: relative; }
+  .grid__unshift-2 {
+    left: calc(-16.66667% - 16.66667px + 20px);
+    position: relative; }
+  .grid__unshift-3 {
+    left: calc(-25% - 15px + 20px);
+    position: relative; }
+  .grid__unshift-4 {
+    left: calc(-33.33333% - 13.33333px + 20px);
+    position: relative; }
+  .grid__unshift-5 {
+    left: calc(-41.66667% - 11.66667px + 20px);
+    position: relative; }
+  .grid__unshift-6 {
+    left: calc(-50% - 10px + 20px);
+    position: relative; }
+  .grid__unshift-7 {
+    left: calc(-58.33333% - 8.33333px + 20px);
+    position: relative; }
+  .grid__unshift-8 {
+    left: calc(-66.66667% - 6.66667px + 20px);
+    position: relative; }
+  .grid__unshift-9 {
+    left: calc(-75% - 5px + 20px);
+    position: relative; }
+  .grid__unshift-10 {
+    left: calc(-83.33333% - 3.33333px + 20px);
+    position: relative; }
+  .grid__unshift-11 {
+    left: calc(-91.66667% - 1.66667px + 20px);
     position: relative; }
   .grid__unshift-12 {
     left: calc(-100% - 0px + 20px);
     position: relative; }
+  .grid__push-1 {
+    margin-left: calc(8.33333% - 21.66667px + 40px); }
+  .grid__push-2 {
+    margin-left: calc(16.66667% - 23.33333px + 40px); }
+  .grid__push-3 {
+    margin-left: calc(25% - 25px + 40px); }
+  .grid__push-4 {
+    margin-left: calc(33.33333% - 26.66667px + 40px); }
+  .grid__push-5 {
+    margin-left: calc(41.66667% - 28.33333px + 40px); }
+  .grid__push-6 {
+    margin-left: calc(50% - 30px + 40px); }
+  .grid__push-7 {
+    margin-left: calc(58.33333% - 31.66667px + 40px); }
+  .grid__push-8 {
+    margin-left: calc(66.66667% - 33.33333px + 40px); }
+  .grid__push-9 {
+    margin-left: calc(75% - 35px + 40px); }
+  .grid__push-10 {
+    margin-left: calc(83.33333% - 36.66667px + 40px); }
+  .grid__push-11 {
+    margin-left: calc(91.66667% - 38.33333px + 40px); }
   .grid__push-12 {
     margin-left: calc(100% - 40px + 40px); }
+  .grid__pull-1 {
+    margin-left: calc(-8.33333% - 18.33333px + 40px); }
+  .grid__pull-2 {
+    margin-left: calc(-16.66667% - 16.66667px + 40px); }
+  .grid__pull-3 {
+    margin-left: calc(-25% - 15px + 40px); }
+  .grid__pull-4 {
+    margin-left: calc(-33.33333% - 13.33333px + 40px); }
+  .grid__pull-5 {
+    margin-left: calc(-41.66667% - 11.66667px + 40px); }
+  .grid__pull-6 {
+    margin-left: calc(-50% - 10px + 40px); }
+  .grid__pull-7 {
+    margin-left: calc(-58.33333% - 8.33333px + 40px); }
+  .grid__pull-8 {
+    margin-left: calc(-66.66667% - 6.66667px + 40px); }
+  .grid__pull-9 {
+    margin-left: calc(-75% - 5px + 40px); }
+  .grid__pull-10 {
+    margin-left: calc(-83.33333% - 3.33333px + 40px); }
+  .grid__pull-11 {
+    margin-left: calc(-91.66667% - 1.66667px + 40px); }
   .grid__pull-12 {
     margin-left: calc(-100% - 0px + 40px); }
   .grid--collapse {
@@ -2702,168 +2693,168 @@ table {
       width: calc(8.33333% - 0.00001px);
       float: left;
       margin-left: 0.00001px; }
-    .grid--collapse > .grid__shift-1 {
-      left: calc(8.33333% - 0.00001px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__unshift-1 {
-      left: calc(-8.33333% - 0.00001px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__push-1 {
-      margin-left: calc(8.33333% - 0.00001px + 0.00002px); }
-    .grid--collapse > .grid__pull-1 {
-      margin-left: calc(-8.33333% - 0.00001px + 0.00002px); }
     .grid--collapse > .grid__span-2 {
       width: calc(16.66667% - 0.00001px);
       float: left;
       margin-left: 0.00001px; }
-    .grid--collapse > .grid__shift-2 {
-      left: calc(16.66667% - 0.00001px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__unshift-2 {
-      left: calc(-16.66667% - 0.00001px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__push-2 {
-      margin-left: calc(16.66667% - 0.00001px + 0.00002px); }
-    .grid--collapse > .grid__pull-2 {
-      margin-left: calc(-16.66667% - 0.00001px + 0.00002px); }
     .grid--collapse > .grid__span-3 {
       width: calc(25% - 0.00001px);
       float: left;
       margin-left: 0.00001px; }
-    .grid--collapse > .grid__shift-3 {
-      left: calc(25% - 0.00001px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__unshift-3 {
-      left: calc(-25% - 0.00001px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__push-3 {
-      margin-left: calc(25% - 0.00001px + 0.00002px); }
-    .grid--collapse > .grid__pull-3 {
-      margin-left: calc(-25% - 0.00001px + 0.00002px); }
     .grid--collapse > .grid__span-4 {
       width: calc(33.33333% - 0.00001px);
       float: left;
       margin-left: 0.00001px; }
-    .grid--collapse > .grid__shift-4 {
-      left: calc(33.33333% - 0.00001px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__unshift-4 {
-      left: calc(-33.33333% - 0.00001px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__push-4 {
-      margin-left: calc(33.33333% - 0.00001px + 0.00002px); }
-    .grid--collapse > .grid__pull-4 {
-      margin-left: calc(-33.33333% - 0.00001px + 0.00002px); }
     .grid--collapse > .grid__span-5 {
       width: calc(41.66667% - 0.00001px);
       float: left;
       margin-left: 0.00001px; }
-    .grid--collapse > .grid__shift-5 {
-      left: calc(41.66667% - 0.00001px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__unshift-5 {
-      left: calc(-41.66667% - 0.00001px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__push-5 {
-      margin-left: calc(41.66667% - 0.00001px + 0.00002px); }
-    .grid--collapse > .grid__pull-5 {
-      margin-left: calc(-41.66667% - 0.00001px + 0.00002px); }
     .grid--collapse > .grid__span-6 {
       width: calc(50% - 0.00002px);
       float: left;
       margin-left: 0.00001px; }
-    .grid--collapse > .grid__shift-6 {
-      left: calc(50% - 0.00002px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__unshift-6 {
-      left: calc(-50% - 0.00001px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__push-6 {
-      margin-left: calc(50% - 0.00002px + 0.00002px); }
-    .grid--collapse > .grid__pull-6 {
-      margin-left: calc(-50% - 0.00001px + 0.00002px); }
     .grid--collapse > .grid__span-7 {
       width: calc(58.33333% - 0.00002px);
       float: left;
       margin-left: 0.00001px; }
-    .grid--collapse > .grid__shift-7 {
-      left: calc(58.33333% - 0.00002px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__unshift-7 {
-      left: calc(-58.33333% - 0px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__push-7 {
-      margin-left: calc(58.33333% - 0.00002px + 0.00002px); }
-    .grid--collapse > .grid__pull-7 {
-      margin-left: calc(-58.33333% - 0px + 0.00002px); }
     .grid--collapse > .grid__span-8 {
       width: calc(66.66667% - 0.00002px);
       float: left;
       margin-left: 0.00001px; }
-    .grid--collapse > .grid__shift-8 {
-      left: calc(66.66667% - 0.00002px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__unshift-8 {
-      left: calc(-66.66667% - 0px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__push-8 {
-      margin-left: calc(66.66667% - 0.00002px + 0.00002px); }
-    .grid--collapse > .grid__pull-8 {
-      margin-left: calc(-66.66667% - 0px + 0.00002px); }
     .grid--collapse > .grid__span-9 {
       width: calc(75% - 0.00002px);
       float: left;
       margin-left: 0.00001px; }
-    .grid--collapse > .grid__shift-9 {
-      left: calc(75% - 0.00002px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__unshift-9 {
-      left: calc(-75% - 0px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__push-9 {
-      margin-left: calc(75% - 0.00002px + 0.00002px); }
-    .grid--collapse > .grid__pull-9 {
-      margin-left: calc(-75% - 0px + 0.00002px); }
     .grid--collapse > .grid__span-10 {
       width: calc(83.33333% - 0.00002px);
       float: left;
       margin-left: 0.00001px; }
-    .grid--collapse > .grid__shift-10 {
-      left: calc(83.33333% - 0.00002px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__unshift-10 {
-      left: calc(-83.33333% - 0px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__push-10 {
-      margin-left: calc(83.33333% - 0.00002px + 0.00002px); }
-    .grid--collapse > .grid__pull-10 {
-      margin-left: calc(-83.33333% - 0px + 0.00002px); }
     .grid--collapse > .grid__span-11 {
       width: calc(91.66667% - 0.00002px);
       float: left;
       margin-left: 0.00001px; }
-    .grid--collapse > .grid__shift-11 {
-      left: calc(91.66667% - 0.00002px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__unshift-11 {
-      left: calc(-91.66667% - 0px + 0.00001px);
-      position: relative; }
-    .grid--collapse > .grid__push-11 {
-      margin-left: calc(91.66667% - 0.00002px + 0.00002px); }
-    .grid--collapse > .grid__pull-11 {
-      margin-left: calc(-91.66667% - 0px + 0.00002px); }
     .grid--collapse > .grid__span-12 {
       width: calc(100% - 0.00002px);
       float: left;
       margin-left: 0.00001px; }
+    .grid--collapse > .grid__shift-1 {
+      left: calc(8.33333% - 0.00001px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__shift-2 {
+      left: calc(16.66667% - 0.00001px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__shift-3 {
+      left: calc(25% - 0.00001px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__shift-4 {
+      left: calc(33.33333% - 0.00001px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__shift-5 {
+      left: calc(41.66667% - 0.00001px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__shift-6 {
+      left: calc(50% - 0.00002px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__shift-7 {
+      left: calc(58.33333% - 0.00002px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__shift-8 {
+      left: calc(66.66667% - 0.00002px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__shift-9 {
+      left: calc(75% - 0.00002px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__shift-10 {
+      left: calc(83.33333% - 0.00002px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__shift-11 {
+      left: calc(91.66667% - 0.00002px + 0.00001px);
+      position: relative; }
     .grid--collapse > .grid__shift-12 {
       left: calc(100% - 0.00002px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__unshift-1 {
+      left: calc(-8.33333% - 0.00001px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__unshift-2 {
+      left: calc(-16.66667% - 0.00001px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__unshift-3 {
+      left: calc(-25% - 0.00001px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__unshift-4 {
+      left: calc(-33.33333% - 0.00001px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__unshift-5 {
+      left: calc(-41.66667% - 0.00001px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__unshift-6 {
+      left: calc(-50% - 0.00001px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__unshift-7 {
+      left: calc(-58.33333% - 0px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__unshift-8 {
+      left: calc(-66.66667% - 0px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__unshift-9 {
+      left: calc(-75% - 0px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__unshift-10 {
+      left: calc(-83.33333% - 0px + 0.00001px);
+      position: relative; }
+    .grid--collapse > .grid__unshift-11 {
+      left: calc(-91.66667% - 0px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__unshift-12 {
       left: calc(-100% - 0px + 0.00001px);
       position: relative; }
+    .grid--collapse > .grid__push-1 {
+      margin-left: calc(8.33333% - 0.00001px + 0.00002px); }
+    .grid--collapse > .grid__push-2 {
+      margin-left: calc(16.66667% - 0.00001px + 0.00002px); }
+    .grid--collapse > .grid__push-3 {
+      margin-left: calc(25% - 0.00001px + 0.00002px); }
+    .grid--collapse > .grid__push-4 {
+      margin-left: calc(33.33333% - 0.00001px + 0.00002px); }
+    .grid--collapse > .grid__push-5 {
+      margin-left: calc(41.66667% - 0.00001px + 0.00002px); }
+    .grid--collapse > .grid__push-6 {
+      margin-left: calc(50% - 0.00002px + 0.00002px); }
+    .grid--collapse > .grid__push-7 {
+      margin-left: calc(58.33333% - 0.00002px + 0.00002px); }
+    .grid--collapse > .grid__push-8 {
+      margin-left: calc(66.66667% - 0.00002px + 0.00002px); }
+    .grid--collapse > .grid__push-9 {
+      margin-left: calc(75% - 0.00002px + 0.00002px); }
+    .grid--collapse > .grid__push-10 {
+      margin-left: calc(83.33333% - 0.00002px + 0.00002px); }
+    .grid--collapse > .grid__push-11 {
+      margin-left: calc(91.66667% - 0.00002px + 0.00002px); }
     .grid--collapse > .grid__push-12 {
       margin-left: calc(100% - 0.00002px + 0.00002px); }
+    .grid--collapse > .grid__pull-1 {
+      margin-left: calc(-8.33333% - 0.00001px + 0.00002px); }
+    .grid--collapse > .grid__pull-2 {
+      margin-left: calc(-16.66667% - 0.00001px + 0.00002px); }
+    .grid--collapse > .grid__pull-3 {
+      margin-left: calc(-25% - 0.00001px + 0.00002px); }
+    .grid--collapse > .grid__pull-4 {
+      margin-left: calc(-33.33333% - 0.00001px + 0.00002px); }
+    .grid--collapse > .grid__pull-5 {
+      margin-left: calc(-41.66667% - 0.00001px + 0.00002px); }
+    .grid--collapse > .grid__pull-6 {
+      margin-left: calc(-50% - 0.00001px + 0.00002px); }
+    .grid--collapse > .grid__pull-7 {
+      margin-left: calc(-58.33333% - 0px + 0.00002px); }
+    .grid--collapse > .grid__pull-8 {
+      margin-left: calc(-66.66667% - 0px + 0.00002px); }
+    .grid--collapse > .grid__pull-9 {
+      margin-left: calc(-75% - 0px + 0.00002px); }
+    .grid--collapse > .grid__pull-10 {
+      margin-left: calc(-83.33333% - 0px + 0.00002px); }
+    .grid--collapse > .grid__pull-11 {
+      margin-left: calc(-91.66667% - 0px + 0.00002px); }
     .grid--collapse > .grid__pull-12 {
       margin-left: calc(-100% - 0px + 0.00002px); }
   @media screen and (max-width: 767px) {
@@ -2874,50 +2865,62 @@ table {
       .grid--break-mobile > .grid__span-1 {
         float: none;
         margin: 0;
+        position: static;
         width: 100%; }
       .grid--break-mobile > .grid__span-2 {
         float: none;
         margin: 0;
+        position: static;
         width: 100%; }
       .grid--break-mobile > .grid__span-3 {
         float: none;
         margin: 0;
+        position: static;
         width: 100%; }
       .grid--break-mobile > .grid__span-4 {
         float: none;
         margin: 0;
+        position: static;
         width: 100%; }
       .grid--break-mobile > .grid__span-5 {
         float: none;
         margin: 0;
+        position: static;
         width: 100%; }
       .grid--break-mobile > .grid__span-6 {
         float: none;
         margin: 0;
+        position: static;
         width: 100%; }
       .grid--break-mobile > .grid__span-7 {
         float: none;
         margin: 0;
+        position: static;
         width: 100%; }
       .grid--break-mobile > .grid__span-8 {
         float: none;
         margin: 0;
+        position: static;
         width: 100%; }
       .grid--break-mobile > .grid__span-9 {
         float: none;
         margin: 0;
+        position: static;
         width: 100%; }
       .grid--break-mobile > .grid__span-10 {
         float: none;
         margin: 0;
+        position: static;
         width: 100%; }
       .grid--break-mobile > .grid__span-11 {
         float: none;
         margin: 0;
+        position: static;
         width: 100%; }
       .grid--break-mobile > .grid__span-12 {
         float: none;
         margin: 0;
+        position: static;
         width: 100%; } }
 
 /**
@@ -3109,16 +3112,16 @@ table {
   .btn--loading .btn__text {
     opacity: 0; }
   .btn--loading:before {
-    content: " ";
-    display: inline-block;
-    height: 1.5em;
-    width: 1.5em;
+    content: "";
+    display: block;
+    height: 24px;
+    width: 24px;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-top: -0.75em;
-    margin-left: -0.75em;
-    border-radius: 100%;
+    margin-top: -12px;
+    margin-left: -12px;
+    border-radius: 50%;
     border: 2px solid #fff;
     border-bottom-color: transparent;
     background: transparent !important;
@@ -3140,7 +3143,6 @@ table {
 
 /*
  * Util mixins and classes
- *
  */
 /*
  * Completely hide the content using display none.
@@ -3175,6 +3177,26 @@ table {
   height: 1px !important;
   overflow: hidden !important; }
 
+/*
+ * Alignment.
+ */
+.pull-left {
+  float: left; }
+
+.pull-right {
+  float: right; }
+
+@media screen and (min-width: 768px) {
+  .form__row {
+    display: flex;
+    clear: both; }
+    .form__row .form__group {
+      flex: 1;
+      margin-right: 1rem;
+      padding-right: 1rem; }
+      .form__row .form__group:last-child {
+        margin-right: 0;
+        padding-right: 0; } }
 .form__group {
   margin-bottom: 0.75rem; }
   .form__group--required .form__label:after {
@@ -3182,9 +3204,10 @@ table {
     color: #d50000;
     display: inline-block;
     margin-left: 0.25rem; }
-  .form__group--error .form__control input[type="text"],
-  .form__group--error .form__control input[type="password"],
   .form__group--error .form__control input[type="email"],
+  .form__group--error .form__control input[type="password"],
+  .form__group--error .form__control input[type="tel"],
+  .form__group--error .form__control input[type="text"],
   .form__group--error .form__control input[type="url"],
   .form__group--error .form__control textarea,
   .form__group--error .form__control select,
@@ -3192,15 +3215,16 @@ table {
     border-color: #d50000;
     border-width: 2px;
     margin-bottom: 0; }
-.form__control input[type="text"],
-.form__control input[type="password"],
 .form__control input[type="email"],
+.form__control input[type="password"],
+.form__control input[type="tel"],
+.form__control input[type="text"],
 .form__control input[type="url"],
 .form__control textarea,
 .form__control select {
   border: none;
   border-bottom: 1px solid #dddddd;
-  background-color: #fff;
+  background-color: transparent;
   color: #333333;
   font-size: 14px;
   line-height: 1.5em;
@@ -3210,11 +3234,13 @@ table {
   transition: border-color 0.3s ease;
   width: 100%;
   margin-bottom: 1px; }
-  .form__control input[type="text"]:focus, .form__control input[type="text"]:focus ~ .input-addon,
+  .form__control input[type="email"]:focus, .form__control input[type="email"]:focus ~ .input-addon,
   .form__control input[type="password"]:focus,
   .form__control input[type="password"]:focus ~ .input-addon,
-  .form__control input[type="email"]:focus,
-  .form__control input[type="email"]:focus ~ .input-addon,
+  .form__control input[type="tel"]:focus,
+  .form__control input[type="tel"]:focus ~ .input-addon,
+  .form__control input[type="text"]:focus,
+  .form__control input[type="text"]:focus ~ .input-addon,
   .form__control input[type="url"]:focus,
   .form__control input[type="url"]:focus ~ .input-addon,
   .form__control textarea:focus,
@@ -3222,9 +3248,10 @@ table {
   .form__control select:focus,
   .form__control select:focus ~ .input-addon {
     border-color: #666666; }
-  .form__control input[type="text"]::placeholder,
-  .form__control input[type="password"]::placeholder,
   .form__control input[type="email"]::placeholder,
+  .form__control input[type="password"]::placeholder,
+  .form__control input[type="tel"]::placeholder,
+  .form__control input[type="text"]::placeholder,
   .form__control input[type="url"]::placeholder,
   .form__control textarea::placeholder,
   .form__control select::placeholder {
@@ -3341,7 +3368,7 @@ table {
   color: #333333;
   font-size: 14px;
   border-bottom: 1px solid #dddddd;
-  background-color: #fff;
+  background-color: transparent;
   transition: border-color 0.3s ease;
   margin-bottom: 1px; }
   .input-addon--prefix {
@@ -3590,16 +3617,16 @@ table {
   .btn--loading .btn__text {
     opacity: 0; }
   .btn--loading:before {
-    content: " ";
-    display: inline-block;
-    height: 1.5em;
-    width: 1.5em;
+    content: "";
+    display: block;
+    height: 24px;
+    width: 24px;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-top: -0.75em;
-    margin-left: -0.75em;
-    border-radius: 100%;
+    margin-top: -12px;
+    margin-left: -12px;
+    border-radius: 50%;
     border: 2px solid #fff;
     border-bottom-color: transparent;
     background: transparent !important;
@@ -3770,6 +3797,10 @@ table {
 
 .dialog-footer__actions {
   padding: 0.75rem 1rem; }
+  .dialog-footer__actions::after {
+    clear: both;
+    content: "";
+    display: table; }
   @media screen and (min-width: 768px) {
     .dialog-footer__actions {
       padding: 1.5rem 2rem; } }
@@ -3779,10 +3810,6 @@ table {
     text-align: left; }
   .dialog-footer__actions--right {
     text-align: right; }
-  .dialog-footer__actions::after {
-    clear: both;
-    content: "";
-    display: table; }
 
 /**
  * Body no scroll
@@ -4438,16 +4465,16 @@ hr {
   .menu-item__link--active {
     background-color: #00315d; }
   .menu-item__link--drop-arrow:after {
-    content: "";
-    display: inline-block;
-    top: -0.1875rem;
-    position: relative;
-    margin-left: 0.5rem;
     height: 0;
     width: 0;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-    border-top: 4px solid #fff; }
+    border-top: 4px solid #fff;
+    content: "";
+    display: inline-block;
+    top: -0.1875rem;
+    position: relative;
+    margin-left: 0.5rem; }
 
 /*
  * Page wrappers
@@ -4665,7 +4692,7 @@ body.content-centered .form,
 body.content-centered .form__actions-inner,
 body.content-centered .messages .alert .errorlist,
 body.content-centered .messages .message,
-body.content-centered .head-filter {
+body.content-centered .head-bar {
   max-width: 1024px;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -4675,10 +4702,6 @@ body.content-centered .messages .alert .errorlist li {
 
 .content__inner {
   padding: 0 1rem; }
-.content__list .fa-check {
-  color: #00b100; }
-.content__list .fa-close {
-  color: #d50000; }
 
 .messages {
   margin-top: 0.75rem; }
@@ -4798,41 +4821,50 @@ fieldset {
   .errorlist li {
     margin: 0 1rem; }
 
-.head-filter {
-  margin: 0 1rem;
-  padding: 0.75rem 0; }
+.head-bar {
+  padding: 0.75rem 1rem; }
   @media screen and (min-width: 768px) {
-    .head-filter {
+    .head-bar {
       display: flex; } }
+  .head-bar--actions {
+    background-color: #f8f8f9;
+    border-top: 1px solid #eaeaed;
+    border-left: 1px solid #eaeaed;
+    border-right: 1px solid #eaeaed; }
   @media screen and (min-width: 768px) {
-    .head-filter .form__group {
+    .head-bar .form__group {
       margin-right: 1rem;
       flex: 1; } }
   @media screen and (min-width: 768px) {
-    .head-filter .btn, .head-filter .form__control input[type="file"], .form__control .head-filter input[type="file"] {
+    .head-bar .btn, .head-bar .form__control input[type="file"], .form__control .head-bar input[type="file"] {
       align-self: center;
       margin-right: 1rem; } }
-  .head-filter .btn:last-child, .head-filter .form__control input[type="file"]:last-child, .form__control .head-filter input[type="file"]:last-child {
+  .head-bar .btn:last-child, .head-bar .form__control input[type="file"]:last-child, .form__control .head-bar input[type="file"]:last-child {
     margin-right: 0; }
-  .head-filter__item {
+  .head-bar__item {
     display: flex;
     margin-right: 1rem; }
-    .head-filter__item:last-child {
+    .head-bar__item:last-child {
       margin-right: 0; }
-    .head-filter__item--search {
+    .head-bar__item--search {
       flex: 1; }
-      .head-filter__item--search .form__text {
+      .head-bar__item--search .form__text {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
         border-right: none; }
-      .head-filter__item--search .btn, .head-filter__item--search .form__control input[type="file"], .form__control .head-filter__item--search input[type="file"] {
+      .head-bar__item--search .btn, .head-bar__item--search .form__control input[type="file"], .form__control .head-bar__item--search input[type="file"] {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0; }
 
 @media screen and (max-width: 767px) {
   .table--admin-mobile-view thead th, .table--admin-mobile-view tbody td {
     display: none; }
-  .table--admin-mobile-view thead th:first-child, .table--admin-mobile-view tbody td:first-child {
+  .table--admin-mobile-view thead th:first-child,
+  .table--admin-mobile-view tbody td:first-child,
+  .table--admin-mobile-view .action-column + th:nth-child(2),
+  .table--admin-mobile-view .action-column + td:nth-child(2) {
     display: table-cell; } }
+.table .action-column {
+  width: 1px; }
 
 /*# sourceMappingURL=admin.css.map */

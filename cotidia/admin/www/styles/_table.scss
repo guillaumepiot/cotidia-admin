@@ -4,9 +4,16 @@
             thead th, tbody td{
                 display: none;
             }
-            thead th:first-child, tbody td:first-child{
+            thead th:first-child,
+            tbody td:first-child,
+            .action-column + th:nth-child(2),
+            .action-column + td:nth-child(2){
                 display: table-cell;
             }
         }
+    }
+
+    .action-column {
+        width: 1px;
     }
 }

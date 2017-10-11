@@ -7,7 +7,7 @@ body{
         .form__actions-inner,
         .messages .alert .errorlist,
         .messages .message,
-        .head-filter {
+        .head-bar {
             max-width: $laptop_width;
             padding-left: $horizontal_padding;
             padding-right: $horizontal_padding;
@@ -26,13 +26,6 @@ body{
         padding: 0 $horizontal_padding;
     }
     &__list{
-        .fa-check {
-            color: $green;
-        }
-
-        .fa-close {
-            color: $red;
-        }
     }
     &__detail{
     }

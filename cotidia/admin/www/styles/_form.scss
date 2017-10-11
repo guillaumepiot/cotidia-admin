@@ -130,19 +130,27 @@ fieldset{
     }
 }
 
-.head-filter{
-    margin: 0 $horizontal_padding;
-    padding: $vertical_padding 0;
+.head-bar{
+    padding: $vertical_padding $horizontal_padding;
 
     @media screen and (min-width: $tablet-width) {
         display: flex;
     }
+
+    &--actions {
+        background-color: $grey--lighter;
+        border-top: 1px solid $table-border-color;
+        border-left: 1px solid $table-border-color;
+        border-right: 1px solid $table-border-color;
+    }
+
     .form__group {
         @media screen and (min-width: $tablet-width) {
             margin-right: $horizontal_padding;
             flex: 1;
         }
     }
+
     .btn {
         @media screen and (min-width: $tablet-width) {
             align-self: center;
@@ -153,6 +161,7 @@ fieldset{
             margin-right: 0;
         }
     }
+
     &__item{
         display: flex;
         margin-right: $horizontal_padding;

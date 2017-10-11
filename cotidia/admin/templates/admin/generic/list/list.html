@@ -1,7 +1,24 @@
 {% load i18n admin_list_tags %}
+{% if actions %}
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="head-bar head-bar--actions">
+        {% for field in actions.form %}
+            {% include "admin/generic/form/form_group.html" %}
+        {% endfor %}
+        <input type="submit" value="{% trans "Go" %}" class="btn btn--transparent">
+    </div>
+{% endif %}
 <table class="table table--clickable table--admin-mobile-view">
     <thead>
         <tr>
+            {% if actions %}
+                <th class="action-column">
+                    <button type="button" class="btn btn--transparent btn--small tooltip tooltip--top-center" onclick="toggleCheckboxes()" data-tooltip="Select All / None">
+                        <span class="fa fa-check"></span>
+                    </button>
+                </th>
+            {% endif %}
             {% for column in columns %}
                 <th>{{column.0}}</th>
             {% endfor %}
@@ -11,6 +28,11 @@
     <tbody>
     {% for object in object_list %}
     <tr onclick="window.location = '{% get_admin_url app_label model_name "update" object %}'">
+        {% if actions %}
+            <td onclick="event.stopPropagation()" class="action-column">
+                <input type="checkbox" name="action_items" value="{{object.id}}">
+            </td>
+        {% endif %}
         {% for column in columns %}
             {% render_column column %}
         {% endfor %}
@@ -27,4 +49,22 @@
     {% endfor %}
     </tbody>
 </table>
+{% if actions %}
+</form>
+{% endif %}
 {% include 'admin/generic/pagination.html' %}
+{% if actions %}
+<script>
+function toggleCheckboxes(toggleCheckbox){
+    var checkboxes = document.querySelectorAll("[name=action_items]")
+    var allChecked = Array.prototype.every.call(checkboxes, function(item){ return item.checked })
+    if (allChecked) {
+        checkboxes.forEach(function(item){ item.checked = false })
+        toggleCheckbox.checked = false
+    } else {
+        checkboxes.forEach(function(item){ item.checked = true })
+        toggleCheckbox.checked = true
+    }
+}
+</script>
+{% endif %}
