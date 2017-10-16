@@ -36,6 +36,19 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
                 self.model._meta.model_name
             )
 
+    def get_queryset(self):
+
+        queryset = super().get_queryset()
+
+        if self.filterset:
+            self.filter = self.filterset(
+                self.request.GET,
+                queryset=queryset
+            )
+            queryset = self.filter.qs
+
+        return queryset
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -52,12 +65,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
                 "form": ActionForm(action_list=action_list)
             }
 
-        if self.filterset:
-            context["filter"] = self.filterset(
-                self.request.GET,
-                queryset=self.get_queryset()
-            )
-            context["object_list"] = context["filter"].qs
+        context["filter"] = getattr(self, "filter", None)
 
         return context
 
