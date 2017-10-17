@@ -2333,9 +2333,6 @@
  * Typography
  */
 /**
- * Headers
- */
-/**
  * Layout
  */
 /**
@@ -2459,6 +2456,380 @@ table {
 .pull-right {
   float: right; }
 
+/*
+ * Wrapping.
+ */
+.nowrap {
+  white-space: nowrap !important; }
+
+/*
+ * Util mixins and classes
+ */
+/*
+ * Completely hide the content using display none.
+ */
+.hidden {
+  display: none !important; }
+
+@media screen and (max-width: 767px) {
+  .hidden-mobile {
+    display: none !important; } }
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .hidden-tablet {
+    display: none !important; } }
+
+@media screen and (min-width: 1024px) and (max-width: 1279px) {
+  .hidden-laptop {
+    display: none !important; } }
+
+@media screen and (min-width: 1280px) {
+  .hidden-desktop {
+    display: none !important; } }
+
+/*
+ * Hide for screen readers by pushing the content away from the viewport.
+ */
+.sr-only {
+  position: absolute !important;
+  left: -10000px !important;
+  top: auto !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important; }
+
+/*
+ * Alignment.
+ */
+.pull-left {
+  float: left; }
+
+.pull-right {
+  float: right; }
+
+/*
+ * Wrapping.
+ */
+.nowrap {
+  white-space: nowrap !important; }
+
+/**
+ * Text
+ *
+ */
+html {
+  font-size: 14px; }
+  @media screen and (min-width: 768px) {
+    html {
+      font-size: 14px !important; } }
+  @media screen and (min-width: 1024px) {
+    html {
+      font-size: 14px !important; } }
+
+body {
+  color: #444444;
+  font-family: "Helvetica Neue", sans-serif;
+  font-size: 100%;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5em; }
+
+p {
+  line-height: 1.5em !important;
+  font-size: 1rem !important;
+  margin: 1em 0; }
+  @media screen and (min-width: 768px) {
+    p {
+      font-size: 1rem !important; } }
+  @media screen and (min-width: 1024px) {
+    p {
+      font-size: 1rem !important; } }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Helvetica Neue", sans-serif;
+  margin: 0.5em 0; }
+
+/**
+ * Font-calculated using type-scale 1.250 (Major Third)
+ * http://type-scale.com/
+ */
+h1 {
+  line-height: 1.18459em !important;
+  font-size: 1.60181rem !important; }
+  @media screen and (min-width: 768px) {
+    h1 {
+      font-size: 2.44141rem !important; } }
+  @media screen and (min-width: 1024px) {
+    h1 {
+      font-size: 3.15733rem !important; } }
+
+h2 {
+  line-height: 1.2566em !important;
+  font-size: 1.42383rem !important; }
+  @media screen and (min-width: 768px) {
+    h2 {
+      font-size: 1.95313rem !important; } }
+  @media screen and (min-width: 1024px) {
+    h2 {
+      font-size: 2.36859rem !important; } }
+
+h3 {
+  line-height: 1.333em !important;
+  font-size: 1.26563rem !important; }
+  @media screen and (min-width: 768px) {
+    h3 {
+      font-size: 1.5625rem !important; } }
+  @media screen and (min-width: 1024px) {
+    h3 {
+      font-size: 1.77689rem !important; } }
+
+h4 {
+  line-height: 1.41404em !important;
+  font-size: 1.125rem !important; }
+  @media screen and (min-width: 768px) {
+    h4 {
+      font-size: 1.25rem !important; } }
+  @media screen and (min-width: 1024px) {
+    h4 {
+      font-size: 1.333rem !important; } }
+
+h5 {
+  line-height: 1.5em !important;
+  font-size: 1rem !important; }
+  @media screen and (min-width: 768px) {
+    h5 {
+      font-size: 1rem !important; } }
+  @media screen and (min-width: 1024px) {
+    h5 {
+      font-size: 1rem !important; } }
+
+h6 {
+  line-height: 1.59119em !important;
+  font-size: 0.88889rem !important; }
+  @media screen and (min-width: 768px) {
+    h6 {
+      font-size: 0.8rem !important; } }
+  @media screen and (min-width: 1024px) {
+    h6 {
+      font-size: 0.75019rem !important; } }
+
+small {
+  line-height: 1.59119em !important;
+  font-size: 0.88889rem !important;
+  color: #aaaaaa; }
+  @media screen and (min-width: 768px) {
+    small {
+      font-size: 0.8rem !important; } }
+  @media screen and (min-width: 1024px) {
+    small {
+      font-size: 0.75019rem !important; } }
+
+b, strong {
+  font-weight: 700; }
+
+i, em {
+  font-style: italic; }
+
+a {
+  color: #00abd3;
+  text-decoration: none; }
+  a:hover, a:focus {
+    text-decoration: none; }
+
+ul,
+ol {
+  padding-left: 2rem; }
+
+ul {
+  list-style-type: disc; }
+
+ol {
+  list-style-type: decimal; }
+
+figure {
+  margin: 1.5rem 0; }
+
+blockquote {
+  line-height: 1.41404em !important;
+  font-size: 1.125rem !important;
+  color: #666666;
+  font-family: Georgia, serif;
+  font-style: italic;
+  border-left: 4px solid #aaaaaa;
+  margin: 0.75rem 0;
+  padding-left: 1rem; }
+  @media screen and (min-width: 768px) {
+    blockquote {
+      font-size: 1.25rem !important; } }
+  @media screen and (min-width: 1024px) {
+    blockquote {
+      font-size: 1.333rem !important; } }
+
+figcaption {
+  padding-left: 1rem;
+  margin-left: 1rem;
+  font-family: Georgia, serif; }
+
+hr {
+  border-style: none;
+  border-top: 1px solid #f2f2f3;
+  padding: 0;
+  margin: 3rem 0; }
+
+/*
+ * Text styles
+ */
+.text-right {
+  text-align: right !important; }
+
+.text-left {
+  text-align: left !important; }
+
+.text-center {
+  text-align: center !important; }
+
+.text-strong {
+  font-weight: 700 !important; }
+
+.text-italic {
+  font-style: italic !important; }
+
+.text-cap {
+  font-variant: small-caps !important; }
+
+.text-uppercase {
+  text-transform: uppercase !important; }
+
+.text-lowercase {
+  text-transform: lowercase !important; }
+
+.text-capitalize {
+  text-transform: capitalize !important; }
+
+/*
+ * Text sizes
+ */
+.text-jumbo {
+  line-height: 1.1167em !important;
+  font-size: 1.80203rem !important; }
+  @media screen and (min-width: 768px) {
+    .text-jumbo {
+      font-size: 3.05176rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .text-jumbo {
+      font-size: 4.20873rem !important; } }
+
+.text-hero {
+  line-height: 1.18459em !important;
+  font-size: 1.60181rem !important; }
+  @media screen and (min-width: 768px) {
+    .text-hero {
+      font-size: 2.44141rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .text-hero {
+      font-size: 3.15733rem !important; } }
+
+.text-large {
+  line-height: 1.2566em !important;
+  font-size: 1.42383rem !important; }
+  @media screen and (min-width: 768px) {
+    .text-large {
+      font-size: 1.95313rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .text-large {
+      font-size: 2.36859rem !important; } }
+
+.text-medium {
+  line-height: 1.333em !important;
+  font-size: 1.26563rem !important; }
+  @media screen and (min-width: 768px) {
+    .text-medium {
+      font-size: 1.5625rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .text-medium {
+      font-size: 1.77689rem !important; } }
+
+.text-emphasis {
+  line-height: 1.41404em !important;
+  font-size: 1.125rem !important; }
+  @media screen and (min-width: 768px) {
+    .text-emphasis {
+      font-size: 1.25rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .text-emphasis {
+      font-size: 1.333rem !important; } }
+
+.text-normal {
+  line-height: 1.5em !important;
+  font-size: 1rem !important; }
+  @media screen and (min-width: 768px) {
+    .text-normal {
+      font-size: 1rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .text-normal {
+      font-size: 1rem !important; } }
+
+.text-small {
+  line-height: 1.59119em !important;
+  font-size: 0.88889rem !important; }
+  @media screen and (min-width: 768px) {
+    .text-small {
+      font-size: 0.8rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .text-small {
+      font-size: 0.75019rem !important; } }
+
+.text-micro {
+  line-height: 1.68793em !important;
+  font-size: 0.79012rem !important; }
+  @media screen and (min-width: 768px) {
+    .text-micro {
+      font-size: 0.64rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .text-micro {
+      font-size: 0.56278rem !important; } }
+
+/*
+ * Text colours
+ */
+.text-default {
+  color: #444444 !important; }
+
+.text-cyan {
+  color: #00abd3 !important; }
+
+.text-red {
+  color: #d50000 !important; }
+
+.text-green {
+  color: #00b100 !important; }
+
+.text-orange {
+  color: #ff8a00 !important; }
+
+.text-grey--dark {
+  color: #333333 !important; }
+
+.text-grey {
+  color: #666666 !important; }
+
+.text-grey--medium {
+  color: #aaaaaa !important; }
+
+.text-grey--light {
+  color: #f2f2f3 !important; }
+
+.text-grey--lighter {
+  color: #f8f8f9 !important; }
+
+.text-white {
+  color: #fff !important; }
+
 @-webkit-keyframes rotate {
   0% {
     -webkit-transform: rotate(0deg);
@@ -2496,6 +2867,9 @@ table {
     border-bottom-color: transparent; }
   .loader--change {
     border-color: #ff8a00;
+    border-bottom-color: transparent; }
+  .loader--delete {
+    border-color: #d50000;
     border-bottom-color: transparent; }
   .loader--large {
     height: 2rem;
@@ -2930,6 +3304,8 @@ table {
  * Btn - Standard button component style.
  */
 .btn, .form__control input[type="file"] {
+  line-height: 1.5em !important;
+  font-size: 1rem !important;
   cursor: pointer;
   display: inline-block;
   position: relative;
@@ -2938,16 +3314,20 @@ table {
   background-color: #666;
   border: 1px solid #666;
   color: #fff;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 1rem;
   font-family: "Helvetica Neue", sans-serif;
-  font-size: 14px;
   font-style: normal;
   text-align: center;
   font-weight: 400;
   text-decoration: none;
-  line-height: 1em;
   border-radius: 4px;
   user-select: none; }
+  @media screen and (min-width: 768px) {
+    .btn, .form__control input[type="file"] {
+      font-size: 1rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .btn, .form__control input[type="file"] {
+      font-size: 1rem !important; } }
   .btn:hover, .form__control input[type="file"]:hover {
     background-color: #6e6e6e;
     text-decoration: none;
@@ -3042,6 +3422,10 @@ table {
       .btn--cancel.btn--transparent:hover, .form__control input.btn--transparent[type="file"]:hover {
         border-color: #eeeeee;
         color: #666666; }
+    .btn--cancel.btn--loading:before, .form__control input.btn--loading[type="file"]:before {
+      border-top-color: #666666;
+      border-left-color: #666666;
+      border-right-color: #666666; }
   .btn--delete {
     background-color: #d50000;
     border-color: #d50000; }
@@ -3083,6 +3467,14 @@ table {
         color: #666666;
         background-color: transparent;
         cursor: not-allowed; }
+    .btn--transparent.btn--loading:before {
+      border-top-color: #aaaaaa;
+      border-left-color: #aaaaaa;
+      border-right-color: #aaaaaa; }
+    .btn--transparent.btn--loading:hover:before {
+      border-top-color: #00abd3;
+      border-left-color: #00abd3;
+      border-right-color: #00abd3; }
   .btn--full-width {
     display: block;
     width: 100%; }
@@ -3099,9 +3491,9 @@ table {
     padding-left: 0;
     padding-right: 0; }
   .btn--large {
-    padding: 1.05rem 1rem; }
+    padding: 0.75rem 1.5rem; }
   .btn--small {
-    padding: 0.25rem 0.5rem; }
+    padding: 0 0.5rem; }
     .btn--small.btn--loading:before {
       height: 12px;
       width: 12px;
@@ -3186,6 +3578,12 @@ table {
 .pull-right {
   float: right; }
 
+/*
+ * Wrapping.
+ */
+.nowrap {
+  white-space: nowrap !important; }
+
 @media screen and (min-width: 768px) {
   .form__row {
     display: flex;
@@ -3209,6 +3607,11 @@ table {
   .form__group--error .form__control input[type="tel"],
   .form__group--error .form__control input[type="text"],
   .form__group--error .form__control input[type="url"],
+  .form__group--error .form__control input[type="date"],
+  .form__group--error .form__control input[type="number"],
+  .form__group--error .form__control input[type="search"],
+  .form__group--error .form__control input[type="tel"],
+  .form__group--error .form__control input[type="time"],
   .form__group--error .form__control textarea,
   .form__group--error .form__control select,
   .form__group--error .form__control .input-addon {
@@ -3220,20 +3623,53 @@ table {
 .form__control input[type="tel"],
 .form__control input[type="text"],
 .form__control input[type="url"],
+.form__control input[type="date"],
+.form__control input[type="number"],
+.form__control input[type="search"],
+.form__control input[type="tel"],
+.form__control input[type="time"],
 .form__control textarea,
 .form__control select {
+  line-height: 1.5em !important;
+  font-size: 1rem !important;
   border: none;
   border-bottom: 1px solid #dddddd;
   background-color: transparent;
   color: #333333;
-  font-size: 14px;
-  line-height: 1.5em;
   outline: none;
   padding: 0;
   padding-bottom: 0.1875rem;
   transition: border-color 0.3s ease;
   width: 100%;
   margin-bottom: 1px; }
+  @media screen and (min-width: 768px) {
+    .form__control input[type="email"],
+    .form__control input[type="password"],
+    .form__control input[type="tel"],
+    .form__control input[type="text"],
+    .form__control input[type="url"],
+    .form__control input[type="date"],
+    .form__control input[type="number"],
+    .form__control input[type="search"],
+    .form__control input[type="tel"],
+    .form__control input[type="time"],
+    .form__control textarea,
+    .form__control select {
+      font-size: 1rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .form__control input[type="email"],
+    .form__control input[type="password"],
+    .form__control input[type="tel"],
+    .form__control input[type="text"],
+    .form__control input[type="url"],
+    .form__control input[type="date"],
+    .form__control input[type="number"],
+    .form__control input[type="search"],
+    .form__control input[type="tel"],
+    .form__control input[type="time"],
+    .form__control textarea,
+    .form__control select {
+      font-size: 1rem !important; } }
   .form__control input[type="email"]:focus, .form__control input[type="email"]:focus ~ .input-addon,
   .form__control input[type="password"]:focus,
   .form__control input[type="password"]:focus ~ .input-addon,
@@ -3243,6 +3679,16 @@ table {
   .form__control input[type="text"]:focus ~ .input-addon,
   .form__control input[type="url"]:focus,
   .form__control input[type="url"]:focus ~ .input-addon,
+  .form__control input[type="date"]:focus,
+  .form__control input[type="date"]:focus ~ .input-addon,
+  .form__control input[type="number"]:focus,
+  .form__control input[type="number"]:focus ~ .input-addon,
+  .form__control input[type="search"]:focus,
+  .form__control input[type="search"]:focus ~ .input-addon,
+  .form__control input[type="tel"]:focus,
+  .form__control input[type="tel"]:focus ~ .input-addon,
+  .form__control input[type="time"]:focus,
+  .form__control input[type="time"]:focus ~ .input-addon,
   .form__control textarea:focus,
   .form__control textarea:focus ~ .input-addon,
   .form__control select:focus,
@@ -3253,6 +3699,11 @@ table {
   .form__control input[type="tel"]::placeholder,
   .form__control input[type="text"]::placeholder,
   .form__control input[type="url"]::placeholder,
+  .form__control input[type="date"]::placeholder,
+  .form__control input[type="number"]::placeholder,
+  .form__control input[type="search"]::placeholder,
+  .form__control input[type="tel"]::placeholder,
+  .form__control input[type="time"]::placeholder,
   .form__control textarea::placeholder,
   .form__control select::placeholder {
     color: #aaaaaa; }
@@ -3281,6 +3732,8 @@ table {
   display: flex;
   margin: 0.75rem 0; }
   .form__control--radio-btn label {
+    line-height: 1.5em !important;
+    font-size: 1rem !important;
     cursor: pointer;
     display: inline-block;
     position: relative;
@@ -3289,18 +3742,22 @@ table {
     background-color: #666;
     border: 1px solid #666;
     color: #fff;
-    padding: 0.75rem 1rem;
+    padding: 0.5rem 1rem;
     font-family: "Helvetica Neue", sans-serif;
-    font-size: 14px;
     font-style: normal;
     text-align: center;
     font-weight: 400;
     text-decoration: none;
-    line-height: 1em;
     border-radius: 4px;
     user-select: none;
     border-radius: 0;
     border-right-width: 0; }
+    @media screen and (min-width: 768px) {
+      .form__control--radio-btn label {
+        font-size: 1rem !important; } }
+    @media screen and (min-width: 1024px) {
+      .form__control--radio-btn label {
+        font-size: 1rem !important; } }
     .form__control--radio-btn label:hover {
       background-color: #6e6e6e;
       text-decoration: none;
@@ -3344,33 +3801,67 @@ table {
         color: #666666;
         background-color: transparent;
         cursor: not-allowed; }
+    .form__control--radio-btn input[type="radio"]:not(:checked) + label.btn--loading:before {
+      border-top-color: #aaaaaa;
+      border-left-color: #aaaaaa;
+      border-right-color: #aaaaaa; }
+    .form__control--radio-btn input[type="radio"]:not(:checked) + label.btn--loading:hover:before {
+      border-top-color: #00abd3;
+      border-left-color: #00abd3;
+      border-right-color: #00abd3; }
 .form__control--inline ul li {
   display: inline-block;
   margin-right: 1rem; }
 .form__control--input-addon {
   display: flex; }
 .form__label {
-  font-size: 14px;
+  line-height: 1.5em !important;
+  font-size: 1rem !important;
   color: #666666;
   display: block; }
+  @media screen and (min-width: 768px) {
+    .form__label {
+      font-size: 1rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .form__label {
+      font-size: 1rem !important; } }
 .form__error {
+  line-height: 1.59119em !important;
+  font-size: 0.88889rem !important;
   color: #d50000;
-  font-size: 0.8em;
-  line-height: 1.5em;
   margin-top: 0.1875rem; }
+  @media screen and (min-width: 768px) {
+    .form__error {
+      font-size: 0.8rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .form__error {
+      font-size: 0.75019rem !important; } }
 .form__help {
+  line-height: 1.59119em !important;
+  font-size: 0.88889rem !important;
   color: #aaaaaa;
-  font-size: 0.8em;
-  line-height: 1.5em;
   margin-top: 0.1875rem; }
+  @media screen and (min-width: 768px) {
+    .form__help {
+      font-size: 0.8rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .form__help {
+      font-size: 0.75019rem !important; } }
 
 .input-addon {
+  line-height: 1.5em !important;
+  font-size: 1rem !important;
   color: #333333;
-  font-size: 14px;
   border-bottom: 1px solid #dddddd;
   background-color: transparent;
   transition: border-color 0.3s ease;
   margin-bottom: 1px; }
+  @media screen and (min-width: 768px) {
+    .input-addon {
+      font-size: 1rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .input-addon {
+      font-size: 1rem !important; } }
   .input-addon--prefix {
     padding-right: 0.5rem;
     order: -1; }
@@ -3384,7 +3875,7 @@ table {
   border-bottom-right-radius: 4px;
   border-bottom-left-radius: 4px;
   position: absolute;
-  top: calc($base-line-height + 1px);
+  top: 100%;
   left: 0;
   width: 100%;
   max-height: 300px;
@@ -3415,14 +3906,21 @@ table {
 .control-select__group:first-child .control-select__group-heading {
   border-top: none; }
 .control-select__group-heading {
+  line-height: 1.59119em !important;
+  font-size: 0.88889rem !important;
   background-color: #f8f8f9;
   border-top: 1px solid #f2f2f3;
   border-bottom: 1px solid #f2f2f3;
   text-transform: uppercase;
-  font-size: 0.8em;
-  font-weight: bold;
+  font-weight: 700;
   padding: 0.375rem 1rem;
   text-align: left; }
+  @media screen and (min-width: 768px) {
+    .control-select__group-heading {
+      font-size: 0.8rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .control-select__group-heading {
+      font-size: 0.75019rem !important; } }
 
 [type=submit], button {
   -webkit-appearance: none;
@@ -3435,6 +3933,8 @@ table {
  * Btn - Standard button component style.
  */
 .btn, .form__control input[type="file"] {
+  line-height: 1.5em !important;
+  font-size: 1rem !important;
   cursor: pointer;
   display: inline-block;
   position: relative;
@@ -3443,16 +3943,20 @@ table {
   background-color: #666;
   border: 1px solid #666;
   color: #fff;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 1rem;
   font-family: "Helvetica Neue", sans-serif;
-  font-size: 14px;
   font-style: normal;
   text-align: center;
   font-weight: 400;
   text-decoration: none;
-  line-height: 1em;
   border-radius: 4px;
   user-select: none; }
+  @media screen and (min-width: 768px) {
+    .btn, .form__control input[type="file"] {
+      font-size: 1rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .btn, .form__control input[type="file"] {
+      font-size: 1rem !important; } }
   .btn:hover, .form__control input[type="file"]:hover {
     background-color: #6e6e6e;
     text-decoration: none;
@@ -3547,6 +4051,10 @@ table {
       .btn--cancel.btn--transparent:hover, .form__control input.btn--transparent[type="file"]:hover {
         border-color: #eeeeee;
         color: #666666; }
+    .btn--cancel.btn--loading:before, .form__control input.btn--loading[type="file"]:before {
+      border-top-color: #666666;
+      border-left-color: #666666;
+      border-right-color: #666666; }
   .btn--delete {
     background-color: #d50000;
     border-color: #d50000; }
@@ -3588,6 +4096,14 @@ table {
         color: #666666;
         background-color: transparent;
         cursor: not-allowed; }
+    .btn--transparent.btn--loading:before {
+      border-top-color: #aaaaaa;
+      border-left-color: #aaaaaa;
+      border-right-color: #aaaaaa; }
+    .btn--transparent.btn--loading:hover:before {
+      border-top-color: #00abd3;
+      border-left-color: #00abd3;
+      border-right-color: #00abd3; }
   .btn--full-width {
     display: block;
     width: 100%; }
@@ -3604,9 +4120,9 @@ table {
     padding-left: 0;
     padding-right: 0; }
   .btn--large {
-    padding: 1.05rem 1rem; }
+    padding: 0.75rem 1.5rem; }
   .btn--small {
-    padding: 0.25rem 0.5rem; }
+    padding: 0 0.5rem; }
     .btn--small.btn--loading:before {
       height: 12px;
       width: 12px;
@@ -3648,7 +4164,7 @@ table {
 
 .dialog {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column; }
   .dialog--small .dialog__content, .dialog--small .dialog__content--pre, .dialog--small .dialog__content--post {
@@ -3753,17 +4269,32 @@ table {
   .dialog--error .dialog__header {
     background-color: #d50000;
     color: #fff;
-    font-weight: bold; }
+    font-weight: 700; }
     .dialog--error .dialog__header .dialog-header__action-btn {
       color: #fff; }
 
 .dialog-header__title {
-  font-size: 1.25em;
+  line-height: 1.41404em !important;
+  font-size: 1.125rem !important;
   padding: 0.75rem 1rem; }
   @media screen and (min-width: 768px) {
     .dialog-header__title {
-      font-size: 1.563em;
+      font-size: 1.25rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .dialog-header__title {
+      font-size: 1.333rem !important; } }
+  @media screen and (min-width: 768px) {
+    .dialog-header__title {
+      line-height: 1.333em !important;
+      font-size: 1.26563rem !important;
       padding: 1.5rem 2rem; } }
+  @media screen and (min-width: 768px) and (min-width: 768px) {
+    .dialog-header__title {
+      font-size: 1.5625rem !important; } }
+  @media screen and (min-width: 768px) and (min-width: 1024px) {
+    .dialog-header__title {
+      font-size: 1.77689rem !important; } }
+
   .dialog-header__title--center {
     text-align: center; }
   .dialog-header__title--left {
@@ -3780,7 +4311,7 @@ table {
   align-items: center; }
   .dialog-header__action--left {
     left: 0;
-    margin-left: 1rem; }
+    margin-left: 2rem; }
     @media screen and (min-width: 768px) {
       .dialog-header__action--left {
         margin-left: 2rem; } }
@@ -3788,12 +4319,28 @@ table {
       padding-right: 1rem; }
   .dialog-header__action--right {
     right: 0;
-    margin-right: 1rem; }
+    margin-right: 2rem; }
     @media screen and (min-width: 768px) {
       .dialog-header__action--right {
         margin-left: 2rem; } }
     .dialog-header__action--right .dialog-header__action-btn {
       padding-left: 1rem; }
+.dialog-header__action-btn {
+  line-height: 1.5em !important;
+  font-size: 1rem !important;
+  border: none;
+  background-color: transparent;
+  color: #00abd3;
+  cursor: pointer;
+  padding: 0; }
+  @media screen and (min-width: 768px) {
+    .dialog-header__action-btn {
+      font-size: 1rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .dialog-header__action-btn {
+      font-size: 1rem !important; } }
+  .dialog-header__action-btn:hover {
+    color: #0096ba; }
 
 .dialog-footer__actions {
   padding: 0.75rem 1rem; }
@@ -3819,211 +4366,6 @@ table {
 .no-scroll {
   overflow: hidden;
   height: 100%; }
-
-/**
- * Text
- *
- */
-html {
-  font-size: 14px; }
-
-body {
-  color: #444444;
-  font-family: "Helvetica Neue", sans-serif;
-  font-size: 100%;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.5em; }
-
-p {
-  margin: 1em 0; }
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Helvetica Neue", sans-serif;
-  line-height: 1.5em;
-  margin: 0.5em 0; }
-
-/**
- * Font-calculated using type-scale 1.250 (Major Third)
- * http://type-scale.com/
- */
-h1 {
-  font-size: 2.441em;
-  font-weight: 400;
-  line-height: 1.3em; }
-
-h2 {
-  font-size: 1.953em;
-  font-weight: 400;
-  line-height: 1.3em; }
-
-h3 {
-  font-size: 1.563em;
-  font-weight: 400;
-  line-height: 1.3em; }
-
-h4 {
-  font-size: 1.25em;
-  font-weight: 400;
-  line-height: 1.3em; }
-
-h5 {
-  font-size: 1em;
-  font-weight: 400;
-  line-height: 1.3em; }
-
-h6 {
-  font-size: 1em;
-  font-weight: 400;
-  line-height: 1.3em; }
-
-small {
-  font-size: 0.8em;
-  color: #aaaaaa; }
-
-b, strong {
-  font-weight: bold; }
-
-i, em {
-  font-style: italic; }
-
-a {
-  color: #00abd3;
-  text-decoration: none; }
-  a:hover, a:focus {
-    text-decoration: none; }
-
-ul,
-ol {
-  padding-left: 2rem; }
-
-ul {
-  list-style-type: disc; }
-
-ol {
-  list-style-type: decimal; }
-
-figure {
-  margin: 1.5rem 0; }
-
-blockquote {
-  color: #666666;
-  font-family: Georgia, serif;
-  font-style: italic;
-  font-size: 17.5px;
-  line-height: 21.875px;
-  border-left: 4px solid #aaaaaa;
-  margin: 0.75rem 0;
-  padding-left: 1rem; }
-
-figcaption {
-  padding-left: 1rem;
-  margin-left: 1rem;
-  font-family: Georgia, serif; }
-
-hr {
-  border-style: none;
-  border-top: 1px solid #f2f2f3;
-  padding: 0;
-  margin: 3rem 0; }
-
-/*
- * Text styles
- */
-.text-right {
-  text-align: right !important; }
-
-.text-left {
-  text-align: left !important; }
-
-.text-center {
-  text-align: center !important; }
-
-.text-strong {
-  font-weight: 700 !important; }
-
-.text-italic {
-  font-style: italic !important; }
-
-.text-cap {
-  font-variant: small-caps !important; }
-
-.text-uppercase {
-  text-transform: uppercase !important; }
-
-.text-lowercase {
-  text-transform: lowercase !important; }
-
-.text-capitalize {
-  text-transform: capitalize !important; }
-
-/*
- * Text sizes
- */
-.text-hero {
-  font-size: 2.441em !important;
-  line-height: 1.5em; }
-
-.text-large {
-  font-size: 1.953em !important;
-  line-height: 1.5em; }
-
-.text-medium {
-  font-size: 1.563em !important;
-  line-height: 1.5em; }
-
-.text-emphasis {
-  font-size: 1.25em !important;
-  line-height: 1.5em; }
-
-.text-normal {
-  font-size: 14px !important;
-  line-height: 1.5em; }
-
-.text-small {
-  font-size: 0.8em !important;
-  line-height: 1.5em; }
-
-/*
- * Text colours
- */
-.text-default {
-  color: #444444 !important; }
-
-.text-cyan {
-  color: #00abd3 !important; }
-
-.text-red {
-  color: #d50000 !important; }
-
-.text-green {
-  color: #00b100 !important; }
-
-.text-orange {
-  color: #ff8a00 !important; }
-
-.text-grey--dark {
-  color: #333333 !important; }
-
-.text-grey {
-  color: #666666 !important; }
-
-.text-grey--medium {
-  color: #aaaaaa !important; }
-
-.text-grey--light {
-  color: #f2f2f3 !important; }
-
-.text-grey--lighter {
-  color: #f8f8f9 !important; }
-
-.text-white {
-  color: #fff !important; }
 
 /**
  * Table
@@ -4079,7 +4421,7 @@ hr {
         .table--stack-mobile tr td:before {
           display: block;
           float: left;
-          font-weight: bold;
+          font-weight: 700;
           content: attr(data-header); } }
   .table tr {
     background-color: #fff; }
@@ -4235,9 +4577,16 @@ hr {
   .tooltip--bottom-center:hover:before, .tooltip--bottom-center:hover:after {
     transform: translate3d(-50%, 6px, 0); }
   .tooltip--small:hover:before {
+    line-height: 1.59119em !important;
+    font-size: 0.88889rem !important;
     top: -1.625rem;
-    padding: 0.1875rem 0.5rem;
-    font-size: 0.8em; }
+    padding: 0.1875rem 0.5rem; }
+    @media screen and (min-width: 768px) {
+      .tooltip--small:hover:before {
+        font-size: 0.8rem !important; } }
+    @media screen and (min-width: 1024px) {
+      .tooltip--small:hover:before {
+        font-size: 0.75019rem !important; } }
 
 .datepicker {
   border: 1px solid #e5e5e7;
@@ -4332,21 +4681,23 @@ hr {
   .label--danger {
     background-color: #d50000; }
 
-/**
- * Bagde
- */
 .badge {
+  line-height: 1.59119em !important;
+  font-size: 0.88889rem !important;
   color: #fff;
   background-color: #666666;
   display: inline-block;
-  border-radius: 1.5em;
-  font-size: 0.8em;
-  line-height: 1.5em;
+  border-radius: 0.7956em;
   padding-left: 0.5em;
   padding-right: 0.5em;
   white-space: nowrap;
-  top: -0.1em;
   position: relative; }
+  @media screen and (min-width: 768px) {
+    .badge {
+      font-size: 0.8rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .badge {
+      font-size: 0.75019rem !important; } }
   .badge--primary {
     background-color: #00abd3; }
   .badge--success {
@@ -4390,7 +4741,7 @@ hr {
     padding: 0; }
     @media screen and (max-width: 767px) {
       .menu__container {
-        background-color: #00213E;
+        background-color: #fafafa;
         position: fixed;
         z-index: 10;
         top: 0;
@@ -4435,10 +4786,11 @@ hr {
     display: none;
     position: absolute;
     width: auto;
-    background-color: #00213E;
+    background-color: #fafafa;
     z-index: 10; }
     @media screen and (min-width: 768px) {
       .menu__sub-nav {
+        background-color: #00213E;
         min-width: 180px; } }
     .menu__sub-nav .menu__item {
       float: none; }
@@ -4454,14 +4806,23 @@ hr {
       right: 0; } }
 .menu-item:hover {
   background-color: #00315d; }
+  @media screen and (max-width: 767px) {
+    .menu-item:hover {
+      background-color: #eeeeee; } }
 .menu-item__link {
   position: relative;
   color: #fff;
   background-color: transparent;
   padding: 0.75rem 1rem;
   display: block; }
+  @media screen and (max-width: 767px) {
+    .menu-item__link {
+      background-color: transparent; } }
   .menu-item__link:hover {
     background-color: #00427b; }
+    @media screen and (max-width: 767px) {
+      .menu-item__link:hover {
+        background-color: #eeeeee; } }
   .menu-item__link--active {
     background-color: #00315d; }
   .menu-item__link--drop-arrow:after {
@@ -4492,6 +4853,57 @@ hr {
 @media screen and (min-width: 1280px) {
   .wrapper {
     max-width: calc(1280px - 4rem); } }
+
+/*
+ * Util mixins and classes
+ */
+/*
+ * Completely hide the content using display none.
+ */
+.hidden {
+  display: none !important; }
+
+@media screen and (max-width: 767px) {
+  .hidden-mobile {
+    display: none !important; } }
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .hidden-tablet {
+    display: none !important; } }
+
+@media screen and (min-width: 1024px) and (max-width: 1279px) {
+  .hidden-laptop {
+    display: none !important; } }
+
+@media screen and (min-width: 1280px) {
+  .hidden-desktop {
+    display: none !important; } }
+
+/*
+ * Hide for screen readers by pushing the content away from the viewport.
+ */
+.sr-only {
+  position: absolute !important;
+  left: -10000px !important;
+  top: auto !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important; }
+
+/*
+ * Alignment.
+ */
+.pull-left {
+  float: left; }
+
+.pull-right {
+  float: right; }
+
+/*
+ * Wrapping.
+ */
+.nowrap {
+  white-space: nowrap !important; }
 
 /*
  * Specific styles to create a sidebar menu
@@ -4527,7 +4939,7 @@ body.menu--sidebar .menu__section {
   body.menu--sidebar .menu-item__link-text {
     padding-top: 0.1em; }
   body.menu--sidebar .menu-item--home {
-    font-size: 1.25em;
+    font-size: 1;
     width: 100%;
     height: 3.2rem;
     background-color: #00213E;
@@ -4555,7 +4967,7 @@ body.menu--sidebar .menu__section {
     z-index: 1;
     white-space: nowrap; }
   body.menu--sidebar .toolbar {
-    font-size: 1.25em;
+    font-size: 1;
     top: 0;
     left: 240px;
     width: calc(100% - 240px); }
@@ -4572,7 +4984,7 @@ body.menu--sidebar .menu__section {
     z-index: 2;
     overflow-y: scroll; }
     body.menu--sidebar .menu__title {
-      font-size: 1.25em;
+      font-size: 1;
       color: #fff; }
   body.menu--sidebar .menu__item--open {
     width: 100%;
@@ -4772,7 +5184,7 @@ fieldset {
   margin: 0.75rem 1rem; }
   fieldset legend {
     background-color: #f2f2f3;
-    font-size: 1.25em;
+    font-size: 1;
     width: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
