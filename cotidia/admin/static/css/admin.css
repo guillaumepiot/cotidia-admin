@@ -2535,15 +2535,7 @@ body {
   line-height: 1.5em; }
 
 p {
-  line-height: 1.5em !important;
-  font-size: 1rem !important;
   margin: 1em 0; }
-  @media screen and (min-width: 768px) {
-    p {
-      font-size: 1rem !important; } }
-  @media screen and (min-width: 1024px) {
-    p {
-      font-size: 1rem !important; } }
 
 h1,
 h2,
@@ -4741,7 +4733,7 @@ hr {
     padding: 0; }
     @media screen and (max-width: 767px) {
       .menu__container {
-        background-color: #fafafa;
+        background-color: #00213E;
         position: fixed;
         z-index: 10;
         top: 0;
@@ -4786,7 +4778,7 @@ hr {
     display: none;
     position: absolute;
     width: auto;
-    background-color: #fafafa;
+    background-color: #00213E;
     z-index: 10; }
     @media screen and (min-width: 768px) {
       .menu__sub-nav {
@@ -4808,7 +4800,7 @@ hr {
   background-color: #00315d; }
   @media screen and (max-width: 767px) {
     .menu-item:hover {
-      background-color: #eeeeee; } }
+      background-color: #00315d; } }
 .menu-item__link {
   position: relative;
   color: #fff;
@@ -4822,7 +4814,7 @@ hr {
     background-color: #00427b; }
     @media screen and (max-width: 767px) {
       .menu-item__link:hover {
-        background-color: #eeeeee; } }
+        background-color: transparent; } }
   .menu-item__link--active {
     background-color: #00315d; }
   .menu-item__link--drop-arrow:after {
