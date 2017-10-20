@@ -5094,15 +5094,11 @@ body.content-centered .content__detail,
 body.content-centered .content__delete,
 body.content-centered .form,
 body.content-centered .form__actions-inner,
-body.content-centered .messages .alert .errorlist,
-body.content-centered .messages .message,
 body.content-centered .head-bar {
   max-width: 1024px;
   padding-left: 1rem;
   padding-right: 1rem;
   margin: 0 auto; }
-body.content-centered .messages .alert .errorlist li {
-  margin: 0 2rem; }
 
 .content__inner {
   padding: 0 1rem; }
@@ -5229,7 +5225,8 @@ fieldset {
   padding: 0.75rem 1rem; }
   @media screen and (min-width: 768px) {
     .head-bar {
-      display: flex; } }
+      display: flex;
+      align-items: center; } }
   .head-bar--actions {
     background-color: #f8f8f9;
     border-top: 1px solid #eaeaed;
@@ -5238,6 +5235,7 @@ fieldset {
   @media screen and (min-width: 768px) {
     .head-bar .form__group {
       margin-right: 1rem;
+      margin-bottom: 0;
       flex: 1; } }
   @media screen and (min-width: 768px) {
     .head-bar .btn, .head-bar .form__control input[type="file"], .form__control .head-bar input[type="file"] {

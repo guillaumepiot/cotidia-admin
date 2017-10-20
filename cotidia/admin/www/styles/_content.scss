@@ -5,18 +5,11 @@ body{
         .content__delete,
         .form,
         .form__actions-inner,
-        .messages .alert .errorlist,
-        .messages .message,
         .head-bar {
             max-width: $laptop_width;
             padding-left: $horizontal_padding;
             padding-right: $horizontal_padding;
             margin: 0 auto;
-        }
-        .messages .alert .errorlist{
-            li{
-                margin: 0 $horizontal_padding * 2;
-            }
         }
     }
 }

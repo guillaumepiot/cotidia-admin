@@ -135,6 +135,7 @@ fieldset{
 
     @media screen and (min-width: $tablet-width) {
         display: flex;
+        align-items: center;
     }
 
     &--actions {
@@ -147,6 +148,7 @@ fieldset{
     .form__group {
         @media screen and (min-width: $tablet-width) {
             margin-right: $horizontal_padding;
+            margin-bottom: 0;
             flex: 1;
         }
     }
