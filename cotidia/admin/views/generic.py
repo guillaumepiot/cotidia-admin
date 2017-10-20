@@ -26,6 +26,8 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
     # detail_view = True
     add_view = True
     actions = []
+    row_click_action = "update"  # or "detail"
+    row_actions = ["view", "update", "delete"]
 
     def get_permission_required(self):
         if hasattr(self, "permission_required"):
@@ -54,6 +56,8 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
 
         context["columns"] = self.columns
         context["add_view"] = self.add_view
+        context["row_click_action"] = self.row_click_action
+        context["row_actions"] = self.row_actions
 
         if self.actions:
             action_list = ()
