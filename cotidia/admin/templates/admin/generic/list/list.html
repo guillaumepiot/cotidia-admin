@@ -57,7 +57,9 @@
     {% empty %}
     <tr>
         <td colspan="{{columns|length}}">{% trans "No items." %}</td>
+        {% if row_actions %}
         <td></td>
+        {% endif %}
     </tr>
     {% endfor %}
     </tbody>

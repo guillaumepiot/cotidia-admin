@@ -92,6 +92,10 @@ body.menu--sidebar {
             margin-left: $menu_sidebar_width;
             padding-top: $toolbar_height;
         }
+        .form--action-fixed-bottom,
+        .form__actions {
+            left: $menu_sidebar_width;
+        }
     }
     @media screen and (max-width: $mobile-width) {
         .menu {

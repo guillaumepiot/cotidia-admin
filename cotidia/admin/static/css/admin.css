@@ -21,7 +21,7 @@
 
 /* makes the font 33% larger relative to the icon container */
 .fa-lg {
-  font-size: 1.33333em;
+  font-size: 1.3333333333em;
   line-height: 0.75em;
   vertical-align: -15%; }
 
@@ -38,24 +38,24 @@
   font-size: 5em; }
 
 .fa-fw {
-  width: 1.28571em;
+  width: 1.2857142857em;
   text-align: center; }
 
 .fa-ul {
   padding-left: 0;
-  margin-left: 2.14286em;
+  margin-left: 2.1428571429em;
   list-style-type: none; }
   .fa-ul > li {
     position: relative; }
 
 .fa-li {
   position: absolute;
-  left: -2.14286em;
-  width: 2.14286em;
-  top: 0.14286em;
+  left: -2.1428571429em;
+  width: 2.1428571429em;
+  top: 0.1428571429em;
   text-align: center; }
   .fa-li.fa-lg {
-    left: -1.85714em; }
+    left: -1.8571428571em; }
 
 .fa-border {
   padding: .2em .25em .15em;
@@ -2551,37 +2551,37 @@ h6 {
  * http://type-scale.com/
  */
 h1 {
-  line-height: 1.18459em !important;
-  font-size: 1.60181rem !important; }
+  line-height: 1.18458672em !important;
+  font-size: 1.6018066406rem !important; }
   @media screen and (min-width: 768px) {
     h1 {
-      font-size: 2.44141rem !important; } }
+      font-size: 2.44140625rem !important; } }
   @media screen and (min-width: 1024px) {
     h1 {
-      font-size: 3.15733rem !important; } }
+      font-size: 3.1573345183rem !important; } }
 
 h2 {
-  line-height: 1.2566em !important;
-  font-size: 1.42383rem !important; }
+  line-height: 1.2566026159em !important;
+  font-size: 1.423828125rem !important; }
   @media screen and (min-width: 768px) {
     h2 {
-      font-size: 1.95313rem !important; } }
+      font-size: 1.953125rem !important; } }
   @media screen and (min-width: 1024px) {
     h2 {
-      font-size: 2.36859rem !important; } }
+      font-size: 2.368593037rem !important; } }
 
 h3 {
-  line-height: 1.333em !important;
-  font-size: 1.26563rem !important; }
+  line-height: 1.3329966542em !important;
+  font-size: 1.265625rem !important; }
   @media screen and (min-width: 768px) {
     h3 {
       font-size: 1.5625rem !important; } }
   @media screen and (min-width: 1024px) {
     h3 {
-      font-size: 1.77689rem !important; } }
+      font-size: 1.776889rem !important; } }
 
 h4 {
-  line-height: 1.41404em !important;
+  line-height: 1.414035em !important;
   font-size: 1.125rem !important; }
   @media screen and (min-width: 768px) {
     h4 {
@@ -2601,25 +2601,25 @@ h5 {
       font-size: 1rem !important; } }
 
 h6 {
-  line-height: 1.59119em !important;
-  font-size: 0.88889rem !important; }
+  line-height: 1.5911911657em !important;
+  font-size: 0.8888888889rem !important; }
   @media screen and (min-width: 768px) {
     h6 {
       font-size: 0.8rem !important; } }
   @media screen and (min-width: 1024px) {
     h6 {
-      font-size: 0.75019rem !important; } }
+      font-size: 0.7501875469rem !important; } }
 
 small {
-  line-height: 1.59119em !important;
-  font-size: 0.88889rem !important;
+  line-height: 1.5911911657em !important;
+  font-size: 0.8888888889rem !important;
   color: #aaaaaa; }
   @media screen and (min-width: 768px) {
     small {
       font-size: 0.8rem !important; } }
   @media screen and (min-width: 1024px) {
     small {
-      font-size: 0.75019rem !important; } }
+      font-size: 0.7501875469rem !important; } }
 
 b, strong {
   font-weight: 700; }
@@ -2647,7 +2647,7 @@ figure {
   margin: 1.5rem 0; }
 
 blockquote {
-  line-height: 1.41404em !important;
+  line-height: 1.414035em !important;
   font-size: 1.125rem !important;
   color: #666666;
   font-family: Georgia, serif;
@@ -2707,47 +2707,47 @@ hr {
  * Text sizes
  */
 .text-jumbo {
-  line-height: 1.1167em !important;
-  font-size: 1.80203rem !important; }
+  line-height: 1.1166980551em !important;
+  font-size: 1.8020324707rem !important; }
   @media screen and (min-width: 768px) {
     .text-jumbo {
-      font-size: 3.05176rem !important; } }
+      font-size: 3.0517578125rem !important; } }
   @media screen and (min-width: 1024px) {
     .text-jumbo {
-      font-size: 4.20873rem !important; } }
+      font-size: 4.2087269129rem !important; } }
 
 .text-hero {
-  line-height: 1.18459em !important;
-  font-size: 1.60181rem !important; }
+  line-height: 1.18458672em !important;
+  font-size: 1.6018066406rem !important; }
   @media screen and (min-width: 768px) {
     .text-hero {
-      font-size: 2.44141rem !important; } }
+      font-size: 2.44140625rem !important; } }
   @media screen and (min-width: 1024px) {
     .text-hero {
-      font-size: 3.15733rem !important; } }
+      font-size: 3.1573345183rem !important; } }
 
 .text-large {
-  line-height: 1.2566em !important;
-  font-size: 1.42383rem !important; }
+  line-height: 1.2566026159em !important;
+  font-size: 1.423828125rem !important; }
   @media screen and (min-width: 768px) {
     .text-large {
-      font-size: 1.95313rem !important; } }
+      font-size: 1.953125rem !important; } }
   @media screen and (min-width: 1024px) {
     .text-large {
-      font-size: 2.36859rem !important; } }
+      font-size: 2.368593037rem !important; } }
 
 .text-medium {
-  line-height: 1.333em !important;
-  font-size: 1.26563rem !important; }
+  line-height: 1.3329966542em !important;
+  font-size: 1.265625rem !important; }
   @media screen and (min-width: 768px) {
     .text-medium {
       font-size: 1.5625rem !important; } }
   @media screen and (min-width: 1024px) {
     .text-medium {
-      font-size: 1.77689rem !important; } }
+      font-size: 1.776889rem !important; } }
 
 .text-emphasis {
-  line-height: 1.41404em !important;
+  line-height: 1.414035em !important;
   font-size: 1.125rem !important; }
   @media screen and (min-width: 768px) {
     .text-emphasis {
@@ -2767,24 +2767,24 @@ hr {
       font-size: 1rem !important; } }
 
 .text-small {
-  line-height: 1.59119em !important;
-  font-size: 0.88889rem !important; }
+  line-height: 1.5911911657em !important;
+  font-size: 0.8888888889rem !important; }
   @media screen and (min-width: 768px) {
     .text-small {
       font-size: 0.8rem !important; } }
   @media screen and (min-width: 1024px) {
     .text-small {
-      font-size: 0.75019rem !important; } }
+      font-size: 0.7501875469rem !important; } }
 
 .text-micro {
-  line-height: 1.68793em !important;
-  font-size: 0.79012rem !important; }
+  line-height: 1.6879262172em !important;
+  font-size: 0.7901234568rem !important; }
   @media screen and (min-width: 768px) {
     .text-micro {
       font-size: 0.64rem !important; } }
   @media screen and (min-width: 1024px) {
     .text-micro {
-      font-size: 0.56278rem !important; } }
+      font-size: 0.5627813555rem !important; } }
 
 /*
  * Text colours
@@ -2884,11 +2884,11 @@ hr {
     content: "";
     display: block; }
   .grid__span-1 {
-    width: calc(8.33333% - 21.66667px);
+    width: calc(8.3333333333% - 21.6666666667px);
     float: left;
     margin-left: 20px; }
   .grid__span-2 {
-    width: calc(16.66667% - 23.33333px);
+    width: calc(16.6666666667% - 23.3333333333px);
     float: left;
     margin-left: 20px; }
   .grid__span-3 {
@@ -2896,11 +2896,11 @@ hr {
     float: left;
     margin-left: 20px; }
   .grid__span-4 {
-    width: calc(33.33333% - 26.66667px);
+    width: calc(33.3333333333% - 26.6666666667px);
     float: left;
     margin-left: 20px; }
   .grid__span-5 {
-    width: calc(41.66667% - 28.33333px);
+    width: calc(41.6666666667% - 28.3333333333px);
     float: left;
     margin-left: 20px; }
   .grid__span-6 {
@@ -2908,11 +2908,11 @@ hr {
     float: left;
     margin-left: 20px; }
   .grid__span-7 {
-    width: calc(58.33333% - 31.66667px);
+    width: calc(58.3333333333% - 31.6666666667px);
     float: left;
     margin-left: 20px; }
   .grid__span-8 {
-    width: calc(66.66667% - 33.33333px);
+    width: calc(66.6666666667% - 33.3333333333px);
     float: left;
     margin-left: 20px; }
   .grid__span-9 {
@@ -2920,11 +2920,11 @@ hr {
     float: left;
     margin-left: 20px; }
   .grid__span-10 {
-    width: calc(83.33333% - 36.66667px);
+    width: calc(83.3333333333% - 36.6666666667px);
     float: left;
     margin-left: 20px; }
   .grid__span-11 {
-    width: calc(91.66667% - 38.33333px);
+    width: calc(91.6666666667% - 38.3333333333px);
     float: left;
     margin-left: 20px; }
   .grid__span-12 {
@@ -2932,123 +2932,123 @@ hr {
     float: left;
     margin-left: 20px; }
   .grid__shift-1 {
-    left: calc(8.33333% - 21.66667px + 20px);
+    left: calc(8.3333333333% - 21.6666666667px + 20px);
     position: relative; }
   .grid__shift-2 {
-    left: calc(16.66667% - 23.33333px + 20px);
+    left: calc(16.6666666667% - 23.3333333333px + 20px);
     position: relative; }
   .grid__shift-3 {
     left: calc(25% - 25px + 20px);
     position: relative; }
   .grid__shift-4 {
-    left: calc(33.33333% - 26.66667px + 20px);
+    left: calc(33.3333333333% - 26.6666666667px + 20px);
     position: relative; }
   .grid__shift-5 {
-    left: calc(41.66667% - 28.33333px + 20px);
+    left: calc(41.6666666667% - 28.3333333333px + 20px);
     position: relative; }
   .grid__shift-6 {
     left: calc(50% - 30px + 20px);
     position: relative; }
   .grid__shift-7 {
-    left: calc(58.33333% - 31.66667px + 20px);
+    left: calc(58.3333333333% - 31.6666666667px + 20px);
     position: relative; }
   .grid__shift-8 {
-    left: calc(66.66667% - 33.33333px + 20px);
+    left: calc(66.6666666667% - 33.3333333333px + 20px);
     position: relative; }
   .grid__shift-9 {
     left: calc(75% - 35px + 20px);
     position: relative; }
   .grid__shift-10 {
-    left: calc(83.33333% - 36.66667px + 20px);
+    left: calc(83.3333333333% - 36.6666666667px + 20px);
     position: relative; }
   .grid__shift-11 {
-    left: calc(91.66667% - 38.33333px + 20px);
+    left: calc(91.6666666667% - 38.3333333333px + 20px);
     position: relative; }
   .grid__shift-12 {
     left: calc(100% - 40px + 20px);
     position: relative; }
   .grid__unshift-1 {
-    left: calc(-8.33333% - 18.33333px + 20px);
+    left: calc(-8.3333333333% - 18.3333333333px + 20px);
     position: relative; }
   .grid__unshift-2 {
-    left: calc(-16.66667% - 16.66667px + 20px);
+    left: calc(-16.6666666667% - 16.6666666667px + 20px);
     position: relative; }
   .grid__unshift-3 {
     left: calc(-25% - 15px + 20px);
     position: relative; }
   .grid__unshift-4 {
-    left: calc(-33.33333% - 13.33333px + 20px);
+    left: calc(-33.3333333333% - 13.3333333333px + 20px);
     position: relative; }
   .grid__unshift-5 {
-    left: calc(-41.66667% - 11.66667px + 20px);
+    left: calc(-41.6666666667% - 11.6666666667px + 20px);
     position: relative; }
   .grid__unshift-6 {
     left: calc(-50% - 10px + 20px);
     position: relative; }
   .grid__unshift-7 {
-    left: calc(-58.33333% - 8.33333px + 20px);
+    left: calc(-58.3333333333% - 8.3333333333px + 20px);
     position: relative; }
   .grid__unshift-8 {
-    left: calc(-66.66667% - 6.66667px + 20px);
+    left: calc(-66.6666666667% - 6.6666666667px + 20px);
     position: relative; }
   .grid__unshift-9 {
     left: calc(-75% - 5px + 20px);
     position: relative; }
   .grid__unshift-10 {
-    left: calc(-83.33333% - 3.33333px + 20px);
+    left: calc(-83.3333333333% - 3.3333333333px + 20px);
     position: relative; }
   .grid__unshift-11 {
-    left: calc(-91.66667% - 1.66667px + 20px);
+    left: calc(-91.6666666667% - 1.6666666667px + 20px);
     position: relative; }
   .grid__unshift-12 {
     left: calc(-100% - 0px + 20px);
     position: relative; }
   .grid__push-1 {
-    margin-left: calc(8.33333% - 21.66667px + 40px); }
+    margin-left: calc(8.3333333333% - 21.6666666667px + 40px); }
   .grid__push-2 {
-    margin-left: calc(16.66667% - 23.33333px + 40px); }
+    margin-left: calc(16.6666666667% - 23.3333333333px + 40px); }
   .grid__push-3 {
     margin-left: calc(25% - 25px + 40px); }
   .grid__push-4 {
-    margin-left: calc(33.33333% - 26.66667px + 40px); }
+    margin-left: calc(33.3333333333% - 26.6666666667px + 40px); }
   .grid__push-5 {
-    margin-left: calc(41.66667% - 28.33333px + 40px); }
+    margin-left: calc(41.6666666667% - 28.3333333333px + 40px); }
   .grid__push-6 {
     margin-left: calc(50% - 30px + 40px); }
   .grid__push-7 {
-    margin-left: calc(58.33333% - 31.66667px + 40px); }
+    margin-left: calc(58.3333333333% - 31.6666666667px + 40px); }
   .grid__push-8 {
-    margin-left: calc(66.66667% - 33.33333px + 40px); }
+    margin-left: calc(66.6666666667% - 33.3333333333px + 40px); }
   .grid__push-9 {
     margin-left: calc(75% - 35px + 40px); }
   .grid__push-10 {
-    margin-left: calc(83.33333% - 36.66667px + 40px); }
+    margin-left: calc(83.3333333333% - 36.6666666667px + 40px); }
   .grid__push-11 {
-    margin-left: calc(91.66667% - 38.33333px + 40px); }
+    margin-left: calc(91.6666666667% - 38.3333333333px + 40px); }
   .grid__push-12 {
     margin-left: calc(100% - 40px + 40px); }
   .grid__pull-1 {
-    margin-left: calc(-8.33333% - 18.33333px + 40px); }
+    margin-left: calc(-8.3333333333% - 18.3333333333px + 40px); }
   .grid__pull-2 {
-    margin-left: calc(-16.66667% - 16.66667px + 40px); }
+    margin-left: calc(-16.6666666667% - 16.6666666667px + 40px); }
   .grid__pull-3 {
     margin-left: calc(-25% - 15px + 40px); }
   .grid__pull-4 {
-    margin-left: calc(-33.33333% - 13.33333px + 40px); }
+    margin-left: calc(-33.3333333333% - 13.3333333333px + 40px); }
   .grid__pull-5 {
-    margin-left: calc(-41.66667% - 11.66667px + 40px); }
+    margin-left: calc(-41.6666666667% - 11.6666666667px + 40px); }
   .grid__pull-6 {
     margin-left: calc(-50% - 10px + 40px); }
   .grid__pull-7 {
-    margin-left: calc(-58.33333% - 8.33333px + 40px); }
+    margin-left: calc(-58.3333333333% - 8.3333333333px + 40px); }
   .grid__pull-8 {
-    margin-left: calc(-66.66667% - 6.66667px + 40px); }
+    margin-left: calc(-66.6666666667% - 6.6666666667px + 40px); }
   .grid__pull-9 {
     margin-left: calc(-75% - 5px + 40px); }
   .grid__pull-10 {
-    margin-left: calc(-83.33333% - 3.33333px + 40px); }
+    margin-left: calc(-83.3333333333% - 3.3333333333px + 40px); }
   .grid__pull-11 {
-    margin-left: calc(-91.66667% - 1.66667px + 40px); }
+    margin-left: calc(-91.6666666667% - 1.6666666667px + 40px); }
   .grid__pull-12 {
     margin-left: calc(-100% - 0px + 40px); }
   .grid--collapse {
@@ -3056,47 +3056,47 @@ hr {
     margin-right: -0.00001px;
     width: calc(100% + 0.00002px); }
     .grid--collapse > .grid__span-1 {
-      width: calc(8.33333% - 0.00001px);
+      width: calc(8.3333333333% - 0.0000108333px);
       float: left;
       margin-left: 0.00001px; }
     .grid--collapse > .grid__span-2 {
-      width: calc(16.66667% - 0.00001px);
+      width: calc(16.6666666667% - 0.0000116667px);
       float: left;
       margin-left: 0.00001px; }
     .grid--collapse > .grid__span-3 {
-      width: calc(25% - 0.00001px);
+      width: calc(25% - 0.0000125px);
       float: left;
       margin-left: 0.00001px; }
     .grid--collapse > .grid__span-4 {
-      width: calc(33.33333% - 0.00001px);
+      width: calc(33.3333333333% - 0.0000133333px);
       float: left;
       margin-left: 0.00001px; }
     .grid--collapse > .grid__span-5 {
-      width: calc(41.66667% - 0.00001px);
+      width: calc(41.6666666667% - 0.0000141667px);
       float: left;
       margin-left: 0.00001px; }
     .grid--collapse > .grid__span-6 {
-      width: calc(50% - 0.00002px);
+      width: calc(50% - 0.000015px);
       float: left;
       margin-left: 0.00001px; }
     .grid--collapse > .grid__span-7 {
-      width: calc(58.33333% - 0.00002px);
+      width: calc(58.3333333333% - 0.0000158333px);
       float: left;
       margin-left: 0.00001px; }
     .grid--collapse > .grid__span-8 {
-      width: calc(66.66667% - 0.00002px);
+      width: calc(66.6666666667% - 0.0000166667px);
       float: left;
       margin-left: 0.00001px; }
     .grid--collapse > .grid__span-9 {
-      width: calc(75% - 0.00002px);
+      width: calc(75% - 0.0000175px);
       float: left;
       margin-left: 0.00001px; }
     .grid--collapse > .grid__span-10 {
-      width: calc(83.33333% - 0.00002px);
+      width: calc(83.3333333333% - 0.0000183333px);
       float: left;
       margin-left: 0.00001px; }
     .grid--collapse > .grid__span-11 {
-      width: calc(91.66667% - 0.00002px);
+      width: calc(91.6666666667% - 0.0000191667px);
       float: left;
       margin-left: 0.00001px; }
     .grid--collapse > .grid__span-12 {
@@ -3104,123 +3104,123 @@ hr {
       float: left;
       margin-left: 0.00001px; }
     .grid--collapse > .grid__shift-1 {
-      left: calc(8.33333% - 0.00001px + 0.00001px);
+      left: calc(8.3333333333% - 0.0000108333px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__shift-2 {
-      left: calc(16.66667% - 0.00001px + 0.00001px);
+      left: calc(16.6666666667% - 0.0000116667px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__shift-3 {
-      left: calc(25% - 0.00001px + 0.00001px);
+      left: calc(25% - 0.0000125px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__shift-4 {
-      left: calc(33.33333% - 0.00001px + 0.00001px);
+      left: calc(33.3333333333% - 0.0000133333px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__shift-5 {
-      left: calc(41.66667% - 0.00001px + 0.00001px);
+      left: calc(41.6666666667% - 0.0000141667px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__shift-6 {
-      left: calc(50% - 0.00002px + 0.00001px);
+      left: calc(50% - 0.000015px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__shift-7 {
-      left: calc(58.33333% - 0.00002px + 0.00001px);
+      left: calc(58.3333333333% - 0.0000158333px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__shift-8 {
-      left: calc(66.66667% - 0.00002px + 0.00001px);
+      left: calc(66.6666666667% - 0.0000166667px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__shift-9 {
-      left: calc(75% - 0.00002px + 0.00001px);
+      left: calc(75% - 0.0000175px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__shift-10 {
-      left: calc(83.33333% - 0.00002px + 0.00001px);
+      left: calc(83.3333333333% - 0.0000183333px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__shift-11 {
-      left: calc(91.66667% - 0.00002px + 0.00001px);
+      left: calc(91.6666666667% - 0.0000191667px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__shift-12 {
       left: calc(100% - 0.00002px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__unshift-1 {
-      left: calc(-8.33333% - 0.00001px + 0.00001px);
+      left: calc(-8.3333333333% - 0.0000091667px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__unshift-2 {
-      left: calc(-16.66667% - 0.00001px + 0.00001px);
+      left: calc(-16.6666666667% - 0.0000083333px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__unshift-3 {
-      left: calc(-25% - 0.00001px + 0.00001px);
+      left: calc(-25% - 0.0000075px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__unshift-4 {
-      left: calc(-33.33333% - 0.00001px + 0.00001px);
+      left: calc(-33.3333333333% - 0.0000066667px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__unshift-5 {
-      left: calc(-41.66667% - 0.00001px + 0.00001px);
+      left: calc(-41.6666666667% - 0.0000058333px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__unshift-6 {
-      left: calc(-50% - 0.00001px + 0.00001px);
+      left: calc(-50% - 0.000005px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__unshift-7 {
-      left: calc(-58.33333% - 0px + 0.00001px);
+      left: calc(-58.3333333333% - 0.0000041667px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__unshift-8 {
-      left: calc(-66.66667% - 0px + 0.00001px);
+      left: calc(-66.6666666667% - 0.0000033333px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__unshift-9 {
-      left: calc(-75% - 0px + 0.00001px);
+      left: calc(-75% - 0.0000025px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__unshift-10 {
-      left: calc(-83.33333% - 0px + 0.00001px);
+      left: calc(-83.3333333333% - 0.0000016667px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__unshift-11 {
-      left: calc(-91.66667% - 0px + 0.00001px);
+      left: calc(-91.6666666667% - 0.0000008333px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__unshift-12 {
       left: calc(-100% - 0px + 0.00001px);
       position: relative; }
     .grid--collapse > .grid__push-1 {
-      margin-left: calc(8.33333% - 0.00001px + 0.00002px); }
+      margin-left: calc(8.3333333333% - 0.0000108333px + 0.00002px); }
     .grid--collapse > .grid__push-2 {
-      margin-left: calc(16.66667% - 0.00001px + 0.00002px); }
+      margin-left: calc(16.6666666667% - 0.0000116667px + 0.00002px); }
     .grid--collapse > .grid__push-3 {
-      margin-left: calc(25% - 0.00001px + 0.00002px); }
+      margin-left: calc(25% - 0.0000125px + 0.00002px); }
     .grid--collapse > .grid__push-4 {
-      margin-left: calc(33.33333% - 0.00001px + 0.00002px); }
+      margin-left: calc(33.3333333333% - 0.0000133333px + 0.00002px); }
     .grid--collapse > .grid__push-5 {
-      margin-left: calc(41.66667% - 0.00001px + 0.00002px); }
+      margin-left: calc(41.6666666667% - 0.0000141667px + 0.00002px); }
     .grid--collapse > .grid__push-6 {
-      margin-left: calc(50% - 0.00002px + 0.00002px); }
+      margin-left: calc(50% - 0.000015px + 0.00002px); }
     .grid--collapse > .grid__push-7 {
-      margin-left: calc(58.33333% - 0.00002px + 0.00002px); }
+      margin-left: calc(58.3333333333% - 0.0000158333px + 0.00002px); }
     .grid--collapse > .grid__push-8 {
-      margin-left: calc(66.66667% - 0.00002px + 0.00002px); }
+      margin-left: calc(66.6666666667% - 0.0000166667px + 0.00002px); }
     .grid--collapse > .grid__push-9 {
-      margin-left: calc(75% - 0.00002px + 0.00002px); }
+      margin-left: calc(75% - 0.0000175px + 0.00002px); }
     .grid--collapse > .grid__push-10 {
-      margin-left: calc(83.33333% - 0.00002px + 0.00002px); }
+      margin-left: calc(83.3333333333% - 0.0000183333px + 0.00002px); }
     .grid--collapse > .grid__push-11 {
-      margin-left: calc(91.66667% - 0.00002px + 0.00002px); }
+      margin-left: calc(91.6666666667% - 0.0000191667px + 0.00002px); }
     .grid--collapse > .grid__push-12 {
       margin-left: calc(100% - 0.00002px + 0.00002px); }
     .grid--collapse > .grid__pull-1 {
-      margin-left: calc(-8.33333% - 0.00001px + 0.00002px); }
+      margin-left: calc(-8.3333333333% - 0.0000091667px + 0.00002px); }
     .grid--collapse > .grid__pull-2 {
-      margin-left: calc(-16.66667% - 0.00001px + 0.00002px); }
+      margin-left: calc(-16.6666666667% - 0.0000083333px + 0.00002px); }
     .grid--collapse > .grid__pull-3 {
-      margin-left: calc(-25% - 0.00001px + 0.00002px); }
+      margin-left: calc(-25% - 0.0000075px + 0.00002px); }
     .grid--collapse > .grid__pull-4 {
-      margin-left: calc(-33.33333% - 0.00001px + 0.00002px); }
+      margin-left: calc(-33.3333333333% - 0.0000066667px + 0.00002px); }
     .grid--collapse > .grid__pull-5 {
-      margin-left: calc(-41.66667% - 0.00001px + 0.00002px); }
+      margin-left: calc(-41.6666666667% - 0.0000058333px + 0.00002px); }
     .grid--collapse > .grid__pull-6 {
-      margin-left: calc(-50% - 0.00001px + 0.00002px); }
+      margin-left: calc(-50% - 0.000005px + 0.00002px); }
     .grid--collapse > .grid__pull-7 {
-      margin-left: calc(-58.33333% - 0px + 0.00002px); }
+      margin-left: calc(-58.3333333333% - 0.0000041667px + 0.00002px); }
     .grid--collapse > .grid__pull-8 {
-      margin-left: calc(-66.66667% - 0px + 0.00002px); }
+      margin-left: calc(-66.6666666667% - 0.0000033333px + 0.00002px); }
     .grid--collapse > .grid__pull-9 {
-      margin-left: calc(-75% - 0px + 0.00002px); }
+      margin-left: calc(-75% - 0.0000025px + 0.00002px); }
     .grid--collapse > .grid__pull-10 {
-      margin-left: calc(-83.33333% - 0px + 0.00002px); }
+      margin-left: calc(-83.3333333333% - 0.0000016667px + 0.00002px); }
     .grid--collapse > .grid__pull-11 {
-      margin-left: calc(-91.66667% - 0px + 0.00002px); }
+      margin-left: calc(-91.6666666667% - 0.0000008333px + 0.00002px); }
     .grid--collapse > .grid__pull-12 {
       margin-left: calc(-100% - 0px + 0.00002px); }
   @media screen and (max-width: 767px) {
@@ -3818,8 +3818,8 @@ hr {
     .form__label {
       font-size: 1rem !important; } }
 .form__error {
-  line-height: 1.59119em !important;
-  font-size: 0.88889rem !important;
+  line-height: 1.5911911657em !important;
+  font-size: 0.8888888889rem !important;
   color: #d50000;
   margin-top: 0.1875rem; }
   @media screen and (min-width: 768px) {
@@ -3827,10 +3827,10 @@ hr {
       font-size: 0.8rem !important; } }
   @media screen and (min-width: 1024px) {
     .form__error {
-      font-size: 0.75019rem !important; } }
+      font-size: 0.7501875469rem !important; } }
 .form__help {
-  line-height: 1.59119em !important;
-  font-size: 0.88889rem !important;
+  line-height: 1.5911911657em !important;
+  font-size: 0.8888888889rem !important;
   color: #aaaaaa;
   margin-top: 0.1875rem; }
   @media screen and (min-width: 768px) {
@@ -3838,7 +3838,7 @@ hr {
       font-size: 0.8rem !important; } }
   @media screen and (min-width: 1024px) {
     .form__help {
-      font-size: 0.75019rem !important; } }
+      font-size: 0.7501875469rem !important; } }
 
 .input-addon {
   line-height: 1.5em !important;
@@ -3898,8 +3898,8 @@ hr {
 .control-select__group:first-child .control-select__group-heading {
   border-top: none; }
 .control-select__group-heading {
-  line-height: 1.59119em !important;
-  font-size: 0.88889rem !important;
+  line-height: 1.5911911657em !important;
+  font-size: 0.8888888889rem !important;
   background-color: #f8f8f9;
   border-top: 1px solid #f2f2f3;
   border-bottom: 1px solid #f2f2f3;
@@ -3912,7 +3912,7 @@ hr {
       font-size: 0.8rem !important; } }
   @media screen and (min-width: 1024px) {
     .control-select__group-heading {
-      font-size: 0.75019rem !important; } }
+      font-size: 0.7501875469rem !important; } }
 
 [type=submit], button {
   -webkit-appearance: none;
@@ -4266,7 +4266,7 @@ hr {
       color: #fff; }
 
 .dialog-header__title {
-  line-height: 1.41404em !important;
+  line-height: 1.414035em !important;
   font-size: 1.125rem !important;
   padding: 0.75rem 1rem; }
   @media screen and (min-width: 768px) {
@@ -4277,15 +4277,15 @@ hr {
       font-size: 1.333rem !important; } }
   @media screen and (min-width: 768px) {
     .dialog-header__title {
-      line-height: 1.333em !important;
-      font-size: 1.26563rem !important;
+      line-height: 1.3329966542em !important;
+      font-size: 1.265625rem !important;
       padding: 1.5rem 2rem; } }
   @media screen and (min-width: 768px) and (min-width: 768px) {
     .dialog-header__title {
       font-size: 1.5625rem !important; } }
   @media screen and (min-width: 768px) and (min-width: 1024px) {
     .dialog-header__title {
-      font-size: 1.77689rem !important; } }
+      font-size: 1.776889rem !important; } }
 
   .dialog-header__title--center {
     text-align: center; }
@@ -4369,27 +4369,27 @@ hr {
   border-spacing: 0;
   border: 1px solid #eaeaed; }
   .table td.span-1, .table th.span-1 {
-    width: 8.33333%; }
+    width: 8.3333333333%; }
   .table td.span-2, .table th.span-2 {
-    width: 16.66667%; }
+    width: 16.6666666667%; }
   .table td.span-3, .table th.span-3 {
     width: 25%; }
   .table td.span-4, .table th.span-4 {
-    width: 33.33333%; }
+    width: 33.3333333333%; }
   .table td.span-5, .table th.span-5 {
-    width: 41.66667%; }
+    width: 41.6666666667%; }
   .table td.span-6, .table th.span-6 {
     width: 50%; }
   .table td.span-7, .table th.span-7 {
-    width: 58.33333%; }
+    width: 58.3333333333%; }
   .table td.span-8, .table th.span-8 {
-    width: 66.66667%; }
+    width: 66.6666666667%; }
   .table td.span-9, .table th.span-9 {
     width: 75%; }
   .table td.span-10, .table th.span-10 {
-    width: 83.33333%; }
+    width: 83.3333333333%; }
   .table td.span-11, .table th.span-11 {
-    width: 91.66667%; }
+    width: 91.6666666667%; }
   .table td.span-12, .table th.span-12 {
     width: 100%; }
   .table--clickable td:hover {
@@ -4424,11 +4424,11 @@ hr {
         border-bottom: none; } }
     .table tr th {
       background-color: #f8f8f9;
-      padding: 0.53571rem 1rem;
+      padding: 0.5357142857rem 1rem;
       font-weight: 700;
       text-align: left; }
     .table tr td {
-      padding: 0.53571rem 1rem;
+      padding: 0.5357142857rem 1rem;
       border-bottom: 1px solid #eaeaed; }
 
 /** ---- FORM ----
@@ -4461,7 +4461,7 @@ hr {
   position: relative; }
   .tooltip:before {
     background-color: rgba(0, 0, 0, 0.75);
-    padding: 0.375rem 0.71429rem;
+    padding: 0.375rem 0.7142857143rem;
     border-radius: 4px;
     white-space: nowrap;
     content: attr(data-tooltip);
@@ -4569,8 +4569,8 @@ hr {
   .tooltip--bottom-center:hover:before, .tooltip--bottom-center:hover:after {
     transform: translate3d(-50%, 6px, 0); }
   .tooltip--small:hover:before {
-    line-height: 1.59119em !important;
-    font-size: 0.88889rem !important;
+    line-height: 1.5911911657em !important;
+    font-size: 0.8888888889rem !important;
     top: -1.625rem;
     padding: 0.1875rem 0.5rem; }
     @media screen and (min-width: 768px) {
@@ -4578,7 +4578,7 @@ hr {
         font-size: 0.8rem !important; } }
     @media screen and (min-width: 1024px) {
       .tooltip--small:hover:before {
-        font-size: 0.75019rem !important; } }
+        font-size: 0.7501875469rem !important; } }
 
 .datepicker {
   border: 1px solid #e5e5e7;
@@ -4674,12 +4674,12 @@ hr {
     background-color: #d50000; }
 
 .badge {
-  line-height: 1.59119em !important;
-  font-size: 0.88889rem !important;
+  line-height: 1.5911911657em !important;
+  font-size: 0.8888888889rem !important;
   color: #fff;
   background-color: #666666;
   display: inline-block;
-  border-radius: 0.7956em;
+  border-radius: 0.7955955829em;
   padding-left: 0.5em;
   padding-right: 0.5em;
   white-space: nowrap;
@@ -4689,7 +4689,7 @@ hr {
       font-size: 0.8rem !important; } }
   @media screen and (min-width: 1024px) {
     .badge {
-      font-size: 0.75019rem !important; } }
+      font-size: 0.7501875469rem !important; } }
   .badge--primary {
     background-color: #00abd3; }
   .badge--success {
@@ -4965,7 +4965,10 @@ body.menu--sidebar .menu__section {
     width: calc(100% - 240px); }
   body.menu--sidebar .content {
     margin-left: 240px;
-    padding-top: 3.2rem; } }
+    padding-top: 3.2rem; }
+  body.menu--sidebar .form--action-fixed-bottom,
+  body.menu--sidebar .form__actions {
+    left: 240px; } }
 @media screen and (max-width: 767px) {
   body.menu--sidebar .menu {
     position: fixed;
