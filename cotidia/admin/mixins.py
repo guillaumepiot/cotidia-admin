@@ -1,14 +1,19 @@
 from django.db import transaction
 
 from cotidia.admin.signals import ordering_complete
+from warnings import warn
 
 
 class OrderableMixin:
+    def _warn(self):
+        warn("OrderableMixin is deprecated please move to using AbstractOrderable", DeprecationWarning)
 
     def orderable_queryset(self):
+        self._warn()
         return self.__class__.objects.filter()
 
     def move_up(self):
+        self._warn()
         # Find previous sibling
         queryset = self.orderable_queryset()
 
@@ -23,6 +28,7 @@ class OrderableMixin:
             self.swap(item)
 
     def move_down(self):
+        self._warn()
         # Find next sibling
         queryset = self.orderable_queryset()
 
@@ -37,6 +43,7 @@ class OrderableMixin:
 
     @transaction.atomic
     def swap(self, item):
+        self._warn()
         item_order_id = item.order_id
         item.order_id = self.order_id
         self.order_id = item_order_id
