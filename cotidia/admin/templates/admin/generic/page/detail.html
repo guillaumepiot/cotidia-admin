@@ -10,7 +10,6 @@
 {% endblock body_class %}
 
 {% block toolbar %}
-
     <a href="{% get_admin_url app_label model_name "delete" object %}" class="btn btn--delete btn--small toolbar__item">
         <span class="fa fa-times"></span>
         {% blocktrans with verbose_name as verbose_name %}
