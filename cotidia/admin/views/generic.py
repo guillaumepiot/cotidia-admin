@@ -336,3 +336,7 @@ class AdminOrderableView(View):
         )
 
         return HttpResponseRedirect(self.request.META["HTTP_REFERER"])
+
+    def get(self, *args, **kwargs):
+        self.request.POST = self.request.GET
+        return self.post(*args, **kwargs)
