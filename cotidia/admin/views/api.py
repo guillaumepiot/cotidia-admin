@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from django.contrib.contenttypes.models import ContentType
+from django.urls import reverse
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -18,3 +19,20 @@ class AdminOrderableAPIView(APIView):
             item.move_down()
 
         return Response(status=status.HTTP_200_OK)
+
+
+class AdminSearchDashboardAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        content_type = kwargs['content_type_id']
+        model_class = ContentType.objects.get_for_id(content_type)
+        fields = model_class._meta.get_fields()
+        print(fields)
+        endpoint = reverse("dashboard", kwargs={"content_type_id": content_type})
+        data = {
+                "endpoint": endpoint,
+                "columns": {},
+                "default_columns": []
+                }
+        return Response(data=data, status=status.HTTP_200_OK)
+
+

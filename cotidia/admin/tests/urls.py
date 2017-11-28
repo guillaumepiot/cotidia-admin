@@ -1,17 +1,17 @@
 from django.conf.urls import url
 
-from cotidia.admin.views.api import AdminOrderableAPIView
-from cotidia.admin.views.api import AdminSearchDashboardAPIView
+from cotidia.admin.tests.views import AdminTestOrderableAPIView, AdminTestSearchDashboardAPIView
+
 
 urlpatterns = [
     url(
         r'^order/(?P<content_type_id>[\d]+)/(?P<object_id>[\d]+)$',
-        AdminOrderableAPIView.as_view(),
+        AdminTestOrderableAPIView.as_view(),
         name='order'
     ),
     url(
         r'^dashboard/(?P<content_type_id>[\d]+)',
-        AdminSearchDashboardAPIView.as_view(),
+        AdminTestSearchDashboardAPIView.as_view(),
         name='dashboard'
         )
 ]
