@@ -1,14 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Route, Switch } from 'react-router-dom'
-
 import { FullScreen } from './elements/global'
 import Modal from '../containers/Modal'
-
-import NotFound from './NotFound'
-
-import SearchDashboard from '../containers/SearchDashboard'
 
 export default function App ({ networkError, bootstrapped }) {
   if (networkError) {
@@ -28,14 +22,9 @@ export default function App ({ networkError, bootstrapped }) {
   }
 
   return (
-    <div>
-      <Switch>
-        <Route exact strict path='/' component={SearchDashboard} />
-        <Route component={NotFound} />
-      </Switch>
-
+    <>
       <Modal />
-    </div>
+    </>
   )
 }
 
