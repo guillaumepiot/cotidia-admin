@@ -3,6 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.response import Response
+from cotidia.admin.utils import get_model_structure
 
 
 class AdminOrderableAPIView(APIView):
@@ -24,15 +25,7 @@ class AdminOrderableAPIView(APIView):
 class AdminSearchDashboardAPIView(APIView):
     def get(self, request, *args, **kwargs):
         content_type = kwargs['content_type_id']
-        model_class = ContentType.objects.get_for_id(content_type)
-        fields = model_class._meta.get_fields()
-        print(fields)
+        model_class = ContentType.objects.get_for_id(content_type).model_class()
         endpoint = reverse("dashboard", kwargs={"content_type_id": content_type})
-        data = {
-                "endpoint": endpoint,
-                "columns": {},
-                "default_columns": []
-                }
+        data = get_model_structure(model_class, endpoint)
         return Response(data=data, status=status.HTTP_200_OK)
-
-
