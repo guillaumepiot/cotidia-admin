@@ -107,12 +107,9 @@ def get_field_representation(field):
         label = field.model.__meta__.field_labels[field.name]
     except (KeyError, AttributeError):
         pass
-    print("%s %s" % (field.name, field.choices))
     if field.choices:
-        print("%s %s" % (field.name, field.choices))
         field_representation['filter'] = 'choice' 
         field_representation['options'] = field.choices
-        
     field_representation['label'] = label
     return field_representation
 
@@ -127,7 +124,6 @@ def get_fields_from_model(model):
         else:
             print("Field not supported: %s" % f.get_internal_type())
 
-    print(fields_representation)
     return fields_representation
 
 
