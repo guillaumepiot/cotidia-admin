@@ -10,6 +10,11 @@
 			}
 		],
 		"@babel/react",
-		"@babel/stage-0"
+		[
+			"@babel/stage-0",
+			{
+				"loose": true
+			}
+		]
 	]
 }

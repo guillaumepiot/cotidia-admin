@@ -1,20 +1,54 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 
 import { Provider } from 'react-redux'
 import configureStore from './redux/create'
+import { bootstrap } from './redux/modules/bootstrap/actions'
 
 import SearchDashboard from './containers/SearchDashboard'
 
-import { bootstrap } from './redux/modules/bootstrap/actions'
+import { FullScreen } from './components/elements/global'
 
-const { store } = configureStore()
+export default function App (props) {
+  const { authToken, ...dashboardProps } = props
 
-store.dispatch(bootstrap())
+  if (! authToken) {
+    return (
+      <FullScreen>
+        Dashboard configuration not provided.
+      </FullScreen>
+    )
+  }
 
-const app = (
-  <Provider store={store}>
-    <SearchDashboard />
-  </Provider>
-)
-ReactDOM.render(app, document.getElementById('root'))
+  sessionStorage.setItem('authToken', authToken)
+
+  const { store } = configureStore()
+
+  store.dispatch(bootstrap())
+
+  return (
+    <Provider store={store}>
+      <SearchDashboard {...dashboardProps} />
+    </Provider>
+  )
+}
+
+App.propTypes = {
+  authToken: PropTypes.string.isRequired,
+  endpoint: PropTypes.string.isRequired,
+  defaultColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  columns: PropTypes.objectOf(PropTypes.shape({
+    label: PropTypes.string.isRequired,
+    display: PropTypes.oneOf(['verbatim', 'date', 'datetime', 'boolean']),
+    filter: PropTypes.oneOf(['text', 'choice', 'boolean']),
+    options: PropTypes.arrayOf(PropTypes.shape({
+      value: PropTypes.any.isRequired,
+      label: PropTypes.string.isRequired,
+    })),
+  })).isRequired,
+}
+
+window.React = React
+window.ReactDOM = ReactDOM
+window.SearchDashboard = App

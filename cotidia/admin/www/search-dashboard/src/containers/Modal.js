@@ -14,7 +14,7 @@ const mapStateToProps = (state) => ({
   component: modalMap[state.modal.component],
   componentProps: state.modal.componentProps,
 
-  data: state.modal.data || {},
+  data: state.modal?.data || {},
 })
 
 const actionCreators = {

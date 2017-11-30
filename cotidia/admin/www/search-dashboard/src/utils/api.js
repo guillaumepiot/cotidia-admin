@@ -52,7 +52,7 @@ async function _fetch (method, url, data = {}, headers = {}) {
 export { _fetch as fetch }
 
 export async function fetchAuthenticated (method, url, data = {}, headers = {}) {
-  const token = localStorage.getItem('auth_token')
+  const token = sessionStorage.getItem('authToken')
 
   return _fetch(method, url, data, {
     ...headers,

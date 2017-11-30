@@ -1,5 +1,7 @@
 import { connect } from 'react-redux'
 
+import { setSearchTerm } from '../redux/modules/search/actions'
+
 import SearchDashboard from '../components/SearchDashboard'
 
 const mapStateToProps = (state) => ({
@@ -7,4 +9,6 @@ const mapStateToProps = (state) => ({
   networkError: state.bootstrap.networkError,
 })
 
-export default connect(mapStateToProps)(SearchDashboard)
+const actionCreators = { setSearchTerm }
+
+export default connect(mapStateToProps, actionCreators)(SearchDashboard)
