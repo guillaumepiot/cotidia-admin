@@ -76,6 +76,8 @@ DEFAULT_SETTINGS = dict(
         'DEFAULT_RENDERER_CLASSES': (
             'rest_framework.renderers.JSONRenderer',
         ),
+        'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+        'PAGE_SIZE': 10
     },
     FILE_UPLOAD_PATH='test-uploads/',
     PUBLIC_FILE_STORAGE='django.core.files.storage.DefaultStorage'
