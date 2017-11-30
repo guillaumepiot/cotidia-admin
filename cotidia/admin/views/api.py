@@ -43,73 +43,60 @@ def filter_range(field, min_val, max_val):
     return filter_gte(field, min_val) & filter_lte(field, max_val)
 
 
-def filter_number(field, val):
-    match = re.match(api_patterns['equal'] % number_pattern, val)
-    if match:
-        print("Groups Equal")
-        print(match.group(1))
-        return filter_equal(field, Decimal(match.group(1)))
-    match = re.match(api_patterns['lte'] % number_pattern, val)
-    if match:
-        print("Groups GTE")
-        print(match.group())
-        return filter_lte(field, Decimal(match.group(1)))
-    match = re.match(api_patterns['gte'] % number_pattern, val)
-    if match:
-        print("Groups LTE")
-        print(match.group(1))
-        return filter_gte(field, Decimal(match.group(1)))
-    match = re.match(api_patterns['range'] % (number_pattern, number_pattern), val)
-    if match:
-        print("Groups range")
-        print(match.group(1))
-        print(match.group(2))
-        return filter_range(field, Decimal(match.group(1)), Decimal(match.group(2)))
-    raise ParseError(
-            detail="The following value is not correct for a numeric field: %s" % val)
+def filter_comparable(field_regex):
+    def temp(field, val):
+        match = re.match(api_patterns['equal'] % field_regex, val)
+        if match:
+            return filter_equal(field, Decimal(match.group(1)))
+        match = re.match(api_patterns['lte'] % field_regex, val)
+        if match:
+            return filter_lte(field, Decimal(match.group(1)))
+        match = re.match(api_patterns['gte'] % field_regex, val)
+        if match:
+            return filter_gte(field, Decimal(match.group(1)))
+        match = re.match(api_patterns['range'] % (field_regex, field_regex), val)
+        if match:
+            return filter_range(field, Decimal(match.group(1)), Decimal(match.group(2)))
+        raise ParseError(
+                detail="The following value is not correct for a numeric field: %s" % val)
+    return temp
 
 
-def text_filter(query_set, field, values):
-    field += "__icontains"
-    q_object = Q(**{field: values.pop()})
-    for value in values:
-        q_object |= Q(**{field: value})
-    return query_set.filter(q_object)
+filter_number = filter_comparable(number_pattern)
 
 
-def choice_filter(query_set, field, values):
-    q_object = Q(**{field: values.pop()})
-    for value in values:
-        q_object |= Q(**{field: value})
-    return query_set.filter(q_object)
+def contains_filter(query_set, field, values):
+    """ Checks if a field contains a value """
+    return field_filter(
+            lambda x, y: Q(**{x + "__icontains": y}), query_set, field, values)
 
-
-def boolean_filter(query_set, field, values):
-    q_object = Q(**{field: values.pop()})
-    for value in values:
-        q_object |= Q(**{field: value})
-    return query_set.filter(q_object)
-
+def exact_match_filter(query_set, field, values):
+    """ Checks if a field exactly matches a value """
+    return field_filter(lambda x, y: Q(**{x: y}), query_set, field, values)
 
 def number_filter(query_set, field, values):
-    q_object = filter_number(field, values.pop())
+    """ Checks if a number fits a constraints """
+    return field_filter(filter_number, query_set, field, values)
+
+def field_filter(filter_fn, query_set, field, values):
+    """ Filters the fields with a given function 
+        The function must return a Q-object
+        Each value is "OR"ed against eachother """ 
+    q_object = filter_fn(field, values.pop())
     for value in values:
-        q_object |= filter_number(field, value)
-
-    new_qset = query_set.filter(q_object)
-    return new_qset
-
+        q_object |= filter_fn(field, value)
+    return query_set.filter(q_object)
 
 def date_filter(query_set, field, values):
     return query_set
 
 
 FILTERS = {
-        "text": text_filter,
-        "choice": choice_filter,
-        "boolean": boolean_filter,
+        "text": contains_filter,
+        "choice": exact_match_filter,
+        "boolean": exact_match_filter,
         "number": number_filter,
-        "date": date_filter
+        "date": exact_match_filter
         }
 
 
