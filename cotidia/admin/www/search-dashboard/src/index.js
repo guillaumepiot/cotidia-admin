@@ -11,7 +11,7 @@ import SearchDashboard from './containers/SearchDashboard'
 import { FullScreen } from './components/elements/global'
 
 export default function App (props) {
-  const { authToken, ...dashboardProps } = props
+  const { authToken, ...config } = props
 
   if (! authToken) {
     return (
@@ -25,11 +25,11 @@ export default function App (props) {
 
   const { store } = configureStore()
 
-  store.dispatch(bootstrap())
+  store.dispatch(bootstrap(config))
 
   return (
     <Provider store={store}>
-      <SearchDashboard {...dashboardProps} />
+      <SearchDashboard />
     </Provider>
   )
 }
@@ -41,7 +41,7 @@ App.propTypes = {
   columns: PropTypes.objectOf(PropTypes.shape({
     label: PropTypes.string.isRequired,
     display: PropTypes.oneOf(['verbatim', 'date', 'datetime', 'boolean']),
-    filter: PropTypes.oneOf(['text', 'choice', 'boolean']),
+    filter: PropTypes.oneOf(['text', 'choice', 'boolean', 'number', 'date']),
     options: PropTypes.arrayOf(PropTypes.shape({
       value: PropTypes.any.isRequired,
       label: PropTypes.string.isRequired,

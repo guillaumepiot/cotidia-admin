@@ -31,39 +31,20 @@ export default class SearchResults extends Component {
   toggleOrderDirection = (e) => this.props.toggleOrderDirection()
 
   render () {
-    const { orderColumn, orderAscending } = this.props
-
-    const columns = [
-      {
-        id: 'name',
-        label: 'Name',
-        accessor: 'name',
-        display: 'verbatim',
-      },
-      {
-        id: 'date',
-        label: 'When?',
-        accessor: 'date',
-        display: 'datetime',
-      },
-      {
-        id: 'active',
-        label: 'Active?',
-        accessor: 'active',
-        display: 'boolean',
-      },
-    ]
+    const { columns, orderColumn, orderAscending } = this.props
 
     const results = [
       {
         uuid: 'f7a7881f-048b-46ef-8290-6153472f2e3a',
         name: 'Bob Grundy',
+        email: 'bob@grundy.com',
         date: '2017-11-30T15:18:21',
         active: true,
       },
       {
         uuid: 'd337a7a8-965b-4bc3-b1a6-8c2536ef26b0',
         name: 'Alice Wolf',
+        email: 'alice@wolf.com',
         date: '2017-12-25T12:01:48',
         active: false,
       },
@@ -78,19 +59,17 @@ export default class SearchResults extends Component {
                 <th key={column.id}>
                   <span onClick={(orderColumn === column.id) ? this.toggleOrderDirection : this.setOrderColumnFactory(column.id)}>
                     {column.label}
+                    {' '}
+                    {(orderColumn === column.id) ? (orderAscending ? (
+                      <Icon icon='sort-asc' />
+                    ) : (
+                      <Icon icon='sort-desc' />
+                    )) : (
+                      <Icon icon='sort' />
+                    )}
                   </span>
 
                   <button className='btn btn--transparent' onClick={this.filterColumnFactory(column.id)}><Icon icon='filter' /></button>
-
-                  {(orderColumn === column.id) && (
-                    <button className='btn btn--transparent' onClick={this.toggleOrderDirection}>
-                      { orderAscending ? (
-                        <Icon icon='sort-asc' />
-                      ) : (
-                        <Icon icon='sort-desc' />
-                      )}
-                    </button>
-                  )}
                 </th>
               ))}
             </tr>

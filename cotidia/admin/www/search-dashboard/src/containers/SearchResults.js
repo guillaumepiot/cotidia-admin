@@ -7,10 +7,13 @@ import {
   toggleOrderDirection,
 } from '../redux/modules/search/actions'
 
+import { getVisibleColumnConfig } from '../redux/modules/search/selectors'
+
 import SearchResults from '../components/SearchResults'
 
 const mapStateToProps = (state) => ({
-  columns: state.search.columns,
+  columns: getVisibleColumnConfig(state.search),
+  displayedColumns: state.search.displayedColumns,
   orderAscending: state.search.orderAscending,
   orderColumn: state.search.orderColumn,
   results: state.search.results,

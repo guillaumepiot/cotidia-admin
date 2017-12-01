@@ -1,15 +1,36 @@
 import * as types from './types'
 
 const initialState = {
-  searchTerm: null,
-  results: null,
-  columns: [],
+  endpoint: null,
+  columns: {},
+
+  visibleColumns: [],
+
   orderColumn: null,
   orderAscending: true,
+
+  filters: {},
+
+  searchTerm: null,
+
+  results: null,
 }
 
 export default (state = initialState, { type, payload } = {}) => {
   switch (type) {
+    case types.SET_ENDPOINT:
+      return {
+        ...state,
+        endpoint: payload,
+      }
+
+    case types.SET_COLUMN_CONFIG:
+      return {
+        ...state,
+        columns: payload.columns,
+        visibleColumns: payload.defaultColumns,
+      }
+
     case types.SET_SEARCH_TERM:
       return {
         ...state,
@@ -27,6 +48,12 @@ export default (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         orderAscending: ! state.orderAscending,
+      }
+
+    case types.STORE_RESULTS:
+      return {
+        ...state,
+        results: payload,
       }
 
     default:

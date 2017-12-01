@@ -1,8 +1,18 @@
 import { put, takeEvery } from 'redux-saga/effects'
 
 import * as types from './types'
+import * as searchTypes from '../search/types'
 
-export function * bootstrap (action) {
+export function * bootstrap ({ payload: config }) {
+  yield put({ type: searchTypes.SET_ENDPOINT, payload: config.endpoint })
+  yield put({
+    type: searchTypes.SET_COLUMN_CONFIG,
+    payload: {
+      columns: config.columns,
+      defaultColumns: config.defaultColumns,
+    },
+  })
+
   yield put({ type: types.BOOTSTRAPPED })
 }
 
