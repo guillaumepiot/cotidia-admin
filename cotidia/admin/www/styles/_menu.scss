@@ -14,6 +14,17 @@ body.menu--sidebar {
         color: desaturate(lighten($menu_background_color, 30%), 30%);
     }
 
+    .menu__container{
+        overflow-y: scroll;
+        padding-top: 3em;
+        padding-bottom: 3em;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+    }
+
     @media screen and (min-width: $tablet-width) {
         .menu {
             width: $menu_sidebar_width;
@@ -29,18 +40,11 @@ body.menu--sidebar {
                 display: none;
             }
         }
-        .menu__container{
-
-        }
         .menu__item {
             float: none;
         }
-        .menu__sub-nav {
-            left: 100%;
-            top: 0;
-        }
         .menu-item__link--drop-arrow:after {
-            @include triangle(8px, $menu_link_color, right);
+            @include triangle(down, 8px, 4px, $menu_link_color);
         }
         .menu-item__link-text {
             padding-top: 0.1em;
@@ -50,11 +54,13 @@ body.menu--sidebar {
             width: 100%;
             height: $toolbar_height;
             background-color: $menu_background_color;
-            // position: absolute;
-            // top: 0;
-            // left: 0;
-            // z-index: 1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: $menu_sidebar_width;
+            z-index: 1;
             white-space: nowrap;
+
             .menu-item__link {
                 height: $toolbar_height;
             }
@@ -68,7 +74,7 @@ body.menu--sidebar {
             bottom: 0;
             left: 0;
             display: block;
-            width: 100%;
+            width: $menu_sidebar_width;
             z-index: 1;
             white-space: nowrap;
         }
@@ -78,7 +84,7 @@ body.menu--sidebar {
             bottom: 0;
             left: 0;
             display: none;
-            width: 100%;
+            width: $toolbar_height;
             z-index: 1;
             white-space: nowrap;
         }
@@ -168,6 +174,24 @@ body.menu--sidebar {
         position: absolute;
         margin-top: -3px;
     }
+    .menu__item--sub-nav {
+        &:hover {
+            .menu__sub-nav {
+                transform: scaleY(1);
+                height: auto;
+                display: block;
+            }
+        }
+    }
+    .menu__sub-nav {
+        position: static;
+        transform: scaleY(0);
+        transform-origin: top;
+        height: 0;
+        transition: transform 0.3s ease;
+        background-color: $menu_link_background_color_active;
+        display: block;
+    }
 }
 
 body.menu--sidebar-collapse {
@@ -197,9 +221,6 @@ body.menu--sidebar-collapse {
         }
         .menu-item__link-text{
             display: none;
-        }
-        .menu__sub-nav .menu-item__link-text{
-            display: block;
         }
         .menu-item__link--drop-arrow:after {
             content: none;
