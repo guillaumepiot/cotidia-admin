@@ -3927,7 +3927,7 @@ hr {
     height: 0;
     width: 0;
     border-color: #333333 transparent transparent;
-    border-width: 9px 4.5px 0; }
+    border-width: 4px 4px 0; }
 .form__control--radio-btn {
   display: flex;
   margin: 0.75rem 0; }
