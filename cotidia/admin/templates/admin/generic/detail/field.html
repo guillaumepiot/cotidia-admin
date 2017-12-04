@@ -1,4 +1,12 @@
-<div class="form__group">
+{% load humanize %}<div class="form__group">
     <label class="form__label">{{label}}</label>
-    <div class="form__control">{% if value %}{{value}}{% endif %}</div>
+    <div class="form__control">
+        {% if value %}
+            {% if type == 'currency' %}
+                {{ADMIN_DETAIL_CURRENCY|safe}}{{value|intcomma}}
+            {% else %}
+                {{value}}
+            {% endif %}
+        {% endif %}
+    </div>
 </div>

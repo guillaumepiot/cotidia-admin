@@ -10,5 +10,7 @@ class AdminConf(AppConf):
     # the menu
     MENU_DEFINITION = {}
 
+    DETAIL_CURRENCY = "&pound;"
+
     class Meta:
         prefix = 'admin'

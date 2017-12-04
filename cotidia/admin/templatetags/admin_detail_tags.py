@@ -7,9 +7,10 @@ register = template.Library()
 
 
 @register.simple_tag(takes_context=True)
-def render_detail_field(context, obj, field):
-    label = field["label"]
-    field = field["field"]
+def render_detail_field(context, obj, field_attrs):
+    label = field_attrs["label"]
+    field = field_attrs["field"]
+    field_type = field_attrs.get("type")
     value = get_attr(obj, field)
     app_label = context["app_label"]
     model_name = context["model_name"]
@@ -26,5 +27,6 @@ def render_detail_field(context, obj, field):
 
     context["label"] = label
     context["value"] = value
+    context["type"] = field_type
 
     return t.render(context)
