@@ -1,7 +1,9 @@
 import re
 import datetime
 
+from django import forms
 from django.utils.safestring import mark_safe
+from django.utils.html import format_html
 from django.utils.dates import MONTHS
 from django.forms.widgets import Widget, Select
 
@@ -340,3 +342,29 @@ class SelectDateTimeWidget(Widget):
         if y and m and d and h and minute:
             return '%s-%s-%s %s:%s' % (y, m, d, int(h), int(minute))
         return data.get(name, None)
+
+
+class TrixEditor(forms.Textarea):
+
+    def render(self, name, value, attrs=None):
+
+        if attrs is None:
+            attrs = {}
+        attrs.update({'style': 'visibility: hidden; position: absolute;'})
+
+        params = {
+            'input': attrs.get('id') or '{}_id'.format(name),
+            'class': 'trix-content',
+        }
+        param_str = ' '.join('{}="{}"'.format(k, v) for k, v in params.items())
+
+        html = super(TrixEditor, self).render(name, value, attrs)
+        html = format_html(
+            '{}<p><trix-editor {}></trix-editor></p>',
+            html,
+            mark_safe(param_str))
+        return html
+
+    class Media:
+        css = {'all': ('trix/trix.css',)}
+        js = ('trix/trix.js',)

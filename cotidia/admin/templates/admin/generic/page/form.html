@@ -1,4 +1,9 @@
 {% extends "admin/page.html" %}{% load i18n admin_toolbar_tags admin_list_tags %}
+
+{% block header_scripts %}
+    {{ form.media.css }}
+{% endblock header_scripts %}
+
 {% block title %}
     {% if object %}
         {% blocktrans with verbose_name as verbose_name %}
@@ -17,7 +22,7 @@
 
 {% block toolbar %}
     <span class="toolbar__breadcrumbs">
-        <a href="{% get_admin_url app_label model_name "list" %}">{{object_name}}</a>
+        <a href="{% get_admin_url app_label model_name "list" %}">{{verbose_name_plural}}</a>
         &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
         {% if object %}
             <a href="{% get_admin_url app_label model_name "detail" object %}">{{object}}</a>
@@ -65,3 +70,7 @@
     {% endblock form_actions %}
 </form>
 {% endblock page_content %}
+
+{% block footer_scripts %}
+{{ form.media.js }}
+{% endblock footer_scripts %}
