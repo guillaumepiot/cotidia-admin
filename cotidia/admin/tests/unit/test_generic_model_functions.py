@@ -91,7 +91,7 @@ class AdminSearchDashboardTests(APITestCase):
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
         content_type = ContentType.objects.get_for_model(GenericRecord).id
-        url = reverse("dashboard", kwargs={"content_type_id": content_type})
+        url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
         data = {}
         response = self.client.get(url, data) 
         self.assertEqual(2, response.data['count'])
@@ -112,7 +112,7 @@ class AdminSearchDashboardTests(APITestCase):
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
         content_type = ContentType.objects.get_for_model(GenericRecord).id
-        url = reverse("dashboard", kwargs={"content_type_id": content_type})
+        url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
         data = {"char_field": "world"}
         response = self.client.get(url, data)
         self.assertEqual(13, response.data['count'])
@@ -144,7 +144,7 @@ class AdminSearchDashboardTests(APITestCase):
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
         content_type = ContentType.objects.get_for_model(GenericRecord).id
-        url = reverse("dashboard", kwargs={"content_type_id": content_type})
+        url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
         data = {"text_field": "world"}
         response = self.client.get(url, data)
         self.assertEqual(13, response.data['count'])
@@ -175,7 +175,7 @@ class AdminSearchDashboardTests(APITestCase):
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
         content_type = ContentType.objects.get_for_model(GenericRecord).id
-        url = reverse("dashboard", kwargs={"content_type_id": content_type})
+        url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
         data = {"boolean_field": True}
         response = self.client.get(url, data)
         self.assertEqual(12, response.data['count'])
@@ -206,7 +206,7 @@ class AdminSearchDashboardTests(APITestCase):
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
         content_type = ContentType.objects.get_for_model(GenericRecord).id
-        url = reverse("dashboard", kwargs={"content_type_id": content_type})
+        url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
         data = {"choice_field": "opt1"}
         response = self.client.get(url, data)
         self.assertEqual(12, response.data['count'])
@@ -234,7 +234,7 @@ class AdminSearchDashboardTests(APITestCase):
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
         content_type = ContentType.objects.get_for_model(GenericRecord).id
-        url = reverse("dashboard", kwargs={"content_type_id": content_type})
+        url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
         data = {"numeric_field": "7"}
         response = self.client.get(url, data)
 
@@ -258,7 +258,7 @@ class AdminSearchDashboardTests(APITestCase):
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
         content_type = ContentType.objects.get_for_model(GenericRecord).id
-        url = reverse("dashboard", kwargs={"content_type_id": content_type})
+        url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
         data = {"numeric_field": ":11"}
         response = self.client.get(url, data)
 
@@ -282,7 +282,7 @@ class AdminSearchDashboardTests(APITestCase):
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
         content_type = ContentType.objects.get_for_model(GenericRecord).id
-        url = reverse("dashboard", kwargs={"content_type_id": content_type})
+        url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
         data = {"numeric_field": "9:"}
         response = self.client.get(url, data)
 
@@ -306,7 +306,7 @@ class AdminSearchDashboardTests(APITestCase):
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
         content_type = ContentType.objects.get_for_model(GenericRecord).id
-        url = reverse("dashboard", kwargs={"content_type_id": content_type})
+        url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
         data = {"numeric_field": "10:25"}
         response = self.client.get(url, data)
 

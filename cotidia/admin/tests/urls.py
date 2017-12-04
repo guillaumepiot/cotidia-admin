@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import include, url
 
 from cotidia.admin.tests.views import AdminTestOrderableAPIView, AdminTestSearchDashboardAPIView
 
@@ -10,8 +10,7 @@ urlpatterns = [
         name='order'
     ),
     url(
-        r'^dashboard/(?P<content_type_id>[\d]+)',
-        AdminTestSearchDashboardAPIView.as_view(),
-        name='dashboard'
+        r'^api/admin/',
+        include("cotidia.admin.urls.api", namespace="generic-api")
         )
 ]

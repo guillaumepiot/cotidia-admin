@@ -10,8 +10,8 @@ urlpatterns = [
         name='order'
     ),
     url(
-        r'^dashboard/(?P<content_type_id>[\d]+)',
+        r'^list/(?P<content_type_id>[\d]+)',
         AdminSearchDashboardAPIView.as_view(),
-        name='dashboard'
+        name='object-list'
         )
 ]
