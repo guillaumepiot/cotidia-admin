@@ -135,10 +135,10 @@ def get_model_default_columns(model):
         fields = [f for f in get_fields_from_model(model).keys()]
     return fields
 
-
-def get_model_structure(model, endpoint):
+def get_model_structure(model, endpoint, token=""):
     return {
             "endpoint": endpoint,
             "columns": get_fields_from_model(model),
             "default_columns": get_model_default_columns(model),
+            "token": token
             }
