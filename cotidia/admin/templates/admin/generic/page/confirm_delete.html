@@ -10,7 +10,7 @@
 {% block toolbar %}
     <span class="toolbar__breadcrumbs">
         <a href="{% get_admin_url app_label model_name "list" %}">
-            {{verbose_name}}
+            {{verbose_name_plural}}
         </a>
         &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
         <a href="{% get_admin_url app_label model_name "detail" object %}">

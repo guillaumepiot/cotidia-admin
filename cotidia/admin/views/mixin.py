@@ -10,6 +10,7 @@ class ContextMixin:
         context["model_name"] = self.model._meta.model_name
         context["object_name"] = self.model._meta.object_name
         context["verbose_name"] = self.model._meta.verbose_name
+        context["verbose_name_plural"] = self.model._meta.verbose_name_plural
         context["template_type"] = self.template_type
         return context
 
