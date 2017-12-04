@@ -1,5 +1,6 @@
 import re
 from decimal import Decimal
+import datetime
 
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
@@ -18,6 +19,7 @@ from cotidia.admin.utils import get_fields_from_model
 
 
 number_pattern = r"(\-?[0-9]+(?:\.[0-9]+)?)"
+date_pattern = r"(\d{4}-[01]\d-[0-3]\d)"
 api_patterns = {
         "equal": r"^%s$",
         "lte": r"^:%s$",
@@ -35,7 +37,6 @@ def filter_gte(field, val):
 
 
 def filter_equal(field, val):
-    print(val)
     return Q(**{field: val})
 
 
@@ -43,26 +44,29 @@ def filter_range(field, min_val, max_val):
     return filter_gte(field, min_val) & filter_lte(field, max_val)
 
 
-def filter_comparable(field_regex):
+def filter_comparable(field_regex, data_type):
+    """ Creates a function that filters a value that matches the parameter regex """
     def temp(field, val):
         match = re.match(api_patterns['equal'] % field_regex, val)
         if match:
-            return filter_equal(field, Decimal(match.group(1)))
+            return filter_equal(field, data_type(match.group(1)))
         match = re.match(api_patterns['lte'] % field_regex, val)
         if match:
-            return filter_lte(field, Decimal(match.group(1)))
+            return filter_lte(field, data_type(match.group(1)))
         match = re.match(api_patterns['gte'] % field_regex, val)
         if match:
-            return filter_gte(field, Decimal(match.group(1)))
+            return filter_gte(field, data_type(match.group(1)))
         match = re.match(api_patterns['range'] % (field_regex, field_regex), val)
         if match:
-            return filter_range(field, Decimal(match.group(1)), Decimal(match.group(2)))
+            return filter_range(field, data_type(match.group(1)), data_type(match.group(2)))
         raise ParseError(
-                detail="The following value is not correct for a numeric field: %s" % val)
+                detail="The following value could not be parsed: %s" % val)
     return temp
 
 
-filter_number = filter_comparable(number_pattern)
+filter_number = filter_comparable(number_pattern, Decimal)
+filter_date = filter_comparable(date_pattern,
+        lambda x: datetime.strptime(x, "%Y-%m-%d"))
 
 
 def contains_filter(query_set, field, values):
@@ -70,13 +74,16 @@ def contains_filter(query_set, field, values):
     return field_filter(
             lambda x, y: Q(**{x + "__icontains": y}), query_set, field, values)
 
+
 def exact_match_filter(query_set, field, values):
     """ Checks if a field exactly matches a value """
     return field_filter(lambda x, y: Q(**{x: y}), query_set, field, values)
 
+
 def number_filter(query_set, field, values):
     """ Checks if a number fits a constraints """
     return field_filter(filter_number, query_set, field, values)
+
 
 def field_filter(filter_fn, query_set, field, values):
     """ Filters the fields with a given function 
@@ -87,8 +94,9 @@ def field_filter(filter_fn, query_set, field, values):
         q_object |= filter_fn(field, value)
     return query_set.filter(q_object)
 
+
 def date_filter(query_set, field, values):
-    return query_set
+    return field_filter(filter_number, query_set, field, values)
 
 
 FILTERS = {
@@ -96,7 +104,7 @@ FILTERS = {
         "choice": exact_match_filter,
         "boolean": exact_match_filter,
         "number": number_filter,
-        "date": exact_match_filter
+        "date": date_filter
         }
 
 
