@@ -33,14 +33,16 @@ function * performSearch () {
 
   console.log(url)
 
-  const results = yield call(fetchAuthenticated, 'GET', url)
+  const { ok, data: results } = yield call(fetchAuthenticated, 'GET', url)
 
-  console.log(results)
+  console.log(ok, results)
 
-  yield put({
-    types: types.STORE_RESULTS,
-    payload: results,
-  })
+  if (ok) {
+    yield put({
+      type: types.STORE_RESULTS,
+      payload: results,
+    })
+  }
 }
 
 export default function * watcher () {
