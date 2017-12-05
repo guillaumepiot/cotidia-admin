@@ -21,11 +21,12 @@ class GenericRecord(models.Model):
     boolean_field = models.BooleanField()
 
     class __meta__:
-        field_labels = {
-                "choice_field": "Choice Field",
-                "date_field": "Date Field"
+        field_representation = {
+                "choice_field": {"label": "Choice Field"},
+                "date_field": {"label": "Date Field"}
                 }
         default_fields = ["id", "char_field"]
+
 
 class GenericRecordNoMeta(models.Model):
     choice_field = models.CharField(
