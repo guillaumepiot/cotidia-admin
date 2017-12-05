@@ -26,6 +26,10 @@ export default class SearchBar extends Component {
   updateSearchTerm = ({ searchTerm }) => this.setState({ searchTerm })
 
   setSearchTerm = (e) => {
+    if (e) {
+      e.preventDefault()
+    }
+
     this.props.setSearchTerm(this.state.searchTerm)
   }
 
@@ -35,7 +39,7 @@ export default class SearchBar extends Component {
 
   render () {
     return (
-      <div className='head-bar head-bar--filter'>
+      <form className='head-bar head-bar--filter' onSubmit={this.setSearchTerm}>
         <div className='form__group'>
           <label className='form__label'>Search</label>
           <div className='form__control'>
@@ -43,6 +47,7 @@ export default class SearchBar extends Component {
               name='searchTerm'
               type='text'
               updateValue={this.updateSearchTerm}
+              updateValueOnBlur={false}
               value={this.state.searchTerm}
             />
           </div>
@@ -53,7 +58,7 @@ export default class SearchBar extends Component {
         <button className='btn btn--transparent' onClick={this.clearSearchTerm} title='Reset filters' type='button'>
           <span className='fa fa-refresh' />
         </button>
-      </div>
+      </form>
     )
   }
 }
