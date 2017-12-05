@@ -74,10 +74,14 @@ export function generateURL (url, data) {
           }
         }
 
-        if (url.includes('?')) {
-          url += '&' + search
-        } else {
-          url += '?' + search
+        const searchString = search.toString()
+
+        if (searchString.length) {
+          if (url.includes('?')) {
+            url += `&${searchString}`
+          } else {
+            url += `?${searchString}`
+          }
         }
       } else {
         url = url.replace(new RegExp(`:${key}`, 'g'), data[key])
