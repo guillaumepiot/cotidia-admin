@@ -86,7 +86,7 @@ class StaffPermissionRequiredMixin(UserCheckMixin):
         return user.is_staff and user.has_perm(self.get_permission_required())
 
 
-def get_field_representation(field):
+def get_field_representation(field, model):
     """ Creates a dict object for a given field using field mapping above
         Fields not in (or a subclass of) elements in the SUPPORTED_FIELD_TYPES
         list will return as "None"
@@ -102,15 +102,19 @@ def get_field_representation(field):
         return None
     # Gets the base representation for the given field type
     field_representation = FIELD_MAPPING[type]()
-    label = field.name
+    field_representation['label'] = field.name
+    if field.choices:
+        field_representation['filter'] = 'choice'
+        field_representation['options'] = field.choices
+
+    # Checks if the developer has defined the field manually in the model
     try:
-        label = field.model.__meta__.field_labels[field.name]
+        if field.name in model.__meta__.field_representation:
+            user_defined_representation = model.__meta__.field_representation[field.name]
+            for key in user_defined_representation:
+                field_representation[key] = user_defined_representation[key]
     except (KeyError, AttributeError):
         pass
-    if field.choices:
-        field_representation['filter'] = 'choice' 
-        field_representation['options'] = field.choices
-    field_representation['label'] = label
     return field_representation
 
 
@@ -118,7 +122,7 @@ def get_fields_from_model(model):
     fields_representation = {}
     fields = model._meta.get_fields()
     for f in fields:
-        field_representation = get_field_representation(f)
+        field_representation = get_field_representation(f, model)
         if field_representation is not None:
             fields_representation[f.name] = field_representation
         else:
