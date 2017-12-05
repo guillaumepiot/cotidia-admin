@@ -139,10 +139,22 @@ def get_model_default_columns(model):
         fields = [f for f in get_fields_from_model(model).keys()]
     return fields
 
-def get_model_structure(model, endpoint, token=""):
-    return {
-            "endpoint": endpoint,
+
+def get_model_structure(
+        model,
+        endpoint=None,
+        detail_endpoint=None,
+        token=None
+        ):
+    structure = {
             "columns": get_fields_from_model(model),
             "default_columns": get_model_default_columns(model),
-            "token": token
             }
+    if endpoint is not None:
+        structure['endpoint'] = endpoint
+    if detail_endpoint is not None:
+        structure['detail_endpoint'] = detail_endpoint
+    if token is not None:
+        structure['token'] = token
+
+    return structure
