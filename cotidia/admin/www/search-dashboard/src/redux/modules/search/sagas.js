@@ -19,9 +19,10 @@ export function * filterColumn ({ payload: { column } }) {
 function * performSearch () {
   const data = yield select((state) => state.search)
 
-  const queryString = {
-    ...data.filters,
-    _order: `${data.orderAscending ? '' : '-'}${data.orderColumn}`,
+  const queryString = { ...data.filters }
+
+  if (data.orderColumn) {
+    queryString._order = `${data.orderAscending ? '' : '-'}${data.orderColumn}`
   }
 
   if (data.searchTerm) {
