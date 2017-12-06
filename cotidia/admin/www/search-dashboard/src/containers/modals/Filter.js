@@ -1,13 +1,14 @@
 import { connect } from 'react-redux'
 
-// import { setFilter } from '../redux/modules/search/actions'
+import { setFilterValue } from '../../redux/modules/search/actions'
 
 import Filter from '../../components/modals/Filter'
 
-const mapStateToProps = (state) => ({
-  columns: state.search.columns,
+const mapStateToProps = (state, ownProps) => ({
+  config: state.search.columns[ownProps.filter],
+  value: state.search.filters[ownProps.filter],
 })
 
-// const actionCreators = { setFilter }
+const actionCreators = { setFilterValue }
 
-export default connect(mapStateToProps)(Filter)
+export default connect(mapStateToProps, actionCreators)(Filter)

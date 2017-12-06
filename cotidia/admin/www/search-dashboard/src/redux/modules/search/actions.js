@@ -27,3 +27,8 @@ export const toggleColumn = (column) => ({
   type: types.TOGGLE_COLUMN,
   payload: { column },
 })
+
+export const setFilterValue = (filter, value) => ({
+  type: types.SET_FILTER_VALUE,
+  payload: { filter, value },
+})

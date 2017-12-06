@@ -1,19 +1,40 @@
-import { call, put, select, takeEvery } from 'redux-saga/effects'
+import { call, put, select, take, takeEvery } from 'redux-saga/effects'
 
 import { generateURL, fetchAuthenticated } from '../../../utils/api'
 
 import { showModal } from '../modal/sagas'
 
 import * as types from './types'
+import * as modalTypes from '../modal/types'
 
 export function * filterColumn ({ payload: { column } }) {
-  const x = yield call(showModal, {
+  const { columns, filters } = yield select((state) => state.search)
+
+  const { submittedData } = yield call(showModal, {
     component: 'Filter',
-    componentProps: { column },
-    // modalActions
+    componentProps: { filter: column },
+    modalProps: {
+      title: columns[column].label,
+      form: true,
+      submitButton: 'Update filter',
+    },
+    data: {
+      value: filters[column],
+    },
+    modalActions: {
+      submittedData: take(modalTypes.SUBMIT_MODAL),
+    },
   })
 
-  console.log(x)
+  if (submittedData) {
+    yield put({
+      type: types.SET_FILTER_VALUE,
+      payload: {
+        filter: column,
+        value: submittedData.payload.value,
+      },
+    })
+  }
 }
 
 export function * manageColumns () {
@@ -63,4 +84,5 @@ export default function * watcher () {
   yield takeEvery(types.SET_SEARCH_TERM, performSearch)
   yield takeEvery(types.SET_ORDER_COLUMN, performSearch)
   yield takeEvery(types.TOGGLE_ORDER_DIRECTION, performSearch)
+  yield takeEvery(types.SET_FILTER_VALUE, performSearch)
 }
