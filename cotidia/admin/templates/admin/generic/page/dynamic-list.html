@@ -21,7 +21,11 @@
 
 {% block page_content %}
 {% include 'admin/generic/utils/head-filter.html' %}
+<div id="search-dashboard"></div>
+{% endblock page_content %}
+
+{% block footer_scripts %}
 <div class="content__list">
     {% render_search_dashboard_config content_type_id app_label url_type request.user.token.key %}
 </div>
-{% endblock page_content %}
+{% endblock footer_scripts %}

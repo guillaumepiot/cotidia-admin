@@ -209,7 +209,7 @@ def get_model_structure(
     serializer = get_model_serializer_class(model)()
     structure = {
             "columns": get_fields_from_serializer(serializer),
-            "get_model_default_columns": get_serializer_default_columns(serializer)
+            "defaultColumns": get_serializer_default_columns(serializer)
 
             }
     print("structure")

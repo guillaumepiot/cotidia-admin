@@ -1,3 +1,5 @@
+<script src="http://localhost:3000/search-dashboard.js"></script>
 <script>
     {{variable_name}} = {{data}};
+    ReactDOM.render(React.createElement(window.SearchDashboard, {{variable_name}}), document.getElementById('search-dashboard'))
 </script>
