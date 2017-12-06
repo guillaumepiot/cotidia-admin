@@ -1,0 +1,27 @@
+{% extends "admin/page.html" %}{% load admin_search_dashboard_tags i18n admin_toolbar_tags admin_list_tags %}
+{% block title %}
+    {{verbose_name}}
+{% endblock title %}
+
+{% block body_class %}
+    {% if template_type == "centered" %}content-centered{% endif %}
+{% endblock body_class %}
+
+{% block toolbar %}
+    {% if add_view %}
+    <a href="{% get_admin_url app_label model_name "add" %}" class="btn btn--create btn--small pull-right">
+        <span class="fa fa-plus"></span>
+        {% blocktrans with verbose_name as verbose_name %}
+            Add {{verbose_name}}
+        {% endblocktrans %}
+    </a>
+    {% endif %}
+    <span class="toolbar__title">{{verbose_name}}</span>
+{% endblock toolbar %}
+
+{% block page_content %}
+{% include 'admin/generic/utils/head-filter.html' %}
+<div class="content__list">
+    {% render_search_dashboard_config content_type_id app_label url_type request.user.token.key %}
+</div>
+{% endblock page_content %}

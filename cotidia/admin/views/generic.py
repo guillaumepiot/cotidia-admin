@@ -10,6 +10,8 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.contenttypes.models import ContentType
+from django.views.generic.base import TemplateView
+from django.core.urlresolvers import NoReverseMatch
 
 from cotidia.admin.utils import StaffPermissionRequiredMixin
 from cotidia.admin.views.mixin import ContextMixin, ChildMixin
@@ -110,6 +112,29 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
             '"{}" has been executed successfully.'.format(action)
         )
         return self.build_success_url()
+
+
+class AdminGenericListView(TemplateView):
+
+    template_name = "admin/generic/page/dynamic-list.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(self, *args, **kwargs)
+        content_type_id = self.kwargs["content_type_id"]
+        model = ContentType.objects.get_for_id(content_type_id).model_class()
+        app_label = model._meta.app_label
+        model_name = model._meta.model_name
+        url_type = "detail"
+        context["content_type_id"] = content_type_id
+        try:
+            reverse("{}-admin:{}-{}".format(app_label, model_name, url_type),
+                    kwargs={"id": "1"})
+            context["app_label"] = app_label
+            context["model_name"] = model_name
+            context["url_type"] = url_type
+        except NoReverseMatch:
+            pass
+        return context
 
 
 class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):
