@@ -18,7 +18,7 @@ export default class ManageColumns extends Component {
         <div className='form__control'>
           <ul>
             {Object.entries(columns).map(([column, config]) => (
-              <li>
+              <li key={column}>
                 <label>
                   <input
                     checked={visibleColumns.includes(column)}
