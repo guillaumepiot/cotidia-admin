@@ -16,6 +16,17 @@ export function * filterColumn ({ payload: { column } }) {
   console.log(x)
 }
 
+export function * manageColumns () {
+  yield call(showModal, {
+    component: 'ManageColumns',
+    modalProps: {
+      title: 'Configure columns',
+      cancelButton: 'Close',
+      form: true,
+    },
+  })
+}
+
 function * performSearch () {
   const data = yield select((state) => state.search)
 
@@ -47,6 +58,7 @@ function * performSearch () {
 
 export default function * watcher () {
   yield takeEvery(types.FILTER_COLUMN, filterColumn)
+  yield takeEvery(types.MANAGE_COLUMNS, manageColumns)
 
   yield takeEvery(types.SET_SEARCH_TERM, performSearch)
   yield takeEvery(types.SET_ORDER_COLUMN, performSearch)

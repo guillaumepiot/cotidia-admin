@@ -82,6 +82,22 @@ export default (state = initialState, { type, payload } = {}) => {
         results: payload,
       }
 
+    case types.TOGGLE_COLUMN: {
+      const visibleColumns =
+        state.visibleColumns.includes(payload.column)
+          ? state.visibleColumns.filter((column) => column !== payload.column)
+          : [ ...state.visibleColumns, payload.column ]
+
+      // TODO: Should we reset order column and direction if we are hiding the current order column?
+      // So far I have gone with not doing so, as it'll kick off a new search and therefore mess
+      // with the displayed results.
+
+      return {
+        ...state,
+        visibleColumns,
+      }
+    }
+
     default:
       return state
   }

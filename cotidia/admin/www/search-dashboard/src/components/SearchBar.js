@@ -5,6 +5,7 @@ import { TextInput } from '@cotidia/react-ui'
 
 export default class SearchBar extends Component {
   static propTypes = {
+    manageColumns: PropTypes.func.isRequired,
     searchTerm: PropTypes.string,
     setSearchTerm: PropTypes.func.isRequired,
   }
@@ -37,6 +38,10 @@ export default class SearchBar extends Component {
     this.setState({ searchTerm: null }, this.setSearchTerm)
   }
 
+  manageColumns = (e) => {
+    this.props.manageColumns()
+  }
+
   render () {
     return (
       <form className='head-bar head-bar--filter' onSubmit={this.setSearchTerm}>
@@ -57,6 +62,10 @@ export default class SearchBar extends Component {
 
         <button className='btn btn--transparent' onClick={this.clearSearchTerm} title='Reset filters' type='button'>
           <span className='fa fa-refresh' />
+        </button>
+
+        <button className='btn btn--transparent' onClick={this.manageColumns} title='Manage column' type='button'>
+          <span className='fa fa-columns' />
         </button>
       </form>
     )
