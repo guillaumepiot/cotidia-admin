@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 
+import { generateURL } from '../utils/api'
+
 import { Icon } from './elements/global'
 
 const columnDisplayTypes = {
@@ -16,6 +18,7 @@ const columnDisplayTypes = {
 export default class SearchResults extends Component {
   static propTypes = {
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+    detailURL: PropTypes.string,
     filterColumn: PropTypes.func.isRequired,
     orderAscending: PropTypes.bool.isRequired,
     orderColumn: PropTypes.string,
@@ -30,8 +33,19 @@ export default class SearchResults extends Component {
 
   toggleOrderDirection = (e) => this.props.toggleOrderDirection()
 
+  viewItemFactory = (item) => (e) => {
+    if (this.props.detailURL) {
+      window.location = generateURL(this.props.detailURL, item)
+    }
+  }
+
   render () {
-    const { columns, orderColumn, orderAscending } = this.props
+    const {
+      columns,
+      detailURL,
+      orderColumn,
+      orderAscending,
+    } = this.props
 
     const results = [
       {
@@ -52,7 +66,7 @@ export default class SearchResults extends Component {
 
     return (
       <div className='content__list'>
-        <table className='table table--clickable table--admin-mobile-view'>
+        <table className={`table ${detailURL ? 'table--clickable' : ''} table--admin-mobile-view`}>
           <thead>
             <tr>
               {columns.map((column) => (
@@ -76,7 +90,7 @@ export default class SearchResults extends Component {
           </thead>
           <tbody>
             {results.map((item) => (
-              <tr key={item.uuid} onClick={this.viewItem}>
+              <tr key={item.uuid} onClick={this.viewItemFactory(item)}>
                 {columns.map((column) => (
                   <td data-header={column.label} key={column.id}>
                     {columnDisplayTypes[column.display](item, column.accessor)}

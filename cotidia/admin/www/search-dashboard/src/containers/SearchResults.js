@@ -13,6 +13,7 @@ import SearchResults from '../components/SearchResults'
 
 const mapStateToProps = (state) => ({
   columns: getVisibleColumnConfig(state.search),
+  detailURL: state.search.detailURL,
   displayedColumns: state.search.displayedColumns,
   orderAscending: state.search.orderAscending,
   orderColumn: state.search.orderColumn,
