@@ -118,8 +118,8 @@ class AdminGenericListView(TemplateView):
 
     template_name = "admin/generic/page/dynamic-list.html"
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(self, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         content_type_id = self.kwargs["content_type_id"]
         model = ContentType.objects.get_for_id(content_type_id).model_class()
         app_label = model._meta.app_label

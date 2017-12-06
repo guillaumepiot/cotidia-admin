@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from cotidia.admin.views import AdminOrderableView, AdminGenericListView
+from cotidia.admin.views.generic import AdminOrderableView, AdminGenericListView
 
 
 urlpatterns = [
@@ -10,7 +10,7 @@ urlpatterns = [
         name='order'
     ),
     url(
-        r'^admin/generic/list/(?<content_type_id>)',
+        r'^list-object/(?P<content_type_id>[\d]+)',
         AdminGenericListView.as_view()
         )
 ]

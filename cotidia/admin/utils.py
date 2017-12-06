@@ -186,7 +186,7 @@ def get_fields_from_serializer(serializer):
         if field_representation is not None:
             fields_representation[f] = field_representation
         else:
-            print("Field not supported: %s" % f.get_internal_type())
+            print("Field not supported: %s" % f)
 
     return fields_representation
 
