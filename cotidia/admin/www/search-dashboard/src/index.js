@@ -37,6 +37,7 @@ export default function App (props) {
 App.propTypes = {
   authToken: PropTypes.string.isRequired,
   endpoint: PropTypes.string.isRequired,
+  detailURL: PropTypes.string,
   defaultColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
   columns: PropTypes.objectOf(PropTypes.shape({
     label: PropTypes.string.isRequired,
@@ -47,6 +48,10 @@ App.propTypes = {
       label: PropTypes.string.isRequired,
     })),
   })).isRequired,
+}
+
+App.defaultProps = {
+  detailURL: null,
 }
 
 window.React = React

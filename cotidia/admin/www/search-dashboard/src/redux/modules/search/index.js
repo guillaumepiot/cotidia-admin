@@ -2,6 +2,7 @@ import * as types from './types'
 
 const initialState = {
   endpoint: null,
+  detailURL: null,
   columns: {},
 
   visibleColumns: [],
@@ -22,6 +23,12 @@ export default (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         endpoint: payload,
+      }
+
+    case types.SET_DETAIL_URL:
+      return {
+        ...state,
+        detailURL: payload,
       }
 
     case types.SET_COLUMN_CONFIG:
