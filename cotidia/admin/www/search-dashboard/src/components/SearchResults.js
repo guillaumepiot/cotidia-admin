@@ -45,24 +45,8 @@ export default class SearchResults extends Component {
       detailURL,
       orderColumn,
       orderAscending,
+      results,
     } = this.props
-
-    const results = [
-      {
-        uuid: 'f7a7881f-048b-46ef-8290-6153472f2e3a',
-        name: 'Bob Grundy',
-        email: 'bob@grundy.com',
-        date: '2017-11-30T15:18:21',
-        active: true,
-      },
-      {
-        uuid: 'd337a7a8-965b-4bc3-b1a6-8c2536ef26b0',
-        name: 'Alice Wolf',
-        email: 'alice@wolf.com',
-        date: '2017-12-25T12:01:48',
-        active: false,
-      },
-    ]
 
     return (
       <div className='content__list'>
