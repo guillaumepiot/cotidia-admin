@@ -4,16 +4,14 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "sixteen": "^0.3.0"
+    "sixteen": "^0.3.3"
   },
   "devDependencies": {
     "font-awesome": "^4.7.0",
     "grunt": "^1.0.1",
     "grunt-contrib-cssmin": "^2.2.1",
     "grunt-contrib-sass": "^1.0.0",
-    "grunt-contrib-watch": "^1.0.0",
-    "node-bourbon": "^4.2.8",
-    "node-neat": "^2.0.0-beta.0"
+    "grunt-contrib-watch": "^1.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

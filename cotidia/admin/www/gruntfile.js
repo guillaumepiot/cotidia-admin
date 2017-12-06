@@ -3,9 +3,6 @@ module.exports = function (grunt) {
         'pkg': grunt.file.readJSON('package.json'),
         'sass': {
             'dist': {
-                'options': {
-                    'loadPath': require('node-neat').includePaths.concat(require('node-bourbon').includePaths)
-                },
                 'files': {
                     '<%= pkg.static %>/css/admin.css': 'styles/admin.scss'
                 }
