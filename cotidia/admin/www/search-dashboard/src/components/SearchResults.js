@@ -55,7 +55,7 @@ export default class SearchResults extends Component {
             <tr>
               {columns.map((column) => (
                 <th key={column.id}>
-                  <span onClick={(orderColumn === column.id) ? this.toggleOrderDirection : this.setOrderColumnFactory(column.id)}>
+                  <span onClick={(orderColumn === column.id) ? this.toggleOrderDirection : this.setOrderColumnFactory(column.id)} style={{ cursor: 'pointer' }}>
                     {column.label}
                     {' '}
                     {(orderColumn === column.id) ? (orderAscending ? (
