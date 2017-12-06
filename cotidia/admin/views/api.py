@@ -7,15 +7,17 @@ from rest_framework.generics import ListAPIView
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
-from rest_framework import serializers
 from rest_framework.renderers import JSONRenderer
-from rest_framework.pagination import LimitOffsetPagination 
+from rest_framework.pagination import LimitOffsetPagination
 
 from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 
-from cotidia.admin.utils import get_fields_from_model
+from cotidia.admin.utils import (
+        get_fields_from_model,
+        get_model_serializer_class
+        )
 
 
 number_pattern = r"(\-?[0-9]+(?:\.[0-9]+)?)"
@@ -26,6 +28,8 @@ api_patterns = {
         "gte": r"^%s:$",
         "range": r"^%s:%s$"
         }
+
+
 
 
 def filter_lte(field, val):
@@ -146,17 +150,13 @@ class AdminSearchDashboardAPIView(ListAPIView):
         ordering_params = self.request.GET.getlist("_order")
         return query_set.order_by(*ordering_params)
 
+    def get_serializer_class(self):
+        return get_model_serializer_class(self.model_class)
+
     @property
     def model_class(self):
         return ContentType.objects\
                 .get_for_id(self.kwargs['content_type_id'])\
                 .model_class()
 
-    def get_serializer_class(self):
-
-        class GenericSerializer(serializers.ModelSerializer):
-            class Meta:
-                model = self.model_class
-                fields = '__all__'
-        return GenericSerializer
 
