@@ -11,6 +11,12 @@ body{
             padding-right: $horizontal_padding;
             margin: 0 auto;
         }
+
+        @media screen and (max-width: $mobile-width) {
+            .form__actions-inner {
+                padding: $vertical_padding 0;
+            }
+        }
     }
 }
 
