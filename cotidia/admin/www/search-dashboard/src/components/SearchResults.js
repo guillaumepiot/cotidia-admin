@@ -67,7 +67,9 @@ export default class SearchResults extends Component {
                     )}
                   </span>
 
-                  <button className='btn btn--transparent' onClick={this.filterColumnFactory(column.id)}><Icon icon='filter' /></button>
+                  {column.filter && (
+                    <button className='btn btn--transparent' onClick={this.filterColumnFactory(column.id)}><Icon icon='filter' /></button>
+                  )}
                 </th>
               ))}
             </tr>
