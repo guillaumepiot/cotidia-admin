@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { TextInput } from '@cotidia/react-ui'
-
 export default class Choice extends Component {
   static propTypes = {
     config: PropTypes.shape({
