@@ -118,7 +118,7 @@ export default class Modal extends Component {
       <div className={`dialog dialog--modal ${isOpen ? 'dialog--modal-open' : ''} ${size ? `dialog--${size}` : ''}`} onClick={this.handleDialogueClick}>
         <div className='dialog__content'>
           { (title || close) && (
-            <div className='dialog__header dialog-header'>
+            <div className='dialog__header dialog-header dialog-section--padded'>
               { title && (
                 <div className='dialog-header__title'>{ title }</div>
               ) }
@@ -131,7 +131,7 @@ export default class Modal extends Component {
               ) }
             </div>
           ) }
-          <div className='dialog__body dialog__body--padded'>
+          <div className='dialog__body dialog-section--padded'>
             { bork ? (
               <p>Something has gone horribly wrong!</p>
             ) : (form ? (
@@ -141,16 +141,16 @@ export default class Modal extends Component {
             ) : component) }
           </div>
           { form && (
-            <div className='dialog__footer dialog-footer dialog-footer--reverse'>
+            <div className='dialog__footer dialog-footer dialog-section--padded dialog-footer--reverse'>
               { submitButton && (
-                <div className='dialog-footer__actions dialog-footer__actions--right'>
+                <div className='dialog-footer__actions'>
                   <Button buttonOnly form={id} type='submit' status='primary' loading={this.props.loading}>
                     { submitButton }
                   </Button>
                 </div>
               ) }
               { (cancelButton || otherButtons) && (
-                <div className='dialog-footer__actions dialog-footer__actions--left'>
+                <div className='dialog-footer__actions'>
                   { cancelButton && (
                     <Button buttonOnly status='cancel' className='close-dialog' onClick={handleClose}>
                       { cancelButton }
