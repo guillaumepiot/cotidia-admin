@@ -11,15 +11,6 @@ body.menu--sidebar {
         color: desaturate(lighten($menu_background_color, 30%), 30%);
     }
 
-    .menu__container{
-        overflow-y: scroll;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-    }
-
     @media screen and (min-width: $tablet-width) {
         .menu {
             width: $menu_sidebar_width;
@@ -34,6 +25,14 @@ body.menu--sidebar {
             &__title{
                 display: none;
             }
+        }
+        .menu__container{
+            overflow-y: scroll;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
         }
         .menu__item {
             float: none;
@@ -152,20 +151,22 @@ body.menu--sidebar {
     .menu__item--sub-nav {
         &:hover {
             .menu__sub-nav {
-                transform: scaleY(1);
-                height: auto;
+                // transform: scaleY(1);
+                // height: auto;
                 display: block;
+                max-height: 500px;
             }
         }
     }
     .menu__sub-nav {
         position: static;
-        transform: scaleY(0);
-        transform-origin: top;
-        height: 0;
-        transition: transform 0.3s ease;
+        // transform: scaleY(0);
+        // transform-origin: top;
+        max-height: 0;
+        transition: max-height 0.6s ease;
         background-color: $menu_link_background_color_active;
         display: block;
+        overflow: hidden;
     }
 }
 

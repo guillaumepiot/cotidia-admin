@@ -3927,7 +3927,7 @@ hr {
     height: 0;
     width: 0;
     border-color: #333333 transparent transparent;
-    border-width: 4px 4px 0; }
+    border-width: 9px 4.5px 0; }
 .form__control--radio-btn {
   display: flex;
   margin: 0.75rem 0; }
@@ -5273,7 +5273,7 @@ hr {
     height: 0;
     width: 0;
     border-color: #fff transparent transparent;
-    border-width: 4px 4px 0;
+    border-width: 8px 4px 0;
     content: "";
     display: inline-block;
     top: -0.1875rem;
@@ -5353,13 +5353,6 @@ body.menu--sidebar .menu__section {
   font-size: 0.9rem;
   padding: 0.375rem 1rem 0 1rem;
   color: #2070b7; }
-body.menu--sidebar .menu__container {
-  overflow-y: scroll;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 100%;
-  width: 100%; }
 @media screen and (min-width: 768px) {
   body.menu--sidebar .menu {
     width: 240px;
@@ -5372,6 +5365,13 @@ body.menu--sidebar .menu__container {
     transition: width 0.3s ease; }
     body.menu--sidebar .menu__title {
       display: none; }
+  body.menu--sidebar .menu__container {
+    overflow-y: scroll;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%; }
   body.menu--sidebar .menu__item {
     float: none; }
   body.menu--sidebar .menu-item__link--drop-arrow:after {
@@ -5464,17 +5464,15 @@ body.menu--sidebar .menu-item__link--drop-arrow:after {
   position: absolute;
   margin-top: -3px; }
 body.menu--sidebar .menu__item--sub-nav:hover .menu__sub-nav {
-  transform: scaleY(1);
-  height: auto;
-  display: block; }
+  display: block;
+  max-height: 500px; }
 body.menu--sidebar .menu__sub-nav {
   position: static;
-  transform: scaleY(0);
-  transform-origin: top;
-  height: 0;
-  transition: transform 0.3s ease;
+  max-height: 0;
+  transition: max-height 0.6s ease;
   background-color: #00315d;
-  display: block; }
+  display: block;
+  overflow: hidden; }
 
 @media screen and (min-width: 768px) {
   body.menu--sidebar-collapse .menu {
@@ -5549,6 +5547,9 @@ body.content-centered .head-bar {
   padding-left: 1rem;
   padding-right: 1rem;
   margin: 0 auto; }
+@media screen and (max-width: 767px) {
+  body.content-centered .form__actions-inner {
+    padding: 0.75rem 0; } }
 
 .content__inner {
   padding: 0 1rem; }
@@ -5620,6 +5621,9 @@ fieldset {
   background-color: #fff;
   border: 1px solid #dfdfdf;
   margin: 0.75rem 1rem; }
+  @media screen and (max-width: 767px) {
+    fieldset {
+      margin: 0.75rem 0; } }
   fieldset legend {
     background-color: #f2f2f3;
     font-size: 1;

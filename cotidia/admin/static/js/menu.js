@@ -1,9 +1,11 @@
 (function(){
-  function showMenu (menu) {
+  function showMenu (menu, e) {
+    e.preventDefault()
     menu.querySelector('.menu__container').classList.add('menu__container--mobile-active')
   }
 
-  function hideMenu (menu) {
+  function hideMenu (menu, e) {
+    e.preventDefault()
     menu.querySelector('.menu__container').classList.remove('menu__container--mobile-active')
   }
 
