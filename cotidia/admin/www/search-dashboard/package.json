@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server --env=development",
-    "clean": "rm ../../static/js/search-dashboard.js",
+    "clean": "rm -f ../../static/js/search-dashboard.js ../../static/js/search-dashboard.js.map",
     "build:actual": "webpack -p --env=production",
     "build": "run-s clean build:actual",
     "test": "ava",
