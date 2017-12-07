@@ -67,10 +67,12 @@ export function generateURL (url, data) {
         const search = new URLSearchParams()
 
         for (const [queryKey, queryValue] of Object.entries(data[key])) {
-          if (Array.isArray(queryValue)) {
-            queryValue.forEach((value) => search.append(queryKey, value))
-          } else {
-            search.set(queryKey, queryValue)
+          if (queryValue != null) {
+            if (Array.isArray(queryValue)) {
+              queryValue.forEach((value) => search.append(queryKey, value))
+            } else {
+              search.set(queryKey, queryValue)
+            }
           }
         }
 
