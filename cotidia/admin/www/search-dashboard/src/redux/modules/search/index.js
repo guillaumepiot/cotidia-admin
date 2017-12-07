@@ -34,6 +34,12 @@ const initialState = {
       active: false,
     },
   ],
+
+  pagination: {
+    count: 0,
+    next: null,
+    previous: null,
+  },
 }
 
 export default (state = initialState, { type, payload } = {}) => {
@@ -79,7 +85,12 @@ export default (state = initialState, { type, payload } = {}) => {
     case types.STORE_RESULTS:
       return {
         ...state,
-        results: payload,
+        results: payload.results,
+        pagination: {
+          count: payload.count,
+          next: payload.next,
+          previous: payload.previous,
+        },
       }
 
     case types.TOGGLE_COLUMN: {

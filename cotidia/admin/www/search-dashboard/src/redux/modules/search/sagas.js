@@ -65,14 +65,33 @@ function * performSearch () {
 
   console.log(url)
 
-  const { ok, data: results } = yield call(fetchAuthenticated, 'GET', url)
+  const { ok, data: result } = yield call(fetchAuthenticated, 'GET', url)
 
-  console.log(ok, results)
+  console.log(ok, result)
 
   if (ok) {
     yield put({
       type: types.STORE_RESULTS,
-      payload: results,
+      payload: result,
+    })
+  }
+}
+
+function * getResultsPage ({ payload: { page } }) {
+  const pagination = yield select((state) => state.search.pagination)
+
+  const url = page === 'next' ? pagination.next : pagination.previous
+
+  console.log(url)
+
+  const { ok, data: result } = yield call(fetchAuthenticated, 'GET', url)
+
+  console.log(ok, result)
+
+  if (ok) {
+    yield put({
+      type: types.STORE_RESULTS,
+      payload: result,
     })
   }
 }
@@ -85,4 +104,6 @@ export default function * watcher () {
   yield takeEvery(types.SET_ORDER_COLUMN, performSearch)
   yield takeEvery(types.TOGGLE_ORDER_DIRECTION, performSearch)
   yield takeEvery(types.SET_FILTER_VALUE, performSearch)
+
+  yield takeEvery(types.GET_RESULTS_PAGE, getResultsPage)
 }

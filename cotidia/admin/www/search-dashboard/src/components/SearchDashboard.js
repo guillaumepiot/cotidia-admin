@@ -6,6 +6,7 @@ import Modal from '../containers/Modal'
 
 import SearchBar from '../containers/SearchBar'
 import SearchResults from '../containers/SearchResults'
+import Pagination from '../containers/Pagination'
 
 export default class SearchDashboard extends Component {
   render () {
@@ -31,6 +32,7 @@ export default class SearchDashboard extends Component {
       <>
         <SearchBar />
         <SearchResults />
+        <Pagination />
 
         <Modal />
       </>

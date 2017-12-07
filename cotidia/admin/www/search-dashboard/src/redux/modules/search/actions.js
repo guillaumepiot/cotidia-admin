@@ -32,3 +32,12 @@ export const setFilterValue = (filter, value) => ({
   type: types.SET_FILTER_VALUE,
   payload: { filter, value },
 })
+
+export const getPreviousPage = () => ({
+  type: types.GET_RESULTS_PAGE,
+  payload: { page: 'previous' },
+})
+export const getNextPage = () => ({
+  type: types.GET_RESULTS_PAGE,
+  payload: { page: 'next' },
+})
