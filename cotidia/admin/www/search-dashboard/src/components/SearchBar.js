@@ -5,6 +5,7 @@ import { TextInput } from '@cotidia/react-ui'
 
 export default class SearchBar extends Component {
   static propTypes = {
+    clearFilters: PropTypes.func.isRequired,
     manageColumns: PropTypes.func.isRequired,
     searchTerm: PropTypes.string,
     setSearchTerm: PropTypes.func.isRequired,
@@ -35,7 +36,7 @@ export default class SearchBar extends Component {
   }
 
   clearSearchTerm = (e) => {
-    this.setState({ searchTerm: null }, this.setSearchTerm)
+    this.props.clearFilters()
   }
 
   manageColumns = (e) => {

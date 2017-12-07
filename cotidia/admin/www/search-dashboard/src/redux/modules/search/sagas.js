@@ -105,6 +105,7 @@ export default function * watcher () {
   yield takeEvery(types.SET_ORDER_COLUMN, performSearch)
   yield takeEvery(types.TOGGLE_ORDER_DIRECTION, performSearch)
   yield takeEvery(types.SET_FILTER_VALUE, performSearch)
+  yield takeEvery(types.CLEAR_FILTERS, performSearch)
 
   yield takeEvery(types.GET_RESULTS_PAGE, getResultsPage)
 }

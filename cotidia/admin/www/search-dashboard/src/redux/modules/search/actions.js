@@ -10,6 +10,10 @@ export const filterColumn = (column) => ({
   payload: { column },
 })
 
+export const clearFilters = () => ({
+  type: types.CLEAR_FILTERS,
+})
+
 export const setOrderColumn = (column) => ({
   type: types.SET_ORDER_COLUMN,
   payload: { column },
