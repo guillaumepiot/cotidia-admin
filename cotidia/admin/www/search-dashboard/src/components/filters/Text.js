@@ -26,6 +26,7 @@ export default class Text extends Component {
         <label className='form__label'>{this.props.config.label} contains</label>
         <div className='form__control'>
           <TextInput
+            autoFocus
             name='value'
             type='text'
             updateValue={this.updateValue}
