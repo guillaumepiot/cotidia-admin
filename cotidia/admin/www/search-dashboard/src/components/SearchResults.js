@@ -74,9 +74,19 @@ export default class SearchResults extends Component {
                   {column.filter && (
                     <>
                       {filters.includes(column.id) && (
-                        <button className={`btn btn--link btn--small pull-right btn--cancel`} onClick={this.clearFilterFactory(column.id)}><Icon icon='refresh' /></button>
+                        <button
+                          className={`btn btn--link btn--small pull-right btn--delete`}
+                          onClick={this.clearFilterFactory(column.id)}
+                        >
+                          <Icon icon='times' />
+                        </button>
                       )}
-                      <button className={`btn btn--link btn--small pull-right ${filters.includes(column.id) ? 'btn--primary' : 'btn--cancel'}`} onClick={this.filterColumnFactory(column.id)}><Icon icon='filter' /></button>
+                      <button
+                        className={`btn btn--link btn--small pull-right ${filters.includes(column.id) ? 'btn--primary' : 'btn--cancel'}`}
+                        onClick={this.filterColumnFactory(column.id)}
+                      >
+                        <Icon icon='filter' />
+                      </button>
                     </>
                   )}
                 </th>
