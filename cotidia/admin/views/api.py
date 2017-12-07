@@ -20,6 +20,7 @@ from cotidia.admin.utils import (
         )
 
 
+PAGE_SIZE = 20
 number_pattern = r"(\-?[0-9]+(?:\.[0-9]+)?)"
 date_pattern = r"(\d{4}-[01]\d-[0-3]\d)"
 api_patterns = {
@@ -128,9 +129,12 @@ class AdminOrderableAPIView(APIView):
         return Response(status=status.HTTP_200_OK)
 
 
+class GenericAdminPaginationStyle(LimitOffsetPagination):
+    default_limit=PAGE_SIZE
+
+
 class AdminSearchDashboardAPIView(ListAPIView):
-    paginate_by = 1
-    pagination_class = LimitOffsetPagination 
+    pagination_class = GenericAdminPaginationStyle
 
     def get_queryset(self):
         model_class = self.model_class
@@ -158,5 +162,3 @@ class AdminSearchDashboardAPIView(ListAPIView):
         return ContentType.objects\
                 .get_for_id(self.kwargs['content_type_id'])\
                 .model_class()
-
-
