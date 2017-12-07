@@ -17,9 +17,11 @@ const columnDisplayTypes = {
 
 export default class SearchResults extends Component {
   static propTypes = {
+    clearFilter: PropTypes.func.isRequired,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
     detailURL: PropTypes.string,
     filterColumn: PropTypes.func.isRequired,
+    filters: PropTypes.arrayOf(PropTypes.string).isRequired,
     orderAscending: PropTypes.bool.isRequired,
     orderColumn: PropTypes.string,
     results: PropTypes.arrayOf(PropTypes.object),
@@ -28,6 +30,7 @@ export default class SearchResults extends Component {
   }
 
   filterColumnFactory = (column) => (e) => this.props.filterColumn(column)
+  clearFilterFactory = (column) => (e) => this.props.clearFilter(column)
 
   setOrderColumnFactory = (column) => (e) => this.props.setOrderColumn(column)
 
@@ -43,6 +46,7 @@ export default class SearchResults extends Component {
     const {
       columns,
       detailURL,
+      filters,
       orderColumn,
       orderAscending,
       results,
@@ -68,7 +72,12 @@ export default class SearchResults extends Component {
                   </span>
 
                   {column.filter && (
-                    <button className='btn btn--transparent btn--small pull-right' onClick={this.filterColumnFactory(column.id)}><Icon icon='filter' /></button>
+                    <>
+                      {filters.includes(column.id) && (
+                        <button className={`btn btn--link btn--small pull-right btn--cancel`} onClick={this.clearFilterFactory(column.id)}><Icon icon='refresh' /></button>
+                      )}
+                      <button className={`btn btn--link btn--small pull-right ${filters.includes(column.id) ? 'btn--primary' : 'btn--cancel'}`} onClick={this.filterColumnFactory(column.id)}><Icon icon='filter' /></button>
+                    </>
                   )}
                 </th>
               ))}

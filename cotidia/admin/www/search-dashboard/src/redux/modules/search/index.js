@@ -99,6 +99,15 @@ export default (state = initialState, { type, payload } = {}) => {
         },
       }
 
+    case types.CLEAR_FILTER:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          [payload.filter]: null,
+        },
+      }
+
     case types.CLEAR_FILTERS:
       return {
         ...state,

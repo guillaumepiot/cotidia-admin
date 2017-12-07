@@ -10,6 +10,11 @@ export const filterColumn = (column) => ({
   payload: { column },
 })
 
+export const clearFilter = (filter) => ({
+  type: types.CLEAR_FILTER,
+  payload: { filter },
+})
+
 export const clearFilters = () => ({
   type: types.CLEAR_FILTERS,
 })

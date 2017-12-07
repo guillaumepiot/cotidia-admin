@@ -11,3 +11,8 @@ export function getVisibleColumnConfig (state) {
 
   return columns.filter(identity)
 }
+
+export function getActiveFilters (state) {
+  // Filter out any filters that aren't (loosely) equal to null, and then map to the keys.
+  return Object.entries(state.filters).filter(([key, value]) => value != null).map(([key, value]) => key)
+}
