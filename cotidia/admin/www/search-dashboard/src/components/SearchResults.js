@@ -50,7 +50,7 @@ export default class SearchResults extends Component {
 
     return (
       <div className='content__list'>
-        <table className={`table ${detailURL ? 'table--clickable' : ''} table--admin-mobile-view`}>
+        <table className={`table ${detailURL ? 'table--clickable' : ''} table--stack-mobile`}>
           <thead>
             <tr>
               {columns.map((column) => (
