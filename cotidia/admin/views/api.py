@@ -130,7 +130,7 @@ class AdminOrderableAPIView(APIView):
 
 
 class GenericAdminPaginationStyle(LimitOffsetPagination):
-    default_limit=PAGE_SIZE
+    default_limit = PAGE_SIZE
 
 
 class AdminSearchDashboardAPIView(ListAPIView):

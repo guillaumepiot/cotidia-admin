@@ -18,4 +18,4 @@ class TestGenericAdminList(TestCase):
 
         self.assertIn(self.admin_user_token.key, str(response.content))
         self.assertIn("/test/stub/:id", str(response.content))
-        self.assertIn("/api/admin/list/14", str(response.content))
+        self.assertIn("/api/admin/list/15", str(response.content))

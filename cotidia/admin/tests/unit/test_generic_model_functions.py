@@ -19,6 +19,8 @@ class AdminSearchDashboardTests(APITestCase):
         url = "temp_url"
         data = get_model_structure(GenericRecord, url)
 
+        print(data)
+
         self.assertIn('choice_field', data['columns'].keys())
         self.assertIn('choice_field', data['columns'].keys())
         self.assertIn('date_field', data['columns'].keys())
@@ -32,21 +34,20 @@ class AdminSearchDashboardTests(APITestCase):
         self.assertEqual('number', data['columns']['numeric_field']['filter'])
         self.assertEqual('text', data['columns']['char_field']['filter'])
         self.assertEqual('text', data['columns']['text_field']['filter'])
-        self.assertEqual((
-                    ("opt1", "Option 1"),
-                    ("opt2", "Option 2"),
-                    ("opt3", "Option 3")
-                    ), data['columns']['choice_field']['options'])
+        self.assertEqual([
+            ("opt1", "Option 1"),
+            ("opt2", "Option 2"),
+            ("opt3", "Option 3")
+            ], data['columns']['choice_field']['options'])
 
         # Check meta data fields were correctly labelled
-        self.assertEqual("Choice Field", data['columns']['choice_field']['label'])
-        self.assertEqual("Date Field", data['columns']['date_field']['label'])
+        self.assertEqual("TEST_LABEL", data['columns']['choice_field']['label'])
+        self.assertEqual("TEST_LABEL2", data['columns']['date_field']['label'])
 
         # Check non-meta data fields were correctly labelled
-        self.assertEqual("numeric_field", data['columns']['numeric_field']['label'])
-        self.assertEqual("char_field", data['columns']['char_field']['label'])
-        self.assertEqual("text_field", data['columns']['text_field']['label'])
-
+        self.assertEqual("Numeric Field", data['columns']['numeric_field']['label'])
+        self.assertEqual("Char Field", data['columns']['char_field']['label'])
+        self.assertEqual("Text Field", data['columns']['text_field']['label'])
 
         self.assertEqual(data['endpoint'], url)
         
@@ -69,18 +70,18 @@ class AdminSearchDashboardTests(APITestCase):
         self.assertEqual('number', data['columns']['numeric_field']['filter'])
         self.assertEqual('text', data['columns']['char_field']['filter'])
         self.assertEqual('text', data['columns']['text_field']['filter'])
-        self.assertEqual((
-                    ("opt1", "Option 1"),
-                    ("opt2", "Option 2"),
-                    ("opt3", "Option 3")
-                    ), data['columns']['choice_field']['options'])
+        self.assertEqual([
+            ("opt1", "Option 1"),
+            ("opt2", "Option 2"),
+            ("opt3", "Option 3")
+            ], data['columns']['choice_field']['options'])
 
         # Check fields were correctly labelled
-        self.assertEqual("choice_field", data['columns']['choice_field']['label'])
-        self.assertEqual("date_field", data['columns']['date_field']['label'])
-        self.assertEqual("numeric_field", data['columns']['numeric_field']['label'])
-        self.assertEqual("char_field", data['columns']['char_field']['label'])
-        self.assertEqual("text_field", data['columns']['text_field']['label'])
+        self.assertEqual("Choice Field", data['columns']['choice_field']['label'])
+        self.assertEqual("Date Field", data['columns']['date_field']['label'])
+        self.assertEqual("Numeric Field", data['columns']['numeric_field']['label'])
+        self.assertEqual("Char Field", data['columns']['char_field']['label'])
+        self.assertEqual("Text Field", data['columns']['text_field']['label'])
 
         self.assertEqual(data['endpoint'], url)
 
@@ -105,7 +106,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         # Create junk objects that match the filter to ensure we have more than
         # 1 page
-        for i in range(10):
+        for i in range(20):
             GenericRecordFactory(char_field="world")
 
         self.client.credentials(
@@ -115,7 +116,7 @@ class AdminSearchDashboardTests(APITestCase):
         url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
         data = {"char_field": "world"}
         response = self.client.get(url, data)
-        self.assertEqual(13, response.data['count'])
+        self.assertEqual(23, response.data['count'])
 
         # Checks the filter text is in the "next" link in the pagination object
         self.assertIn("?char_field=world", response.data['next'])
@@ -137,7 +138,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         # Create junk objects that match the filter to ensure we have more than
         # 1 page
-        for i in range(10):
+        for i in range(20):
             GenericRecordFactory(text_field="world")
 
         self.client.credentials(
@@ -147,7 +148,7 @@ class AdminSearchDashboardTests(APITestCase):
         url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
         data = {"text_field": "world"}
         response = self.client.get(url, data)
-        self.assertEqual(13, response.data['count'])
+        self.assertEqual(23, response.data['count'])
 
         # Checks the filter text is in the "next" link in the pagination object
         self.assertIn("text_field=world", response.data['next'])
@@ -168,7 +169,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         # Create junk objects that match the filter to ensure we have more than
         # 1 page
-        for i in range(10):
+        for i in range(20):
             GenericRecordFactory(boolean_field=True)
 
         self.client.credentials(
@@ -178,7 +179,7 @@ class AdminSearchDashboardTests(APITestCase):
         url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
         data = {"boolean_field": True}
         response = self.client.get(url, data)
-        self.assertEqual(12, response.data['count'])
+        self.assertEqual(22, response.data['count'])
 
         # Checks the filter text is in the "next" link in the pagination object
         self.assertIn("boolean_field=True", response.data['next'])
@@ -199,7 +200,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         # Create junk objects that match the filter to ensure we have more than
         # 1 page
-        for i in range(10):
+        for i in range(20):
             GenericRecordFactory(choice_field="opt1")
 
         self.client.credentials(
@@ -209,7 +210,7 @@ class AdminSearchDashboardTests(APITestCase):
         url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
         data = {"choice_field": "opt1"}
         response = self.client.get(url, data)
-        self.assertEqual(12, response.data['count'])
+        self.assertEqual(22, response.data['count'])
 
         # Checks the filter text is in the "next" link in the pagination object
         self.assertIn("choice_field=opt1", response.data['next'])
@@ -227,7 +228,7 @@ class AdminSearchDashboardTests(APITestCase):
         for i in range(1, 8):
             GenericRecordFactory(id=i, numeric_field=i)
 
-        for i in range(10):
+        for i in range(20):
             GenericRecordFactory(numeric_field=7)
 
         self.client.credentials(
@@ -238,7 +239,7 @@ class AdminSearchDashboardTests(APITestCase):
         data = {"numeric_field": "7"}
         response = self.client.get(url, data)
 
-        self.assertEqual(11, response.data['count'])
+        self.assertEqual(21, response.data['count'])
 
         # Checks the filter text is in the "next" link in the pagination object
         self.assertIn("numeric_field=7", response.data['next'])
@@ -254,6 +255,9 @@ class AdminSearchDashboardTests(APITestCase):
         for i in range(1, 21):
             GenericRecordFactory(id=i, numeric_field=i)
 
+        for i in range(10):
+            GenericRecordFactory(numeric_field=1)
+
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
@@ -262,7 +266,7 @@ class AdminSearchDashboardTests(APITestCase):
         data = {"numeric_field": ":11"}
         response = self.client.get(url, data)
 
-        self.assertEqual(11, response.data['count'])
+        self.assertEqual(21, response.data['count'])
 
         # Checks the filter text is in the "next" link in the pagination object
         self.assertIn("numeric_field=%3A11", response.data['next'])
@@ -278,6 +282,9 @@ class AdminSearchDashboardTests(APITestCase):
         for i in range(1, 21):
             GenericRecordFactory(id=i, numeric_field=i)
 
+        for i in range(10):
+            GenericRecordFactory(numeric_field=10)
+
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
@@ -286,7 +293,7 @@ class AdminSearchDashboardTests(APITestCase):
         data = {"numeric_field": "9:"}
         response = self.client.get(url, data)
 
-        self.assertEqual(12, response.data['count'])
+        self.assertEqual(22, response.data['count'])
 
         # Checks the filter text is in the "next" link in the pagination object
         self.assertIn("numeric_field=9%3A", response.data['next'])
@@ -302,6 +309,9 @@ class AdminSearchDashboardTests(APITestCase):
         for i in range(1, 101):
             GenericRecordFactory(id=i, numeric_field=i)
 
+        for i in range(10):
+            GenericRecordFactory(numeric_field=15)
+
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
@@ -310,7 +320,7 @@ class AdminSearchDashboardTests(APITestCase):
         data = {"numeric_field": "10:25"}
         response = self.client.get(url, data)
 
-        self.assertEqual(16, response.data['count'])
+        self.assertEqual(26, response.data['count'])
 
         # Checks the filter text is in the "next" link in the pagination object
         self.assertIn("numeric_field=10%3A25", response.data['next'])

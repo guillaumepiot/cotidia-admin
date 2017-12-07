@@ -14,6 +14,7 @@ from django.db.models.fields import (
 from rest_framework import fields
 from rest_framework import serializers
 
+MAX_SUBSERIALIZER_DEPTH = 2
 SUPPORTED_FIELD_TYPES_MODEL = [
         UUIDField,
         DateTimeField,
@@ -31,7 +32,9 @@ SUPPORTED_FIELD_TYPES_SERIALIZER = [
         fields.CharField,
         fields.IntegerField,
         fields.BooleanField,
-        fields.ChoiceField
+        fields.ChoiceField,
+        serializers.PrimaryKeyRelatedField,
+        serializers.ModelSerializer,
         ]
 FIELD_MAPPING = {
         "DateTimeField": (lambda: {
@@ -70,6 +73,10 @@ FIELD_MAPPING = {
             "display": "verbatim",
             "filter": "number"
             }),
+        "PrimaryKeyRelatedField": (lambda: {
+            "display": "verbatim",
+            "filter": "number"
+            }),
         }
 
 
@@ -103,11 +110,13 @@ class StaffPermissionRequiredMixin(UserCheckMixin):
 
 def get_model_serializer_class(model_class):
     try:
-        return model_class.__meta__.serializer
+        return model_class.__meta__.serializer()
     except AttributeError:
         try:
             class GenericSerializer(serializers.ModelSerializer):
-                field_representation = model_class.__meta__.field_representation
+                class __meta__:
+                    field_representation = model_class.__meta__.field_representation
+
                 class Meta:
                     model = model_class
                     fields = '__all__'
@@ -121,7 +130,7 @@ def get_model_serializer_class(model_class):
             return GenericSerializer
 
 
-def get_field_representation(field_name, field, model):
+def get_field_representation(field_name, field, model, prefix="",max_depth=MAX_SUBSERIALIZER_DEPTH):
     """ Creates a dict object for a given field using field mapping above
         Fields not in (or a subclass of) elements in the SUPPORTED_FIELD_TYPES
         list will return as "None"
@@ -133,60 +142,69 @@ def get_field_representation(field_name, field, model):
             key=lambda x: len(x.mro())
             )
 
-    type = next(
+    field_type = next(
             iter([t for t in sorted_types if isinstance(field, t)]),
             None)
 
-    if type is None:
-        return None
+    if field_type == serializers.ModelSerializer:
+        if max_depth <= 0:
+            return {}
+        else:
+            return get_fields_from_serializer(
+                    field,
+                    prefix=("%s%s__") % (
+                        prefix,
+                        field_name
+                        ),
+                    max_depth=max_depth -1)
 
     # Gets the base representation for the given field type
-    field_representation = FIELD_MAPPING[type.__name__]()
-    field_representation['label'] = field_name
+    field_representation = FIELD_MAPPING[field_type.__name__]()
+    # Formats the label by changing _s to spaces and capitalising the first
+    # letter of each word
+    field_representation['label'] =\
+        field_name.replace("__", " ").replace("_", " ").title()
     try:
-        field_representation['options'] = tuple(field.choices.items())
+        field_representation['options'] = list(field.choices.items())
     except AttributeError:
         pass
 
     # Checks if the developer has defined the field manually in the model
     try:
-        print(dir(field_name.__class__))
-        if field_name in model.field_representation:
-            print("META FOUND")
-            user_defined_representation = model.field_representation[field_name]
+        if field_name in model.__meta__.field_representation:
+            user_defined_representation =\
+                    model.__meta__.field_representation[field_name]
             for key in user_defined_representation:
-                field_representation[key] = user_defined_representation[key]
-    except (KeyError, AttributeError) as e:
-        if field_name == "choice_field":
-            print("Oh crap")
-            print(e)
+                try:
+                    field_representation[key] =\
+                            user_defined_representation[key]
+                except KeyError:
+                    pass
+    except (AttributeError) as e:
         pass
 
-    print(field_representation)
-    return field_representation
+    return {prefix + field_name: field_representation}
 
 
 def get_fields_from_model(model):
-    try:
-        serializer = model.__meta__.serializer()
-    except AttributeError:
-        serializer = get_model_serializer_class(model)()
-    return get_fields_from_serializer(serializer)
+    return get_fields_from_serializer(get_model_serializer_class(model)())
 
 
-def get_fields_from_serializer(serializer):
+def get_fields_from_serializer(serializer, prefix="",max_depth=MAX_SUBSERIALIZER_DEPTH):
     fields_representation = {}
     fields = serializer.fields
     for f in fields:
         field_representation = get_field_representation(
                 f,
                 fields[f],
-                serializer
+                serializer,
+                prefix,
+                max_depth
                 )
         if field_representation is not None:
-            fields_representation[f] = field_representation
+            fields_representation.update(field_representation)
         else:
-            print("Field not supported: %s" % f)
+            print("Field not supported: %s" % fields[f])
 
     return fields_representation
 
@@ -196,7 +214,7 @@ def get_serializer_default_columns(serializer):
     try:
         fields = serializer.__meta__.default_fields
     except (AttributeError):
-        fields = [f for f in get_fields_from_serializer(serializer).keys()]
+        fields = [f for f in get_fields_from_serializer(serializer).keys() if "__" not in f]
     return fields
 
 
@@ -212,8 +230,6 @@ def get_model_structure(
             "defaultColumns": get_serializer_default_columns(serializer)
 
             }
-    print("structure")
-    print(structure)
     if endpoint is not None:
         structure['endpoint'] = endpoint
     if detail_endpoint is not None:
