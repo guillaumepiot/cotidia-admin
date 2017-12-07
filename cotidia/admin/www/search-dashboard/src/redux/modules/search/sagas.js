@@ -63,11 +63,7 @@ function * performSearch () {
 
   let url = generateURL(data.endpoint, { '?': queryString })
 
-  console.log(url)
-
   const { ok, data: result } = yield call(fetchAuthenticated, 'GET', url)
-
-  console.log(ok, result)
 
   if (ok) {
     yield put({
@@ -82,11 +78,7 @@ function * getResultsPage ({ payload: { page } }) {
 
   const url = page === 'next' ? pagination.next : pagination.previous
 
-  console.log(url)
-
   const { ok, data: result } = yield call(fetchAuthenticated, 'GET', url)
-
-  console.log(ok, result)
 
   if (ok) {
     yield put({
