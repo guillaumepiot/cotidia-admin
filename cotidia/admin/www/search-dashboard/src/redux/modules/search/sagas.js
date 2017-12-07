@@ -100,6 +100,7 @@ export default function * watcher () {
   yield takeEvery(types.FILTER_COLUMN, filterColumn)
   yield takeEvery(types.MANAGE_COLUMNS, manageColumns)
 
+  yield takeEvery(types.PERFORM_SEARCH, performSearch)
   yield takeEvery(types.SET_SEARCH_TERM, performSearch)
   yield takeEvery(types.SET_ORDER_COLUMN, performSearch)
   yield takeEvery(types.TOGGLE_ORDER_DIRECTION, performSearch)

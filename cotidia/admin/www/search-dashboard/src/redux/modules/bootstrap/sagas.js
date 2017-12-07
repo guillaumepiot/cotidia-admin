@@ -14,6 +14,7 @@ export function * bootstrap ({ payload: config }) {
     },
   })
 
+  yield put({ type: searchTypes.PERFORM_SEARCH })
   yield put({ type: types.BOOTSTRAPPED })
 }
 
