@@ -4,6 +4,8 @@ import moment from 'moment'
 
 import { generateURL } from '../utils/api'
 
+import Pagination from '../containers/Pagination'
+
 import { Icon } from './elements/global'
 
 const getItem = (item, accessor) => {
@@ -122,6 +124,8 @@ export default class SearchResults extends Component {
             ))}
           </tbody>
         </table>
+
+        <Pagination />
       </div>
     )
   }

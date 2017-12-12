@@ -14,8 +14,8 @@ export default class Pagination extends Component {
     return (
       <>
         <div>{this.props.count} results.</div>
-        <div className='pagination'>
 
+        <div className='pagination'>
           <button
             className='pagination__link pagination__link--previous'
             disabled={! this.props.previous}
