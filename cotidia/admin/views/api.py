@@ -187,5 +187,7 @@ class AdminSearchDashboardAPIView(ListAPIView):
     @property
     def model_class(self):
         return ContentType.objects\
-                .get_for_id(self.kwargs['content_type_id'])\
-                .model_class()
+                .get(
+                        app_label=self.kwargs['app_label'],
+                        model=self.kwargs['model']
+                ).model_class()

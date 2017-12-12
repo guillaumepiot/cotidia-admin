@@ -130,6 +130,9 @@ class AdminGenericListView(TemplateView):
         url_type = "detail"
         context["content_type_id"] = content_type_id
         context["verbose_name"] = model._meta.verbose_name 
+        context["app_label"] = app_label
+        context["model_name"] = model_name
+        context["url_type"] = url_type
         try:
             reverse("{}-admin:{}-{}".format(app_label, model_name, url_type),
                     kwargs={"id": "1"})
