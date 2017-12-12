@@ -6,12 +6,29 @@ import { generateURL } from '../utils/api'
 
 import { Icon } from './elements/global'
 
+const getItem = (item, accessor) => {
+  const parts = accessor.split('__')
+
+  let value = item
+  let part
+
+  // Go through each part of the accessor and 'recurse' into the data structure:
+  // If item = { a: { b: { c: 'hi' } } } and accessor is a__b__c it'll return `'hi'`
+
+  // eslint-disable-next-line no-cond-assign
+  while (part = parts.shift()) {
+    value = value[part]
+  }
+
+  return value
+}
+
 const columnDisplayTypes = {
-  verbatim: (item, accessor) => (item[accessor] == null) ? '' : String(item[accessor]),
-  date: (item, accessor) => moment(item[accessor]).format('D MMM YYYY'),
-  datetime: (item, accessor) => moment(item[accessor]).format('D MMM YYYY @ HH:MM'),
-  boolean: (item, accessor) => (
-    item[accessor] ? <span className='fa fa-check' /> : <span className='fa fa-times' />
+  verbatim: (value) => (value == null) ? '' : String(value),
+  date: (value) => moment(value).format('D MMM YYYY'),
+  datetime: (value) => moment(value).format('D MMM YYYY @ HH:MM'),
+  boolean: (value) => (
+    value ? <span className='fa fa-check' /> : <span className='fa fa-times' />
   ),
 }
 
@@ -98,7 +115,7 @@ export default class SearchResults extends Component {
               <tr key={item.uuid} onClick={this.viewItemFactory(item)}>
                 {columns.map((column) => (
                   <td data-header={column.label} key={column.id}>
-                    {columnDisplayTypes[column.display](item, column.accessor)}
+                    {columnDisplayTypes[column.display](getItem(item, column.accessor))}
                   </td>
                 ))}
               </tr>
