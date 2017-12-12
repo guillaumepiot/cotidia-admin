@@ -32,12 +32,6 @@
         <script src="{% static "js/cookiesHelper.js" %}"></script>
         <script src="{% static "js/menu.js" %}"></script>
 
-        {% if DEBUG %}
-            <script src="{% static "js/admin.js" %}"></script>
-        {% else %}
-            <script src="{% static "js/admin.min.js" %}"></script>
-        {% endif %}
-
         {% block footer_scripts %}{% endblock footer_scripts %}
     </body>
 </html>
