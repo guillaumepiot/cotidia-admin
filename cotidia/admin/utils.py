@@ -167,7 +167,7 @@ def get_field_representation(field_name, field, model, prefix="",max_depth=MAX_S
     field_representation['label'] =\
         field_name.replace("__", " ").replace("_", " ").title()
     try:
-        field_representation['options'] = list(field.choices.items())
+        field_representation['options'] = list(map(lambda x: {"value": x[0], "label": x[1]}, field.choices.items()))
     except AttributeError:
         pass
 
