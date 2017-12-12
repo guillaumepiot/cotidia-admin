@@ -1,9 +1,11 @@
 {% load staticfiles %}
+
 {% if DEBUG %}
-<script src="http://localhost:3000/search-dashboard.js"></script>
+    <script src="http://localhost:3000/search-dashboard.js"></script>
 {% else %}
-<script src="{% static "js/search-dashboard.js" %}"
+    <script src="{% static "js/search-dashboard.js" %}"></script>
 {% endif %}
+
 <script>
     {{variable_name}} = {{data}};
     if (ReactDOM) {
