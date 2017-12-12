@@ -11,6 +11,7 @@ class AdminConf(AppConf):
     MENU_DEFINITION = {}
 
     DETAIL_CURRENCY = "&pound;"
+    MAX_SUBSERIALIZER_DEPTH = 4
 
     class Meta:
         prefix = 'admin'

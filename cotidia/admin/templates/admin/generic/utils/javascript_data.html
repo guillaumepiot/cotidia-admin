@@ -1,0 +1,12 @@
+{% load staticfiles %}
+{% if DEBUG %}
+<script src="http://localhost:3000/search-dashboard.js"></script>
+{% else %}
+<script src="{% static "js/search-dashboard.js" %}"
+{% endif %}
+<script>
+    {{variable_name}} = {{data}};
+    if (ReactDOM) {
+        ReactDOM.render(React.createElement(window.SearchDashboard, {{variable_name}}), document.getElementById('search-dashboard'))
+    }
+</script>

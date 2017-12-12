@@ -7,6 +7,7 @@ def admin_settings(request):
         "SITE_URL": settings.SITE_URL,
         "SITE_NAME": settings.SITE_NAME,
         "ADMIN_DETAIL_CURRENCY": settings.ADMIN_DETAIL_CURRENCY,
+        "DEBUG": settings.DEBUG
     }
 
     return data

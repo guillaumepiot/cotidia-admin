@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Cotidia Admin Search Dashboard</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="http://localhost:8000/static/css/admin.css">
+    </head>
+    <body class="menu--sidebar">
+        <menu class="menu">
+            <header class="menu__item menu__item--open menu-item">
+                <a href="#" class="menu-item__link"><span class="fa fa-bars"></span></a>
+                <span class="menu__title">Admin</span>
+            </header>
+            <ul class="menu__container">
+                <li class="menu__item menu__item--close menu-item">
+                    <a href="#" class="menu-item__link"><span class="fa fa-close"></span></a>
+                </li>
+                <li class="menu__item menu-item menu-item--home">
+                    <a href="#" class="menu-item__link">
+                        <span class="menu-item__link-icon">
+                            <span class="fa fa-home"></span>
+                        </span>
+                        <span class="menu-item__link-text">Admin</span>
+                    </a>
+                </li>
+
+                <div class="menu__section">
+                    Some section
+                </div>
+
+                <li class="menu__item menu-item">
+                    <a href="#" class="menu-item__link"><span class="menu-item__link-icon"><span class="fa fa-users"></span></span> <span class="menu-item__link-text">First thing</span></a>
+                </li>
+
+                <li class="menu__item menu-item">
+                    <a href="#" class="menu-item__link"><span class="menu-item__link-icon"><span class="fa fa-list"></span></span> <span class="menu-item__link-text">Next one</span></a>
+                </li>
+
+                <li class="menu__item menu-item">
+                    <a href="#" class="menu-item__link"><span class="menu-item__link-icon"><span class="fa fa-users"></span></span> <span class="menu-item__link-text">Third</span></a>
+                </li>
+
+                <li class="menu__item menu-item">
+                    <a href="#" class="menu-item__link"><span class="menu-item__link-icon"><span class="fa fa-calendar"></span></span> <span class="menu-item__link-text">And the last one</span></a>
+                </li>
+            </ul>
+        </menu>
+
+        <div class="toolbar">
+            <a href="#" class="btn btn--create btn--small pull-right">
+                <span class="fa fa-plus"></span>
+                Add Person
+            </a>
+            <span class="toolbar__title">People</span>
+        </div>
+
+        <div class="content" id="search-dashboard">
+            <form action="" method="get" class="head-bar head-bar--filter">
+                <div class="form__group">
+                    <label class="form__label">Search</label>
+                    <div class="form__control">
+                        <input type="text" />
+                    </div>
+                </div>
+                <input type="submit" value="Filter" class="btn btn--primary btn--transparent" />
+                <a href="" class="btn btn--transparent" title="Reset filters"><span class="fa fa-refresh"></span></a>
+            </form>
+        </div>
+
+        <script src="search-dashboard.js"></script>
+        <script>
+            var appConfig = {
+                authToken: 'abcdef',
+                endpoint: '/api/search?content_type_id=38',
+                detailURL: '/admin/person/view/:id',
+                defaultColumns: ['name', 'email'],
+                columns: {
+                    name: {
+                        label: 'Name',
+                        display: 'verbatim',
+                        filter: 'text',
+                    },
+                    email: {
+                        label: 'Email',
+                        display: 'verbatim',
+                        filter: 'text',
+                    },
+                    date: {
+                        label: 'When?',
+                        display: 'datetime',
+                        filter: 'date',
+                    },
+                    type: {
+                        label: 'Type',
+                        display: 'verbatim',
+                        filter: 'choice',
+                        options: [
+                            {
+                                value: 'carnivore',
+                                label: 'Meat eater',
+                            },
+                            {
+                                value: 'pescetarian',
+                                label: 'Fish eater',
+                            },
+                            {
+                                value: 'vegetarian',
+                                label: 'Vegetarian',
+                            },
+                            {
+                                value: 'vegan',
+                                label: 'Vegan',
+                            },
+                            {
+                                value: 'fruitarian',
+                                label: 'Fruitarian',
+                            },
+                        ]
+                    },
+                    active: {
+                        label: 'Active?',
+                        display: 'boolean',
+                        filter: 'boolean',
+                    },
+                },
+            }
+
+            ReactDOM.render(React.createElement(window.SearchDashboard, appConfig), document.getElementById('search-dashboard'))
+        </script>
+    </body>
+</html>

@@ -22,12 +22,13 @@ DEFAULT_SETTINGS = dict(
         "django_otp.plugins.otp_totp",
         "two_factor",
 
-        "cotidia.core",
         "cotidia.admin",
         "cotidia.account",
         "cotidia.mail",
+        "cotidia.file",
         "rest_framework",
         "rest_framework.authtoken",
+        "cotidia.admin.tests"
     ],
     MIDDLEWARE_CLASSES=[
         "django.middleware.common.CommonMiddleware",
@@ -44,6 +45,7 @@ DEFAULT_SETTINGS = dict(
             "OPTIONS": {
                 "debug": True,
                 "context_processors": [
+                    "django.template.context_processors.request",
                     "django.contrib.auth.context_processors.auth",
                 ]
             }
@@ -52,7 +54,7 @@ DEFAULT_SETTINGS = dict(
     DATABASES={
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME": ":memory:",
+            "NAME": ":memory:"
         }
     },
     SITE_ID=1,
@@ -61,10 +63,8 @@ DEFAULT_SETTINGS = dict(
     ROOT_URLCONF="cotidia.admin.tests.urls",
     SECRET_KEY="notasecret",
     AUTH_USER_MODEL="account.User",
-    AUTHENTICATION_BACKENDS=[
-        'cotidia.admin.auth.EmailBackend',
-    ],
     STATIC_URL='/static/',
+    STATIC_ROOT=PACKAGE_ROOT,
     REST_FRAMEWORK={
         'DEFAULT_AUTHENTICATION_CLASSES': (
             'rest_framework.authentication.TokenAuthentication',
@@ -76,37 +76,31 @@ DEFAULT_SETTINGS = dict(
         'DEFAULT_RENDERER_CLASSES': (
             'rest_framework.renderers.JSONRenderer',
         ),
-    }
+        'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+        'PAGE_SIZE': 10
+    },
+    FILE_UPLOAD_PATH='test-uploads/',
+    PUBLIC_FILE_STORAGE='django.core.files.storage.DefaultStorage'
 )
 
 
-def runtests(*test_args):
-    if not settings.configured:
-        settings.configure(**DEFAULT_SETTINGS)
-
-    # Compatibility with Django 1.7's stricter initialization
-    if hasattr(django, "setup"):
-        django.setup()
-
-    parent = os.path.dirname(os.path.abspath(__file__))
-    sys.path.insert(0, parent)
+def runtests():
+    settings.configure(**DEFAULT_SETTINGS)
 
     try:
-        from django.test.runner import DiscoverRunner
-        runner_class = DiscoverRunner
-        test_args = ["cotidia.admin.tests"]
-    except ImportError:
+        # Django <= 1.8
         from django.test.simple import DjangoTestSuiteRunner
-        runner_class = DjangoTestSuiteRunner
-        test_args = ["tests"]
+        test_runner = DjangoTestSuiteRunner(verbosity=1)
+    except ImportError:
+        # Django >= 1.8
+        django.setup()
+        from django.test.runner import DiscoverRunner
+        test_runner = DiscoverRunner(verbosity=1)
 
-    failures = runner_class(
-        verbosity=1,
-        interactive=True,
-        failfast=False
-    ).run_tests(test_args)
-    sys.exit(failures)
+    failures = test_runner.run_tests(['cotidia'])
+    if failures:
+        sys.exit(failures)
 
 
 if __name__ == "__main__":
-    runtests(*sys.argv[1:])
+    runtests()
