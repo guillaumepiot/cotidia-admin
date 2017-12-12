@@ -10,7 +10,7 @@ urlpatterns = [
         name='order'
     ),
     url(
-        r'^list-object/(?P<content_type_id>[\d]+)',
+        r'^list/(?P<content_type_id>[\d]+)',
         AdminGenericListView.as_view()
         )
 ]
