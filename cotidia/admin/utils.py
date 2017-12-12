@@ -31,6 +31,7 @@ SUPPORTED_FIELD_TYPES_SERIALIZER = [
         fields.DateField,
         fields.CharField,
         fields.IntegerField,
+        fields.DecimalField,
         fields.BooleanField,
         fields.ChoiceField,
         serializers.PrimaryKeyRelatedField,
@@ -58,6 +59,10 @@ FIELD_MAPPING = {
             "filter": "choice"
             }),
         "IntegerField": (lambda: {
+            "display": "verbatim",
+            "filter": "number"
+            }),
+        "DecimalField": (lambda: {
             "display": "verbatim",
             "filter": "number"
             }),
