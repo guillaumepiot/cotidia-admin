@@ -5,11 +5,16 @@ body{
         .content__delete,
         .form,
         .form__actions-inner,
-        .head-bar {
+        .head-bar{
             max-width: $laptop_width;
             padding-left: $horizontal_padding;
             padding-right: $horizontal_padding;
             margin: 0 auto;
+        }
+
+        .pagination {
+            padding-left: 0;
+            padding-right: 0;
         }
 
         @media screen and (max-width: $mobile-width) {
@@ -37,12 +42,14 @@ body{
 }
 
 .pagination{
-    padding: $vertical_padding 0;
+    padding: $vertical_padding $horizontal_padding;
+
     &__link{
         display: block;
         float: left;
         border: 1px solid lighten($grey--medium, 10%);
         padding: 0 $vertical_padding;
+        font-size: 1em;
         line-height: 2em;
         text-transform: uppercase;
         &--current{
