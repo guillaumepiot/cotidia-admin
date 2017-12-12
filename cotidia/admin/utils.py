@@ -216,7 +216,8 @@ def get_serializer_default_columns(serializer):
     try:
         fields = serializer.SearchProvider.default_fields
     except (AttributeError):
-        fields = [f for f in get_fields_from_serializer(serializer).keys() if "__" not in f]
+        # Gets all fields excluding sub serializer fields and uuid fields
+        fields = [f for f in get_fields_from_serializer(serializer).keys() if "__" not in f if "uuid" not in f]
     return fields
 
 
