@@ -10,7 +10,7 @@ urlpatterns = [
         name='order'
     ),
     url(
-        r'^list/(?P<app_label>[a-zA-Z]+)/(?P<model>[a-zA-Z]+)',
+        r'^list/(?P<app_label>[a-zA-Z_]+)/(?P<model>[a-zA-Z_]+)',
         AdminSearchDashboardAPIView.as_view(),
         name='object-list'
         )
