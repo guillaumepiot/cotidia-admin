@@ -7,12 +7,11 @@ from rest_framework.generics import ListAPIView
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
-from rest_framework.renderers import JSONRenderer
 from rest_framework.pagination import LimitOffsetPagination
 
 from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
-from django.urls import reverse
+from functools import reduce
 
 from cotidia.admin.utils import (
         get_fields_from_model,
@@ -29,8 +28,6 @@ api_patterns = {
         "gte": r"^%s:$",
         "range": r"^%s:%s$"
         }
-
-
 
 
 def filter_lte(field, val):
@@ -70,8 +67,10 @@ def filter_comparable(field_regex, data_type):
 
 
 filter_number = filter_comparable(number_pattern, Decimal)
-filter_date = filter_comparable(date_pattern,
-        lambda x: datetime.strptime(x, "%Y-%m-%d"))
+filter_date = filter_comparable(
+        date_pattern,
+        lambda x: datetime.strptime(x, "%Y-%m-%d")
+)
 
 
 def contains_filter(query_set, field, values):
@@ -102,6 +101,26 @@ def field_filter(filter_fn, query_set, field, values):
 
 def date_filter(query_set, field, values):
     return field_filter(filter_number, query_set, field, values)
+
+
+def filter_general_query(serializer, values, queryset, suffix="__icontains"):
+    q_object = Q()
+    try:
+        field_set = serializer.SearchProvider.general_query_fields
+    except AttributeError:
+        field_set = ["id"]
+        suffix = ""
+
+    for val in values:
+        # Turns all values in the field_set columns into Q objects and ORs them
+        # together with the queryset for previous values
+        q_object = reduce(
+                lambda x, y: x | y,
+                map(lambda x: Q(**{x + suffix: val}), field_set),
+                q_object
+        )
+
+    return queryset.filter(q_object)
 
 
 FILTERS = {
@@ -142,8 +161,15 @@ class AdminSearchDashboardAPIView(ListAPIView):
         field_data = get_fields_from_model(model_class)
         query_set = model_class.objects.all()
 
+        q_list = self.request.GET.getlist('_q')
+
+        query_set = filter_general_query(query_set,q_list, query_set)
+
         # Applies filters for each field in get request
         for field in field_data.keys():
+            # If the field name is reserved (starts with _ we skip the filtering)
+            if field[0] == '_': 
+                continue
             filter_params = self.request.GET.getlist(field)
             # If there is a filter to apply
             if filter_params:
