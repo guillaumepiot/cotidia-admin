@@ -145,6 +145,8 @@ def get_field_representation(field_name, field, model, prefix="",max_depth=MAX_S
     field_type = next(
             iter([t for t in sorted_types if isinstance(field, t)]),
             None)
+    if field_type is None:
+        return None
 
     if field_type == serializers.ModelSerializer:
         if max_depth <= 0:
