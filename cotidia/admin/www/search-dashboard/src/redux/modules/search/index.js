@@ -113,6 +113,8 @@ export default (state = initialState, { type, payload } = {}) => {
         ...state,
         searchTerm: null,
         filters: {},
+        orderColumn: null,
+        orderAscending: true,
       }
 
     default:

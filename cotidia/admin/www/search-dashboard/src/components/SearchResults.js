@@ -7,7 +7,7 @@ import { generateURL } from '../utils/api'
 import { Icon } from './elements/global'
 
 const columnDisplayTypes = {
-  verbatim: (item, accessor) => String(item[accessor]),
+  verbatim: (item, accessor) => (item[accessor] == null) ? '' : String(item[accessor]),
   date: (item, accessor) => moment(item[accessor]).format('D MMM YYYY'),
   datetime: (item, accessor) => moment(item[accessor]).format('D MMM YYYY @ HH:MM'),
   boolean: (item, accessor) => (
