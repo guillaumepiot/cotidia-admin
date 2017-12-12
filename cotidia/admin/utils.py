@@ -15,7 +15,7 @@ from rest_framework import fields, serializers
 
 from cotidia.admin.conf import settings
 
-MAX_SUBSERIALIZER_DEPTH = settings.ADMIN_DEFAULT_SUBSERIALIZER_DEPTH 
+MAX_SUBSERIALIZER_DEPTH = settings.ADMIN_MAX_SUBSERIALIZER_DEPTH
 
 SUPPORTED_FIELD_TYPES_MODEL = [
         UUIDField,
