@@ -114,7 +114,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
         return self.build_success_url()
 
 
-class AdminGenericListView(TemplateView):
+class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
 
     template_name = "admin/generic/page/dynamic-list.html"
 
@@ -129,7 +129,7 @@ class AdminGenericListView(TemplateView):
         model_name = model._meta.model_name
         url_type = "detail"
         context["content_type_id"] = content_type_id
-        context["verbose_name"] = model._meta.verbose_name 
+        context["verbose_name"] = model._meta.verbose_name
         context["app_label"] = app_label
         context["model_name"] = model_name
         context["url_type"] = url_type
