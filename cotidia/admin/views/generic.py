@@ -8,7 +8,7 @@ from django.views.generic import (
 )
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.contrib.contenttypes.models import ContentType
 from django.views.generic.base import TemplateView
 from django.core.urlresolvers import NoReverseMatch
@@ -120,7 +120,10 @@ class AdminGenericListView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        content_type_id = self.kwargs["content_type_id"]
+        try:
+            content_type_id = ContentType.objects.get(app_label=kwargs["app_label"], model=kwargs["model"]).id
+        except ContentType.DoesNotExist:
+            raise Http404()
         model = ContentType.objects.get_for_id(content_type_id).model_class()
         app_label = model._meta.app_label
         model_name = model._meta.model_name
