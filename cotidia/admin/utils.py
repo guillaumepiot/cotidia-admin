@@ -1,4 +1,3 @@
-from cotidia.account.conf import settings
 from django.shortcuts import redirect
 from django.core.exceptions import PermissionDenied
 from django.db.models.fields import (
@@ -11,10 +10,13 @@ from django.db.models.fields import (
         AutoField,
         TextField,
         )
-from rest_framework import fields
-from rest_framework import serializers
 
-MAX_SUBSERIALIZER_DEPTH = 2
+from rest_framework import fields, serializers
+
+from cotidia.admin.conf import settings
+
+MAX_SUBSERIALIZER_DEPTH = settings.ADMIN_DEFAULT_SUBSERIALIZER_DEPTH 
+
 SUPPORTED_FIELD_TYPES_MODEL = [
         UUIDField,
         DateTimeField,
