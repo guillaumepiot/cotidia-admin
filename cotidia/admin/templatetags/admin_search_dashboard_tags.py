@@ -46,7 +46,7 @@ def render_search_dashboard_config(
                     kwargs={"id": 9999})
             detail_endpoint = detail_endpoint.replace("9999", ":id")
         except NoReverseMatch:
-            detail_endpoint=None
+            detail_endpoint = None
     else:
         detail_endpoint = None
 
