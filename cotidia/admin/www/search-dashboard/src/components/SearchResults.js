@@ -17,7 +17,7 @@ const getItem = (item, accessor) => {
 
   // eslint-disable-next-line no-cond-assign
   while (part = parts.shift()) {
-    value = value[part]
+    value = value?.[part]
   }
 
   return value
