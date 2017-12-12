@@ -162,8 +162,9 @@ class AdminSearchDashboardAPIView(ListAPIView):
         query_set = model_class.objects.all()
 
         q_list = self.request.GET.getlist('_q')
+        serializer = get_model_serializer_class(model_class)
 
-        query_set = filter_general_query(query_set,q_list, query_set)
+        query_set = filter_general_query(serializer, q_list, query_set)
 
         # Applies filters for each field in get request
         for field in field_data.keys():
