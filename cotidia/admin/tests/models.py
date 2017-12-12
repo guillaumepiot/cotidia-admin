@@ -18,7 +18,7 @@ class GenericRecordNoMeta(models.Model):
             )
     text_field = models.TextField()
 
-    class __meta__:
+    class SearchProvider:
         def serializer():
             from cotidia.admin.tests.serializers import GenericRecordSerializerNoMeta
             return GenericRecordSerializerNoMeta
@@ -37,7 +37,7 @@ class GenericRecord(models.Model):
     boolean_field = models.BooleanField()
     foreign_key_field = models.ForeignKey(GenericRecordNoMeta)
 
-    class __meta__:
+    class SearchProvider:
         def serializer():
             from cotidia.admin.tests.serializers import GenericRecordSerializer
             return GenericRecordSerializer

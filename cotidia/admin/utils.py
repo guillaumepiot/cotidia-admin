@@ -110,12 +110,12 @@ class StaffPermissionRequiredMixin(UserCheckMixin):
 
 def get_model_serializer_class(model_class):
     try:
-        return model_class.__meta__.serializer()
+        return model_class.SearchProvider.serializer()
     except AttributeError:
         try:
             class GenericSerializer(serializers.ModelSerializer):
-                class __meta__:
-                    field_representation = model_class.__meta__.field_representation
+                class SearchProvider:
+                    field_representation = model_class.SearchProvider.field_representation
 
                 class Meta:
                     model = model_class
@@ -171,9 +171,9 @@ def get_field_representation(field_name, field, model, prefix="",max_depth=MAX_S
 
     # Checks if the developer has defined the field manually in the model
     try:
-        if field_name in model.__meta__.field_representation:
+        if field_name in model.SearchProvider.field_representation:
             user_defined_representation =\
-                    model.__meta__.field_representation[field_name]
+                    model.SearchProvider.field_representation[field_name]
             for key in user_defined_representation:
                 try:
                     field_representation[key] =\
@@ -212,7 +212,7 @@ def get_fields_from_serializer(serializer, prefix="",max_depth=MAX_SUBSERIALIZER
 def get_serializer_default_columns(serializer):
     fields = []
     try:
-        fields = serializer.__meta__.default_fields
+        fields = serializer.SearchProvider.default_fields
     except (AttributeError):
         fields = [f for f in get_fields_from_serializer(serializer).keys() if "__" not in f]
     return fields
