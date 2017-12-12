@@ -129,6 +129,8 @@ def get_model_serializer_class(model_class):
 
         except AttributeError:
             class GenericSerializer(serializers.ModelSerializer):
+                class SearchProvider:
+                    default_columns = ["id"]
                 class Meta:
                     model = model_class
                     fields = '__all__'
@@ -219,7 +221,7 @@ def get_fields_from_serializer(serializer, prefix="",max_depth=MAX_SUBSERIALIZER
 def get_serializer_default_columns(serializer):
     fields = []
     try:
-        fields = serializer.SearchProvider.default_fields
+        fields = serializer.SearchProvider.default_columns
     except (AttributeError):
         # Gets all fields excluding sub serializer fields and uuid fields
         fields = [f for f in get_fields_from_serializer(serializer).keys() if "__" not in f if "uuid" not in f]
