@@ -16,6 +16,7 @@ from django.core.urlresolvers import NoReverseMatch
 from cotidia.admin.utils import StaffPermissionRequiredMixin
 from cotidia.admin.views.mixin import ContextMixin, ChildMixin
 from cotidia.admin.forms import ActionForm
+from cotidia.admin.templatetags.admin_list_tags import get_admin_url
 
 
 class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
@@ -124,12 +125,23 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
             content_type_id = ContentType.objects.get(app_label=kwargs["app_label"], model=kwargs["model"]).id
         except ContentType.DoesNotExist:
             raise Http404()
+        
         model = ContentType.objects.get_for_id(content_type_id).model_class()
         app_label = model._meta.app_label
         model_name = model._meta.model_name
+
+        # Checks if there is an "add url"
+        try:
+            get_admin_url(app_label, model_name, "add")
+            add_view = True
+        except NoReverseMatch:
+            add_view = False
+
         url_type = "detail"
         context["content_type_id"] = content_type_id
         context["verbose_name"] = model._meta.verbose_name
+        context["verbose_name_plural"] = model._meta.verbose_name_plural
+        context["add_view"] = add_view
         context["app_label"] = app_label
         context["model_name"] = model_name
         context["url_type"] = url_type
