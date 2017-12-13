@@ -38,6 +38,7 @@ SUPPORTED_FIELD_TYPES_SERIALIZER = [
         fields.ChoiceField,
         serializers.PrimaryKeyRelatedField,
         serializers.ModelSerializer,
+        serializers.ListSerializer
         ]
 FIELD_MAPPING = {
         "DateTimeField": (lambda: {
@@ -83,6 +84,10 @@ FIELD_MAPPING = {
         "PrimaryKeyRelatedField": (lambda: {
             "display": "verbatim",
             "filter": "number"
+            }),
+        "ListSerializer": (lambda: {
+            "display": "list",
+            "filter": "text"
             }),
         }
 
@@ -155,7 +160,7 @@ def get_field_representation(field_name, field, model, prefix="",max_depth=MAX_S
     if field_type is None:
         return None
 
-    if field_type == serializers.ModelSerializer:
+    if issubclass(field_type, serializers.ModelSerializer):
         if max_depth <= 0:
             return {}
         else:
