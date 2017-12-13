@@ -15,6 +15,16 @@
         }
     }
 
+    thead tr th {
+        position: relative;
+        padding-right: $horizontal_padding * 2;
+        .btn {
+            position: absolute;
+            top: auto;
+            right: $horizontal_padding / 2;
+        }
+    }
+
     .action-column {
         width: 1px;
     }

@@ -5743,6 +5743,13 @@ fieldset {
     .table--admin-mobile-view .action-column + th:nth-child(2),
     .table--admin-mobile-view .action-column + td:nth-child(2) {
       display: table-cell; } }
+  .table thead tr th {
+    position: relative;
+    padding-right: 2rem; }
+    .table thead tr th .btn, .table thead tr th .form__control input[type="file"], .form__control .table thead tr th input[type="file"] {
+      position: absolute;
+      top: auto;
+      right: 0.5rem; }
   .table .action-column {
     width: 1px; }
 
