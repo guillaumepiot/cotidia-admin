@@ -1,0 +1,4 @@
+{% load humanize %}
+{% if display_type == 'currency' %}{{ADMIN_DETAIL_CURRENCY|safe}}{{value|intcomma}}{% elif display_type == 'percent' %}{{value}}%{% else %}{{value}}
+{% endif %}{% if queryloop and not queryloop.last %}, {% endif %}
+

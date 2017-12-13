@@ -4,24 +4,9 @@ from django.template.exceptions import TemplateDoesNotExist
 from django.template.loader import get_template
 from django.core.urlresolvers import reverse
 
+from cotidia.admin.templatetags.admin_util_tags import get_attr
+
 register = template.Library()
-
-
-@register.filter()
-def get_attr(obj, column):
-
-    # If the column is a display function, call it with the object as first
-    # argument
-    if callable(column):
-        return column(obj)
-
-    attr = getattr(obj, column)
-
-    # If the object attribute is a method, call it
-    if callable(attr):
-        return attr()
-
-    return attr
 
 
 @register.simple_tag(takes_context=True)
