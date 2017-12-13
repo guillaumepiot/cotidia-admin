@@ -131,8 +131,6 @@ def get_model_serializer_class(model_class):
 
         except AttributeError:
             class GenericSerializer(serializers.ModelSerializer):
-                class SearchProvider:
-                    default_columns = ["id"]
                 class Meta:
                     model = model_class
                     fields = '__all__'
@@ -180,20 +178,6 @@ def get_field_representation(field_name, field, model, prefix="",max_depth=MAX_S
     except AttributeError:
         pass
 
-    # Checks if the developer has defined the field manually in the model
-    try:
-        if field_name in model.SearchProvider.field_representation:
-            user_defined_representation =\
-                    model.SearchProvider.field_representation[field_name]
-            for key in user_defined_representation:
-                try:
-                    field_representation[key] =\
-                            user_defined_representation[key]
-                except KeyError:
-                    pass
-    except (AttributeError) as e:
-        pass
-
     return {prefix + field_name: field_representation}
 
 
@@ -216,6 +200,16 @@ def get_fields_from_serializer(serializer, prefix="",max_depth=MAX_SUBSERIALIZER
             fields_representation.update(field_representation)
         else:
             print("Field not supported: %s" % fields[f])
+    
+    try:
+        user_defined_representation = serializer.SearchProvider.field_representation
+        for field in user_defined_representation:
+            try:
+                fields_representation[field].update(user_defined_representation[field])
+            except KeyError as e:
+                pass
+    except AttributeError as e:
+        pass
 
     return fields_representation
 

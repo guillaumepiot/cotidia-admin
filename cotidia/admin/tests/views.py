@@ -16,12 +16,12 @@ class AdminTestSearchDashboardAPIView(AdminSearchDashboardAPIView):
 
 class TestAdminPageView(View):
     def get(self, *args, **kwargs):
-        content_type_id = ContentType.objects.get_for_model(GenericRecord).id
+        content_type = ContentType.objects.get_for_model(GenericRecord)
         context = {
-                "app_label": "generic",
-                "model_name": "object",
+                "app_label": content_type.app_label,
+                "model_name": content_type.model,
                 "url_type": "list",
-                "content_type_id": content_type_id,
+                "content_type_id": content_type.id
                 }
         return render(self.request, "admin/generic/utils/test.html", context)
 

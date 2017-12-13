@@ -19,8 +19,6 @@ class AdminSearchDashboardTests(APITestCase):
         url = "temp_url"
         data = get_model_structure(GenericRecord, url)
 
-        print(data)
-
         self.assertIn('choice_field', data['columns'].keys())
         self.assertIn('choice_field', data['columns'].keys())
         self.assertIn('date_field', data['columns'].keys())
@@ -28,21 +26,35 @@ class AdminSearchDashboardTests(APITestCase):
         self.assertIn('char_field', data['columns'].keys())
         self.assertIn('text_field', data['columns'].keys())
 
+        self.assertIn('foreign_key_field__choice_field', data['columns'].keys())
+        self.assertIn('foreign_key_field__choice_field', data['columns'].keys())
+        self.assertIn('foreign_key_field__date_field', data['columns'].keys())
+        self.assertIn('foreign_key_field__numeric_field', data['columns'].keys())
+        self.assertIn('foreign_key_field__char_field', data['columns'].keys())
+        self.assertIn('foreign_key_field__text_field', data['columns'].keys())
+
         self.assertEqual('number', data['columns']['id']['filter'])
         self.assertEqual('choice', data['columns']['choice_field']['filter'])
         self.assertEqual('date', data['columns']['date_field']['filter'])
         self.assertEqual('number', data['columns']['numeric_field']['filter'])
         self.assertEqual('text', data['columns']['char_field']['filter'])
         self.assertEqual('text', data['columns']['text_field']['filter'])
+        self.assertEqual('number', data['columns']['foreign_key_field__id']['filter'])
+        self.assertEqual('choice', data['columns']['foreign_key_field__choice_field']['filter'])
+        self.assertEqual('date', data['columns']['foreign_key_field__date_field']['filter'])
+        self.assertEqual('number', data['columns']['foreign_key_field__numeric_field']['filter'])
+        self.assertEqual('text', data['columns']['foreign_key_field__char_field']['filter'])
+        self.assertEqual('text', data['columns']['foreign_key_field__text_field']['filter'])
         self.assertEqual([
-            ("opt1", "Option 1"),
-            ("opt2", "Option 2"),
-            ("opt3", "Option 3")
+            {"value": "opt1", "label": "Option 1"},
+            {"value": "opt2", "label": "Option 2"},
+            {"value": "opt3", "label": "Option 3"}
             ], data['columns']['choice_field']['options'])
 
         # Check meta data fields were correctly labelled
         self.assertEqual("TEST_LABEL", data['columns']['choice_field']['label'])
         self.assertEqual("TEST_LABEL2", data['columns']['date_field']['label'])
+        self.assertEqual("replacement_label", data['columns']['foreign_key_field__choice_field']['label'])
 
         # Check non-meta data fields were correctly labelled
         self.assertEqual("Numeric Field", data['columns']['numeric_field']['label'])
@@ -71,9 +83,9 @@ class AdminSearchDashboardTests(APITestCase):
         self.assertEqual('text', data['columns']['char_field']['filter'])
         self.assertEqual('text', data['columns']['text_field']['filter'])
         self.assertEqual([
-            ("opt1", "Option 1"),
-            ("opt2", "Option 2"),
-            ("opt3", "Option 3")
+            {"value": "opt1", "label": "Option 1"},
+            {"value": "opt2", "label": "Option 2"},
+            {"value": "opt3", "label": "Option 3"}
             ], data['columns']['choice_field']['options'])
 
         # Check fields were correctly labelled
@@ -91,8 +103,8 @@ class AdminSearchDashboardTests(APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
-        content_type = ContentType.objects.get_for_model(GenericRecord).id
-        url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
+        content_type = ContentType.objects.get_for_model(GenericRecord)
+        url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
         data = {}
         response = self.client.get(url, data) 
         self.assertEqual(2, response.data['count'])
@@ -112,8 +124,8 @@ class AdminSearchDashboardTests(APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
-        content_type = ContentType.objects.get_for_model(GenericRecord).id
-        url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
+        content_type = ContentType.objects.get_for_model(GenericRecord)
+        url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
         data = {"char_field": "world"}
         response = self.client.get(url, data)
         self.assertEqual(23, response.data['count'])
@@ -144,8 +156,8 @@ class AdminSearchDashboardTests(APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
-        content_type = ContentType.objects.get_for_model(GenericRecord).id
-        url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
+        content_type = ContentType.objects.get_for_model(GenericRecord)
+        url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
         data = {"text_field": "world"}
         response = self.client.get(url, data)
         self.assertEqual(23, response.data['count'])
@@ -175,8 +187,8 @@ class AdminSearchDashboardTests(APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
-        content_type = ContentType.objects.get_for_model(GenericRecord).id
-        url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
+        content_type = ContentType.objects.get_for_model(GenericRecord)
+        url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
         data = {"boolean_field": True}
         response = self.client.get(url, data)
         self.assertEqual(22, response.data['count'])
@@ -206,8 +218,8 @@ class AdminSearchDashboardTests(APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
-        content_type = ContentType.objects.get_for_model(GenericRecord).id
-        url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
+        content_type = ContentType.objects.get_for_model(GenericRecord)
+        url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
         data = {"choice_field": "opt1"}
         response = self.client.get(url, data)
         self.assertEqual(22, response.data['count'])
@@ -234,8 +246,8 @@ class AdminSearchDashboardTests(APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
-        content_type = ContentType.objects.get_for_model(GenericRecord).id
-        url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
+        content_type = ContentType.objects.get_for_model(GenericRecord)
+        url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
         data = {"numeric_field": "7"}
         response = self.client.get(url, data)
 
@@ -261,8 +273,8 @@ class AdminSearchDashboardTests(APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
-        content_type = ContentType.objects.get_for_model(GenericRecord).id
-        url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
+        content_type = ContentType.objects.get_for_model(GenericRecord)
+        url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
         data = {"numeric_field": ":11"}
         response = self.client.get(url, data)
 
@@ -288,8 +300,8 @@ class AdminSearchDashboardTests(APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
-        content_type = ContentType.objects.get_for_model(GenericRecord).id
-        url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
+        content_type = ContentType.objects.get_for_model(GenericRecord)
+        url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
         data = {"numeric_field": "9:"}
         response = self.client.get(url, data)
 
@@ -315,8 +327,8 @@ class AdminSearchDashboardTests(APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
         )
-        content_type = ContentType.objects.get_for_model(GenericRecord).id
-        url = reverse("generic-api:object-list", kwargs={"content_type_id": content_type})
+        content_type = ContentType.objects.get_for_model(GenericRecord)
+        url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
         data = {"numeric_field": "10:25"}
         response = self.client.get(url, data)
 
