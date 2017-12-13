@@ -255,6 +255,12 @@ body.menu--sidebar-hidden {
         }
     }
     select {
+        color: $grey--medium;
+    }
+    input[type="text"] {
         color: #fff;
+    }
+    .input-addon {
+        color: $grey--medium;
     }
 }

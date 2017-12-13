@@ -5532,7 +5532,11 @@ body.menu--sidebar .menu__sub-nav {
   border-color: #fff transparent transparent;
   border-width: 4px 4px 0; }
 .menu select {
+  color: #aaaaaa; }
+.menu input[type="text"] {
   color: #fff; }
+.menu .input-addon {
+  color: #aaaaaa; }
 
 /**
  * Defines the toolbar.
@@ -5567,6 +5571,8 @@ body.content-centered .pagination {
 
 .content__inner {
   padding: 0 1rem; }
+.content__list {
+  overflow-x: scroll; }
 
 .messages {
   margin-top: 0.75rem; }
@@ -5727,15 +5733,17 @@ fieldset {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0; }
 
-@media screen and (max-width: 767px) {
-  .table--admin-mobile-view thead th, .table--admin-mobile-view tbody td {
-    display: none; }
-  .table--admin-mobile-view thead th:first-child,
-  .table--admin-mobile-view tbody td:first-child,
-  .table--admin-mobile-view .action-column + th:nth-child(2),
-  .table--admin-mobile-view .action-column + td:nth-child(2) {
-    display: table-cell; } }
-.table .action-column {
-  width: 1px; }
+.table {
+  white-space: nowrap; }
+  @media screen and (max-width: 767px) {
+    .table--admin-mobile-view thead th, .table--admin-mobile-view tbody td {
+      display: none; }
+    .table--admin-mobile-view thead th:first-child,
+    .table--admin-mobile-view tbody td:first-child,
+    .table--admin-mobile-view .action-column + th:nth-child(2),
+    .table--admin-mobile-view .action-column + td:nth-child(2) {
+      display: table-cell; } }
+  .table .action-column {
+    width: 1px; }
 
 /*# sourceMappingURL=admin.css.map */

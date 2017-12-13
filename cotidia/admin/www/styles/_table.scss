@@ -1,4 +1,6 @@
 .table{
+    white-space: nowrap;
+
     &--admin-mobile-view{
         @media screen and (max-width: $mobile-width) {
             thead th, tbody td{

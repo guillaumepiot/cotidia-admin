@@ -30,6 +30,7 @@ body{
         padding: 0 $horizontal_padding;
     }
     &__list{
+        overflow-x: scroll;
     }
     &__detail{
     }
