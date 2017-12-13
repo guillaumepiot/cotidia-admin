@@ -17,10 +17,6 @@ def render_search_dashboard_config(
         model_name,
         url_type,
         api_token):
-    print("App Label")
-    print(app_label)
-    print("Model")
-    print(model_name)
     model_class = ContentType.objects.get(
             app_label=app_label,
             model=model_name
@@ -43,7 +39,7 @@ def render_search_dashboard_config(
             url_name = "{}-admin:{}-{}".format(app_label, model_name, url_type)
             detail_endpoint = reverse(
                     url_name,
-                    kwargs={"id": 9999})
+                    kwargs={"pk": 9999})
             detail_endpoint = detail_endpoint.replace("9999", ":id")
         except NoReverseMatch:
             detail_endpoint = None
