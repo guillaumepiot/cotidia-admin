@@ -1,0 +1,44 @@
+{% extends "admin/page.html" %}{% load i18n %}
+{% block title %}
+    {% trans "Search" %}
+{% endblock title %}
+
+{% block toolbar %}
+    <span class="toolbar__title">{% trans "Search" %}</span>
+{% endblock toolbar %}
+
+{% block page_content %}
+{% if not global_search_query %}
+    <div class="alert alert--warning">No search query provided.</div>
+{% elif num_results %}
+    <div class="alert">{{num_results}} results found for <span class="text-strong">{{global_search_query}}</span>.</div>
+{% else %}
+    <div class="alert alert--warning">No results found for <span class="text-strong">{{global_search_query}}</span>.</div>
+{% endif %}
+
+<div class="content__list">
+    <table class="table table--clickable table--admin-mobile-view">
+        <thead>
+            <tr>
+                <th>{% trans "Type" %}</th>
+                <th>{% trans "Representation" %}</th>
+                <th>{% trans "View" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for object in object_list %}
+        <tr onclick="window.location = '{{object.url}}'">
+            <td><span class="label">{{object.type}}</span></td>
+            <td>{{object.representation}}</td>
+            <td><a href="{{object.url}}" class="btn btn--primary btn--small">{% trans "View" %}</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">{% trans "No results found." %}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% include 'admin/generic/pagination.html' %}
+</div>
+{% endblock page_content %}

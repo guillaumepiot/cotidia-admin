@@ -12,11 +12,15 @@ from django.http import HttpResponseRedirect, Http404
 from django.contrib.contenttypes.models import ContentType
 from django.views.generic.base import TemplateView
 from django.core.urlresolvers import NoReverseMatch
+from django.apps import apps
+from django.db.models import Q
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from cotidia.admin.utils import StaffPermissionRequiredMixin
 from cotidia.admin.views.mixin import ContextMixin, ChildMixin
 from cotidia.admin.forms import ActionForm
 from cotidia.admin.templatetags.admin_list_tags import get_admin_url
+from cotidia.admin.conf import settings
 
 
 class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
@@ -125,7 +129,7 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
             content_type_id = ContentType.objects.get(app_label=kwargs["app_label"], model=kwargs["model"]).id
         except ContentType.DoesNotExist:
             raise Http404()
-        
+
         model = ContentType.objects.get_for_id(content_type_id).model_class()
         app_label = model._meta.app_label
         model_name = model._meta.model_name
@@ -384,3 +388,69 @@ class AdminOrderableView(View):
     def get(self, *args, **kwargs):
         self.request.POST = self.request.GET
         return self.post(*args, **kwargs)
+
+
+class AdminGenericSearchView(StaffPermissionRequiredMixin, TemplateView):
+
+    template_name = "admin/generic/page/search.html"
+
+    def get_item_url(self, model, obj):
+        url_name = "{}-admin:{}-detail".format(
+            model._meta.app_label,
+            model._meta.model_name
+        )
+        return reverse(url_name, kwargs={"pk": obj.id})
+
+    def search_objects(self, query):
+        results = []
+
+        if not query:
+            return []
+
+        for m in settings.ADMIN_GLOBAL_SEARCH:
+            app_label, model_name = m["model"].split(".")
+            model = apps.get_model(app_label, model_name)
+
+            q_objects = Q()
+
+            for field in m["fields"]:
+                filter_args = {}
+                lookup = "__icontains"
+                filter_args[field + lookup] = query
+                q_objects.add(Q(**filter_args), Q.OR)
+
+            for item in model.objects.filter(q_objects):
+                results.append({
+                    "type": model._meta.verbose_name,
+                    "representation": item.__str__(),
+                    "url": self.get_item_url(model, item)
+                })
+
+        return results
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get("query")
+        context["global_search_query"] = query
+
+        objects = self.search_objects(query)
+
+        paginator = Paginator(objects, 25)
+
+        page = self.request.GET.get('page')
+
+        try:
+            page_obj = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            page_obj = paginator.page(paginator.num_pages)
+
+        context["object_list"] = page_obj.object_list
+        context["num_results"] = paginator.count
+        context["page_obj"] = page_obj
+
+        context["url_params"] = "query={}&".format(query)
+        return context
