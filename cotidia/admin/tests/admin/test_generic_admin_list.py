@@ -17,5 +17,4 @@ class TestGenericAdminList(TestCase):
         response = self.client.get(url, {})
 
         self.assertIn(self.admin_user_token.key, str(response.content))
-        self.assertIn("/test/stub/:id", str(response.content))
-        self.assertIn("/api/admin/list/15", str(response.content))
+        self.assertIn("/api/admin/list/tests/genericrecord", str(response.content))
