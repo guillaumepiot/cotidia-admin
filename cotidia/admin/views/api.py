@@ -2,6 +2,8 @@ import re
 from decimal import Decimal
 import datetime
 
+from functools import reduce
+
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework import status
@@ -9,9 +11,8 @@ from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
 from rest_framework.pagination import LimitOffsetPagination
 
-from django.db.models import Q
+from django.db.models import Q, F
 from django.contrib.contenttypes.models import ContentType
-from functools import reduce
 
 from cotidia.admin.utils import (
         get_fields_from_model,
@@ -123,6 +124,13 @@ def filter_general_query(serializer, values, queryset, suffix="__icontains"):
     return queryset.filter(q_object)
 
 
+def parse_ordering(order_val):
+    if order_val[0] == "-":
+        return F(order_val[1:]).desc(nulls_last=True)
+    else:
+        return F(order_val).asc(nulls_last=True)
+
+
 FILTERS = {
         "text": contains_filter,
         "choice": exact_match_filter,
@@ -169,7 +177,7 @@ class AdminSearchDashboardAPIView(ListAPIView):
         # Applies filters for each field in get request
         for field in field_data.keys():
             # If the field name is reserved (starts with _ we skip the filtering)
-            if field[0] == '_': 
+            if field[0] == '_':
                 continue
             filter_params = self.request.GET.getlist(field)
             # If there is a filter to apply
@@ -179,6 +187,7 @@ class AdminSearchDashboardAPIView(ListAPIView):
                 query_set = FILTERS[filter_type](query_set, field, filter_params)
 
         ordering_params = self.request.GET.getlist("_order")
+        ordering_params = map(parse_ordering, ordering_params)
         return query_set.order_by(*ordering_params)
 
     def get_serializer_class(self):
