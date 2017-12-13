@@ -3927,7 +3927,7 @@ hr {
     height: 0;
     width: 0;
     border-color: #333333 transparent transparent;
-    border-width: 9px 4.5px 0; }
+    border-width: 4px 4px 0; }
 .form__control--radio-btn {
   display: flex;
   margin: 0.75rem 0; }
@@ -5273,7 +5273,7 @@ hr {
     height: 0;
     width: 0;
     border-color: #fff transparent transparent;
-    border-width: 8px 4px 0;
+    border-width: 4px 4px 0;
     content: "";
     display: inline-block;
     top: -0.1875rem;
@@ -5285,7 +5285,7 @@ hr {
  */
 @media screen and (max-width: 767px) {
   .wrapper {
-    margin: 0 1rem; } }
+    margin: 0 2rem; } }
 @media screen and (min-width: 768px) {
   .wrapper {
     margin: 0 auto;
@@ -5522,6 +5522,17 @@ body.menu--sidebar .menu__sub-nav {
 
 .menu__item--sidebar-collapse, .menu__item--sidebar-expand {
   display: none; }
+
+.menu .form__group {
+  padding: 0.75rem 1rem; }
+.menu .form__control--select:after {
+  border-style: solid;
+  height: 0;
+  width: 0;
+  border-color: #fff transparent transparent;
+  border-width: 4px 4px 0; }
+.menu select {
+  color: #fff; }
 
 /**
  * Defines the toolbar.

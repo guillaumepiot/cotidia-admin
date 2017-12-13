@@ -240,3 +240,21 @@ body.menu--sidebar-hidden {
 .menu__item--sidebar-collapse, .menu__item--sidebar-expand{
     display: none;
 }
+
+// Form elements in menu
+
+.menu {
+    .form__group {
+        padding: $vertical_padding $horizontal_padding;
+    }
+    .form__control {
+        &--select {
+            &:after {
+                @include triangle(down, 8px, 4px, #fff);
+            }
+        }
+    }
+    select {
+        color: #fff;
+    }
+}

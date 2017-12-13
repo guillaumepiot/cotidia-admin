@@ -48,6 +48,16 @@
       expandSidebarBtn.addEventListener('touchend', expandSidebar)
       expandSidebarBtn.addEventListener('click', expandSidebar)
     }
+
+    // Shortcuts handling
+    var shortcutsElm = document.getElementById('id_shortcuts')
+    if (shortcutsElm) {
+      shortcutsElm.addEventListener('change', function() {
+        if (this.value) {
+          window.location = this.value
+        }
+      })
+    }
   }
 
   function documentReady () {
