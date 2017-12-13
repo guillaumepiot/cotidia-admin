@@ -1,6 +1,5 @@
 from django.conf import settings
 
-
 from appconf import AppConf
 
 
@@ -12,6 +11,9 @@ class AdminConf(AppConf):
 
     DETAIL_CURRENCY = "&pound;"
     MAX_SUBSERIALIZER_DEPTH = 4
+
+    # A list of links to go to from the main menu
+    SHORTCUTS = []
 
     class Meta:
         prefix = 'admin'
