@@ -19,8 +19,6 @@ class AdminSearchDashboardTests(APITestCase):
         url = "temp_url"
         data = get_model_structure(GenericRecord, url)
 
-        print(data)
-
         self.assertIn('choice_field', data['columns'].keys())
         self.assertIn('choice_field', data['columns'].keys())
         self.assertIn('date_field', data['columns'].keys())
@@ -28,12 +26,25 @@ class AdminSearchDashboardTests(APITestCase):
         self.assertIn('char_field', data['columns'].keys())
         self.assertIn('text_field', data['columns'].keys())
 
+        self.assertIn('foreign_key_field__choice_field', data['columns'].keys())
+        self.assertIn('foreign_key_field__choice_field', data['columns'].keys())
+        self.assertIn('foreign_key_field__date_field', data['columns'].keys())
+        self.assertIn('foreign_key_field__numeric_field', data['columns'].keys())
+        self.assertIn('foreign_key_field__char_field', data['columns'].keys())
+        self.assertIn('foreign_key_field__text_field', data['columns'].keys())
+
         self.assertEqual('number', data['columns']['id']['filter'])
         self.assertEqual('choice', data['columns']['choice_field']['filter'])
         self.assertEqual('date', data['columns']['date_field']['filter'])
         self.assertEqual('number', data['columns']['numeric_field']['filter'])
         self.assertEqual('text', data['columns']['char_field']['filter'])
         self.assertEqual('text', data['columns']['text_field']['filter'])
+        self.assertEqual('number', data['columns']['foreign_key_field__id']['filter'])
+        self.assertEqual('choice', data['columns']['foreign_key_field__choice_field']['filter'])
+        self.assertEqual('date', data['columns']['foreign_key_field__date_field']['filter'])
+        self.assertEqual('number', data['columns']['foreign_key_field__numeric_field']['filter'])
+        self.assertEqual('text', data['columns']['foreign_key_field__char_field']['filter'])
+        self.assertEqual('text', data['columns']['foreign_key_field__text_field']['filter'])
         self.assertEqual([
             {"value": "opt1", "label": "Option 1"},
             {"value": "opt2", "label": "Option 2"},
@@ -43,6 +54,7 @@ class AdminSearchDashboardTests(APITestCase):
         # Check meta data fields were correctly labelled
         self.assertEqual("TEST_LABEL", data['columns']['choice_field']['label'])
         self.assertEqual("TEST_LABEL2", data['columns']['date_field']['label'])
+        self.assertEqual("replacement_label", data['columns']['foreign_key_field__choice_field']['label'])
 
         # Check non-meta data fields were correctly labelled
         self.assertEqual("Numeric Field", data['columns']['numeric_field']['label'])
