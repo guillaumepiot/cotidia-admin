@@ -1,4 +1,4 @@
-{% if is_paginated %}
+{% if is_paginated or page_obj%}
     <div class="pagination">
         {% if page_obj.has_previous %}
             <a href="?{{url_params}}{{url_params_sort}}page={{ page_obj.previous_page_number }}" class="pagination__link pagination__link--previous">previous</a>

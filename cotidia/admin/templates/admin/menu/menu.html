@@ -15,6 +15,7 @@
                 <span class="menu-item__link-text">{{SITE_NAME}}</span>
             </a>
         </li>
+        {% include "admin/menu/global_search.html" %}
         {% include "admin/menu/shortcuts.html" %}
         {% for item in menu %}
             {% if not item.url and not item.nav_items %}

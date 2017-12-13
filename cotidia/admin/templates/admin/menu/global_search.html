@@ -1,0 +1,14 @@
+{% load i18n %}{% if ADMIN_GLOBAL_SEARCH %}
+<li class="menu__item menu-item">
+    <form action="{% url 'generic-admin:search' %}" method="get">
+        <div class="form__group">
+            <div class="form__control form__control--input-addon">
+                <input type="text" name="query" placeholder="Search" value="{% if global_search_query %}{{global_search_query}}{% endif %}">
+                <div class="input-addon input-addon--suffix">
+                    <span class="fa fa-search"></span>
+                </div>
+            </div>
+        </div>
+    </form>
+</li>
+{% endif %}
