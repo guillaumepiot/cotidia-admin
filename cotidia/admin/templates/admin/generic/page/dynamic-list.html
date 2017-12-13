@@ -25,7 +25,5 @@
 {% endblock page_content %}
 
 {% block footer_scripts %}
-<div class="content__list">
-    {% render_search_dashboard_config app_label model_name url_type request.user.token.key %}
-</div>
+{% render_search_dashboard_config app_label model_name url_type request.user.token.key %}
 {% endblock footer_scripts %}
