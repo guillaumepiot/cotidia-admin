@@ -103,7 +103,7 @@ export default class SearchResults extends Component {
                   </span>
 
                   {column.filter && (
-                    <>
+                    <div className='table-header-actions'>
                       {filters.includes(column.id) && (
                         <button
                           className={`btn btn--link btn--small pull-right btn--delete`}
@@ -118,7 +118,7 @@ export default class SearchResults extends Component {
                       >
                         <Icon icon='filter' />
                       </button>
-                    </>
+                    </div>
                   )}
                 </th>
               ))}
