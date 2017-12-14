@@ -55,6 +55,10 @@ function * performSearch () {
 
   if (data.orderColumn) {
     queryString._order = `${data.orderAscending ? '' : '-'}${data.orderColumn}`
+  } else {
+    if (data.visibleColumns.length) {
+      queryString._order = data.visibleColumns[0]
+    }
   }
 
   if (data.searchTerm) {
