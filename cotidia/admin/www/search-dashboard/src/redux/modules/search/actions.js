@@ -37,6 +37,11 @@ export const toggleColumn = (column) => ({
   payload: { column },
 })
 
+export const setColumns = (columns) => ({
+  type: types.SET_COLUMNS,
+  payload: { columns },
+})
+
 export const setFilterValue = (filter, value) => ({
   type: types.SET_FILTER_VALUE,
   payload: { filter, value },

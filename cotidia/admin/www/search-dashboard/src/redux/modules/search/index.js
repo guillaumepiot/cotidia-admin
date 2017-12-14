@@ -90,6 +90,13 @@ export default (state = initialState, { type, payload } = {}) => {
       }
     }
 
+    case types.SET_COLUMNS: {
+      return {
+        ...state,
+        visibleColumns: payload.columns,
+      }
+    }
+
     case types.SET_FILTER_VALUE:
       return {
         ...state,

@@ -88,6 +88,12 @@ function * getResultsPage ({ payload: { page } }) {
   }
 }
 
+function * saveColumnConfig () {
+  const state = yield select((state) => state.search)
+
+  localStorage.setItem(state.endpoint, JSON.stringify(state.visibleColumns))
+}
+
 export default function * watcher () {
   yield takeEvery(types.FILTER_COLUMN, filterColumn)
   yield takeEvery(types.MANAGE_COLUMNS, manageColumns)
@@ -99,6 +105,8 @@ export default function * watcher () {
   yield takeEvery(types.SET_FILTER_VALUE, performSearch)
   yield takeEvery(types.CLEAR_FILTER, performSearch)
   yield takeEvery(types.CLEAR_FILTERS, performSearch)
+
+  yield takeEvery(types.TOGGLE_COLUMN, saveColumnConfig)
 
   yield takeEvery(types.GET_RESULTS_PAGE, getResultsPage)
 }

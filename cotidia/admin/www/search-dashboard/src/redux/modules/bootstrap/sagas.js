@@ -1,6 +1,7 @@
 import { put, takeEvery } from 'redux-saga/effects'
 
 import * as types from './types'
+import * as searchActions from '../search/actions'
 import * as searchTypes from '../search/types'
 
 export function * bootstrap ({ payload: config }) {
@@ -13,6 +14,12 @@ export function * bootstrap ({ payload: config }) {
       defaultColumns: config.defaultColumns,
     },
   })
+
+  const savedColumns = JSON.parse(localStorage.getItem(config.endpoint))
+
+  if (Array.isArray(savedColumns)) {
+    yield put(searchActions.setColumns(savedColumns))
+  }
 
   yield put({ type: searchTypes.PERFORM_SEARCH })
   yield put({ type: types.BOOTSTRAPPED })
