@@ -25,13 +25,25 @@ const getItem = (item, accessor) => {
   return value
 }
 
-const columnDisplayTypes = {
+const formatters = {
   verbatim: (value) => (value == null) ? '' : String(value),
   date: (value) => moment(value).format('D MMM YYYY'),
   datetime: (value) => moment(value).format('D MMM YYYY @ HH:mm'),
   boolean: (value) => (
     value ? <span className='fa fa-check' /> : <span className='fa fa-times' />
   ),
+}
+
+const getFormattedValue = (item, accessor, format) => {
+  const value = getItem(item, accessor)
+
+  const formatter = formatters[format] || formatters.verbatim
+
+  if (Array.isArray(value)) {
+    return value.map((value) => formatter(value)).join(', ')
+  } else {
+    return formatter(value)
+  }
 }
 
 export default class SearchResults extends Component {
@@ -117,7 +129,7 @@ export default class SearchResults extends Component {
               <tr key={item.uuid} onClick={this.viewItemFactory(item)}>
                 {columns.map((column) => (
                   <td data-header={column.label} key={column.id}>
-                    {columnDisplayTypes[column.display](getItem(item, column.accessor))}
+                    {getFormattedValue(item, column.accessor, column.display)}
                   </td>
                 ))}
               </tr>
