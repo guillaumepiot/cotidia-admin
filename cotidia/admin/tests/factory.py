@@ -1,7 +1,7 @@
 import factory
 import factory.fuzzy
 from datetime import date, timedelta
-from cotidia.admin.tests.models import GenericRecord, GenericRecordNoMeta
+from cotidia.admin.tests.models import GenericRecord, GenericRecordNoMeta, GenericRecordTwo
 
 TEST_CHOICES = (
     ("opt1", "Option 1"),
@@ -13,6 +13,12 @@ INDEX = 0
 class GenericRecordNoMetaFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = GenericRecordNoMeta
+
+
+class GenericRecordNoMeta2Factory(factory.django.DjangoModelFactory):
+    char_field = factory.fuzzy.FuzzyText(length=90)
+    class Meta:
+        model = GenericRecordTwo
 
 
 class GenericRecordFactory(factory.django.DjangoModelFactory):
@@ -28,3 +34,8 @@ class GenericRecordFactory(factory.django.DjangoModelFactory):
     text_field = factory.fuzzy.FuzzyText(length=98)
     boolean_field = factory.fuzzy.FuzzyChoice([True, False])
     foreign_key_field = factory.SubFactory(GenericRecordNoMetaFactory)
+
+    @factory.post_generation
+    def many_to_many_field(self, create, extracted, **kwargs):
+        for i in range(3):
+            self.many_to_many_field.add(GenericRecordNoMeta2Factory())
