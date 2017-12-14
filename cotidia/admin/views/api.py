@@ -104,20 +104,15 @@ def date_filter(query_set, field, values):
     return field_filter(filter_number, query_set, field, values)
 
 
-def filter_general_query(serializer, values, queryset, suffix="__icontains"):
+def filter_general_query(serializer, values, queryset, query_fields, suffix="__icontains"):
     q_object = Q()
-    try:
-        field_set = serializer.SearchProvider.general_query_fields
-    except AttributeError:
-        field_set = ["id"]
-        suffix = ""
 
     for val in values:
         # Turns all values in the field_set columns into Q objects and ORs them
         # together with the queryset for previous values
         q_object = reduce(
                 lambda x, y: x | y,
-                map(lambda x: Q(**{x + suffix: val}), field_set),
+                map(lambda x: Q(**{x + suffix: val}), query_fields),
                 q_object
         )
 
@@ -138,6 +133,16 @@ FILTERS = {
         "number": number_filter,
         "date": date_filter
         }
+
+
+def get_sub_serializer(serializer,field):
+    fields = field.split("__")
+    sub_serializer = serializer()
+    for f in fields:
+        sub_serializer = sub_serializer.fields[f].child
+
+    return sub_serializer 
+
 
 
 class AdminOrderableAPIView(APIView):
@@ -171,8 +176,11 @@ class AdminSearchDashboardAPIView(ListAPIView):
 
         q_list = self.request.GET.getlist('_q')
         serializer = get_model_serializer_class(model_class)
-
-        query_set = filter_general_query(serializer, q_list, query_set)
+        try:
+            general_query_field_set = serializer.SearchProvider.general_query_fields
+        except AttributeError:
+            general_query_field_set = ["id"]
+        query_set = filter_general_query(serializer, q_list, query_set, general_query_field_set)
 
         # Applies filters for each field in get request
         for field in field_data.keys():
@@ -183,8 +191,21 @@ class AdminSearchDashboardAPIView(ListAPIView):
             # If there is a filter to apply
             if filter_params:
                 # Get the relevant filter and apply it
+                suffix=""
+                try:
+                    print(field_data[field])
+                    if field_data[field]['many']:
+                        sub_serializer = get_sub_serializer(serializer, field)
+                        suffix = "__" + sub_serializer.SearchProvider.display_field
+                        print(suffix)
+                except KeyError:
+                    pass
                 filter_type = field_data[field]['filter']
-                query_set = FILTERS[filter_type](query_set, field, filter_params)
+                query_set = FILTERS[filter_type](
+                        query_set,
+                        field + suffix,
+                        filter_params
+                        )
 
         ordering_params = self.request.GET.getlist("_order")
         ordering_params = map(parse_ordering, ordering_params)

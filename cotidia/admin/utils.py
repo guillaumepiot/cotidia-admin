@@ -84,10 +84,12 @@ FIELD_MAPPING = {
             }),
         "AdminModelSerializer": (lambda: {
             "display": "verbatim",
+            "many": "True",
             "filter": "number"
             }),
         "ManyRelatedField": (lambda: {
             "display": "verbatim",
+            "many": "True",
             "filter": "text"
             }),
 
