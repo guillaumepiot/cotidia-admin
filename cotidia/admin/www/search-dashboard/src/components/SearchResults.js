@@ -28,7 +28,7 @@ const getItem = (item, accessor) => {
 const columnDisplayTypes = {
   verbatim: (value) => (value == null) ? '' : String(value),
   date: (value) => moment(value).format('D MMM YYYY'),
-  datetime: (value) => moment(value).format('D MMM YYYY @ HH:MM'),
+  datetime: (value) => moment(value).format('D MMM YYYY @ HH:mm'),
   boolean: (value) => (
     value ? <span className='fa fa-check' /> : <span className='fa fa-times' />
   ),
