@@ -5745,10 +5745,10 @@ fieldset {
       display: table-cell; } }
   .table thead tr th {
     position: relative;
-    padding-right: 2rem; }
-    .table thead tr th .btn, .table thead tr th .form__control input[type="file"], .form__control .table thead tr th input[type="file"] {
+    padding-right: 3rem; }
+    .table thead tr th .table-header-actions {
       position: absolute;
-      top: auto;
+      top: 0.375rem;
       right: 0.5rem; }
   .table .action-column {
     width: 1px; }

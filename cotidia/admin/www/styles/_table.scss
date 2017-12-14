@@ -17,10 +17,10 @@
 
     thead tr th {
         position: relative;
-        padding-right: $horizontal_padding * 2;
-        .btn {
+        padding-right: $horizontal_padding * 3;
+        .table-header-actions {
             position: absolute;
-            top: auto;
+            top: $vertical_padding / 2;
             right: $horizontal_padding / 2;
         }
     }
