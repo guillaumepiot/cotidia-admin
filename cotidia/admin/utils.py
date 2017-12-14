@@ -14,6 +14,7 @@ from django.db.models.fields import (
 from rest_framework import fields, serializers
 
 from cotidia.admin.conf import settings
+from cotidia.admin.serializers import AdminModelSerializer
 
 MAX_SUBSERIALIZER_DEPTH = settings.ADMIN_MAX_SUBSERIALIZER_DEPTH
 
@@ -36,8 +37,9 @@ SUPPORTED_FIELD_TYPES_SERIALIZER = [
         fields.DecimalField,
         fields.BooleanField,
         fields.ChoiceField,
-        serializers.PrimaryKeyRelatedField,
-        serializers.ModelSerializer,
+        AdminModelSerializer,
+        serializers.ManyRelatedField,
+        serializers.ListSerializer
         ]
 FIELD_MAPPING = {
         "DateTimeField": (lambda: {
@@ -80,9 +82,20 @@ FIELD_MAPPING = {
             "display": "verbatim",
             "filter": "number"
             }),
-        "PrimaryKeyRelatedField": (lambda: {
+        "AdminModelSerializer": (lambda: {
             "display": "verbatim",
+            "many": "True",
             "filter": "number"
+            }),
+        "ManyRelatedField": (lambda: {
+            "display": "verbatim",
+            "many": "True",
+            "filter": "text"
+            }),
+
+        "ListSerializer": (lambda: {
+            "display": "verbatim",
+            "filter": "text"
             }),
         }
 
@@ -120,7 +133,7 @@ def get_model_serializer_class(model_class):
         return model_class.SearchProvider.serializer()
     except AttributeError:
         try:
-            class GenericSerializer(serializers.ModelSerializer):
+            class GenericSerializer(AdminModelSerializer):
                 class SearchProvider:
                     field_representation = model_class.SearchProvider.field_representation
 
@@ -130,7 +143,7 @@ def get_model_serializer_class(model_class):
             return GenericSerializer
 
         except AttributeError:
-            class GenericSerializer(serializers.ModelSerializer):
+            class GenericSerializer(AdminModelSerializer):
                 class Meta:
                     model = model_class
                     fields = '__all__'
@@ -155,7 +168,7 @@ def get_field_representation(field_name, field, model, prefix="",max_depth=MAX_S
     if field_type is None:
         return None
 
-    if field_type == serializers.ModelSerializer:
+    if issubclass(field_type, serializers.ModelSerializer):
         if max_depth <= 0:
             return {}
         else:
