@@ -11,6 +11,7 @@ class GenericRecordSerializerNoMeta(AdminModelSerializer):
 
 class GenericRecordSerializerTwo(AdminModelSerializer):
     class SearchProvider:
+        display_field = "char_field"
         pass
     class Meta:
         display_field = "char_field"
