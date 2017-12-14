@@ -42,6 +42,8 @@ export default (state = initialState, { type, payload } = {}) => {
         ...state,
         columns: payload.columns,
         visibleColumns: payload.defaultColumns,
+        orderColumn: payload.defaultColumns[0],
+        orderAscending: true,
       }
 
     case types.SET_SEARCH_TERM:
@@ -94,6 +96,8 @@ export default (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         visibleColumns: payload.columns,
+        orderColumn: payload.columns[0],
+        orderAscending: true,
       }
     }
 
