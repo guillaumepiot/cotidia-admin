@@ -149,6 +149,7 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
         context["app_label"] = app_label
         context["model_name"] = model_name
         context["url_type"] = url_type
+
         try:
             reverse("{}-admin:{}-{}".format(app_label, model_name, url_type),
                     kwargs={"id": "1"})
@@ -157,6 +158,14 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
             context["url_type"] = url_type
         except NoReverseMatch:
             pass
+
+        # Has add view?
+        try:
+            reverse("{}-admin:{}-{}".format(app_label, model_name, "add"))
+            context["add_view"] = True
+        except:
+            context["add_view"] = False
+
         return context
 
 
