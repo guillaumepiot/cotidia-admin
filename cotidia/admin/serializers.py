@@ -10,5 +10,8 @@ class AdminModelSerializer(serializers.ModelSerializer):
                 serializers.ListSerializer in self.parent.__class__.mro()
                 and self.parent.parent is not None
         ):
-            return repr[self.SearchProvider.display_field]
+            try:
+                return repr[self.SearchProvider.display_field]
+            except AttributeError:
+                raise AttributeError("%s does not have the display_field defined in the SearchProvider sub class" % str(self.__class__.__name__))
         return repr
