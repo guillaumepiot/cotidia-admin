@@ -68,7 +68,13 @@ export default (state = initialState, { type, payload } = {}) => {
     case types.STORE_RESULTS:
       return {
         ...state,
-        results: payload.results,
+        results: payload.results.reduce((agg, item) => {
+          if (! agg.find((innerItem) => item.uuid === innerItem.uuid)) {
+            agg.push(item)
+          }
+
+          return agg
+        }, []),
         pagination: {
           count: payload.count,
           next: payload.next,
