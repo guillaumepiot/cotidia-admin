@@ -5743,13 +5743,23 @@ fieldset {
     .table--admin-mobile-view .action-column + th:nth-child(2),
     .table--admin-mobile-view .action-column + td:nth-child(2) {
       display: table-cell; } }
-  .table thead tr th {
-    position: relative;
-    padding-right: 3rem; }
-    .table thead tr th .table-header-actions {
+  .table-header {
+    cursor: pointer;
+    padding-right: 3rem !important;
+    position: relative; }
+    .table-header__sort {
+      visibility: hidden; }
+      .table-header__sort--active {
+        visibility: visible; }
+    .table-header__actions {
+      visibility: hidden;
       position: absolute;
       top: 0.375rem;
       right: 0.5rem; }
+      .table-header__actions--active {
+        visibility: visible; }
+    .table-header:hover .table-header__sort, .table-header:hover .table-header__actions {
+      visibility: visible; }
   .table .action-column {
     width: 1px; }
 

@@ -6,6 +6,7 @@
             thead th, tbody td{
                 display: none;
             }
+
             thead th:first-child,
             tbody td:first-child,
             .action-column + th:nth-child(2),
@@ -15,13 +16,40 @@
         }
     }
 
-    thead tr th {
+    &-header {
+        cursor: pointer;
+        padding-right: $horizontal_padding * 3 !important;
         position: relative;
-        padding-right: $horizontal_padding * 3;
-        .table-header-actions {
+
+        &__name {
+        }
+
+        &__sort {
+            visibility: hidden;
+
+            &--active {
+                visibility: visible;
+            }
+        }
+
+        &__actions {
+            visibility: hidden;
             position: absolute;
             top: $vertical_padding / 2;
             right: $horizontal_padding / 2;
+
+            &--active {
+                visibility: visible;
+            }
+        }
+
+        &:hover {
+            .table-header {
+                &__sort,
+                &__actions {
+                    visibility: visible;
+                }
+            }
         }
     }
 

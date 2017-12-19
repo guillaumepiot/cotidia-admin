@@ -60,12 +60,29 @@ export default class SearchResults extends Component {
     toggleOrderDirection: PropTypes.func.isRequired,
   }
 
-  filterColumnFactory = (column) => (e) => this.props.filterColumn(column)
-  clearFilterFactory = (column) => (e) => this.props.clearFilter(column)
+  filterColumnFactory = (column) => (e) => {
+    // Because this event will be a button inside a component that it also looking for a click
+    // event, we should stop the propagation of the event so both aren't handled.
+    e.stopPropagation()
 
-  setOrderColumnFactory = (column) => (e) => this.props.setOrderColumn(column)
+    this.props.filterColumn(column)
+  }
 
-  toggleOrderDirection = (e) => this.props.toggleOrderDirection()
+  clearFilterFactory = (column) => (e) => {
+    // Because this event will be a button inside a component that it also looking for a click
+    // event, we should stop the propagation of the event so both aren't handled.
+    e.stopPropagation()
+
+    this.props.clearFilter(column)
+  }
+
+  setOrderColumnFactory = (column) => (e) => {
+    if (this.props.orderColumn === column) {
+      this.props.toggleOrderDirection()
+    } else {
+      this.props.setOrderColumn(column)
+    }
+  }
 
   viewItemFactory = (item) => (e) => {
     if (this.props.detailURL) {
@@ -89,21 +106,21 @@ export default class SearchResults extends Component {
           <thead>
             <tr>
               {columns.map((column) => (
-                <th key={column.id}>
-                  <span onClick={(orderColumn === column.id) ? this.toggleOrderDirection : this.setOrderColumnFactory(column.id)} style={{ cursor: 'pointer' }}>
+                <th className='table__header table-header' key={column.id} onClick={this.setOrderColumnFactory(column.id)}>
+                  <span className='table-header__name'>
                     {column.label}
                     {' '}
                     {(orderColumn === column.id) ? (orderAscending ? (
-                      <Icon icon='sort-asc' />
+                      <Icon className='table-header__sort table-header__sort--active' icon='long-arrow-down' />
                     ) : (
-                      <Icon icon='sort-desc' />
+                      <Icon className='table-header__sort table-header__sort--active' icon='long-arrow-up' />
                     )) : (
-                      <Icon icon='sort' />
+                      <Icon className='table-header__sort' icon='long-arrow-down' />
                     )}
                   </span>
 
                   {column.filter && (
-                    <div className='table-header-actions'>
+                    <span className={`table-header__actions ${filters.includes(column.id) ? 'table-header__actions--active' : ''}`}>
                       {filters.includes(column.id) && (
                         <button
                           className={`btn btn--link btn--small pull-right btn--delete`}
@@ -118,7 +135,7 @@ export default class SearchResults extends Component {
                       >
                         <Icon icon='filter' />
                       </button>
-                    </div>
+                    </span>
                   )}
                 </th>
               ))}
