@@ -20,7 +20,7 @@ from cotidia.admin.utils import (
         )
 
 
-PAGE_SIZE = 20
+PAGE_SIZE = 250
 number_pattern = r"(\-?[0-9]+(?:\.[0-9]+)?)"
 date_pattern = r"(\d{4}-[01]\d-[0-3]\d)"
 api_patterns = {
