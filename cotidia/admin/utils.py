@@ -1,15 +1,13 @@
-from django.shortcuts import redirect
-from django.core.exceptions import PermissionDenied
 from django.db.models.fields import (
-        UUIDField,
-        DateTimeField,
-        DateField,
-        CharField,
-        IntegerField,
-        BooleanField,
-        AutoField,
-        TextField,
-        )
+    UUIDField,
+    DateTimeField,
+    DateField,
+    CharField,
+    IntegerField,
+    BooleanField,
+    AutoField,
+    TextField,
+)
 
 from rest_framework import fields, serializers
 
@@ -19,113 +17,87 @@ from cotidia.admin.serializers import AdminModelSerializer
 MAX_SUBSERIALIZER_DEPTH = settings.ADMIN_MAX_SUBSERIALIZER_DEPTH
 
 SUPPORTED_FIELD_TYPES_MODEL = [
-        UUIDField,
-        DateTimeField,
-        DateField,
-        CharField,
-        IntegerField,
-        BooleanField,
-        AutoField,
-        TextField,
-        ]
+    UUIDField,
+    DateTimeField,
+    DateField,
+    CharField,
+    IntegerField,
+    BooleanField,
+    AutoField,
+    TextField,
+]
+
 SUPPORTED_FIELD_TYPES_SERIALIZER = [
-        fields.UUIDField,
-        fields.DateTimeField,
-        fields.DateField,
-        fields.CharField,
-        fields.IntegerField,
-        fields.DecimalField,
-        fields.BooleanField,
-        fields.ChoiceField,
-        AdminModelSerializer,
-        serializers.ManyRelatedField,
-        serializers.ListSerializer
-        ]
+    fields.UUIDField,
+    fields.DateTimeField,
+    fields.DateField,
+    fields.CharField,
+    fields.IntegerField,
+    fields.DecimalField,
+    fields.BooleanField,
+    fields.ChoiceField,
+    AdminModelSerializer,
+    serializers.ManyRelatedField,
+    serializers.ListSerializer
+]
+
 FIELD_MAPPING = {
-        "DateTimeField": (lambda: {
-            "display": "datetime",
-            "filter": "date"
-            }),
-        "UUIDField": (lambda: {
-            "display": "verbatim",
-            "filter": "text"
-            }),
-        "DateField": (lambda: {
-            "display": "date",
-            "filter": "date"
-            }),
-        "CharField": (lambda: {
-            "display": "verbatim",
-            "filter": "text"
-            }),
-        "ChoiceField": (lambda: {
-            "display": "verbatim",
-            "filter": "choice"
-            }),
-        "IntegerField": (lambda: {
-            "display": "verbatim",
-            "filter": "number"
-            }),
-        "DecimalField": (lambda: {
-            "display": "verbatim",
-            "filter": "number"
-            }),
-        "BooleanField": (lambda: {
-            "display": "boolean",
-            "filter": "boolean"
-            }),
-        "TextField": (lambda: {
-            "display": "verbatim",
-            "filter": "text"
-            }),
-        "AutoField": (lambda: {
-            "display": "verbatim",
-            "filter": "number"
-            }),
-        "AdminModelSerializer": (lambda: {
-            "display": "verbatim",
-            "many": "True",
-            "filter": "number"
-            }),
-        "ManyRelatedField": (lambda: {
-            "display": "verbatim",
-            "many": "True",
-            "filter": "text"
-            }),
+    "DateTimeField": (lambda: {
+        "display": "datetime",
+        "filter": "date"
+    }),
+    "UUIDField": (lambda: {
+        "display": "verbatim",
+        "filter": "text"
+    }),
+    "DateField": (lambda: {
+        "display": "date",
+        "filter": "date"
+    }),
+    "CharField": (lambda: {
+        "display": "verbatim",
+        "filter": "text"
+    }),
+    "ChoiceField": (lambda: {
+        "display": "verbatim",
+        "filter": "choice"
+    }),
+    "IntegerField": (lambda: {
+        "display": "verbatim",
+        "filter": "number"
+    }),
+    "DecimalField": (lambda: {
+        "display": "verbatim",
+        "filter": "number"
+    }),
+    "BooleanField": (lambda: {
+        "display": "boolean",
+        "filter": "boolean"
+    }),
+    "TextField": (lambda: {
+        "display": "verbatim",
+        "filter": "text"
+    }),
+    "AutoField": (lambda: {
+        "display": "verbatim",
+        "filter": "number"
+    }),
+    "AdminModelSerializer": (lambda: {
+        "display": "verbatim",
+        "many": "True",
+        "filter": "number"
+    }),
+    "ManyRelatedField": (lambda: {
+        "display": "verbatim",
+        "many": "True",
+        "filter": "text"
+    }),
 
-        "ListSerializer": (lambda: {
-            "display": "verbatim",
-            "filter": "text"
-            }),
-        }
-
-
-class UserCheckMixin(object):
-
-    def check_user(self, user):
-        return True
-
-    def dispatch(self, request, *args, **kwargs):
-        if not self.check_user(request.user):
-            if request.user.is_authenticated():
-                raise PermissionDenied
-            else:
-                return redirect(settings.ACCOUNT_ADMIN_LOGIN_URL)
-        return super().dispatch(request, *args, **kwargs)
-
-
-class StaffPermissionRequiredMixin(UserCheckMixin):
-
-    def get_permission_required(self):
-        if hasattr(self, "permission_required"):
-            return self.permission_required
-        return None
-
-    def check_user(self, user):
-        """Check if the user has the relevant permissions."""
-        if user.is_superuser:
-            return True
-        return user.is_staff and user.has_perm(self.get_permission_required())
+    "ListSerializer": (lambda: {
+        "display": "verbatim",
+        "filter": "text"
+    }),
+}
 
 
 def get_model_serializer_class(model_class):
@@ -213,7 +185,7 @@ def get_fields_from_serializer(serializer, prefix="",max_depth=MAX_SUBSERIALIZER
             fields_representation.update(field_representation)
         else:
             print("Field not supported: %s" % fields[f])
-    
+
     try:
         user_defined_representation = serializer.SearchProvider.field_representation
         for field in user_defined_representation:

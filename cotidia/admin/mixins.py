@@ -1,7 +1,39 @@
+from warnings import warn
+
 from django.db import transaction
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import redirect
+from django.conf import settings
 
 from cotidia.admin.signals import ordering_complete
-from warnings import warn
+
+
+class UserCheckMixin(object):
+
+    def check_user(self, user):
+        return True
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.check_user(request.user):
+            if request.user.is_authenticated():
+                raise PermissionDenied
+            else:
+                return redirect(settings.ACCOUNT_ADMIN_LOGIN_URL)
+        return super().dispatch(request, *args, **kwargs)
+
+
+class StaffPermissionRequiredMixin(UserCheckMixin):
+
+    def get_permission_required(self):
+        if hasattr(self, "permission_required"):
+            return self.permission_required
+        return None
+
+    def check_user(self, user):
+        """Check if the user has the relevant permissions."""
+        if user.is_superuser:
+            return True
+        return user.is_staff and user.has_perm(self.get_permission_required())
 
 
 class OrderableMixin:

@@ -16,7 +16,7 @@ from django.apps import apps
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from cotidia.admin.utils import StaffPermissionRequiredMixin
+from cotidia.admin.mixins import StaffPermissionRequiredMixin
 from cotidia.admin.views.mixin import ContextMixin, ChildMixin
 from cotidia.admin.forms import ActionForm
 from cotidia.admin.templatetags.admin_list_tags import get_admin_url
@@ -121,7 +121,17 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
 
 class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
 
-    template_name = "admin/generic/page/dynamic-list.html"
+    def get_template_names(self):
+
+        template = "admin/{app}/{model}/dynamic-list.html".format(
+            app=self.model._meta.app_label,
+            model=self.model._meta.model_name
+        )
+
+        return [
+            template,
+            "admin/generic/page/dynamic-list.html",
+        ]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -130,9 +140,9 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
         except ContentType.DoesNotExist:
             raise Http404()
 
-        model = ContentType.objects.get_for_id(content_type_id).model_class()
-        app_label = model._meta.app_label
-        model_name = model._meta.model_name
+        self.model = ContentType.objects.get_for_id(content_type_id).model_class()
+        app_label = self.model._meta.app_label
+        model_name = self.model._meta.model_name
 
         # Checks if there is an "add url"
         try:
@@ -143,8 +153,8 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
 
         url_type = "detail"
         context["content_type_id"] = content_type_id
-        context["verbose_name"] = model._meta.verbose_name
-        context["verbose_name_plural"] = model._meta.verbose_name_plural
+        context["verbose_name"] = self.model._meta.verbose_name
+        context["verbose_name_plural"] = self.model._meta.verbose_name_plural
         context["add_view"] = add_view
         context["app_label"] = app_label
         context["model_name"] = model_name
