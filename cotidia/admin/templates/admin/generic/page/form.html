@@ -1,6 +1,7 @@
 {% extends "admin/page.html" %}{% load i18n admin_toolbar_tags admin_list_tags %}
 
 {% block header_scripts %}
+    {{block.super}}
     {{ form.media.css }}
 {% endblock header_scripts %}
 

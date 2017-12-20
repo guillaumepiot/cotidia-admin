@@ -8,7 +8,7 @@ body.menu--sidebar {
         text-transform: uppercase;
         font-size: 0.9rem;
         padding: $vertical_padding / 2 $horizontal_padding 0 $horizontal_padding;
-        color: desaturate(lighten($menu_background_color, 30%), 30%);
+        color: var(--menu_background_color_section, $menu_background_color_section)
     }
 
     @media screen and (min-width: $tablet-width) {
@@ -48,6 +48,7 @@ body.menu--sidebar {
             width: 100%;
             height: $toolbar_height;
             background-color: $menu_background_color;
+            background-color: var(--menu_background_color, $menu_background_color);
 
             .menu-item__link {
                 height: $toolbar_height;
@@ -151,8 +152,6 @@ body.menu--sidebar {
     .menu__item--sub-nav {
         &:hover {
             .menu__sub-nav {
-                // transform: scaleY(1);
-                // height: auto;
                 display: block;
                 max-height: 500px;
             }
@@ -160,11 +159,10 @@ body.menu--sidebar {
     }
     .menu__sub-nav {
         position: static;
-        // transform: scaleY(0);
-        // transform-origin: top;
         max-height: 0;
         transition: max-height 0.6s ease;
         background-color: $menu_link_background_color_active;
+        background-color: var(--menu_link_background_color_active, $menu_link_background_color_active);
         display: block;
         overflow: hidden;
     }

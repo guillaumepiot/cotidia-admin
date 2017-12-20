@@ -20,6 +20,8 @@ $menu_link_background_color_hover: lighten(#00213E, 12%);
 $menu_link_background_color_hover_mobile: transparent;
 $menu_link_background_color_active: lighten(#00213E, 6%);
 $menu_link_background_color_active_mobile: lighten(#00213E, 6%);
+$menu_background_color_section: desaturate(lighten($menu_background_color, 30%), 30%);
+
 $menu_subnav_min_width: 180px;
 
 $toolbar_height: 3.2rem;
