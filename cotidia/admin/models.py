@@ -1,13 +1,13 @@
 from django.db import models, transaction
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Max
-from .mixins import OrderableMixin
 
 from cotidia.admin.signals import ordering_complete
 
 
-class AbstractOrderable(models.Model, OrderableMixin):
-    """ Class for creating ordered objects """
+class AbstractOrderable(models.Model):
+    """Class for creating ordered objects."""
+
     order_id = models.PositiveIntegerField(default=0)
 
     def orderable_queryset(self):
@@ -21,8 +21,8 @@ class AbstractOrderable(models.Model, OrderableMixin):
     def save(self, *args, **kwargs):
         if not self.order_id:
             max_order_id = self.orderable_queryset().aggregate(
-                    Max('order_id')
-                    )['order_id__max']
+                Max('order_id')
+            )['order_id__max']
             if max_order_id:
                 self.order_id = max_order_id + 1
             else:
