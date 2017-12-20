@@ -24,7 +24,7 @@
             content: "";
             display: block;
             position: absolute;
-            top: calc(50% - 1rem);
+            top: $vertical_padding * 2;
             left: calc(50% - 1rem);
             height: 2rem;
             width: 2rem;
