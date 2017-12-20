@@ -27,7 +27,7 @@ export const Icon = ({ className, icon, size, animating }) => (
 )
 
 Icon.propTypes = {
-  classname: PropTypes.string,
+  className: PropTypes.string,
   icon: PropTypes.string.isRequired,
   size: PropTypes.string,
   animating: PropTypes.string,
