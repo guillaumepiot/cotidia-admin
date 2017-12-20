@@ -102,7 +102,7 @@ export default class SearchResults extends Component {
 
     return (
       <>
-        <table className={`table ${detailURL ? 'table--clickable' : ''} table--stack-mobile`}>
+        <table className={`table ${detailURL ? 'table--clickable' : ''} table--admin-mobile-view`}>
           <thead>
             <tr>
               {columns.map((column) => (
