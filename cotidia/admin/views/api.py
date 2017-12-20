@@ -210,6 +210,7 @@ class AdminSearchDashboardAPIView(ListAPIView):
 
         ordering_params = self.request.GET.getlist("_order")
         # Checks the first ordering param exists
+        annotation = None
         if(ordering_params):
             #Cleans the "-" to just have the field name
             clean_field_name = ordering_params[0].replace("-", "") 
@@ -220,8 +221,9 @@ class AdminSearchDashboardAPIView(ListAPIView):
                 ))}
         ordering_params = list(map(parse_ordering, ordering_params))
         try:
-            query_set = query_set.annotate(**annotation)
-            ordering_params = ["val_is_empty"] + ordering_params
+            if annotation is not None:
+                query_set = query_set.annotate(**annotation)
+                ordering_params = ["val_is_empty"] + ordering_params
         except (ValueError, ValidationError) as e:
             #Neccessary for non string fields, nothing more needs to happen as they have sensible defaults
             pass
