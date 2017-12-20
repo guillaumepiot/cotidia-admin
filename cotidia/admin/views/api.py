@@ -11,8 +11,9 @@ from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
 from rest_framework.pagination import LimitOffsetPagination
 
-from django.db.models import Q, F
+from django.db.models import Q, F, Count, Case, When, CharField
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ValidationError
 
 from cotidia.admin.utils import (
         get_fields_from_model,
@@ -208,8 +209,23 @@ class AdminSearchDashboardAPIView(ListAPIView):
                         )
 
         ordering_params = self.request.GET.getlist("_order")
-        ordering_params = map(parse_ordering, ordering_params)
-        return query_set.order_by(*ordering_params)
+        # Checks the first ordering param exists
+        if(ordering_params):
+            #Cleans the "-" to just have the field name
+            clean_field_name = ordering_params[0].replace("-", "") 
+            condition_blank = Q(**{clean_field_name + "__exact": ""})
+            # If the the field is blank, then the val_is_empty will be true
+            annotation = {"val_is_empty": Count(Case(
+                When(condition_blank, then=1), output_field=CharField(),
+                ))}
+        ordering_params = list(map(parse_ordering, ordering_params))
+        try:
+            query_set = query_set.annotate(**annotation)
+            ordering_params = ["val_is_empty"] + ordering_params
+        except (ValueError, ValidationError) as e:
+            #Neccessary for non string fields, nothing more needs to happen as they have sensible defaults
+            pass
+        return query_set.order_by(*list(ordering_params))
 
     def get_serializer_class(self):
         return get_model_serializer_class(self.model_class)
