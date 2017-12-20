@@ -53,11 +53,16 @@ export default class SearchResults extends Component {
     detailURL: PropTypes.string,
     filterColumn: PropTypes.func.isRequired,
     filters: PropTypes.arrayOf(PropTypes.string).isRequired,
+    loading: PropTypes.bool,
     orderAscending: PropTypes.bool.isRequired,
     orderColumn: PropTypes.string,
     results: PropTypes.arrayOf(PropTypes.object),
     setOrderColumn: PropTypes.func.isRequired,
     toggleOrderDirection: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    loading: false,
   }
 
   filterColumnFactory = (column) => (e) => {
@@ -95,6 +100,7 @@ export default class SearchResults extends Component {
       columns,
       detailURL,
       filters,
+      loading,
       orderColumn,
       orderAscending,
       results,
@@ -102,7 +108,7 @@ export default class SearchResults extends Component {
 
     return (
       <>
-        <table className={`table ${detailURL ? 'table--clickable' : ''} table--admin-mobile-view`}>
+        <table className={`table ${detailURL ? 'table--clickable' : ''} table--admin-mobile-view ${loading ? 'table--loading' : ''}`}>
           <thead>
             <tr>
               {columns.map((column) => (

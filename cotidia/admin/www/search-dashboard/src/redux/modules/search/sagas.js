@@ -49,6 +49,8 @@ export function * manageColumns () {
 }
 
 function * performSearch () {
+  yield put({ type: types.SEARCH_START })
+
   const data = yield select((state) => state.search)
 
   const queryString = { ...data.filters }
@@ -63,13 +65,17 @@ function * performSearch () {
 
   let url = generateURL(data.endpoint, { '?': queryString })
 
-  const { ok, data: result } = yield call(fetchAuthenticated, 'GET', url)
+  try {
+    const { ok, data: result } = yield call(fetchAuthenticated, 'GET', url)
 
-  if (ok) {
-    yield put({
-      type: types.STORE_RESULTS,
-      payload: result,
-    })
+    if (ok) {
+      yield put({
+        type: types.STORE_RESULTS,
+        payload: result,
+      })
+    }
+  } finally {
+    yield put({ type: types.SEARCH_END })
   }
 }
 

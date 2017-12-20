@@ -17,6 +17,7 @@ const mapStateToProps = (state) => ({
   detailURL: state.search.detailURL,
   displayedColumns: state.search.displayedColumns,
   filters: getActiveFilters(state.search),
+  loading: state.search.loading,
   orderAscending: state.search.orderAscending,
   orderColumn: state.search.orderColumn,
   results: state.search.results,

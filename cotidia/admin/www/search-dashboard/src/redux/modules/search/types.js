@@ -21,3 +21,6 @@ export const SET_COLUMNS = 'search-dashboard/search/SET_COLUMNS'
 export const SET_FILTER_VALUE = 'search-dashboard/search/SET_FILTER_VALUE'
 
 export const GET_RESULTS_PAGE = 'search-dashboard/search/GET_RESULTS_PAGE'
+
+export const SEARCH_START = 'search-dashboard/search/SEARCH_START'
+export const SEARCH_END = 'search-dashboard/search/SEARCH_END'

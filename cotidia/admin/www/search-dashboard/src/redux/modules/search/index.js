@@ -15,6 +15,7 @@ const initialState = {
   searchTerm: null,
 
   results: [],
+  loading: false,
 
   pagination: {
     count: 0,
@@ -63,6 +64,18 @@ export default (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         orderAscending: ! state.orderAscending,
+      }
+
+    case types.SEARCH_START:
+      return {
+        ...state,
+        loading: true,
+      }
+
+    case types.SEARCH_END:
+      return {
+        ...state,
+        loading: false,
       }
 
     case types.STORE_RESULTS:
