@@ -6,15 +6,15 @@
         {% for field in actions.form %}
             {% include "admin/generic/form/form_group.html" %}
         {% endfor %}
-        <input type="submit" value="{% trans "Go" %}" class="btn btn--transparent">
+        <input type="submit" value="{% trans "Go" %}" class="btn btn--primary btn--transparent">
     </div>
 {% endif %}
-<table class="table table--clickable table--admin-mobile-view">
+<table class="table table--clickable table--admin-mobile-view table--loading">
     <thead>
         <tr>
             {% if actions %}
                 <th class="action-column">
-                    <button type="button" class="btn btn--transparent btn--small tooltip tooltip--top-center" onclick="toggleCheckboxes()" data-tooltip="Select All / None">
+                    <button type="button" class="btn btn--transparent btn--small tooltip tooltip--top-left" onclick="toggleCheckboxes()" data-tooltip="Select All / None">
                         <span class="fa fa-check"></span>
                     </button>
                 </th>
@@ -57,6 +57,9 @@
     {% empty %}
     <tr>
         <td colspan="{{columns|length}}">{% trans "No items." %}</td>
+        {% if actions %}
+        <td></td>
+        {% endif %}
         {% if row_actions %}
         <td></td>
         {% endif %}

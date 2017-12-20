@@ -31,6 +31,7 @@ body{
     }
     &__list{
         overflow-x: scroll;
+        margin: $vertical_padding $horizontal_padding;
     }
     &__detail{
     }

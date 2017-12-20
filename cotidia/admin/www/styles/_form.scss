@@ -132,7 +132,7 @@ fieldset{
 }
 
 .head-bar{
-    padding: $vertical_padding $horizontal_padding;
+    margin-bottom: $vertical_padding;
 
     @media screen and (min-width: $tablet-width) {
         display: flex;
@@ -140,10 +140,9 @@ fieldset{
     }
 
     &--actions {
-        background-color: $grey--lighter;
-        border-top: 1px solid $table-border-color;
-        border-left: 1px solid $table-border-color;
-        border-right: 1px solid $table-border-color;
+        // border-top: 1px solid $table-border-color;
+        // border-left: 1px solid $table-border-color;
+        // border-right: 1px solid $table-border-color;
     }
 
     .form__group {
