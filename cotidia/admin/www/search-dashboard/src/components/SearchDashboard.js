@@ -28,12 +28,12 @@ export default class SearchDashboard extends Component {
     }
 
     return (
-      <>
+      <div className='content__list'>
         <SearchBar />
         <SearchResults />
 
         <Modal />
-      </>
+      </div>
     )
   }
 }

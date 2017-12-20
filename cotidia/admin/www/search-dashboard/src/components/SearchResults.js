@@ -101,7 +101,7 @@ export default class SearchResults extends Component {
     } = this.props
 
     return (
-      <div className='content__list'>
+      <>
         <table className={`table ${detailURL ? 'table--clickable' : ''} table--stack-mobile`}>
           <thead>
             <tr>
@@ -155,7 +155,7 @@ export default class SearchResults extends Component {
         </table>
 
         <Pagination />
-      </div>
+      </>
     )
   }
 }
