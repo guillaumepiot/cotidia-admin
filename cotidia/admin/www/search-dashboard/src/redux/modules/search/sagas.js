@@ -80,17 +80,23 @@ function * performSearch () {
 }
 
 function * getResultsPage ({ payload: { page } }) {
+  yield put({ type: types.SEARCH_START })
+
   const pagination = yield select((state) => state.search.pagination)
 
   const url = page === 'next' ? pagination.next : pagination.previous
 
-  const { ok, data: result } = yield call(fetchAuthenticated, 'GET', url)
+  try {
+    const { ok, data: result } = yield call(fetchAuthenticated, 'GET', url)
 
-  if (ok) {
-    yield put({
-      type: types.STORE_RESULTS,
-      payload: result,
-    })
+    if (ok) {
+      yield put({
+        type: types.STORE_RESULTS,
+        payload: result,
+      })
+    }
+  } finally {
+    yield put({ type: types.SEARCH_END })
   }
 }
 
