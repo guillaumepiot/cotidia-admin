@@ -4,17 +4,17 @@ body{
         .content__detail,
         .content__delete,
         .form,
-        .form__actions-inner,
-        .head-bar{
+        .form__actions-inner{
             max-width: $laptop_width;
             padding-left: $horizontal_padding;
             padding-right: $horizontal_padding;
-            margin: 0 auto;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .pagination {
-            padding-left: 0;
-            padding-right: 0;
+        .head-bar{
+            margin-left: auto;
+            margin-right: auto;
         }
 
         @media screen and (max-width: $mobile-width) {
@@ -44,7 +44,7 @@ body{
 }
 
 .pagination{
-    padding: $vertical_padding $horizontal_padding;
+    padding: $vertical_padding 0;
 
     &__link{
         display: block;

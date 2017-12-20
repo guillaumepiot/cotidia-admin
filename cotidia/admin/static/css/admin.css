@@ -5556,15 +5556,15 @@ body.content-centered .content__list,
 body.content-centered .content__detail,
 body.content-centered .content__delete,
 body.content-centered .form,
-body.content-centered .form__actions-inner,
-body.content-centered .head-bar {
+body.content-centered .form__actions-inner {
   max-width: 1024px;
   padding-left: 1rem;
   padding-right: 1rem;
-  margin: 0 auto; }
-body.content-centered .pagination {
-  padding-left: 0;
-  padding-right: 0; }
+  margin-left: auto;
+  margin-right: auto; }
+body.content-centered .head-bar {
+  margin-left: auto;
+  margin-right: auto; }
 @media screen and (max-width: 767px) {
   body.content-centered .form__actions-inner {
     padding: 0.75rem 0; } }
@@ -5579,7 +5579,7 @@ body.content-centered .pagination {
   margin-top: 0.75rem; }
 
 .pagination {
-  padding: 0.75rem 1rem; }
+  padding: 0.75rem 0; }
   .pagination__link {
     display: block;
     float: left;
