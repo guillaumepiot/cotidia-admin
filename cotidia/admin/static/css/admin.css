@@ -4787,13 +4787,10 @@ hr {
       flex-wrap: nowrap; } }
   .dialog-footer--reverse {
     flex-direction: row-reverse; }
+  .dialog-footer--center {
+    justify-content: center; }
   .dialog-footer__actions {
     white-space: nowrap; }
-
-.dialog-footer-action--left {
-  align-self: left; }
-.dialog-footer-action--right {
-  align-items: right; }
 
 .dialog-section--padded {
   padding: 0.75rem 1rem; }
