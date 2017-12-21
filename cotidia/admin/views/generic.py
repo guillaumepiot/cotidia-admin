@@ -433,10 +433,11 @@ class AdminGenericSearchView(StaffPermissionRequiredMixin, TemplateView):
             q_objects = Q()
 
             for field in m["fields"]:
-                filter_args = {}
-                lookup = "__icontains"
-                filter_args[field + lookup] = query
-                q_objects.add(Q(**filter_args), Q.OR)
+                for q in query.split(" "):
+                    filter_args = {}
+                    lookup = "__icontains"
+                    filter_args[field + lookup] = q
+                    q_objects.add(Q(**filter_args), Q.OR)
 
             for item in model.objects.filter(q_objects):
                 results.append({
