@@ -27,7 +27,7 @@ class AbstractOrderable(models.Model):
                 self.order_id = max_order_id + 1
             else:
                 self.order_id = 1
-        return super(AbstractOrderable, self).save(*args, **kwargs)
+        return super().save(*args, **kwargs)
 
     def move_up(self):
         # Find previous sibling
