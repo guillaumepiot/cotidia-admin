@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "font-awesome": "^4.7.0",
     "sixteen": "^0.3.5"
   },
   "devDependencies": {
-    "font-awesome": "^4.7.0",
     "grunt": "^1.0.1",
     "grunt-contrib-cssmin": "^2.2.1",
     "grunt-contrib-sass": "^1.0.0",
