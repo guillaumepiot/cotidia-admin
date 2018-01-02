@@ -1,4 +1,4 @@
 {% load humanize %}
-{% if display_type == 'currency' %}{{ADMIN_DETAIL_CURRENCY|safe}}{{value|intcomma}}{% elif display_type == 'percent' %}{{value}}%{% else %}{{value}}
+{% if display_type == 'currency' %}{{ADMIN_DETAIL_CURRENCY|safe}}{{value|intcomma}}{% elif display_type == 'percent' %}{{value}}%{% elif display_type == 'number' %}{{value}}{% elif display_type == 'email' %}<a href="mailto:{{value}}">{{value}}</a>{% else %}{% if value %}{{value}}{% else %}<span class="text-italic text-grey--medium">No value set.</span>{% endif %}
 {% endif %}{% if queryloop and not queryloop.last %}, {% endif %}
 

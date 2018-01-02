@@ -1,9 +1,10 @@
 {% load humanize admin_util_tags %}<div class="form__group">
     <label class="form__label">{{label}}</label>
     <div class="form__control">
-
-        {% if value %}
-            {% if value|get_value_type == "QuerySet" %}
+        {% if value is not None %}
+            {% if value|get_value_type == "bool" %}
+                {% include "admin/generic/detail/bool.html" %}
+            {% elif value|get_value_type == "QuerySet" %}
                 {% for v in value %}
                 {% with v as value and forloop as queryloop %}
                     {% include "admin/generic/detail/value.html" %}
@@ -13,6 +14,5 @@
                 {% include "admin/generic/detail/value.html" %}
             {% endif %}
         {% endif %}
-
     </div>
 </div>
