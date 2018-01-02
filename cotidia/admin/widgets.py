@@ -368,3 +368,11 @@ class TrixEditor(forms.Textarea):
     class Media:
         css = {'all': ('trix/trix.css',)}
         js = ('trix/trix.js',)
+
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+
+class TimeInput(forms.TimeInput):
+    input_type = 'time'
