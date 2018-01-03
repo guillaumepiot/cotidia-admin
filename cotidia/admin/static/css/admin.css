@@ -5180,7 +5180,7 @@ hr {
   background-color: var(--menu_background_color, #00213E); }
   .menu__container {
     padding: 0; }
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: 1023px) {
       .menu__container {
         background-color: #00213E;
         background-color: var(--menu_background_color_mobile, #00213E);
@@ -5196,7 +5196,7 @@ hr {
           float: none; }
         .menu__container .menu__sub-nav {
           position: static; } }
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: 1023px) {
       .menu__container--mobile-right {
         left: 100%; } }
     .menu__container--mobile-active {
@@ -5211,12 +5211,12 @@ hr {
     float: left; }
     .menu__item--open {
       display: inline-block; }
-      @media screen and (min-width: 768px) {
+      @media screen and (min-width: 1024px) {
         .menu__item--open {
           display: none; } }
     .menu__item--open-right {
       float: right; }
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 1024px) {
       .menu__item--close {
         display: none; } }
     .menu__item--close-right {
@@ -5231,7 +5231,7 @@ hr {
     background-color: #00213E;
     background-color: var(--menu_background_color_mobile, #00213E);
     z-index: 10; }
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 1024px) {
       .menu__sub-nav {
         background-color: #00213E;
         background-color: var(--menu_background_color, #00213E);
@@ -5243,7 +5243,7 @@ hr {
     display: block;
     clear: both; }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1024px) {
   .menu-item--right {
     float: right; }
     .menu-item--right .menu__sub-nav {
@@ -5251,7 +5251,7 @@ hr {
 .menu-item:hover {
   background-color: #00315d;
   background-color: var(--menu_link_background_color_active, #00315d); }
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 1023px) {
     .menu-item:hover {
       background-color: #00315d;
       background-color: var(--menu_link_background_color_active_mobile, #00315d); } }
@@ -5262,14 +5262,14 @@ hr {
   background-color: var(--menu_link_background_color, transparent);
   padding: 0.75rem 1rem;
   display: block; }
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 1023px) {
     .menu-item__link {
       background-color: transparent;
       background-color: var(--menu_link_background_color_mobile, transparent); } }
   .menu-item__link:hover {
     background-color: #00427b;
     background-color: var(--menu_link_background_color_hover, #00427b); }
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: 1023px) {
       .menu-item__link:hover {
         background-color: transparent;
         background-color: var(--menu_link_background_color_hover_mobile, transparent); } }
@@ -5701,6 +5701,14 @@ fieldset {
         border-bottom: 1px solid #eaeaed; }
       fieldset.table-view .table tbody tr {
         background-color: transparent; }
+
+.fieldset_actions {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  background-color: #f8f8f9;
+  clear: both; }
 
 .errorlist {
   padding: 0; }

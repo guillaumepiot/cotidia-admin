@@ -124,6 +124,15 @@ fieldset{
     }
 }
 
+.fieldset_actions {
+    padding-left: $horizontal_padding;
+    padding-right: $horizontal_padding;
+    padding-top: $vertical_padding;
+    padding-bottom: $vertical_padding;
+    background-color: $grey--lighter;
+    clear: both;
+}
+
 .errorlist {
     padding: 0;
     li{
