@@ -16,14 +16,14 @@
             Delete
         {% endblocktrans %}
     </a>
-    <a href="{% get_admin_url app_label model_name "update" object %}" class="btn btn--change btn--small toolbar__item">
+    <a href="{% get_admin_url app_label model_name 'update' object %}" class="btn btn--change btn--small toolbar__item">
         <span class="fa fa-pencil"></span>
         {% blocktrans with verbose_name as verbose_name %}
             Edit
         {% endblocktrans %}
     </a>
     <span class="toolbar__breadcrumbs">
-        <a href="{% get_admin_url app_label model_name "list" %}">{{verbose_name_plural}}</a>
+        <a href="{% get_admin_url app_label model_name 'list' %}">{{verbose_name_plural}}</a>
         &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
         {% blocktrans with verbose_name as verbose_name %}
             {{verbose_name}} details
@@ -61,12 +61,12 @@
     {% block form_actions %}
     <div class="form__actions">
         <div class="form__actions-inner">
-            <a href="{% get_admin_url app_label model_name "update" object %}" class="btn btn--change">
+            <a href="{% get_admin_url app_label model_name 'update' object %}" class="btn btn--change">
                 {% blocktrans with object_name as object_name %}
                     Edit
                 {% endblocktrans %}
             </a>
-            <a href="{% get_admin_url app_label model_name "list" %}" class="btn btn--transparent pull-right">
+            <a href="{% get_admin_url app_label model_name 'list' %}" class="btn btn--transparent pull-right">
                 {% trans "Back" %}
             </a>
         </div>
