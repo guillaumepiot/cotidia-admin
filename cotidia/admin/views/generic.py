@@ -294,7 +294,6 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
             self.model._meta.model_name
         )
         return reverse(url_name)
-        # return reverse(url_name, args=[self.get_object().id])
 
     def build_detail_url(self):
         url_name = "{}-admin:{}-detail".format(
