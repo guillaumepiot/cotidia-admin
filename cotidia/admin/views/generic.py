@@ -192,10 +192,13 @@ class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):
                 self.model._meta.model_name
             )
 
+    def get_fieldsets(self):
+        return self.fieldsets
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context["fieldsets"] = self.fieldsets
+        context["fieldsets"] = self.get_fieldsets()
 
         return context
 
