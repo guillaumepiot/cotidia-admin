@@ -1,0 +1,7 @@
+{% if fieldset.actions %}
+    <div class="fieldset_actions">
+        {% for action in  fieldset.actions%}
+            <a href="{{action.url}}" class="btn btn--small {{action.class}}">{{action.label}}</a>
+        {% endfor %}
+    </div>
+{% endif %}
