@@ -38,7 +38,10 @@ App.propTypes = {
   authToken: PropTypes.string.isRequired,
   endpoint: PropTypes.string.isRequired,
   detailURL: PropTypes.string,
-  defaultColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  defaultColumns: PropTypes.arrayOf(PropTypes.string),
+  defaultOrderBy: PropTypes.string,
+  defaultFilters: PropTypes.object,
+  overrideStoredConfig: PropTypes.bool,
   columns: PropTypes.objectOf(PropTypes.shape({
     label: PropTypes.string.isRequired,
     display: PropTypes.oneOf(['verbatim', 'date', 'datetime', 'boolean']),
@@ -51,7 +54,11 @@ App.propTypes = {
 }
 
 App.defaultProps = {
+  defaultColumns: [],
+  defaultOrderBy: null,
+  defaultFilters: {},
   detailURL: null,
+  overrideStoredConfig: false,
 }
 
 window.React = React

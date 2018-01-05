@@ -7,18 +7,38 @@ import * as searchTypes from '../search/types'
 export function * bootstrap ({ payload: config }) {
   yield put({ type: searchTypes.SET_ENDPOINT, payload: config.endpoint })
   yield put({ type: searchTypes.SET_DETAIL_URL, payload: config.detailURL })
+
+  let defaultOrderColumn = config.defaultColumns[0]
+  let defaultOrderAscending = true
+
+  if (config.defaultOrderBy) {
+    if (config.defaultOrderBy[0] === '-') {
+      defaultOrderAscending = false
+      defaultOrderColumn = config.defaultOrderBy.slice(1)
+    } else {
+      defaultOrderColumn = config.defaultOrderBy
+    }
+  }
+
   yield put({
     type: searchTypes.SET_COLUMN_CONFIG,
     payload: {
       columns: config.columns,
       defaultColumns: config.defaultColumns,
+      defaultFilters: config.defaultFilters,
+      defaultOrderColumn,
+      defaultOrderAscending,
     },
   })
 
-  const { visibleColumns } = JSON.parse(localStorage.getItem(config.endpoint))
+  // If the config doesn't say to override any stored config, retrieve it from localStorage and
+  // apply it on top of the setup we just did.
+  if (config.overrideStoredConfig !== true) {
+    const { visibleColumns } = JSON.parse(localStorage.getItem(config.endpoint))
 
-  if (Array.isArray(visibleColumns)) {
-    yield put(searchActions.setColumns(visibleColumns))
+    if (Array.isArray(visibleColumns)) {
+      yield put(searchActions.setColumns(visibleColumns))
+    }
   }
 
   yield put({ type: searchTypes.PERFORM_SEARCH })

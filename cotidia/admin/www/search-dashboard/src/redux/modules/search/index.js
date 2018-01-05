@@ -43,8 +43,9 @@ export default (state = initialState, { type, payload } = {}) => {
         ...state,
         columns: payload.columns,
         visibleColumns: payload.defaultColumns,
-        orderColumn: payload.defaultColumns[0],
-        orderAscending: true,
+        orderColumn: payload.defaultOrderColumn,
+        orderAscending: payload.defaultOrderAscending,
+        filters: payload.defaultFilters,
       }
 
     case types.SET_SEARCH_TERM:

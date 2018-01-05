@@ -75,7 +75,12 @@
                 authToken: 'abcdef',
                 endpoint: '/api/search?content_type_id=38',
                 detailURL: '/admin/person/view/:id',
-                defaultColumns: ['name', 'email'],
+                defaultColumns: ['name', 'email', 'type'],
+                defaultOrderBy: '-email',
+                defaultFilters: {
+                    type: ['vegan', 'fruitarian']
+                },
+                overrideStoredConfig: true,
                 columns: {
                     name: {
                         label: 'Name',
