@@ -103,7 +103,9 @@ function * getResultsPage ({ payload: { page } }) {
 function * saveColumnConfig () {
   const state = yield select((state) => state.search)
 
-  localStorage.setItem(state.endpoint, JSON.stringify(state.visibleColumns))
+  localStorage.setItem(state.endpoint, JSON.stringify({
+    visibleColumns: state.visibleColumns,
+  }))
 }
 
 export default function * watcher () {

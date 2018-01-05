@@ -15,10 +15,10 @@ export function * bootstrap ({ payload: config }) {
     },
   })
 
-  const savedColumns = JSON.parse(localStorage.getItem(config.endpoint))
+  const { visibleColumns } = JSON.parse(localStorage.getItem(config.endpoint))
 
-  if (Array.isArray(savedColumns)) {
-    yield put(searchActions.setColumns(savedColumns))
+  if (Array.isArray(visibleColumns)) {
+    yield put(searchActions.setColumns(visibleColumns))
   }
 
   yield put({ type: searchTypes.PERFORM_SEARCH })
