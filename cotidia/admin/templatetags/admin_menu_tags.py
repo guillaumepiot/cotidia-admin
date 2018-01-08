@@ -65,7 +65,7 @@ def menu(context):
     processed_apps = []
 
     for section, section_apps in settings.ADMIN_MENU_DEFINITION.items():
-        permitted_menu.append({'text': section})
+        current_menu_count = len(permitted_menu)
 
         for app in section_apps:
             processed_apps.append(app)
@@ -79,6 +79,10 @@ def menu(context):
             if admin_menu:
                 menu = admin_menu(context)
                 permitted_menu = build_permitted_menu(context, menu, permitted_menu)
+
+        if current_menu_count < len(permitted_menu):
+            # Insert header before the new menu item
+            permitted_menu.insert(current_menu_count, {'text': section})
 
     # Add en empty break for the remaining unordered apps
     permitted_menu.append({'text': ''})
