@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 
@@ -12,6 +12,7 @@ class ContextMixin:
         context["verbose_name"] = self.model._meta.verbose_name
         context["verbose_name_plural"] = self.model._meta.verbose_name_plural
         context["template_type"] = self.template_type
+
         return context
 
 

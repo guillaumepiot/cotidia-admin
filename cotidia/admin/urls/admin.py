@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.urls import path
 
 from cotidia.admin.views.generic import (
     AdminOrderableView,
@@ -6,20 +6,21 @@ from cotidia.admin.views.generic import (
     AdminGenericSearchView
 )
 
+app_name = "cotidia.admin"
 
 urlpatterns = [
-    url(
-        r'^order/(?P<content_type_id>[\d]+)/(?P<object_id>[\d]+)$',
+    path(
+        'order/<int:content_type_id>/<int:object_id>',
         AdminOrderableView.as_view(),
         name='order'
     ),
-    url(
-        r'^list/(?P<app_label>[a-zA-Z_]+)/(?P<model>[a-zA-Z_]+)',
+    path(
+        'list/<str:app_label>/<str:model>',
         AdminGenericListView.as_view(),
         name='list'
     ),
-    url(
-        r'^search',
+    path(
+        'search',
         AdminGenericSearchView.as_view(),
         name='search'
     )

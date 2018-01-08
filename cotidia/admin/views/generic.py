@@ -7,11 +7,10 @@ from django.views.generic import (
     View
 )
 from django.contrib import messages
-from django.core.urlresolvers import reverse
+from django.urls import reverse, NoReverseMatch
 from django.http import HttpResponseRedirect, Http404
 from django.contrib.contenttypes.models import ContentType
 from django.views.generic.base import TemplateView
-from django.core.urlresolvers import NoReverseMatch
 from django.apps import apps
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -159,6 +158,7 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
         context["app_label"] = app_label
         context["model_name"] = model_name
         context["url_type"] = url_type
+        context["list"] = self.modeal.model_has_search_procider
 
         try:
             reverse("{}-admin:{}-{}".format(app_label, model_name, url_type),

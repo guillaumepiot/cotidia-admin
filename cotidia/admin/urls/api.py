@@ -1,17 +1,19 @@
-from django.conf.urls import url
+from django.urls import path
 
 from cotidia.admin.views.api import AdminOrderableAPIView
 from cotidia.admin.views.api import AdminSearchDashboardAPIView
 
+app_name = "cotidia.admin"
+
 urlpatterns = [
-    url(
-        r'^order/(?P<content_type_id>[\d]+)/(?P<object_id>[\d]+)$',
+    path(
+        'order/<int:content_type_id>/<int:object_id>',
         AdminOrderableAPIView.as_view(),
         name='order'
     ),
-    url(
-        r'^list/(?P<app_label>[a-zA-Z_]+)/(?P<model>[a-zA-Z_]+)',
+    path(
+        'list/<str:app_label>/<str:model>',
         AdminSearchDashboardAPIView.as_view(),
         name='object-list'
-        )
+    )
 ]

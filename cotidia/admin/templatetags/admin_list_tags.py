@@ -2,7 +2,7 @@ from datetime import datetime
 from django import template
 from django.template.exceptions import TemplateDoesNotExist
 from django.template.loader import get_template
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from cotidia.admin.templatetags.admin_util_tags import get_attr
 
