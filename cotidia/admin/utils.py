@@ -213,7 +213,10 @@ def get_model_structure(
         model,
         endpoint=None,
         detail_endpoint=None,
-        token=None
+        token=None,
+        default_columns=None,
+        default_filters=None,
+        default_order=None
         ):
     serializer = get_model_serializer_class(model)()
     structure = {
@@ -227,5 +230,11 @@ def get_model_structure(
         structure['detailURL'] = detail_endpoint
     if token is not None:
         structure['authToken'] = token
+    if default_columns:
+        structure['defaultColumns'] = default_columns
+    if default_filters:
+        structure['defaultFilters'] = default_filters
+    if default_order:
+        structure['defaultOrder'] = default_order
 
     return structure
