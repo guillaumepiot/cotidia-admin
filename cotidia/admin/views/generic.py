@@ -158,7 +158,7 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
         context["app_label"] = app_label
         context["model_name"] = model_name
         context["url_type"] = url_type
-        context["list"] = self.modeal.model_has_search_procider
+        # context["list"] = self.model.model_has_search_provider
 
         try:
             reverse("{}-admin:{}-{}".format(app_label, model_name, url_type),
