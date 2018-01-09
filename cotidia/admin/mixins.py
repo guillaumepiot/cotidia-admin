@@ -1,11 +1,6 @@
-from warnings import warn
-
-from django.db import transaction
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.conf import settings
-
-from cotidia.admin.signals import ordering_complete
 
 
 class UserCheckMixin(object):
@@ -15,7 +10,7 @@ class UserCheckMixin(object):
 
     def dispatch(self, request, *args, **kwargs):
         if not self.check_user(request.user):
-            if request.user.is_authenticated():
+            if request.user.is_authenticated:
                 raise PermissionDenied
             else:
                 return redirect(settings.ACCOUNT_ADMIN_LOGIN_URL)
