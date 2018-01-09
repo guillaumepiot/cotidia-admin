@@ -24,5 +24,5 @@
 {% endblock page_content %}
 
 {% block footer_scripts %}
-{% render_search_dashboard_config app_label model_name url_type request.user.token.key %}
+{% render_search_dashboard_config app_label model_name url_type request.user.token.key default_columns default_filters default_order %}
 {% endblock footer_scripts %}

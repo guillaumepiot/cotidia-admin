@@ -153,7 +153,7 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
         filters = {}
         for key in self.request.GET:
             if key[0] != '_':
-                filters[key] = self.request.GET.get_list(key)
+                filters[key] = self.request.GET.getlist(key)
 
 
         url_type = "detail"
@@ -165,9 +165,9 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
         context["model_name"] = model_name
         context["url_type"] = url_type
         # context["list"] = self.model.model_has_search_provider
-        context["_column"] = self.request.GET.get_list("_column")
-        context["_order"] = self.request.GET.get_list("_order")
-        context["_filter"] = filters
+        context["default_columns"] = self.request.GET.getlist("_column")
+        context["default_order"] = self.request.GET.getlist("_order")
+        context["default_filters"] = filters
 
         try:
             reverse("{}-admin:{}-{}".format(app_label, model_name, url_type),
