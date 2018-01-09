@@ -34,10 +34,16 @@ export function * bootstrap ({ payload: config }) {
   // If the config doesn't say to override any stored config, retrieve it from localStorage and
   // apply it on top of the setup we just did.
   if (config.overrideStoredConfig !== true) {
-    const { visibleColumns } = JSON.parse(localStorage.getItem(config.endpoint))
+    try {
+      const storedConfig = JSON.parse(localStorage.getItem(config.endpoint))
 
-    if (Array.isArray(visibleColumns)) {
-      yield put(searchActions.setColumns(visibleColumns))
+      if (storedConfig) {
+        if (Array.isArray(storedConfig.visibleColumns)) {
+          yield put(searchActions.setColumns(storedConfig.visibleColumns))
+        }
+      }
+    } catch {
+      // pass
     }
   }
 
