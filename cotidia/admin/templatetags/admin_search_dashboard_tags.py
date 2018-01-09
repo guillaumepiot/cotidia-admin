@@ -11,11 +11,15 @@ register = template.Library()
 
 @register.simple_tag(takes_context=True)
 def render_search_dashboard_config(
-        context,
-        app_label,
-        model_name,
-        url_type,
-        api_token):
+    context,
+    app_label,
+    model_name,
+    url_type,
+    api_token,
+    default_columns,
+    default_filters,
+    default_order
+):
     model_class = ContentType.objects.get(
         app_label=app_label,
         model=model_name
@@ -50,7 +54,10 @@ def render_search_dashboard_config(
         model_class,
         endpoint=endpoint,
         detail_endpoint=detail_endpoint,
-        token=api_token
+        token=api_token,
+        default_columns=default_columns,
+        default_filters=default_filters,
+        default_order=default_order
     ))
 
     template = context.template.engine.get_template(
