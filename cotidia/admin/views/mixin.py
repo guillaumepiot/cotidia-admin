@@ -12,6 +12,11 @@ class ContextMixin:
         context["verbose_name"] = self.model._meta.verbose_name
         context["verbose_name_plural"] = self.model._meta.verbose_name_plural
         context["template_type"] = self.template_type
+        try:
+            self.model.SearchProvider
+            context["list_type"] = "dynamic"
+        except AttributeError:
+            context["list_type"] = "static"
 
         return context
 
