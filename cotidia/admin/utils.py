@@ -235,6 +235,6 @@ def get_model_structure(
     if default_filters:
         structure['defaultFilters'] = default_filters
     if default_order:
-        structure['defaultOrder'] = default_order
+        structure['defaultOrderBy'] = default_order[0]
 
     return structure
