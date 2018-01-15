@@ -34,8 +34,9 @@ SUPPORTED_FIELD_TYPES_SERIALIZER = [
     fields.CharField,
     fields.IntegerField,
     fields.DecimalField,
-    fields.BooleanField,
     fields.ChoiceField,
+    fields.BooleanField,
+    fields.NullBooleanField,
     AdminModelSerializer,
     serializers.ManyRelatedField,
     serializers.ListSerializer
@@ -71,6 +72,10 @@ FIELD_MAPPING = {
         "filter": "number"
     }),
     "BooleanField": (lambda: {
+        "display": "boolean",
+        "filter": "boolean"
+    }),
+    "NullBooleanField": (lambda: {
         "display": "boolean",
         "filter": "boolean"
     }),
