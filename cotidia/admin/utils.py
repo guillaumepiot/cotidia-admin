@@ -31,6 +31,7 @@ SUPPORTED_FIELD_TYPES_SERIALIZER = [
     fields.UUIDField,
     fields.DateTimeField,
     fields.DateField,
+    fields.TimeField,
     fields.CharField,
     fields.IntegerField,
     fields.DecimalField,
@@ -52,6 +53,10 @@ FIELD_MAPPING = {
         "filter": "text"
     }),
     "DateField": (lambda: {
+        "display": "date",
+        "filter": "date"
+    }),
+    "TimeField": (lambda: {
         "display": "date",
         "filter": "date"
     }),
