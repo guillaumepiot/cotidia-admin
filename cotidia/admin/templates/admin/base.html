@@ -6,7 +6,7 @@
         <title>{% block title %}No title set{% endblock %} | {{SITE_NAME}}</title>
         <meta name="description" content="{% block description %}{% endblock %}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-        {% include "cms/partials/favicon.html" %}
+        {% include "admin/partials/favicon.html" %}
         {% if DEBUG %}
             <link rel="stylesheet" href="{% static "css/admin.css" %}">
         {% else %}
