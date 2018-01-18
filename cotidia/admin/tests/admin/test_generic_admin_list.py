@@ -26,7 +26,9 @@ class TestGenericAdminList(TestCase):
             "genericrecord",
             "detail",
             self.admin_user_token.key,
-            [],[],[]
+            [],
+            [],
+            []
             )
         self.assertIn(self.admin_user_token.key, str(config))
         self.assertIn("/api/admin/list/tests/genericrecord", str(config))
