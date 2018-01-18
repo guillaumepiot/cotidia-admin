@@ -50,7 +50,8 @@ class GenericRecord(models.Model):
             )
     text_field = models.TextField()
     boolean_field = models.BooleanField()
-    foreign_key_field = models.ForeignKey(GenericRecordNoMeta)
+    foreign_key_field = models.ForeignKey(GenericRecordNoMeta,
+                                          on_delete=models.CASCADE)
     many_to_many_field = models.ManyToManyField(GenericRecordTwo)
 
     class SearchProvider:

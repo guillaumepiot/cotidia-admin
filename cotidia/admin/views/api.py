@@ -86,6 +86,15 @@ def exact_match_filter(query_set, field, values):
     return field_filter(lambda x, y: Q(**{x: y}), query_set, field, values)
 
 
+def boolean_filter(queryset, field, values):
+    return field_filter(
+        lambda x, y: Q(**{x: y == "true"}),
+        queryset,
+        field,
+        values
+    )
+
+
 def number_filter(query_set, field, values):
     """ Checks if a number fits a constraints """
     return field_filter(filter_number, query_set, field, values)
@@ -130,7 +139,7 @@ def parse_ordering(order_val):
 FILTERS = {
         "text": contains_filter,
         "choice": exact_match_filter,
-        "boolean": exact_match_filter,
+        "boolean": boolean_filter,
         "number": number_filter,
         "date": date_filter
         }
@@ -194,11 +203,9 @@ class AdminSearchDashboardAPIView(ListAPIView):
                 # Get the relevant filter and apply it
                 suffix=""
                 try:
-                    print(field_data[field])
                     if field_data[field]['many']:
                         sub_serializer = get_sub_serializer(serializer, field)
                         suffix = "__" + sub_serializer.SearchProvider.display_field
-                        print(suffix)
                 except KeyError:
                     pass
                 filter_type = field_data[field]['filter']

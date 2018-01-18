@@ -49,8 +49,7 @@ def render_search_dashboard_config(
     else:
         detail_endpoint = None
 
-    context['variable_name'] = "field_data"
-    context['data'] = mark_safe(get_model_structure(
+    return mark_safe(get_model_structure(
         model_class,
         endpoint=endpoint,
         detail_endpoint=detail_endpoint,
@@ -59,8 +58,3 @@ def render_search_dashboard_config(
         default_filters=default_filters,
         default_order=default_order
     ))
-
-    template = context.template.engine.get_template(
-        "admin/generic/utils/javascript_data.html"
-    )
-    return template.render(context)
