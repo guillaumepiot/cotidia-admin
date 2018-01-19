@@ -23,7 +23,7 @@ class {{model_name}}AdminTests(TestCase):
     def test_add_{{model_name|lower}}(self):
         """Test that we can add a new object."""
 
-        url = reverse('{{app_name}}-admin:model-add')
+        url = reverse('{{app_label}}-admin:model-add')
 
         # Test that the page load first
         response = self.c.get(url)
@@ -44,7 +44,7 @@ class {{model_name}}AdminTests(TestCase):
         """Test that we can update an existing object."""
 
         url = reverse(
-            '{{app_name}}-admin:{{model_name|lower}}-update',
+            '{{app_label}}-admin:{{model_name|lower}}-update',
             kwargs={
                 'pk': self.object.id
             }
@@ -69,7 +69,7 @@ class {{model_name}}AdminTests(TestCase):
         """Test that we can retrieve an object from its ID."""
 
         url = reverse(
-            '{{app_name}}-admin:{{model_name|lower}}-detail',
+            '{{app_label}}-admin:{{model_name|lower}}-detail',
             kwargs={
                 'pk': self.object.id
             }
@@ -82,7 +82,7 @@ class {{model_name}}AdminTests(TestCase):
     def test_list_{{model_name|lower}}(self):
         """Test that we can list objects."""
 
-        url = reverse('{{app_name}}-admin:{{model_name|lower}}-list')
+        url = reverse('{{app_label}}-admin:{{model_name|lower}}-list')
 
         # Test that the page load first
         response = self.c.get(url)
@@ -92,7 +92,7 @@ class {{model_name}}AdminTests(TestCase):
         """Test that we can delete an object."""
 
         url = reverse(
-            '{{app_name}}-admin:{{model_name|lower}}-delete',
+            '{{app_label}}-admin:{{model_name|lower}}-delete',
             kwargs={
                 'pk': self.object.id
             }
