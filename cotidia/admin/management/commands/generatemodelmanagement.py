@@ -6,6 +6,8 @@ from django.utils.six.moves import input
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
+TEMP_FILE_LOCATION = "tmp.txt"
+
 
 def string_prompt(question, default=None):
     if default is not None:
@@ -75,6 +77,17 @@ class Command(BaseCommand):
             },
         ]
 
+        snippets = [
+            {
+                'snipet_name': "URL snippet",
+                'template': "generations/snippets/url_snippet.py"
+            },
+            {
+                'snipet_name': "Menu snippet",
+                'template': "generations/snippets/menu_snippet.py"
+            },
+        ]
+
         context = {
             "model_name": model_class.__name__,
             "model_verbose_name": model_class._meta.verbose_name,
@@ -94,4 +107,11 @@ class Command(BaseCommand):
                                                     context)
                     f.write(file_content)
                     f.close()
+        snippet_string = ""
+        for snippet in snippets:
+            snippet_string += snippet["snippet_name"]
+            snippet_string += "\n\n"
+            snippet_string += render_to_string(snippet["template"], context)
+            snippet_string += "\n\n"
 
+        self.stdout.write(snippet_string)
