@@ -26,7 +26,7 @@
         <a href="{% get_admin_url app_label model_name 'list' %}">{{verbose_name_plural}}</a>
         &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
         {% blocktrans with verbose_name as verbose_name %}
-            {{verbose_name}} details
+            {{object}}
         {% endblocktrans %}
     </span>
 {% endblock toolbar %}
