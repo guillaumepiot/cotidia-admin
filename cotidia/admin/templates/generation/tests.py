@@ -31,14 +31,16 @@ class {{model_name}}AdminTests(TestCase):
 
         # Send data
         data = {
-            'attr': 'value'
+            {% for field in fields %}"{{field.1}}": "<<SETME>>",{% if not forloop.last %}
+            {% endif %}{% endfor %}
         }
         response = self.c.post(url, data)
         self.assertEqual(response.status_code, 302)
 
         # Get the latest added object
         obj = {{model_name}}.objects.filter().latest('id')
-        self.assertEqual(obj.attr, 'value')
+        {% for field in fields %}self.assertEqual(obj.{{field.1}}, "<<SETME>>"){% if not forloop.last %}
+        {% endif %}{% endfor %}
 
     def test_update_{{model_name|lower}}(self):
         """Test that we can update an existing object."""
@@ -56,14 +58,17 @@ class {{model_name}}AdminTests(TestCase):
 
         # Send data
         data = {
-            'attr': 'other value'
+            {% for field in fields %}"{{field.1}}": "<<SETME>>",{% if not forloop.last %}
+            {% endif %}{% endfor %}
         }
         response = self.c.post(url, data)
         self.assertEqual(response.status_code, 302)
 
         # Get the latest added object
         obj = {{model_name}}.objects.get(id=self.object.id)
-        self.assertEqual(obj.attr, 'other value')
+
+        {% for field in fields %}self.assertEqual(obj.{{field.1}}, "<<SETME>>"){% if not forloop.last %}
+        {% endif %}{% endfor %}
 
     def test_retrieve_{{model_name|lower}}(self):
         """Test that we can retrieve an object from its ID."""

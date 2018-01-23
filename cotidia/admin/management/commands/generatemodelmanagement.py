@@ -62,9 +62,9 @@ class Command(BaseCommand):
                     app_label,
                     'tests',
                     'admin',
-                    model_name.lower()+".py"
+                    "test_" + model_name.lower()+".py"
                 ),
-                "template": "generation/forms.py"
+                "template": "generation/tests.py"
             },
             {
                 "path": os.path.join(
@@ -79,12 +79,14 @@ class Command(BaseCommand):
 
         snippets = [
             {
-                'snipet_name': "URL snippet",
-                'template': "generations/snippets/url_snippet.py"
+                'snippet_name': "URL snippet: %s/urls/admin/%s.py" %
+                (app_label, model_name.lower()),
+                'template': "generation/snippets/url_snippet.py"
             },
             {
-                'snipet_name': "Menu snippet",
-                'template': "generations/snippets/menu_snippet.py"
+                'snippet_name': "Menu snippet: %s/menu.py" %
+                app_label,
+                'template': "generation/snippets/menu_snippet.py"
             },
         ]
 
@@ -107,11 +109,19 @@ class Command(BaseCommand):
                                                     context)
                     f.write(file_content)
                     f.close()
-        snippet_string = ""
+            else:
+                self.stdout.write("Skipping %s as file already exists" %
+                                  template["path"])
+
+
+        snippet_string = "\n=========\nSnippets\n=========\n"
         for snippet in snippets:
-            snippet_string += snippet["snippet_name"]
-            snippet_string += "\n\n"
-            snippet_string += render_to_string(snippet["template"], context)
+            name = snippet["snippet_name"]
+            template = snippet["template"]
+            snippet_string += "\n" + '=' * len(name) + "\n"
+            snippet_string += name
+            snippet_string += "\n" + '=' * len(name) + "\n"
+            snippet_string += render_to_string(template, context)
             snippet_string += "\n\n"
 
         self.stdout.write(snippet_string)
