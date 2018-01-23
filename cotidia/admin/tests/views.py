@@ -21,7 +21,10 @@ class TestAdminPageView(View):
                 "app_label": content_type.app_label,
                 "model_name": content_type.model,
                 "url_type": "list",
-                "content_type_id": content_type.id
+                "content_type_id": content_type.id,
+                "default_columns": [],
+                "default_filters": [],
+                "default_order": [],
                 }
         return render(self.request, "admin/generic/utils/test.html", context)
 

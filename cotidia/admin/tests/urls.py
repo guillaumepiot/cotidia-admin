@@ -1,4 +1,4 @@
-from django.conf.urls import include, url
+from django.urls import re_path, path, include
 
 from cotidia.admin.tests.views import (
         AdminTestOrderableAPIView,
@@ -7,24 +7,24 @@ from cotidia.admin.tests.views import (
         stub_view
         )
 
-generic_admin_urls = [
-            url(r'home/$', TestAdminPageView.as_view(), name="test_view"),
-            url(r'stub/(?P<id>[\d]+)$', stub_view, name="genericrecord-list")
-        ]
+generic_admin_urls = ([
+            re_path(r'home/$', TestAdminPageView.as_view(), name="test_view"),
+        ], 'cotidia.admin.tests')
+app_name = "cotidia.admin.tests"
 
 urlpatterns = [
-    url(
-        r'^order/(?P<content_type_id>[\d]+)/(?P<object_id>[\d]+)$',
-        AdminTestOrderableAPIView.as_view(),
-        name='order'
-    ),
-    url(
-        r'^api/admin/',
+    path(
+        r'admin/generic/',
+        include('cotidia.admin.urls.admin', namespace="generic-admin"),
+        ),
+    re_path(
+        r'stub/(?P<id>[\d]+)$',
+        stub_view,
+        name="generic-admin:genericrecord-list"
+        ),
+    path(
+        r'api/admin/',
         include("cotidia.admin.urls.api", namespace="generic-api")
         ),
-    url(r'^test/',
-        include(generic_admin_urls, namespace="generic-admin"),
-        )
 
 ]
-

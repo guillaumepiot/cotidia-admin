@@ -1,4 +1,5 @@
 {% extends "admin/page.html" %}{% load admin_search_dashboard_tags i18n admin_toolbar_tags admin_list_tags %}
+{% load staticfiles %}
 {% block title %}
     {{verbose_name}}
 {% endblock title %}
@@ -24,5 +25,17 @@
 {% endblock page_content %}
 
 {% block footer_scripts %}
-{% render_search_dashboard_config app_label model_name url_type request.user.token.key default_columns default_filters default_order %}
+{% if DEBUG %}
+    <script src="http://localhost:3000/search-dashboard.js"></script>
+{% else %}
+    <script src="{% static "js/search-dashboard.js" %}"></script>
+{% endif %}
+
+<script>
+    data = {% render_search_dashboard_config app_label model_name url_type request.user.token.key default_columns default_filters default_order %};
+    if (ReactDOM) {
+        ReactDOM.render(React.createElement(window.SearchDashboard, data), document.getElementById('search-dashboard'))
+    }
+</script>
+
 {% endblock footer_scripts %}
