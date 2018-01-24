@@ -29,7 +29,8 @@ urlpatterns = [
         r'^api/generic/',
         include('cotidia.admin.urls.api', namespace="generic-api")
     ),
-```]
+]
+```
 
 Add context processor:
 
