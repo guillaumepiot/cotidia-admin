@@ -17,3 +17,9 @@ class AdminModelSerializer(serializers.ModelSerializer):
                     "%s does not have the display_field defined in the SearchProvider sub class" % str(self.__class__.__name__)
                 )
         return repr
+
+
+class SortSerializer(serializers.Serializer):
+    data = serializers.ListField(
+        child=serializers.UUIDField()
+    )

@@ -6,7 +6,7 @@ from functools import reduce
 
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
 from rest_framework.pagination import LimitOffsetPagination
@@ -16,20 +16,21 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 
 from cotidia.admin.utils import (
-        get_fields_from_model,
-        get_model_serializer_class
-        )
+    get_fields_from_model,
+    get_model_serializer_class
+)
+from cotidia.admin.serializers import SortSerializer
 
 
 PAGE_SIZE = 250
 number_pattern = r"(\-?[0-9]+(?:\.[0-9]+)?)"
 date_pattern = r"(\d{4}-[01]\d-[0-3]\d)"
 api_patterns = {
-        "equal": r"^%s$",
-        "lte": r"^:%s$",
-        "gte": r"^%s:$",
-        "range": r"^%s:%s$"
-        }
+    "equal": r"^%s$",
+    "lte": r"^:%s$",
+    "gte": r"^%s:$",
+    "range": r"^%s:%s$"
+}
 
 
 def filter_lte(field, val):
@@ -49,7 +50,7 @@ def filter_range(field, min_val, max_val):
 
 
 def filter_comparable(field_regex, data_type):
-    """ Creates a function that filters a value that matches the parameter regex """
+    """Create a function that filters a value that matches the parameter regex."""
     def temp(field, val):
         match = re.match(api_patterns['equal'] % field_regex, val)
         if match:
@@ -64,25 +65,25 @@ def filter_comparable(field_regex, data_type):
         if match:
             return filter_range(field, data_type(match.group(1)), data_type(match.group(2)))
         raise ParseError(
-                detail="The following value could not be parsed: %s" % val)
+            detail="The following value could not be parsed: %s" % val)
     return temp
 
 
 filter_number = filter_comparable(number_pattern, Decimal)
 filter_date = filter_comparable(
-        date_pattern,
-        lambda x: datetime.strptime(x, "%Y-%m-%d")
+    date_pattern,
+    lambda x: datetime.strptime(x, "%Y-%m-%d")
 )
 
 
 def contains_filter(query_set, field, values):
-    """ Checks if a field contains a value """
+    """Check if a field contains a value."""
     return field_filter(
-            lambda x, y: Q(**{x + "__icontains": y}), query_set, field, values)
+        lambda x, y: Q(**{x + "__icontains": y}), query_set, field, values)
 
 
 def exact_match_filter(query_set, field, values):
-    """ Checks if a field exactly matches a value """
+    """Check if a field exactly matches a value."""
     return field_filter(lambda x, y: Q(**{x: y}), query_set, field, values)
 
 
@@ -96,14 +97,14 @@ def boolean_filter(queryset, field, values):
 
 
 def number_filter(query_set, field, values):
-    """ Checks if a number fits a constraints """
+    """Check if a number fits a constraints."""
     return field_filter(filter_number, query_set, field, values)
 
 
 def field_filter(filter_fn, query_set, field, values):
-    """ Filters the fields with a given function 
+    """Filter the fields with a given function
         The function must return a Q-object
-        Each value is "OR"ed against eachother """ 
+        Each value is "OR"ed against eachother."""
     q_object = filter_fn(field, values.pop())
     for value in values:
         q_object |= filter_fn(field, value)
@@ -121,9 +122,9 @@ def filter_general_query(serializer, values, queryset, query_fields, suffix="__i
         # Turns all values in the field_set columns into Q objects and ORs them
         # together with the queryset for previous values
         q_object = reduce(
-                lambda x, y: x | y,
-                map(lambda x: Q(**{x + suffix: val}), query_fields),
-                q_object
+            lambda x, y: x | y,
+            map(lambda x: Q(**{x + suffix: val}), query_fields),
+            q_object
         )
 
     return queryset.filter(q_object)
@@ -137,12 +138,12 @@ def parse_ordering(order_val):
 
 
 FILTERS = {
-        "text": contains_filter,
-        "choice": exact_match_filter,
-        "boolean": boolean_filter,
-        "number": number_filter,
-        "date": date_filter
-        }
+    "text": contains_filter,
+    "choice": exact_match_filter,
+    "boolean": boolean_filter,
+    "number": number_filter,
+    "date": date_filter
+}
 
 
 def get_sub_serializer(serializer,field):
@@ -151,11 +152,12 @@ def get_sub_serializer(serializer,field):
     for f in fields:
         sub_serializer = sub_serializer.fields[f].child
 
-    return sub_serializer 
-
+    return sub_serializer
 
 
 class AdminOrderableAPIView(APIView):
+    permission_classes = (permissions.IsAdminUser,)
+
     def post(self, *args, **kwargs):
         content_type_id = kwargs.get("content_type_id")
         object_id = kwargs.get("object_id")
@@ -176,6 +178,7 @@ class GenericAdminPaginationStyle(LimitOffsetPagination):
 
 
 class AdminSearchDashboardAPIView(ListAPIView):
+    permission_classes = (permissions.IsAdminUser,)
     pagination_class = GenericAdminPaginationStyle
 
     def get_queryset(self):
@@ -201,7 +204,7 @@ class AdminSearchDashboardAPIView(ListAPIView):
             # If there is a filter to apply
             if filter_params:
                 # Get the relevant filter and apply it
-                suffix=""
+                suffix = ""
                 try:
                     if field_data[field]['many']:
                         sub_serializer = get_sub_serializer(serializer, field)
@@ -210,29 +213,29 @@ class AdminSearchDashboardAPIView(ListAPIView):
                     pass
                 filter_type = field_data[field]['filter']
                 query_set = FILTERS[filter_type](
-                        query_set,
-                        field + suffix,
-                        filter_params
-                        )
+                    query_set,
+                    field + suffix,
+                    filter_params
+                )
 
         ordering_params = self.request.GET.getlist("_order")
         # Checks the first ordering param exists
         annotation = None
         if(ordering_params):
-            #Cleans the "-" to just have the field name
-            clean_field_name = ordering_params[0].replace("-", "") 
+            # Cleans the "-" to just have the field name
+            clean_field_name = ordering_params[0].replace("-", "")
             condition_blank = Q(**{clean_field_name + "__exact": ""})
             # If the the field is blank, then the val_is_empty will be true
             annotation = {"val_is_empty": Count(Case(
                 When(condition_blank, then=1), output_field=CharField(),
-                ))}
+            ))}
         ordering_params = list(map(parse_ordering, ordering_params))
         try:
             if annotation is not None:
                 query_set = query_set.annotate(**annotation)
                 ordering_params = ["val_is_empty"] + ordering_params
         except (ValueError, ValidationError) as e:
-            #Neccessary for non string fields, nothing more needs to happen as they have sensible defaults
+            # Neccessary for non string fields, nothing more needs to happen as they have sensible defaults
             pass
         return query_set.order_by(*list(ordering_params))
 
@@ -242,7 +245,37 @@ class AdminSearchDashboardAPIView(ListAPIView):
     @property
     def model_class(self):
         return ContentType.objects\
-                .get(
-                        app_label=self.kwargs['app_label'],
-                        model=self.kwargs['model']
-                ).model_class()
+            .get(
+                app_label=self.kwargs['app_label'],
+                model=self.kwargs['model']
+            ).model_class()
+
+
+class SortAPIView(APIView):
+    permission_classes = (permissions.IsAdminUser,)
+
+    def post(self, request, *args, **kwargs):
+        serializer = SortSerializer(data=request.data)
+        content_type = ContentType.objects.get(id=kwargs['content_type_id'])
+        model_class = content_type.model_class()
+
+        if serializer.is_valid():
+
+            uuids = serializer.data["data"]
+
+            # 1 required as order_ids must be > 0
+            for i, uuid in enumerate(uuids, 1):
+                try:
+                    obj = model_class.objects.get(uuid=uuid)
+                except model_class.DoesNotExist:
+                    raise NotFound(
+                        detail="Could not find a file matching the following uuid %s" % uuid
+                    )
+                except ValidationError:
+                    raise ParseError(detail="Invalid UUID", code=400)
+                obj.order_id = i
+                obj.save()
+
+            return Response(status=200)
+
+        return Response(status=400, data=serializer.errors)

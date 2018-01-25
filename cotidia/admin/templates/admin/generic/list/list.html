@@ -29,7 +29,7 @@
     </thead>
     <tbody>
     {% for object in object_list %}
-    <tr onclick="window.location = '{% get_admin_url app_label model_name row_click_action object %}'">
+    <tr onclick="window.location = '{% get_admin_url app_label model_name row_click_action object %}'" data-id="{{object.uuid}}">
         {% if actions %}
             <td onclick="event.stopPropagation()" class="action-column">
                 <input type="checkbox" name="action_items" value="{{object.id}}">
