@@ -14,7 +14,7 @@ export default class ResultsTableHeader extends Component {
     orderAscending: PropTypes.bool.isRequired,
     orderColumn: PropTypes.string,
     setOrderColumn: PropTypes.func.isRequired,
-    toggleSelectAll: PropTypes.func,
+    toggleSelectAllResults: PropTypes.func,
     toggleOrderDirection: PropTypes.func.isRequired,
   }
 
@@ -46,10 +46,10 @@ export default class ResultsTableHeader extends Component {
     }
   }
 
-  toggleSelectAll = (e) => {
+  toggleSelectAllResults = (e) => {
     e.stopPropagation()
 
-    this.props.toggleSelectAll()
+    this.props.toggleSelectAllResults()
   }
 
   render () {
@@ -66,7 +66,7 @@ export default class ResultsTableHeader extends Component {
       <thead>
         <tr>
           {(batchActions.length > 0) && (
-            <th className='table__header table-header' onClick={this.toggleSelectAll}>
+            <th className='table__header table-header' onClick={this.toggleSelectAllResults}>
               <input type='checkbox' checked={allSelected} />
             </th>
           )}

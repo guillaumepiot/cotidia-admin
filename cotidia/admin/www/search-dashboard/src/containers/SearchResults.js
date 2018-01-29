@@ -6,6 +6,8 @@ import {
   setSearchTerm,
   setOrderColumn,
   toggleOrderDirection,
+  toggleResultSelected,
+  toggleSelectAllResults,
 } from '../redux/modules/search/actions'
 
 import { getVisibleColumnConfig, getActiveFilters } from '../redux/modules/search/selectors'
@@ -22,6 +24,7 @@ const mapStateToProps = (state) => ({
   orderAscending: state.search.orderAscending,
   orderColumn: state.search.orderColumn,
   results: state.search.results,
+  selected: state.search.selected,
 })
 
 const actionCreators = {
@@ -30,6 +33,8 @@ const actionCreators = {
   setSearchTerm,
   setOrderColumn,
   toggleOrderDirection,
+  toggleResultSelected,
+  toggleSelectAllResults,
 }
 
 export default connect(mapStateToProps, actionCreators)(SearchResults)

@@ -57,16 +57,16 @@ export default class SearchResults extends Component {
     orderAscending: PropTypes.bool.isRequired,
     orderColumn: PropTypes.string,
     results: PropTypes.arrayOf(PropTypes.object),
+    selected: PropTypes.arrayOf(PropTypes.object),
     setOrderColumn: PropTypes.func.isRequired,
     toggleOrderDirection: PropTypes.func.isRequired,
+    toggleResultSelected: PropTypes.func.isRequired,
+    toggleSelectAllResults: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
     batchActions: [],
     loading: false,
-  }
-
-  state = {
     selected: [],
   }
 
@@ -78,28 +78,11 @@ export default class SearchResults extends Component {
 
   checkItemFactory = (item) => (e) => {
     e.stopPropagation()
-
-    const { uuid } = item
-
-    this.setState(({ selected }) => ({
-      selected: selected.includes(uuid)
-        ? selected.filter((selectedItem) => selectedItem !== uuid)
-        : [ ...selected, uuid ],
-    }))
+    this.props.toggleResultSelected(item.uuid)
   }
 
   allSelected () {
-    return this.props.results.length && (this.state.selected.length === this.props.results.length)
-  }
-
-  toggleSelectAll = () => {
-    if (this.allSelected()) {
-      this.setState({ selected: [] })
-    } else {
-      this.setState({
-        selected: this.props.results.map((item) => item.uuid),
-      })
-    }
+    return this.props.results.length && (this.props.selected.length === this.props.results.length)
   }
 
   render () {
@@ -114,11 +97,10 @@ export default class SearchResults extends Component {
       orderColumn,
       orderAscending,
       results,
+      selected,
       setOrderColumn,
       toggleOrderDirection,
     } = this.props
-
-    const { selected } = this.state
 
     return (
       <>
@@ -133,7 +115,7 @@ export default class SearchResults extends Component {
             clearFilter={clearFilter}
             filterColumn={filterColumn}
             setOrderColumn={setOrderColumn}
-            toggleSelectAll={this.toggleSelectAll}
+            toggleSelectAllResults={this.props.toggleSelectAllResults}
             toggleOrderDirection={toggleOrderDirection}
           />
           <tbody>

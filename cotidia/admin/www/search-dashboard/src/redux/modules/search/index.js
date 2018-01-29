@@ -23,6 +23,8 @@ const initialState = {
     next: null,
     previous: null,
   },
+
+  selected: [],
 }
 
 export default (state = initialState, { type, payload } = {}) => {
@@ -96,6 +98,7 @@ export default (state = initialState, { type, payload } = {}) => {
 
           return agg
         }, []),
+        selected: [],
         pagination: {
           count: payload.count,
           next: payload.next,
@@ -153,6 +156,22 @@ export default (state = initialState, { type, payload } = {}) => {
         filters: {},
         orderColumn: null,
         orderAscending: true,
+      }
+
+    case types.TOGGLE_RESULT_SELECTED:
+      return {
+        ...state,
+        selected: state.selected.includes(payload.item)
+          ? state.selected.filter((selectedItem) => selectedItem !== payload.item)
+          : [ ...state.selected, payload.item ],
+      }
+
+    case types.TOGGLE_SELECT_ALL_RESULTS:
+      return {
+        ...state,
+        selected: state.selected.length === state.results.length
+          ? []
+          : state.results.map((item) => item.uuid),
       }
 
     default:

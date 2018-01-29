@@ -25,3 +25,6 @@ export const GET_RESULTS_PAGE = 'search-dashboard/search/GET_RESULTS_PAGE'
 
 export const SEARCH_START = 'search-dashboard/search/SEARCH_START'
 export const SEARCH_END = 'search-dashboard/search/SEARCH_END'
+
+export const TOGGLE_RESULT_SELECTED = 'search-dashboard/search/TOGGLE_RESULT_SELECTED'
+export const TOGGLE_SELECT_ALL_RESULTS = 'search-dashboard/search/TOGGLE_SELECT_ALL_RESULTS'

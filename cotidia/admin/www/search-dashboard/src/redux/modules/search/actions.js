@@ -55,3 +55,12 @@ export const getNextPage = () => ({
   type: types.GET_RESULTS_PAGE,
   payload: { page: 'next' },
 })
+
+export const toggleResultSelected = (item) => ({
+  type: types.TOGGLE_RESULT_SELECTED,
+  payload: { item },
+})
+
+export const toggleSelectAllResults = () => ({
+  type: types.TOGGLE_SELECT_ALL_RESULTS,
+})
