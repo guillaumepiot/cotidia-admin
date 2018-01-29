@@ -71,63 +71,264 @@
 
         <script src="search-dashboard.js"></script>
         <script>
+            var onComplete = function () {
+                window.postMessage({
+                    target: 'SearchDashboard',
+                    endpoint: 'http://localhost:8000/api/generic/list/lender/product',
+                    action: 'refresh',
+                })
+            }
+
             var appConfig = {
-                authToken: 'abcdef',
-                endpoint: '/api/search?content_type_id=38',
-                detailURL: '/admin/person/view/:id',
-                defaultColumns: ['name', 'email', 'type'],
-                defaultOrderBy: '-email',
-                defaultFilters: {
-                    type: ['vegan', 'fruitarian']
-                },
-                overrideStoredConfig: true,
+                authToken: '8061585f768c98b4cc430de75115102101863ce7',
+                endpoint: 'http://localhost:8000/api/generic/list/lender/product',
+                detailURL: 'http://localhost:8000/admin/lender/product/:id',
+                defaultColumns: [
+                    'lender__company', 'loan_type', 'asset_type', 'security_type__name', 'max_ltv',
+                    'max_ltc', 'min_loan', 'max_loan', 'min_term', 'min_term_type', 'max_term',
+                    'max_term_type', 'arrangement_fee', 'procuration_fee', 'rate_type', 'min_rate',
+                    'min_rate_tracking_type', 'max_rate', 'max_rate_tracking_type', 'exit_value',
+                    'exit_type', 'profile__user__first_name', 'profile__user__last_name',
+                    'profile__user__email', 'profile__mobile_number', 'profile__phone_number',
+                ],
+                batchActions: [
+                    {
+                        action: 'add_products',
+                        label: 'Add products',
+                        endpoint: 'http://localhost:8000/api/admin/invest/1/add_products',
+                        onComplete: onComplete,
+                    },
+                ],
                 columns: {
-                    name: {
-                        label: 'Name',
+                    id: {
+                        display: 'verbatim',
+                        filter: 'number',
+                        label: 'Id',
+                    },
+                    lender__company: {
                         display: 'verbatim',
                         filter: 'text',
+                        label: 'Company',
                     },
-                    email: {
+                    security_type__name: {
+                        display: 'verbatim',
+                        filter: 'text',
+                        label: 'Security Type',
+                    },
+                    loan_type: {
+                        display: 'verbatim',
+                        filter: 'text',
+                        label: 'Loan Type',
+                        naming_field: 'name',
+                        many: 'True',
+                    },
+                    asset_type: {
+                        display: 'verbatim',
+                        filter: 'text',
+                        label: 'Asset Type',
+                        naming_field: 'name',
+                        many: 'True',
+                    },
+                    profile__user__first_name: {
+                        display: 'verbatim',
+                        filter: 'text',
+                        label: 'First Name',
+                    },
+                    profile__user__last_name: {
+                        display: 'verbatim',
+                        filter: 'text',
+                        label: 'Last Name',
+                    },
+                    profile__user__email: {
+                        display: 'verbatim',
+                        filter: 'text',
                         label: 'Email',
+                    },
+                    profile__mobile_number: {
                         display: 'verbatim',
                         filter: 'text',
+                        label: 'Mobile Number',
                     },
-                    date: {
-                        label: 'When?',
+                    profile__phone_number: {
+                        display: 'verbatim',
+                        filter: 'text',
+                        label: 'Phone Number',
+                    },
+                    uuid: {
+                        display: 'verbatim',
+                        filter: 'text',
+                        label: 'Uuid',
+                    },
+                    created_at: {
                         display: 'datetime',
                         filter: 'date',
+                        label: 'Created At',
                     },
-                    type: {
-                        label: 'Type',
+                    modified_at: {
+                        display: 'datetime',
+                        filter: 'date',
+                        label: 'Modified At',
+                    },
+                    max_ltc: {
+                        display: 'verbatim',
+                        filter: 'text',
+                        label: 'Max LTC',
+                    },
+                    max_ltv: {
+                        display: 'verbatim',
+                        filter: 'text',
+                        label: 'Max LTV',
+                    },
+                    min_loan: {
+                        display: 'verbatim',
+                        filter: 'number',
+                        label: 'Min Loan',
+                    },
+                    max_loan: {
+                        display: 'verbatim',
+                        filter: 'number',
+                        label: 'Max Loan',
+                    },
+                    arrangement_fee: {
+                        display: 'verbatim',
+                        filter: 'number',
+                        label: 'Arrangement Fee',
+                    },
+                    procuration_fee: {
+                        display: 'verbatim',
+                        filter: 'number',
+                        label: 'Procuration Fee',
+                    },
+                    rate_type: {
                         display: 'verbatim',
                         filter: 'choice',
+                        label: 'Rate Type',
                         options: [
                             {
-                                value: 'carnivore',
-                                label: 'Meat eater',
+                                value: 'FIXED',
+                                label: 'Fixed rate',
                             },
                             {
-                                value: 'pescetarian',
-                                label: 'Fish eater',
+                                value: 'TRACKING',
+                                label: 'Tracking rate',
                             },
-                            {
-                                value: 'vegetarian',
-                                label: 'Vegetarian',
-                            },
-                            {
-                                value: 'vegan',
-                                label: 'Vegan',
-                            },
-                            {
-                                value: 'fruitarian',
-                                label: 'Fruitarian',
-                            },
-                        ]
+                        ],
                     },
-                    active: {
-                        label: 'Active?',
-                        display: 'boolean',
-                        filter: 'boolean',
+                    min_rate: {
+                        display: 'verbatim',
+                        filter: 'number',
+                        label: 'Min Rate',
+                    },
+                    min_rate_tracking_type: {
+                        display: 'verbatim',
+                        filter: 'choice',
+                        label: 'Min Rate Tracking Type',
+                        options: [
+                            {
+                                value: 'BASE',
+                                label: 'Base rate',
+                            },
+                            {
+                                value: '1M-LIBOR',
+                                label: '1 month Libor',
+                            },
+                            {
+                                value: '3M-LIBOR',
+                                label: '3 month Libor',
+                            },
+                        ],
+                    },
+                    max_rate: {
+                        display: 'verbatim',
+                        filter: 'number',
+                        label: 'Max Rate',
+                    },
+                    max_rate_tracking_type: {
+                        display: 'verbatim',
+                        filter: 'choice',
+                        label: 'Max Rate Tracking Type',
+                        options: [
+                            {
+                                value: 'BASE',
+                                label: 'Base rate',
+                            },
+                            {
+                                value: '1M-LIBOR',
+                                label: '1 month Libor',
+                            },
+                            {
+                                value: '3M-LIBOR',
+                                label: '3 month Libor',
+                            },
+                        ],
+                    },
+                    exit_value: {
+                        display: 'verbatim',
+                        filter: 'number',
+                        label: 'Exit Value',
+                    },
+                    exit_type: {
+                        display: 'verbatim',
+                        filter: 'choice',
+                        label: 'Exit Type',
+                        options: [
+                            {
+                                value: 'GDV',
+                                label: 'GDV',
+                            },
+                            {
+                                value: 'LOAN',
+                                label: 'Loan',
+                            },
+                        ],
+                    },
+                    min_term: {
+                        display: 'verbatim',
+                        filter: 'number',
+                        label: 'Min Term',
+                    },
+                    min_term_type: {
+                        display: 'verbatim',
+                        filter: 'choice',
+                        label: 'Min Term Type',
+                        options: [
+                            {
+                                value: 'D',
+                                label: 'Day',
+                            },
+                            {
+                                value: 'M',
+                                label: 'Month',
+                            },
+                            {
+                                value: 'Y',
+                                label: 'Year',
+                            },
+                        ],
+                    },
+                    max_term: {
+                        display: 'verbatim',
+                        filter: 'number',
+                        label: 'Max Term',
+                    },
+                    max_term_type: {
+                        display: 'verbatim',
+                        filter: 'choice',
+                        label: 'Max Term Type',
+                        options: [
+                            {
+                                value: 'D',
+                                label: 'Day',
+                            },
+                            {
+                                value: 'M',
+                                label: 'Month',
+                            },
+                            {
+                                value: 'Y',
+                                label: 'Year',
+                            },
+                        ],
                     },
                 },
             }
