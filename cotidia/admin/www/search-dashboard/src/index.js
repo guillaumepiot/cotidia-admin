@@ -36,27 +36,27 @@ export default function App (props) {
 
 App.propTypes = {
   authToken: PropTypes.string.isRequired,
-  endpoint: PropTypes.string.isRequired,
-  detailURL: PropTypes.string,
-  defaultColumns: PropTypes.arrayOf(PropTypes.string),
-  defaultOrderBy: PropTypes.string,
-  defaultFilters: PropTypes.object,
-  overrideStoredConfig: PropTypes.bool,
   columns: PropTypes.objectOf(PropTypes.shape({
-    label: PropTypes.string.isRequired,
     display: PropTypes.oneOf(['verbatim', 'date', 'datetime', 'boolean']),
     filter: PropTypes.oneOf(['text', 'choice', 'boolean', 'number', 'date']),
+    label: PropTypes.string.isRequired,
     options: PropTypes.arrayOf(PropTypes.shape({
-      value: PropTypes.any.isRequired,
       label: PropTypes.string.isRequired,
+      value: PropTypes.any.isRequired,
     })),
   })).isRequired,
+  defaultColumns: PropTypes.arrayOf(PropTypes.string),
+  defaultFilters: PropTypes.object,
+  defaultOrderBy: PropTypes.string,
+  detailURL: PropTypes.string,
+  endpoint: PropTypes.string.isRequired,
+  overrideStoredConfig: PropTypes.bool,
 }
 
 App.defaultProps = {
   defaultColumns: [],
-  defaultOrderBy: null,
   defaultFilters: {},
+  defaultOrderBy: null,
   detailURL: null,
   overrideStoredConfig: false,
 }
