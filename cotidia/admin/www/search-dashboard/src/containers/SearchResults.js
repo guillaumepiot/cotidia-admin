@@ -13,6 +13,7 @@ import { getVisibleColumnConfig, getActiveFilters } from '../redux/modules/searc
 import SearchResults from '../components/SearchResults'
 
 const mapStateToProps = (state) => ({
+  batchActions: state.search.batchActions,
   columns: getVisibleColumnConfig(state.search),
   detailURL: state.search.detailURL,
   displayedColumns: state.search.displayedColumns,

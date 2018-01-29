@@ -36,6 +36,12 @@ export default function App (props) {
 
 App.propTypes = {
   authToken: PropTypes.string.isRequired,
+  batchActions: PropTypes.arrayOf(PropTypes.shape({
+    action: PropTypes.string.isRequired,
+    endpoint: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    onComplete: PropTypes.func,
+  })),
   columns: PropTypes.objectOf(PropTypes.shape({
     display: PropTypes.oneOf(['verbatim', 'date', 'datetime', 'boolean']),
     filter: PropTypes.oneOf(['text', 'choice', 'boolean', 'number', 'date']),
@@ -54,6 +60,7 @@ App.propTypes = {
 }
 
 App.defaultProps = {
+  batchActions: [],
   defaultColumns: [],
   defaultFilters: {},
   defaultOrderBy: null,

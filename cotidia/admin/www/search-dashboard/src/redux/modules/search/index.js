@@ -4,6 +4,7 @@ const initialState = {
   endpoint: null,
   detailURL: null,
   columns: {},
+  batchActions: [],
 
   visibleColumns: [],
 
@@ -36,6 +37,12 @@ export default (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         detailURL: payload,
+      }
+
+    case types.SET_BATCH_ACTIONS:
+      return {
+        ...state,
+        batchActions: payload,
       }
 
     case types.SET_COLUMN_CONFIG:

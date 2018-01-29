@@ -1,6 +1,7 @@
 // Bootstrap types
 export const SET_ENDPOINT = 'search-dashboard/search/SET_ENDPOINT'
 export const SET_DETAIL_URL = 'search-dashboard/search/SET_DETAIL_URL'
+export const SET_BATCH_ACTIONS = 'search-dashboard/search/SET_BATCH_ACTIONS'
 export const SET_COLUMN_CONFIG = 'search-dashboard/search/SET_COLUMN_CONFIG'
 
 // Actual usage
