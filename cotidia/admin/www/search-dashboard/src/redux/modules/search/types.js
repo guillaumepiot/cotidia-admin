@@ -28,3 +28,5 @@ export const SEARCH_END = 'search-dashboard/search/SEARCH_END'
 
 export const TOGGLE_RESULT_SELECTED = 'search-dashboard/search/TOGGLE_RESULT_SELECTED'
 export const TOGGLE_SELECT_ALL_RESULTS = 'search-dashboard/search/TOGGLE_SELECT_ALL_RESULTS'
+
+export const PERFORM_BATCH_ACTION = 'search-dashboard/search/PERFORM_BATCH_ACTION'

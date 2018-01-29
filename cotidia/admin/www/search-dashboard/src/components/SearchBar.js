@@ -5,10 +5,21 @@ import { TextInput } from '@cotidia/react-ui'
 
 export default class SearchBar extends Component {
   static propTypes = {
+    batchActions: PropTypes.arrayOf(PropTypes.shape({
+      action: PropTypes.string.isRequired,
+      endpoint: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      onComplete: PropTypes.func,
+    })),
     clearFilters: PropTypes.func.isRequired,
     manageColumns: PropTypes.func.isRequired,
+    performBatchAction: PropTypes.func.isRequired,
     searchTerm: PropTypes.string,
     setSearchTerm: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    batchActions: [],
   }
 
   state = {
@@ -43,6 +54,10 @@ export default class SearchBar extends Component {
     this.props.manageColumns()
   }
 
+  performBatchActionFactory = (action) => () => {
+    this.props.performBatchAction(action)
+  }
+
   render () {
     return (
       <form className='head-bar head-bar--filter' onSubmit={this.setSearchTerm}>
@@ -64,6 +79,18 @@ export default class SearchBar extends Component {
         <button className='btn btn--transparent' onClick={this.manageColumns} title='Manage column' type='button'>
           <span className='fa fa-columns' />
         </button>
+
+        {this.props.batchActions.map((action) => (
+          <button
+            className='btn btn--transparent'
+            key={action.action}
+            onClick={this.performBatchActionFactory(action.action)}
+            title={action.label}
+            type='button'
+          >
+            {action.label}
+          </button>
+        ))}
       </form>
     )
   }

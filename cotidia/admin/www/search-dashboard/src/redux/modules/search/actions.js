@@ -64,3 +64,8 @@ export const toggleResultSelected = (item) => ({
 export const toggleSelectAllResults = () => ({
   type: types.TOGGLE_SELECT_ALL_RESULTS,
 })
+
+export const performBatchAction = (action) => ({
+  type: types.PERFORM_BATCH_ACTION,
+  payload: { action },
+})

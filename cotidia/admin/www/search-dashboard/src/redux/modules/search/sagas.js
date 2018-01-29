@@ -108,6 +108,12 @@ function * saveColumnConfig () {
   }))
 }
 
+function * performBatchAction ({ payload: { action } }) {
+  const { search: { batchActions, selected } } = yield select()
+
+  console.log(batchActions.find((batchAction) => batchAction.action === action).label, 'on', selected)
+}
+
 export default function * watcher () {
   yield takeEvery(types.FILTER_COLUMN, filterColumn)
   yield takeEvery(types.MANAGE_COLUMNS, manageColumns)
@@ -123,4 +129,6 @@ export default function * watcher () {
   yield takeEvery(types.TOGGLE_COLUMN, saveColumnConfig)
 
   yield takeEvery(types.GET_RESULTS_PAGE, getResultsPage)
+
+  yield takeEvery(types.PERFORM_BATCH_ACTION, performBatchAction)
 }
