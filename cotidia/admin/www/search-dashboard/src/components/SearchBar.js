@@ -46,18 +46,14 @@ export default class SearchBar extends Component {
   render () {
     return (
       <form className='head-bar head-bar--filter' onSubmit={this.setSearchTerm}>
-        <div className='form__group'>
-          <label className='form__label'>Search</label>
-          <div className='form__control'>
-            <TextInput
-              name='searchTerm'
-              type='text'
-              updateValue={this.updateSearchTerm}
-              updateValueOnBlur={false}
-              value={this.state.searchTerm}
-            />
-          </div>
-        </div>
+        <TextInput
+          label='Search'
+          name='searchTerm'
+          type='text'
+          updateValue={this.updateSearchTerm}
+          updateValueOnBlur={false}
+          value={this.state.searchTerm}
+        />
 
         <button className='btn btn--primary btn--transparent' onClick={this.setSearchTerm} type='button'>Filter</button>
 
