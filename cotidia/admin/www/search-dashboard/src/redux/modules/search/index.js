@@ -91,6 +91,10 @@ export default (state = initialState, { type, payload } = {}) => {
     case types.STORE_RESULTS:
       return {
         ...state,
+        // Normally this would be `results: payload.results`, but we need to filter out duplicates
+        // that Django may be senidng us because it's not working correctly. So that's what this
+        // reduce does here - it's building up a new result set by going through each element of the
+        // payload's, and ignoring duplicate UUIDs.
         results: payload.results.reduce((agg, item) => {
           if (! agg.find((innerItem) => item.uuid === innerItem.uuid)) {
             agg.push(item)
