@@ -4,9 +4,8 @@ import moment from 'moment'
 
 import { generateURL } from '../utils/api'
 
+import ResultsTableHeader from './ResultsTableHeader'
 import Pagination from '../containers/Pagination'
-
-import { Icon } from './elements/global'
 
 const getItem = (item, accessor) => {
   const parts = accessor.split('__')
@@ -65,30 +64,6 @@ export default class SearchResults extends Component {
     loading: false,
   }
 
-  filterColumnFactory = (column) => (e) => {
-    // Because this event will be a button inside a component that it also looking for a click
-    // event, we should stop the propagation of the event so both aren't handled.
-    e.stopPropagation()
-
-    this.props.filterColumn(column)
-  }
-
-  clearFilterFactory = (column) => (e) => {
-    // Because this event will be a button inside a component that it also looking for a click
-    // event, we should stop the propagation of the event so both aren't handled.
-    e.stopPropagation()
-
-    this.props.clearFilter(column)
-  }
-
-  setOrderColumnFactory = (column) => (e) => {
-    if (this.props.orderColumn === column) {
-      this.props.toggleOrderDirection()
-    } else {
-      this.props.setOrderColumn(column)
-    }
-  }
-
   viewItemFactory = (item) => (e) => {
     if (this.props.detailURL) {
       window.location = generateURL(this.props.detailURL, item)
@@ -97,56 +72,32 @@ export default class SearchResults extends Component {
 
   render () {
     const {
+      clearFilter,
       columns,
       detailURL,
+      filterColumn,
       filters,
       loading,
       orderColumn,
       orderAscending,
       results,
+      setOrderColumn,
+      toggleOrderDirection,
     } = this.props
 
     return (
       <>
         <table className={`table ${detailURL ? 'table--clickable' : ''} table--admin-mobile-view ${loading ? 'table--loading' : ''}`}>
-          <thead>
-            <tr>
-              {columns.map((column) => (
-                <th className='table__header table-header' key={column.id} onClick={this.setOrderColumnFactory(column.id)}>
-                  <span className='table-header__name'>
-                    {column.label}
-                    {' '}
-                    {(orderColumn === column.id) ? (orderAscending ? (
-                      <Icon className='table-header__sort table-header__sort--active' icon='long-arrow-down' />
-                    ) : (
-                      <Icon className='table-header__sort table-header__sort--active' icon='long-arrow-up' />
-                    )) : (
-                      <Icon className='table-header__sort' icon='long-arrow-down' />
-                    )}
-                  </span>
-
-                  {column.filter && (
-                    <span className={`table-header__actions ${filters.includes(column.id) ? 'table-header__actions--active' : ''}`}>
-                      {filters.includes(column.id) && (
-                        <button
-                          className={`btn btn--link btn--small pull-right btn--delete`}
-                          onClick={this.clearFilterFactory(column.id)}
-                        >
-                          <Icon icon='times' />
-                        </button>
-                      )}
-                      <button
-                        className={`btn btn--link btn--small pull-right ${filters.includes(column.id) ? 'btn--primary' : 'btn--cancel'}`}
-                        onClick={this.filterColumnFactory(column.id)}
-                      >
-                        <Icon icon='filter' />
-                      </button>
-                    </span>
-                  )}
-                </th>
-              ))}
-            </tr>
-          </thead>
+          <ResultsTableHeader
+            columns={columns}
+            filters={filters}
+            orderAscending={orderAscending}
+            orderColumn={orderColumn}
+            clearFilter={clearFilter}
+            filterColumn={filterColumn}
+            setOrderColumn={setOrderColumn}
+            toggleOrderDirection={toggleOrderDirection}
+          />
           <tbody>
             {results.map((item) => (
               <tr key={item.uuid} onClick={this.viewItemFactory(item)}>
