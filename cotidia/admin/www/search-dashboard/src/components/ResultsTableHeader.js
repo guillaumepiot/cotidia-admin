@@ -5,6 +5,8 @@ import { Icon } from './elements/global'
 
 export default class ResultsTableHeader extends Component {
   static propTypes = {
+    allSelected: PropTypes.bool.isRequired,
+    batchActions: PropTypes.arrayOf(PropTypes.object),
     clearFilter: PropTypes.func.isRequired,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
     filterColumn: PropTypes.func.isRequired,
@@ -12,7 +14,12 @@ export default class ResultsTableHeader extends Component {
     orderAscending: PropTypes.bool.isRequired,
     orderColumn: PropTypes.string,
     setOrderColumn: PropTypes.func.isRequired,
+    toggleSelectAll: PropTypes.func,
     toggleOrderDirection: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    batchActions: [],
   }
 
   filterColumnFactory = (column) => (e) => {
@@ -39,12 +46,30 @@ export default class ResultsTableHeader extends Component {
     }
   }
 
+  toggleSelectAll = (e) => {
+    e.stopPropagation()
+
+    this.props.toggleSelectAll()
+  }
+
   render () {
-    const { columns, filters, orderAscending, orderColumn } = this.props
+    const {
+      allSelected,
+      batchActions,
+      columns,
+      filters,
+      orderAscending,
+      orderColumn,
+    } = this.props
 
     return (
       <thead>
         <tr>
+          {(batchActions.length > 0) && (
+            <th className='table__header table-header' onClick={this.toggleSelectAll}>
+              <input type='checkbox' checked={allSelected} />
+            </th>
+          )}
           {columns.map((column) => (
             <th className='table__header table-header' key={column.id} onClick={this.setOrderColumnFactory(column.id)}>
               <span className='table-header__name'>

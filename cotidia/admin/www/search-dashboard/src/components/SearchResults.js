@@ -47,6 +47,7 @@ const getFormattedValue = (item, accessor, format) => {
 
 export default class SearchResults extends Component {
   static propTypes = {
+    batchActions: PropTypes.arrayOf(PropTypes.object),
     clearFilter: PropTypes.func.isRequired,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
     detailURL: PropTypes.string,
@@ -61,7 +62,12 @@ export default class SearchResults extends Component {
   }
 
   static defaultProps = {
+    batchActions: [],
     loading: false,
+  }
+
+  state = {
+    selected: [],
   }
 
   viewItemFactory = (item) => (e) => {
@@ -70,8 +76,35 @@ export default class SearchResults extends Component {
     }
   }
 
+  checkItemFactory = (item) => (e) => {
+    e.stopPropagation()
+
+    const { uuid } = item
+
+    this.setState(({ selected }) => ({
+      selected: selected.includes(uuid)
+        ? selected.filter((selectedItem) => selectedItem !== uuid)
+        : [ ...selected, uuid ],
+    }))
+  }
+
+  allSelected () {
+    return this.props.results.length && (this.state.selected.length === this.props.results.length)
+  }
+
+  toggleSelectAll = () => {
+    if (this.allSelected()) {
+      this.setState({ selected: [] })
+    } else {
+      this.setState({
+        selected: this.props.results.map((item) => item.uuid),
+      })
+    }
+  }
+
   render () {
     const {
+      batchActions,
       clearFilter,
       columns,
       detailURL,
@@ -85,10 +118,14 @@ export default class SearchResults extends Component {
       toggleOrderDirection,
     } = this.props
 
+    const { selected } = this.state
+
     return (
       <>
         <table className={`table ${detailURL ? 'table--clickable' : ''} table--admin-mobile-view ${loading ? 'table--loading' : ''}`}>
           <ResultsTableHeader
+            allSelected={this.allSelected()}
+            batchActions={batchActions}
             columns={columns}
             filters={filters}
             orderAscending={orderAscending}
@@ -96,11 +133,17 @@ export default class SearchResults extends Component {
             clearFilter={clearFilter}
             filterColumn={filterColumn}
             setOrderColumn={setOrderColumn}
+            toggleSelectAll={this.toggleSelectAll}
             toggleOrderDirection={toggleOrderDirection}
           />
           <tbody>
             {results.map((item) => (
               <tr key={item.uuid} onClick={this.viewItemFactory(item)}>
+                {(batchActions.length > 0) && (
+                  <td onClick={this.checkItemFactory(item)}>
+                    <input type='checkbox' checked={selected.includes(item.uuid)} />
+                  </td>
+                )}
                 {columns.map((column) => (
                   <td data-header={column.label} key={column.id}>
                     {getFormattedValue(item, column.accessor, column.display)}
