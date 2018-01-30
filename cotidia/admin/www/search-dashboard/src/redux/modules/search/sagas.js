@@ -124,6 +124,7 @@ function * performBatchAction ({ payload: { action } }) {
 
       if (ok) {
         batchAction.onSuccess && batchAction.onSuccess(data)
+        yield put({ type: types.PERFORM_SEARCH })
       } else {
         batchAction.onError && batchAction.onError(data || responseText)
       }
