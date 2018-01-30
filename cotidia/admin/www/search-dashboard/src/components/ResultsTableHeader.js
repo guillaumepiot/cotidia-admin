@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 import { Icon } from './elements/global'
 
-export default class ResultsTableHeader extends Component {
+export default class ResultsTableHeader extends PureComponent {
   static propTypes = {
     allSelected: PropTypes.bool.isRequired,
     batchActions: PropTypes.arrayOf(PropTypes.object),

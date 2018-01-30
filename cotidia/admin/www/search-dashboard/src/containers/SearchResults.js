@@ -16,10 +16,10 @@ import SearchResults from '../components/SearchResults'
 
 const mapStateToProps = (state) => ({
   batchActions: state.search.batchActions,
-  columns: getVisibleColumnConfig(state.search),
+  columns: getVisibleColumnConfig(state),
   detailURL: state.search.detailURL,
   displayedColumns: state.search.displayedColumns,
-  filters: getActiveFilters(state.search),
+  filters: getActiveFilters(state),
   loading: state.search.loading,
   orderAscending: state.search.orderAscending,
   orderColumn: state.search.orderColumn,

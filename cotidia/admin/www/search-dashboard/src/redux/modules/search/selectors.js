@@ -1,18 +1,22 @@
+import { createSelector } from 'reselect'
+
 const identity = _ => _
 
-export function getVisibleColumnConfig (state) {
-  const columns = state.visibleColumns.map(
+// Create a cached selector as this gets used in a lot of subcomponents
+export const getVisibleColumnConfig = createSelector(
+  (state) => state.search.visibleColumns,
+  (state) => state.search.columns,
+  (visibleColumns, columns) => visibleColumns.map(
     (column) => ({
-      ...state.columns[column],
+      ...columns[column],
       id: column,
       accessor: column,
     })
-  )
+  ).filter(identity)
+)
 
-  return columns.filter(identity)
-}
-
-export function getActiveFilters (state) {
-  // Filter out any filters that aren't (loosely) equal to null, and then map to the keys.
-  return Object.entries(state.filters).filter(([key, value]) => value != null).map(([key, value]) => key)
-}
+// Filter out any filters that aren't (loosely) equal to null, and then map to the keys.
+export const getActiveFilters = createSelector(
+  (state) => state.search.filters,
+  (filters) => Object.entries(filters).filter(([key, value]) => value != null).map(([key, value]) => key)
+)
