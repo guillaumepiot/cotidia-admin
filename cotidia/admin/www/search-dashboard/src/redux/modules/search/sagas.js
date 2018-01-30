@@ -108,6 +108,44 @@ function * saveColumnConfig () {
   }))
 }
 
+function * performBatchAction ({ payload: { action } }) {
+  const { search: { batchActions, selected } } = yield select()
+
+  const batchAction = batchActions.find((batchAction) => batchAction.action === action)
+
+  if (batchAction && selected.length) {
+    try {
+      const { ok, data, responseText } = yield call(
+        fetchAuthenticated,
+        'POST',
+        batchAction.endpoint,
+        { uuids: selected }
+      )
+
+      if (ok) {
+        batchAction.onSuccess && batchAction.onSuccess(data)
+        yield put({ type: types.PERFORM_SEARCH })
+      } else {
+        batchAction.onError && batchAction.onError(data || responseText)
+      }
+    } catch (e) {
+      batchAction.onError && batchAction.onError(e)
+    } finally {
+      batchAction.onComplete && batchAction.onComplete()
+    }
+  }
+}
+
+function * handleSearchDashboardMessage ({ payload: { message } }) {
+  const { search: { endpoint } } = yield select()
+
+  if (message.endpoint === endpoint) {
+    if (message.action === 'refresh') {
+      yield put({ type: types.PERFORM_SEARCH })
+    }
+  }
+}
+
 export default function * watcher () {
   yield takeEvery(types.FILTER_COLUMN, filterColumn)
   yield takeEvery(types.MANAGE_COLUMNS, manageColumns)
@@ -123,4 +161,8 @@ export default function * watcher () {
   yield takeEvery(types.TOGGLE_COLUMN, saveColumnConfig)
 
   yield takeEvery(types.GET_RESULTS_PAGE, getResultsPage)
+
+  yield takeEvery(types.PERFORM_BATCH_ACTION, performBatchAction)
+
+  yield takeEvery(types.HANDLE_SEARCH_DASHBOARD_MESSAGE, handleSearchDashboardMessage)
 }

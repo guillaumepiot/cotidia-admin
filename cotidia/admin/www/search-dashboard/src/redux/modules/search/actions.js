@@ -55,3 +55,22 @@ export const getNextPage = () => ({
   type: types.GET_RESULTS_PAGE,
   payload: { page: 'next' },
 })
+
+export const toggleResultSelected = (item) => ({
+  type: types.TOGGLE_RESULT_SELECTED,
+  payload: { item },
+})
+
+export const toggleSelectAllResults = () => ({
+  type: types.TOGGLE_SELECT_ALL_RESULTS,
+})
+
+export const performBatchAction = (action) => ({
+  type: types.PERFORM_BATCH_ACTION,
+  payload: { action },
+})
+
+export const handleSearchDashboardMessage = (message) => ({
+  type: types.HANDLE_SEARCH_DASHBOARD_MESSAGE,
+  payload: { message },
+})

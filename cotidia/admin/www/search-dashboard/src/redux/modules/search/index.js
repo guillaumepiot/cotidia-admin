@@ -4,6 +4,7 @@ const initialState = {
   endpoint: null,
   detailURL: null,
   columns: {},
+  batchActions: [],
 
   visibleColumns: [],
 
@@ -22,6 +23,8 @@ const initialState = {
     next: null,
     previous: null,
   },
+
+  selected: [],
 }
 
 export default (state = initialState, { type, payload } = {}) => {
@@ -36,6 +39,12 @@ export default (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         detailURL: payload,
+      }
+
+    case types.SET_BATCH_ACTIONS:
+      return {
+        ...state,
+        batchActions: payload,
       }
 
     case types.SET_COLUMN_CONFIG:
@@ -82,6 +91,10 @@ export default (state = initialState, { type, payload } = {}) => {
     case types.STORE_RESULTS:
       return {
         ...state,
+        // Normally this would be `results: payload.results`, but we need to filter out duplicates
+        // that Django may be senidng us because it's not working correctly. So that's what this
+        // reduce does here - it's building up a new result set by going through each element of the
+        // payload's, and ignoring duplicate UUIDs.
         results: payload.results.reduce((agg, item) => {
           if (! agg.find((innerItem) => item.uuid === innerItem.uuid)) {
             agg.push(item)
@@ -89,6 +102,7 @@ export default (state = initialState, { type, payload } = {}) => {
 
           return agg
         }, []),
+        selected: [],
         pagination: {
           count: payload.count,
           next: payload.next,
@@ -146,6 +160,22 @@ export default (state = initialState, { type, payload } = {}) => {
         filters: {},
         orderColumn: null,
         orderAscending: true,
+      }
+
+    case types.TOGGLE_RESULT_SELECTED:
+      return {
+        ...state,
+        selected: state.selected.includes(payload.item)
+          ? state.selected.filter((selectedItem) => selectedItem !== payload.item)
+          : [ ...state.selected, payload.item ],
+      }
+
+    case types.TOGGLE_SELECT_ALL_RESULTS:
+      return {
+        ...state,
+        selected: state.selected.length === state.results.length
+          ? []
+          : state.results.map((item) => item.uuid),
       }
 
     default:

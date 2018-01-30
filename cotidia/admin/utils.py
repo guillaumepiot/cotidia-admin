@@ -226,14 +226,24 @@ def get_model_structure(
         token=None,
         default_columns=None,
         default_filters=None,
-        default_order=None
+        default_order=None,
+        batch_actions=[]
         ):
     serializer = get_model_serializer_class(model)()
     structure = {
-            "columns": get_fields_from_serializer(serializer),
-            "defaultColumns": get_serializer_default_columns(serializer)
+        "columns": get_fields_from_serializer(serializer),
+        "defaultColumns": get_serializer_default_columns(serializer)
+    }
+    # If the serializer has batch actions we use them, otherwise there are no
+    # batch actions
+    if batch_actions == []:
+        try:
+            structure["batchActions"] = serializer.SearchProvider.batch_actions
+        except AttributeError:
+            structure["batchActions"] = []
+    else:
+        structure["batchActions"] = batch_actions
 
-            }
     if endpoint is not None:
         structure['endpoint'] = endpoint
     if detail_endpoint is not None:
