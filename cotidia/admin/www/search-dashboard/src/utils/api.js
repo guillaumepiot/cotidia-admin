@@ -37,19 +37,29 @@ async function _fetch (method, url, data = {}, headers = {}) {
 
   const response = await fetch(url, fetchConfig)
 
+  // Clone response so that we can read the text if parsing it as JSON fails. (See below.)
+  const responseForText = response.clone()
+
   let responseData
+  let responseText
 
   try {
     responseData = await response.json()
   } catch (e) {
-    // pass
+    // Don't worry if JSON could not be parsed - it is likely that we got an unexpected HTML
+    // response as part of a 500 or 403 error, etc.. In which case, let's get the text of the
+    // response (from the cloned version) to pass back.
+    responseText = await responseForText.text()
   }
+
 
   return {
     ok: response.ok,
     status: response.status,
     statusText: response.statusText,
     data: responseData,
+    responseText,
+
   }
 }
 
