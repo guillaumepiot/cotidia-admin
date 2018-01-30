@@ -10,24 +10,28 @@ async function _fetch (method, url, data = {}, headers = {}) {
   }
 
   if (data) {
-    const formData = new FormData()
-    let hasData = false
+    if (headers['Content-Type'] === 'application/json') {
+      fetchConfig.body = JSON.stringify(data)
+    } else {
+      const formData = new FormData()
+      let hasData = false
 
-    for (const [key, value] of Object.entries(data)) {
-      // Non-strict equality on purpose for weeding out null or undefined but keeping everything else.
-      if (value != null) {
-        if (Array.isArray(value)) {
-          value.forEach((value) => formData.append(key, value))
-        } else {
-          formData.set(key, value)
+      for (const [key, value] of Object.entries(data)) {
+        // Non-strict equality on purpose for weeding out null or undefined but keeping everything else.
+        if (value != null) {
+          if (Array.isArray(value)) {
+            value.forEach((value) => formData.append(key, value))
+          } else {
+            formData.append(key, value)
+          }
+
+          hasData = true
         }
-
-        hasData = true
       }
-    }
 
-    if (hasData) {
-      fetchConfig.body = formData
+      if (hasData) {
+        fetchConfig.body = formData
+      }
     }
   }
 
