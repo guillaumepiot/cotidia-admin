@@ -43,7 +43,6 @@
 {% block page_content %}
 {% include "admin/generic/form/non_field_errors.html" %}
 {% include "admin/generic/form/errors.html" %}
-{{form.errors}}
 <form action="" method="post" class="form" enctype="multipart/form-data">
     {% csrf_token %}
 
