@@ -6,6 +6,8 @@ import { Provider } from 'react-redux'
 import configureStore from './redux/create'
 import { bootstrap } from './redux/modules/bootstrap/actions'
 
+import { messageHandlerFactory } from './utils'
+
 import SearchDashboard from './containers/SearchDashboard'
 
 import { FullScreen } from './components/elements/global'
@@ -26,6 +28,8 @@ export default function App (props) {
   const { store } = configureStore()
 
   store.dispatch(bootstrap(config))
+
+  window.addEventListener('message', messageHandlerFactory(store))
 
   return (
     <Provider store={store}>

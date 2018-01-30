@@ -71,12 +71,17 @@
 
         <script src="search-dashboard.js"></script>
         <script>
-            var onComplete = function () {
+            var onSuccess = function () {
+                console.log('pOsting message')
                 window.postMessage({
                     target: 'SearchDashboard',
                     endpoint: 'http://localhost:8000/api/generic/list/lender/product',
                     action: 'refresh',
-                })
+                }, location.origin)
+            }
+
+            var onError = function (error) {
+                alert('An error occurred while processing the request. The response from the server was:\n\n' + error)
             }
 
             var appConfig = {
@@ -96,7 +101,8 @@
                         action: 'add_products',
                         label: 'Add products',
                         endpoint: 'http://localhost:8000/api/admin/invest/1/add_products',
-                        onComplete: onComplete,
+                        onSuccess: onSuccess,
+                        onError: onError,
                     },
                 ],
                 columns: {

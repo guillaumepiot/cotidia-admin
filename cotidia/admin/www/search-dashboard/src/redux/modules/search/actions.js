@@ -69,3 +69,8 @@ export const performBatchAction = (action) => ({
   type: types.PERFORM_BATCH_ACTION,
   payload: { action },
 })
+
+export const handleSearchDashboardMessage = (message) => ({
+  type: types.HANDLE_SEARCH_DASHBOARD_MESSAGE,
+  payload: { message },
+})

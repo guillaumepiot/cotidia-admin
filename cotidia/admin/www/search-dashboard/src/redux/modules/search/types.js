@@ -30,3 +30,5 @@ export const TOGGLE_RESULT_SELECTED = 'search-dashboard/search/TOGGLE_RESULT_SEL
 export const TOGGLE_SELECT_ALL_RESULTS = 'search-dashboard/search/TOGGLE_SELECT_ALL_RESULTS'
 
 export const PERFORM_BATCH_ACTION = 'search-dashboard/search/PERFORM_BATCH_ACTION'
+
+export const HANDLE_SEARCH_DASHBOARD_MESSAGE = 'search-dashboard/search/HANDLE_SEARCH_DASHBOARD_MESSAGE'
