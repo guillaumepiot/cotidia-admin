@@ -115,7 +115,12 @@ function * performBatchAction ({ payload: { action } }) {
 
   if (batchAction && selected.length) {
     try {
-      const { ok, data, responseText } = yield call(fetchAuthenticated, 'POST', batchAction.endpoint, { uuids: selected })
+      const { ok, data, responseText } = yield call(
+        fetchAuthenticated,
+        'POST',
+        batchAction.endpoint,
+        { uuids: selected }
+      )
 
       if (ok) {
         batchAction.onSuccess && batchAction.onSuccess(data)
