@@ -4787,10 +4787,13 @@ hr {
       flex-wrap: nowrap; } }
   .dialog-footer--reverse {
     flex-direction: row-reverse; }
-  .dialog-footer--center {
-    justify-content: center; }
   .dialog-footer__actions {
     white-space: nowrap; }
+
+.dialog-footer-action--left {
+  align-self: left; }
+.dialog-footer-action--right {
+  align-items: right; }
 
 .dialog-section--padded {
   padding: 0.75rem 1rem; }
@@ -4939,7 +4942,7 @@ hr {
     height: 0;
     width: 0;
     border-color: rgba(0, 0, 0, 0.75) transparent transparent;
-    border-width: 5px 5px 0; }
+    border-width: 10px 5px 0; }
   .tooltip--top-left:hover:before, .tooltip--top-left:hover:after {
     transform: translateY(-6px); }
   .tooltip--bottom-left:before {
@@ -4953,7 +4956,7 @@ hr {
     height: 0;
     width: 0;
     border-color: transparent transparent rgba(0, 0, 0, 0.75);
-    border-width: 0 5px 5px; }
+    border-width: 0 5px 10px; }
   .tooltip--bottom-left:hover:before, .tooltip--bottom-left:hover:after {
     transform: translateY(6px); }
   .tooltip--top-right:before {
@@ -4967,7 +4970,7 @@ hr {
     height: 0;
     width: 0;
     border-color: rgba(0, 0, 0, 0.75) transparent transparent;
-    border-width: 5px 5px 0; }
+    border-width: 10px 5px 0; }
   .tooltip--top-right:hover:before, .tooltip--top-right:hover:after {
     transform: translateY(-6px); }
   .tooltip--bottom-right:before {
@@ -4981,7 +4984,7 @@ hr {
     height: 0;
     width: 0;
     border-color: transparent transparent rgba(0, 0, 0, 0.75);
-    border-width: 0 5px 5px; }
+    border-width: 0 5px 10px; }
   .tooltip--bottom-right:hover:before, .tooltip--bottom-right:hover:after {
     transform: translateY(6px); }
   .tooltip--top-center:before {
@@ -4997,7 +5000,7 @@ hr {
     height: 0;
     width: 0;
     border-color: rgba(0, 0, 0, 0.75) transparent transparent;
-    border-width: 5px 5px 0; }
+    border-width: 10px 5px 0; }
   .tooltip--top-center:hover:before, .tooltip--top-center:hover:after {
     transform: translate3d(-50%, -6px, 0); }
   .tooltip--bottom-center:before {
@@ -5013,7 +5016,7 @@ hr {
     height: 0;
     width: 0;
     border-color: transparent transparent rgba(0, 0, 0, 0.75);
-    border-width: 0 5px 5px; }
+    border-width: 0 5px 10px; }
   .tooltip--bottom-center:hover:before, .tooltip--bottom-center:hover:after {
     transform: translate3d(-50%, 6px, 0); }
   .tooltip--small:hover:before {
@@ -5176,14 +5179,12 @@ hr {
  * Menu
  */
 .menu {
-  background-color: #00213E;
-  background-color: var(--menu_background_color, #00213E); }
+  background-color: #00213E; }
   .menu__container {
     padding: 0; }
-    @media screen and (max-width: 1023px) {
+    @media screen and (max-width: 767px) {
       .menu__container {
         background-color: #00213E;
-        background-color: var(--menu_background_color_mobile, #00213E);
         position: fixed;
         z-index: 10;
         top: 0;
@@ -5196,7 +5197,7 @@ hr {
           float: none; }
         .menu__container .menu__sub-nav {
           position: static; } }
-    @media screen and (max-width: 1023px) {
+    @media screen and (max-width: 767px) {
       .menu__container--mobile-right {
         left: 100%; } }
     .menu__container--mobile-active {
@@ -5211,12 +5212,12 @@ hr {
     float: left; }
     .menu__item--open {
       display: inline-block; }
-      @media screen and (min-width: 1024px) {
+      @media screen and (min-width: 768px) {
         .menu__item--open {
           display: none; } }
     .menu__item--open-right {
       float: right; }
-    @media screen and (min-width: 1024px) {
+    @media screen and (min-width: 768px) {
       .menu__item--close {
         display: none; } }
     .menu__item--close-right {
@@ -5229,12 +5230,10 @@ hr {
     position: absolute;
     width: auto;
     background-color: #00213E;
-    background-color: var(--menu_background_color_mobile, #00213E);
     z-index: 10; }
-    @media screen and (min-width: 1024px) {
+    @media screen and (min-width: 768px) {
       .menu__sub-nav {
         background-color: #00213E;
-        background-color: var(--menu_background_color, #00213E);
         min-width: 180px; } }
     .menu__sub-nav .menu__item {
       float: none; }
@@ -5243,39 +5242,32 @@ hr {
     display: block;
     clear: both; }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 768px) {
   .menu-item--right {
     float: right; }
     .menu-item--right .menu__sub-nav {
       right: 0; } }
 .menu-item:hover {
-  background-color: #00315d;
-  background-color: var(--menu_link_background_color_active, #00315d); }
-  @media screen and (max-width: 1023px) {
+  background-color: #00315d; }
+  @media screen and (max-width: 767px) {
     .menu-item:hover {
-      background-color: #00315d;
-      background-color: var(--menu_link_background_color_active_mobile, #00315d); } }
+      background-color: #00315d; } }
 .menu-item__link {
   position: relative;
   color: #fff;
   background-color: transparent;
-  background-color: var(--menu_link_background_color, transparent);
   padding: 0.75rem 1rem;
   display: block; }
-  @media screen and (max-width: 1023px) {
+  @media screen and (max-width: 767px) {
     .menu-item__link {
-      background-color: transparent;
-      background-color: var(--menu_link_background_color_mobile, transparent); } }
+      background-color: transparent; } }
   .menu-item__link:hover {
-    background-color: #00427b;
-    background-color: var(--menu_link_background_color_hover, #00427b); }
-    @media screen and (max-width: 1023px) {
+    background-color: #00427b; }
+    @media screen and (max-width: 767px) {
       .menu-item__link:hover {
-        background-color: transparent;
-        background-color: var(--menu_link_background_color_hover_mobile, transparent); } }
+        background-color: transparent; } }
   .menu-item__link--active {
-    background-color: #00315d;
-    background-color: var(--menu_link_background_color_active, #00315d); }
+    background-color: #00315d; }
   .menu-item__link--drop-arrow:after {
     border-style: solid;
     height: 0;
@@ -5800,6 +5792,8 @@ fieldset {
         visibility: visible; }
     .table-header:hover .table-header__sort, .table-header:hover .table-header__actions {
       visibility: visible; }
+  .table .table__row--active {
+    background-color: whitesmoke; }
   .table .action-column {
     width: 1px; }
 
