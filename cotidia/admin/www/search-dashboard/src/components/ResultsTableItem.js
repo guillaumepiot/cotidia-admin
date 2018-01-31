@@ -70,7 +70,7 @@ export default class ResultsTableItem extends PureComponent {
     } = this.props
 
     return (
-      <tr key={item.uuid} onClick={this.viewItem}>
+      <tr className={checked ? 'table__row--active' : null} key={item.uuid} onClick={this.viewItem}>
         {showCheck && (
           <td onClick={this.checkItem}>
             <input type='checkbox' checked={checked} />

@@ -87,6 +87,14 @@
         }
     }
 
+    // Done as a descendent selector as it needs to override sixteen's own `.table tr`
+    .table__row {
+        &--active {
+            // :hover standard rule in sixteen is `darken(#fff, 2%)`, so let's just double that
+            background-color: darken(#fff, 4%);
+        }
+    }
+
     .action-column {
         width: 1px;
     }
