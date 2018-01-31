@@ -22,7 +22,7 @@ from cotidia.admin.utils import (
 from cotidia.admin.serializers import SortSerializer
 
 
-PAGE_SIZE = 250
+PAGE_SIZE = 50
 number_pattern = r"(\-?[0-9]+(?:\.[0-9]+)?)"
 date_pattern = r"(\d{4}-[01]\d-[0-3]\d)"
 api_patterns = {
