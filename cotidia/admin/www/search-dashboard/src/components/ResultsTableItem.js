@@ -52,8 +52,12 @@ export default class ResultsTableItem extends PureComponent {
     viewItem: PropTypes.func.isRequired,
   }
 
-  viewItem = () => {
-    this.props.viewItem(this.props.item)
+  handleClickRow = () => {
+    if (this.props.viewItem) {
+      this.props.viewItem(this.props.item)
+    } else if (this.props.showCheck) {
+      this.props.checkItem(this.props.item)
+    }
   }
 
   checkItem = (e) => {
@@ -70,7 +74,7 @@ export default class ResultsTableItem extends PureComponent {
     } = this.props
 
     return (
-      <tr className={checked ? 'table__row--active' : null} key={item.uuid} onClick={this.viewItem}>
+      <tr className={checked ? 'table__row--active' : null} key={item.uuid} onClick={this.handleClickRow}>
         {showCheck && (
           <td onClick={this.checkItem}>
             <input type='checkbox' checked={checked} />

@@ -87,7 +87,7 @@ export default class SearchResults extends Component {
                 columns={columns}
                 item={item}
                 showCheck={batchActions.length > 0}
-                viewItem={this.viewItem}
+                viewItem={this.props.detailURL ? this.viewItem : null}
               />
             ))}
           </tbody>
