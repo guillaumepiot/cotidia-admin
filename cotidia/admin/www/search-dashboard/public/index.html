@@ -103,6 +103,12 @@
                         onSuccess: onSuccess,
                         onError: onError,
                     },
+                    {
+                        action: 'delete',
+                        label: 'Delete',
+                        endpoint: 'http://localhost:8000/api/admin/product/delete',
+                        onError: onError,
+                    },
                 ],
                 columns: {
                     id: {
