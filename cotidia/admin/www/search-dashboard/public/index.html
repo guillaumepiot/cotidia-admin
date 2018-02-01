@@ -72,7 +72,6 @@
         <script src="search-dashboard.js"></script>
         <script>
             var onSuccess = function () {
-                console.log('pOsting message')
                 window.postMessage({
                     target: 'SearchDashboard',
                     endpoint: 'http://localhost:8000/api/generic/list/lender/product',
