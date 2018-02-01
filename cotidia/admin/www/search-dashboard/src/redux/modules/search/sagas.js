@@ -108,6 +108,12 @@ function * saveColumnConfig () {
   }))
 }
 
+function * removeSavedColumnConfig () {
+  const state = yield select((state) => state.search)
+
+  localStorage.setItem(state.endpoint, JSON.stringify({}))
+}
+
 function * performBatchAction ({ payload: { action } }) {
   const { search: { batchActions, selected } } = yield select()
 
@@ -159,6 +165,7 @@ export default function * watcher () {
   yield takeEvery(types.CLEAR_FILTERS, performSearch)
 
   yield takeEvery(types.TOGGLE_COLUMN, saveColumnConfig)
+  yield takeEvery(types.RESET_COLUMNS, removeSavedColumnConfig)
 
   yield takeEvery(types.GET_RESULTS_PAGE, getResultsPage)
 

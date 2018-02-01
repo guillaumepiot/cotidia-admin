@@ -3,10 +3,11 @@ import * as types from './types'
 const initialState = {
   endpoint: null,
   detailURL: null,
-  columns: {},
-  batchActions: [],
+  columns: {}, // Config for all columns
+  batchActions: [], // Config for all batch acitons
 
-  visibleColumns: [],
+  defaultColumns: [], // Actual default columns as specifed by config
+  visibleColumns: [], // Current visible columns
 
   orderColumn: null,
   orderAscending: true,
@@ -51,6 +52,7 @@ export default (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         columns: payload.columns,
+        defaultColumns: payload.defaultColumns,
         visibleColumns: payload.defaultColumns,
         orderColumn: payload.defaultOrderColumn,
         orderAscending: payload.defaultOrderAscending,
@@ -116,10 +118,6 @@ export default (state = initialState, { type, payload } = {}) => {
           ? state.visibleColumns.filter((column) => column !== payload.column)
           : [ ...state.visibleColumns, payload.column ]
 
-      // TODO: Should we reset order column and direction if we are hiding the current order column?
-      // So far I have gone with not doing so, as it'll kick off a new search and therefore mess
-      // with the displayed results.
-
       return {
         ...state,
         visibleColumns,
@@ -132,6 +130,13 @@ export default (state = initialState, { type, payload } = {}) => {
         visibleColumns: payload.columns,
         orderColumn: payload.columns[0],
         orderAscending: true,
+      }
+    }
+
+    case types.RESET_COLUMNS: {
+      return {
+        ...state,
+        visibleColumns: state.defaultColumns,
       }
     }
 
@@ -158,8 +163,6 @@ export default (state = initialState, { type, payload } = {}) => {
         ...state,
         searchTerm: null,
         filters: {},
-        orderColumn: null,
-        orderAscending: true,
       }
 
     case types.TOGGLE_RESULT_SELECTED:

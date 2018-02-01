@@ -3,12 +3,19 @@ import PropTypes from 'prop-types'
 
 export default class ManageColumns extends Component {
   static propTypes = {
+    closeModal: PropTypes.func.isRequired,
     columns: PropTypes.object.isRequired,
+    resetColumns: PropTypes.func.isRequired,
     toggleColumn: PropTypes.func.isRequired,
     visibleColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
   }
 
   toggleColumnFactory = (column) => (e) => this.props.toggleColumn(column)
+
+  resetColumns = (e) => {
+    this.props.resetColumns()
+    this.props.closeModal()
+  }
 
   render () {
     const { columns, visibleColumns } = this.props
@@ -33,6 +40,7 @@ export default class ManageColumns extends Component {
             ))}
           </ul>
         </div>
+        <button className='btn btn--delete' onClick={this.resetColumns} type='button'>Reset columns to default</button>
       </div>
     )
   }

@@ -18,6 +18,7 @@ export const STORE_RESULTS = 'search-dashboard/search/STORE_RESULTS'
 export const MANAGE_COLUMNS = 'search-dashboard/search/MANAGE_COLUMNS'
 export const TOGGLE_COLUMN = 'search-dashboard/search/TOGGLE_COLUMN'
 export const SET_COLUMNS = 'search-dashboard/search/SET_COLUMNS'
+export const RESET_COLUMNS = 'search-dashboard/search/RESET_COLUMNS'
 
 export const SET_FILTER_VALUE = 'search-dashboard/search/SET_FILTER_VALUE'
 

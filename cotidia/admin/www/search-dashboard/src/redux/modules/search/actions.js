@@ -42,6 +42,10 @@ export const setColumns = (columns) => ({
   payload: { columns },
 })
 
+export const resetColumns = () => ({
+  type: types.RESET_COLUMNS,
+})
+
 export const setFilterValue = (filter, value) => ({
   type: types.SET_FILTER_VALUE,
   payload: { filter, value },

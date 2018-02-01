@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { toggleColumn } from '../../redux/modules/search/actions'
+import { resetColumns, toggleColumn } from '../../redux/modules/search/actions'
 
 import ManageColumns from '../../components/modals/ManageColumns'
 
@@ -9,6 +9,6 @@ const mapStateToProps = (state) => ({
   visibleColumns: state.search.visibleColumns,
 })
 
-const actionCreators = { toggleColumn }
+const actionCreators = { resetColumns, toggleColumn }
 
 export default connect(mapStateToProps, actionCreators)(ManageColumns)
