@@ -149,13 +149,15 @@ export default class Modal extends Component {
                   </Button>
                 </div>
               ) }
-              { (cancelButton || otherButtons) && (
+              { cancelButton && (
                 <div className='dialog-footer__actions'>
-                  { cancelButton && (
-                    <Button buttonOnly status='cancel' className='close-dialog' onClick={handleClose}>
-                      { cancelButton }
-                    </Button>
-                  ) }
+                  <Button buttonOnly status='cancel' className='close-dialog' onClick={handleClose}>
+                    { cancelButton }
+                  </Button>
+                </div>
+              ) }
+              { otherButtons && (
+                <div className='dialog-footer__actions'>
                   { otherButtons }
                 </div>
               ) }
