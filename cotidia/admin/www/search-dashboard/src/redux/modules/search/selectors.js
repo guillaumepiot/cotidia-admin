@@ -7,7 +7,7 @@ export const getVisibleColumnConfig = createSelector(
   (state) => state.search.visibleColumns,
   (state) => state.search.columns,
   (visibleColumns, columns) => visibleColumns.map(
-    (column) => ({
+    (column) => columns[column] && ({
       ...columns[column],
       id: column,
       accessor: column,
