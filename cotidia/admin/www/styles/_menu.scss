@@ -44,7 +44,7 @@ body.menu--sidebar {
             padding-top: 0.1em;
         }
         .menu-item--home {
-            font-size: $font_size--emphasis;
+            @include font-size($font_size--emphasis);
             width: 100%;
             height: $toolbar_height;
             background-color: $menu_background_color;
@@ -64,7 +64,7 @@ body.menu--sidebar {
             display: none;
         }
         .toolbar {
-            font-size: $font_size--emphasis;
+            @include font-size($font_size--emphasis);
             top: 0;
             left: $menu_sidebar_width;
             width: calc(100% - #{$menu_sidebar_width});
@@ -88,7 +88,7 @@ body.menu--sidebar {
             z-index: 2;
             overflow-y: scroll;
             &__title{
-                font-size: $font_size--emphasis;
+                @include font-size($font_size--emphasis);
                 color: $menu_link_color;
             }
         }
