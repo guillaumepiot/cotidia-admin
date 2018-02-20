@@ -6,7 +6,7 @@
     </div>
     {% else %}
     {% include "admin/generic/form/label.html" %}
-    <div class="form__control{% if field|is_select %} form__control--select{% endif %}">
+    <div class="form__control{% if field|is_select %} form__control--select{% elif field|is_radio_button %} form__control--radio-btn{% endif %}">
         {{field}}
     </div>
     {% endif %}

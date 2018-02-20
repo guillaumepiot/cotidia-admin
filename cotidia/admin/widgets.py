@@ -376,3 +376,8 @@ class DateInput(forms.DateInput):
 
 class TimeInput(forms.TimeInput):
     input_type = 'time'
+
+
+class RadioButtonSelect(forms.RadioSelect):
+    template_name = 'widgets/radio_button.html'
+    option_template_name = 'widgets/radio_option_button.html'
