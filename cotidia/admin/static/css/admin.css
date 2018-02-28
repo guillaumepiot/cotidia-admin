@@ -3408,6 +3408,20 @@ hr {
     .form__control textarea,
     .form__control select {
       font-size: 1rem !important; } }
+  .form__control input[type="date"]:hover,
+  .form__control input[type="email"]:hover,
+  .form__control input[type="number"]:hover,
+  .form__control input[type="password"]:hover,
+  .form__control input[type="search"]:hover,
+  .form__control input[type="tel"]:hover,
+  .form__control input[type="text"]:hover,
+  .form__control input[type="time"]:hover,
+  .form__control input[type="url"]:hover,
+  .form__control textarea:hover,
+  .form__control select:hover {
+    border-color: #7f878a;
+    border-width: 2px;
+    margin-bottom: 0px; }
   .form__control input[type="date"]:focus, .form__control input[type="date"]:focus ~ .input-addon,
   .form__control input[type="email"]:focus,
   .form__control input[type="email"]:focus ~ .input-addon,
@@ -5178,13 +5192,13 @@ fieldset {
   border-radius: 2px;
   background-color: #fff;
   border: 1px solid #dfdfdf;
-  margin: 0.75rem 1rem; }
+  margin: 1rem; }
   @media screen and (max-width: 767px) {
     fieldset {
       margin: 0.75rem 0; } }
   fieldset legend {
-    background-color: #f2f2f3;
-    font-size: 1;
+    line-height: 1.414035em !important;
+    font-size: 1.125rem !important;
     width: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
@@ -5192,9 +5206,14 @@ fieldset {
     padding-bottom: 0.75rem;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
-    border-bottom: 1px solid #eaeaec;
     float: left;
     display: block; }
+    @media screen and (min-width: 768px) {
+      fieldset legend {
+        font-size: 1.25rem !important; } }
+    @media screen and (min-width: 1024px) {
+      fieldset legend {
+        font-size: 1.333rem !important; } }
   fieldset > .form__row {
     padding: 0 1rem; }
     fieldset > .form__row .form__group {
@@ -5205,10 +5224,8 @@ fieldset {
     border-bottom: 1px solid #f2f2f3; }
     fieldset.detail > .form__row:last-child {
       border-bottom: 0; }
-    fieldset.detail > .form__row .form__group {
-      border-right: 1px solid #f2f2f3; }
-      fieldset.detail > .form__row .form__group:last-child {
-        border-right: 0; }
+    fieldset.detail > .form__row .form__group:last-child {
+      border-right: 0; }
   fieldset.table-view {
     padding-bottom: 0;
     padding-left: 0;

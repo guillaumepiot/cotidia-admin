@@ -48,15 +48,15 @@ fieldset{
     border-radius: $border_radius;
     background-color: #fff;
     border: 1px solid darken(#e7e7e7, 3%);
-    margin: $vertical_padding $horizontal_padding;
+    margin: 1rem;
 
     @media screen and (max-width: $mobile-width) {
         margin: $vertical_padding 0;
     }
 
     legend{
-        background-color: $grey--light;
-        font-size: $font-size--emphasis;
+        // background-color: $grey--light;
+        @include font-size($font_size--emphasis);
         width: 100%;
         padding-left: $horizontal_padding;
         padding-right: $horizontal_padding;
@@ -64,7 +64,7 @@ fieldset{
         padding-bottom: $vertical_padding;
         border-top-left-radius: $border-radius;
         border-top-right-radius: $border-radius;
-        border-bottom: 1px solid darken($grey--light, 3%);
+        // border-bottom: 1px solid darken($grey--light, 3%);
         float: left;
         display: block;
     }
@@ -84,7 +84,7 @@ fieldset{
             border-bottom: 0;
         }
         .form__group {
-            border-right: 1px solid $grey--light;
+            // border-right: 1px solid $grey--light;
             &:last-child {
                 border-right: 0;
             }
