@@ -64,7 +64,6 @@ body.menu--sidebar {
             display: none;
         }
         .toolbar {
-            @include font-size($font_size--emphasis);
             top: 0;
             left: $menu_sidebar_width;
             width: calc(100% - #{$menu_sidebar_width});

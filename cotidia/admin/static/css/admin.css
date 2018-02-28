@@ -2480,7 +2480,7 @@ html {
 
 body {
   color: #444444;
-  font-family: "Helvetica Neue", sans-serif;
+  font-family: "Roboto", Helvetica, sans-serif;
   font-size: 100%;
   font-style: normal;
   font-weight: 400;
@@ -2495,7 +2495,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Helvetica Neue", sans-serif;
+  font-family: "Roboto", Helvetica, sans-serif;
   margin: 0.5em 0; }
 
 /**
@@ -2565,7 +2565,7 @@ h6 {
 small {
   line-height: 1.5911911657em !important;
   font-size: 0.8888888889rem !important;
-  color: #aaaaaa; }
+  color: #555A5D; }
   @media screen and (min-width: 768px) {
     small {
       font-size: 0.8rem !important; } }
@@ -2601,10 +2601,10 @@ figure {
 blockquote {
   line-height: 1.414035em !important;
   font-size: 1.125rem !important;
-  color: #666666;
+  color: #7f878a;
   font-family: Georgia, serif;
   font-style: italic;
-  border-left: 4px solid #aaaaaa;
+  border-left: 4px solid #555A5D;
   margin: 0.75rem 0;
   padding-left: 1rem; }
   @media screen and (min-width: 768px) {
@@ -2757,13 +2757,13 @@ hr {
   color: #ff8a00 !important; }
 
 .text-grey--dark {
-  color: #333333 !important; }
+  color: #111315 !important; }
 
 .text-grey {
-  color: #666666 !important; }
+  color: #7f878a !important; }
 
 .text-grey--medium {
-  color: #aaaaaa !important; }
+  color: #555A5D !important; }
 
 .text-grey--light {
   color: #f2f2f3 !important; }
@@ -2799,7 +2799,7 @@ hr {
   height: 1rem;
   width: 1rem;
   border-radius: 100%;
-  border: 2px solid #666666;
+  border: 2px solid #7f878a;
   border-bottom-color: transparent;
   background: transparent !important;
   animation: rotate 1s 0s linear infinite; }
@@ -3305,38 +3305,68 @@ hr {
           margin-right: 0;
           padding-right: 0; } }
 .form__group {
-  margin-bottom: 0.75rem; }
-  .form__group--required .form__label:after {
+  margin-bottom: 0.375rem; }
+  .form__group--required .form__label::after {
     content: "*";
-    color: #d50000;
     display: inline-block;
     margin-left: 0.25rem; }
-  .form__group--error .form__control input[type="email"],
-  .form__group--error .form__control input[type="password"],
-  .form__group--error .form__control input[type="tel"],
-  .form__group--error .form__control input[type="text"],
-  .form__group--error .form__control input[type="url"],
+  .form__group--active .form__label {
+    color: #00abd3; }
+  .form__group--error .form__label {
+    color: #d50000; }
+  .form__group--error .form__control input::placeholder,
+  .form__group--error .form__control textarea::placeholder {
+    color: transparent; }
   .form__group--error .form__control input[type="date"],
+  .form__group--error .form__control input[type="email"],
   .form__group--error .form__control input[type="number"],
+  .form__group--error .form__control input[type="password"],
   .form__group--error .form__control input[type="search"],
   .form__group--error .form__control input[type="tel"],
+  .form__group--error .form__control input[type="text"],
   .form__group--error .form__control input[type="time"],
+  .form__group--error .form__control input[type="url"],
   .form__group--error .form__control textarea,
   .form__group--error .form__control select,
   .form__group--error .form__control .input-addon {
     border-color: #d50000;
     border-width: 2px;
     margin-bottom: 0; }
-.form__control input[type="email"],
-.form__control input[type="password"],
-.form__control input[type="tel"],
-.form__control input[type="text"],
-.form__control input[type="url"],
+    .form__group--error .form__control input[type="date"]:focus, .form__group--error .form__control input[type="date"]:focus ~ .input-addon,
+    .form__group--error .form__control input[type="email"]:focus,
+    .form__group--error .form__control input[type="email"]:focus ~ .input-addon,
+    .form__group--error .form__control input[type="number"]:focus,
+    .form__group--error .form__control input[type="number"]:focus ~ .input-addon,
+    .form__group--error .form__control input[type="password"]:focus,
+    .form__group--error .form__control input[type="password"]:focus ~ .input-addon,
+    .form__group--error .form__control input[type="search"]:focus,
+    .form__group--error .form__control input[type="search"]:focus ~ .input-addon,
+    .form__group--error .form__control input[type="tel"]:focus,
+    .form__group--error .form__control input[type="tel"]:focus ~ .input-addon,
+    .form__group--error .form__control input[type="text"]:focus,
+    .form__group--error .form__control input[type="text"]:focus ~ .input-addon,
+    .form__group--error .form__control input[type="time"]:focus,
+    .form__group--error .form__control input[type="time"]:focus ~ .input-addon,
+    .form__group--error .form__control input[type="url"]:focus,
+    .form__group--error .form__control input[type="url"]:focus ~ .input-addon,
+    .form__group--error .form__control textarea:focus,
+    .form__group--error .form__control textarea:focus ~ .input-addon,
+    .form__group--error .form__control select:focus,
+    .form__group--error .form__control select:focus ~ .input-addon,
+    .form__group--error .form__control .input-addon:focus,
+    .form__group--error .form__control .input-addon:focus ~ .input-addon {
+      border-color: #d50000; }
+  .form__group--error .form__help {
+    color: #d50000; }
 .form__control input[type="date"],
+.form__control input[type="email"],
 .form__control input[type="number"],
+.form__control input[type="password"],
 .form__control input[type="search"],
 .form__control input[type="tel"],
+.form__control input[type="text"],
 .form__control input[type="time"],
+.form__control input[type="url"],
 .form__control textarea,
 .form__control select {
   line-height: 1.5em !important;
@@ -3344,78 +3374,76 @@ hr {
   border: none;
   border-bottom: 1px solid #dddddd;
   background-color: transparent;
-  color: #333333;
+  color: #111315;
   outline: none;
   padding: 0;
   padding-bottom: 0.1875rem;
+  margin-bottom: 1px;
   transition: border-color 0.3s ease;
   width: 100%;
   margin-bottom: 1px; }
   @media screen and (min-width: 768px) {
-    .form__control input[type="email"],
-    .form__control input[type="password"],
-    .form__control input[type="tel"],
-    .form__control input[type="text"],
-    .form__control input[type="url"],
     .form__control input[type="date"],
+    .form__control input[type="email"],
     .form__control input[type="number"],
+    .form__control input[type="password"],
     .form__control input[type="search"],
     .form__control input[type="tel"],
+    .form__control input[type="text"],
     .form__control input[type="time"],
+    .form__control input[type="url"],
     .form__control textarea,
     .form__control select {
       font-size: 1rem !important; } }
   @media screen and (min-width: 1024px) {
-    .form__control input[type="email"],
-    .form__control input[type="password"],
-    .form__control input[type="tel"],
-    .form__control input[type="text"],
-    .form__control input[type="url"],
     .form__control input[type="date"],
+    .form__control input[type="email"],
     .form__control input[type="number"],
+    .form__control input[type="password"],
     .form__control input[type="search"],
     .form__control input[type="tel"],
+    .form__control input[type="text"],
     .form__control input[type="time"],
+    .form__control input[type="url"],
     .form__control textarea,
     .form__control select {
       font-size: 1rem !important; } }
-  .form__control input[type="email"]:focus, .form__control input[type="email"]:focus ~ .input-addon,
-  .form__control input[type="password"]:focus,
-  .form__control input[type="password"]:focus ~ .input-addon,
-  .form__control input[type="tel"]:focus,
-  .form__control input[type="tel"]:focus ~ .input-addon,
-  .form__control input[type="text"]:focus,
-  .form__control input[type="text"]:focus ~ .input-addon,
-  .form__control input[type="url"]:focus,
-  .form__control input[type="url"]:focus ~ .input-addon,
-  .form__control input[type="date"]:focus,
-  .form__control input[type="date"]:focus ~ .input-addon,
+  .form__control input[type="date"]:focus, .form__control input[type="date"]:focus ~ .input-addon,
+  .form__control input[type="email"]:focus,
+  .form__control input[type="email"]:focus ~ .input-addon,
   .form__control input[type="number"]:focus,
   .form__control input[type="number"]:focus ~ .input-addon,
+  .form__control input[type="password"]:focus,
+  .form__control input[type="password"]:focus ~ .input-addon,
   .form__control input[type="search"]:focus,
   .form__control input[type="search"]:focus ~ .input-addon,
   .form__control input[type="tel"]:focus,
   .form__control input[type="tel"]:focus ~ .input-addon,
+  .form__control input[type="text"]:focus,
+  .form__control input[type="text"]:focus ~ .input-addon,
   .form__control input[type="time"]:focus,
   .form__control input[type="time"]:focus ~ .input-addon,
+  .form__control input[type="url"]:focus,
+  .form__control input[type="url"]:focus ~ .input-addon,
   .form__control textarea:focus,
   .form__control textarea:focus ~ .input-addon,
   .form__control select:focus,
   .form__control select:focus ~ .input-addon {
-    border-color: #666666; }
-  .form__control input[type="email"]::placeholder,
-  .form__control input[type="password"]::placeholder,
-  .form__control input[type="tel"]::placeholder,
-  .form__control input[type="text"]::placeholder,
-  .form__control input[type="url"]::placeholder,
+    border-color: #00abd3;
+    border-width: 2px;
+    margin-bottom: 0px; }
   .form__control input[type="date"]::placeholder,
+  .form__control input[type="email"]::placeholder,
   .form__control input[type="number"]::placeholder,
+  .form__control input[type="password"]::placeholder,
   .form__control input[type="search"]::placeholder,
   .form__control input[type="tel"]::placeholder,
+  .form__control input[type="text"]::placeholder,
   .form__control input[type="time"]::placeholder,
+  .form__control input[type="url"]::placeholder,
   .form__control textarea::placeholder,
   .form__control select::placeholder {
-    color: #aaaaaa; }
+    color: #aaafb1; }
 .form__control select {
   border-radius: 0;
   -webkit-appearance: none;
@@ -3423,19 +3451,20 @@ hr {
 .form__control ul {
   list-style: none;
   padding: 0;
-  margin: 0.75rem 0; }
+  margin: 0.375rem 0; }
 .form__control--select {
   position: relative; }
-  .form__control--select:after {
+  .form__control--select::after {
     content: "";
     position: absolute;
+    pointer-events: none;
     right: 0.5rem;
     top: 50%;
     margin-top: -4px;
     border-style: solid;
     height: 0;
     width: 0;
-    border-color: #333333 transparent transparent;
+    border-color: #111315 transparent transparent;
     border-width: 4px 4px 0; }
 .form__control--radio-btn {
   display: flex;
@@ -3452,7 +3481,7 @@ hr {
     border: 2px solid #666;
     color: #fff;
     padding: 0.5rem 1rem;
-    font-family: "Helvetica Neue", sans-serif;
+    font-family: "Roboto", Helvetica, sans-serif;
     font-style: normal;
     text-align: center;
     font-weight: 400;
@@ -3490,27 +3519,27 @@ hr {
     display: none !important; }
   .form__control--radio-btn input[type="radio"]:not(:checked) + label {
     background-color: transparent;
-    border-color: #aaaaaa;
-    color: #aaaaaa;
+    border-color: #555A5D;
+    color: #555A5D;
     border-right-width: 0; }
     .form__control--radio-btn input[type="radio"]:not(:checked) + label:hover {
-      background-color: #aaaaaa;
-      border-color: #aaaaaa;
+      background-color: #555A5D;
+      border-color: #555A5D;
       color: #fff; }
     .form__control--radio-btn input[type="radio"]:not(:checked) + label:focus, .form__control--radio-btn input[type="radio"]:not(:checked) + label:active {
-      background-color: #969696;
-      border-color: #969696;
+      background-color: #424548;
+      border-color: #424548;
       color: #fff; }
     .form__control--radio-btn input[type="radio"]:not(:checked) + label[disabled]:hover, .form__control--radio-btn input[type="radio"]:not(:checked) + label[disabled]:focus {
       background-color: transparent;
-      border-color: #aaaaaa;
-      color: #aaaaaa; }
+      border-color: #555A5D;
+      color: #555A5D; }
     .form__control--radio-btn input[type="radio"]:not(:checked) + label.btn--loading {
       color: transparent; }
       .form__control--radio-btn input[type="radio"]:not(:checked) + label.btn--loading:before {
-        border-top-color: #aaaaaa;
-        border-left-color: #aaaaaa;
-        border-right-color: #aaaaaa; }
+        border-top-color: #555A5D;
+        border-left-color: #555A5D;
+        border-right-color: #555A5D; }
       .form__control--radio-btn input[type="radio"]:not(:checked) + label.btn--loading:hover:before {
         border-top-color: #fff;
         border-left-color: #fff;
@@ -3520,44 +3549,24 @@ hr {
   margin-right: 1rem; }
 .form__control--input-addon {
   display: flex; }
-.form__label {
-  line-height: 1.5em !important;
-  font-size: 1rem !important;
-  color: #666666;
+.form__label, .form__option-label {
+  font-size: 85%;
+  color: #7f878a;
   display: block; }
-  @media screen and (min-width: 768px) {
-    .form__label {
-      font-size: 1rem !important; } }
-  @media screen and (min-width: 1024px) {
-    .form__label {
-      font-size: 1rem !important; } }
-.form__error {
-  line-height: 1.5911911657em !important;
-  font-size: 0.8888888889rem !important;
-  color: #d50000;
-  margin-top: 0.1875rem; }
-  @media screen and (min-width: 768px) {
-    .form__error {
-      font-size: 0.8rem !important; } }
-  @media screen and (min-width: 1024px) {
-    .form__error {
-      font-size: 0.7501875469rem !important; } }
+.form__option-label {
+  display: inline-block; }
+  input:checked + .form__option-label {
+    color: #111315; }
 .form__help {
-  line-height: 1.5911911657em !important;
-  font-size: 0.8888888889rem !important;
-  color: #aaaaaa;
-  margin-top: 0.1875rem; }
-  @media screen and (min-width: 768px) {
-    .form__help {
-      font-size: 0.8rem !important; } }
-  @media screen and (min-width: 1024px) {
-    .form__help {
-      font-size: 0.7501875469rem !important; } }
+  font-size: 75%;
+  color: #7f878a; }
+  .form__help::after {
+    content: "\00a0"; }
 
 .input-addon {
   line-height: 1.5em !important;
   font-size: 1rem !important;
-  color: #333333;
+  color: #111315;
   border-bottom: 1px solid #dddddd;
   background-color: transparent;
   transition: border-color 0.3s ease;
@@ -3593,8 +3602,8 @@ hr {
   text-align: left;
   cursor: pointer; }
   .control-select__option--focused, .control-select__option:hover, .control-select__option:focus {
-    background-color: #f2f2f3;
-    color: #333333;
+    background-color: #f8f8f9;
+    color: #111315;
     cursor: pointer; }
   .control-select__option--selected, .control-select__option--selected:hover, .control-select__option--selected:focus {
     background-color: #00abd3;
@@ -3602,7 +3611,7 @@ hr {
     cursor: pointer; }
   .control-select__option--highlighted {
     text-decoration: underline;
-    color: #333333; }
+    color: #111315; }
 .control-select--focus .control-select__options {
   display: block; }
 .control-select--focus .form__select {
@@ -3612,21 +3621,12 @@ hr {
 .control-select__group:first-child .control-select__group-heading {
   border-top: none; }
 .control-select__group-heading {
-  line-height: 1.5911911657em !important;
-  font-size: 0.8888888889rem !important;
-  background-color: #f8f8f9;
-  border-top: 1px solid #f2f2f3;
-  border-bottom: 1px solid #f2f2f3;
+  font-size: 85%;
+  border-top: 1px solid #dddddd;
   text-transform: uppercase;
   font-weight: 700;
   padding: 0.375rem 1rem;
   text-align: left; }
-  @media screen and (min-width: 768px) {
-    .control-select__group-heading {
-      font-size: 0.8rem !important; } }
-  @media screen and (min-width: 1024px) {
-    .control-select__group-heading {
-      font-size: 0.7501875469rem !important; } }
 
 [type=submit], button {
   -webkit-appearance: none;
@@ -3650,7 +3650,7 @@ hr {
   border: 2px solid #666;
   color: #fff;
   padding: 0.5rem 1rem;
-  font-family: "Helvetica Neue", sans-serif;
+  font-family: "Roboto", Helvetica, sans-serif;
   font-style: normal;
   text-align: center;
   font-weight: 400;
@@ -3910,50 +3910,50 @@ hr {
           border-left-color: #d67400;
           border-right-color: #d67400; }
   .btn--cancel, .form__control input[type="file"] {
-    background: #eeeeee;
-    border-color: #eeeeee;
-    color: #666666; }
+    background: #E5EBED;
+    border-color: #E5EBED;
+    color: #555A5D; }
     .btn--cancel:hover, .form__control input[type="file"]:hover {
-      background: #dadada;
-      border-color: #dadada;
-      color: #666666; }
+      background: #cdd8dc;
+      border-color: #cdd8dc;
+      color: #555A5D; }
     .btn--cancel:focus, .form__control input[type="file"]:focus, .btn--cancel:active, .form__control input[type="file"]:active {
-      background: #cfcfcf;
-      border-color: #cfcfcf;
-      color: #666666; }
+      background: #c1cfd4;
+      border-color: #c1cfd4;
+      color: #555A5D; }
     .btn--cancel[disabled], .form__control input[disabled][type="file"] {
-      background: #eeeeee;
-      border-color: #eeeeee;
-      color: #666666; }
+      background: #E5EBED;
+      border-color: #E5EBED;
+      color: #555A5D; }
       .btn--cancel[disabled]:hover, .form__control input[disabled][type="file"]:hover, .btn--cancel[disabled]:focus, .form__control input[disabled][type="file"]:focus {
-        background-color: #eeeeee;
-        border-color: #eeeeee;
-        color: #666666; }
+        background-color: #E5EBED;
+        border-color: #E5EBED;
+        color: #555A5D; }
     .btn--cancel.btn--loading, .form__control input.btn--loading[type="file"] {
       color: transparent; }
     .btn--cancel.btn--outline, .form__control input.btn--outline[type="file"] {
       background-color: transparent;
-      border-color: #666666;
-      color: #666666;
-      color: #666666; }
+      border-color: #7f878a;
+      color: #7f878a;
+      color: #7f878a; }
       .btn--cancel.btn--outline:hover, .form__control input.btn--outline[type="file"]:hover {
-        background-color: #666666;
-        border-color: #666666;
+        background-color: #7f878a;
+        border-color: #7f878a;
         color: #fff; }
       .btn--cancel.btn--outline:focus, .form__control input.btn--outline[type="file"]:focus, .btn--cancel.btn--outline:active, .form__control input.btn--outline[type="file"]:active {
-        background-color: #525252;
-        border-color: #525252;
+        background-color: #6b7275;
+        border-color: #6b7275;
         color: #fff; }
       .btn--cancel.btn--outline[disabled]:hover, .form__control input.btn--outline[disabled][type="file"]:hover, .btn--cancel.btn--outline[disabled]:focus, .form__control input.btn--outline[disabled][type="file"]:focus {
         background-color: transparent;
-        border-color: #666666;
-        color: #666666; }
+        border-color: #7f878a;
+        color: #7f878a; }
       .btn--cancel.btn--outline.btn--loading, .form__control input.btn--outline.btn--loading[type="file"] {
         color: transparent; }
         .btn--cancel.btn--outline.btn--loading:before, .form__control input.btn--outline.btn--loading[type="file"]:before {
-          border-top-color: #666666;
-          border-left-color: #666666;
-          border-right-color: #666666; }
+          border-top-color: #7f878a;
+          border-left-color: #7f878a;
+          border-right-color: #7f878a; }
         .btn--cancel.btn--outline.btn--loading:hover:before, .form__control input.btn--outline.btn--loading[type="file"]:hover:before {
           border-top-color: #fff;
           border-left-color: #fff;
@@ -3961,37 +3961,37 @@ hr {
     .btn--cancel.btn--link, .form__control input.btn--link[type="file"] {
       border-color: transparent;
       background-color: transparent;
-      color: #666666;
+      color: #7f878a;
       padding-left: 0;
       padding-right: 0; }
       .btn--cancel.btn--link:hover, .form__control input.btn--link[type="file"]:hover {
         background-color: transparent;
-        color: #525252; }
+        color: #6b7275; }
       .btn--cancel.btn--link:focus, .form__control input.btn--link[type="file"]:focus, .btn--cancel.btn--link:active, .form__control input.btn--link[type="file"]:active {
         background-color: transparent;
-        color: #474747; }
+        color: #61686a; }
       .btn--cancel.btn--link:after, .form__control input.btn--link[type="file"]:after {
-        background: #666666; }
+        background: #7f878a; }
       .btn--cancel.btn--link:hover:after, .form__control input.btn--link[type="file"]:hover:after, .btn--cancel.btn--link:focus:after, .form__control input.btn--link[type="file"]:focus:after {
-        background: #525252; }
+        background: #6b7275; }
       .btn--cancel.btn--link[disabled]:hover, .form__control input.btn--link[disabled][type="file"]:hover, .btn--cancel.btn--link[disabled]:focus, .form__control input.btn--link[disabled][type="file"]:focus {
         background-color: transparent;
         border-color: transparent;
-        color: #666666; }
+        color: #7f878a; }
       .btn--cancel.btn--link.btn--loading, .form__control input.btn--link.btn--loading[type="file"] {
         color: transparent; }
         .btn--cancel.btn--link.btn--loading:before, .form__control input.btn--link.btn--loading[type="file"]:before {
-          border-top-color: #666666;
-          border-left-color: #666666;
-          border-right-color: #666666; }
+          border-top-color: #7f878a;
+          border-left-color: #7f878a;
+          border-right-color: #7f878a; }
         .btn--cancel.btn--link.btn--loading:hover:before, .form__control input.btn--link.btn--loading[type="file"]:hover:before {
-          border-top-color: #525252;
-          border-left-color: #525252;
-          border-right-color: #525252; }
+          border-top-color: #6b7275;
+          border-left-color: #6b7275;
+          border-right-color: #6b7275; }
     .btn--cancel.btn--loading:before, .form__control input.btn--loading[type="file"]:before {
-      border-top-color: #666666;
-      border-left-color: #666666;
-      border-right-color: #666666; }
+      border-top-color: #7f878a;
+      border-left-color: #7f878a;
+      border-right-color: #7f878a; }
   .btn--delete {
     background: #d50000;
     border-color: #d50000;
@@ -4174,9 +4174,9 @@ hr {
       .dialog--modal .dialog__body {
         overflow-y: auto; } }
     .dialog--modal .dialog__header {
-      background-color: #fafafa;
+      background-color: #fff;
       border-bottom: none;
-      color: #333333;
+      color: #111315;
       border-top-left-radius: 2px;
       border-top-right-radius: 2px; }
     .dialog--modal .dialog__footer {
@@ -4186,7 +4186,7 @@ hr {
       border-bottom-right-radius: 2px; }
   .dialog__content {
     background-color: #fff;
-    border: 1px solid #eeeeee;
+    border: 1px solid #D0D5D7;
     border-radius: 2px;
     width: calc(100% - 1rem);
     max-width: 540px; }
@@ -4204,17 +4204,17 @@ hr {
       background-color: transparent; }
       @media screen and (max-width: 767px) {
         .dialog__content--pre {
-          border-bottom: 1px solid #eeeeee;
+          border-bottom: 1px solid #D0D5D7;
           padding: 0 1rem; } }
     .dialog__content--post {
       border: none;
       background-color: transparent; }
   .dialog__header {
-    background-color: #fafafa;
-    border-bottom: 1px solid #eeeeee;
+    background-color: #E5EBED;
+    border-bottom: 1px solid #D0D5D7;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
-    color: #333333;
+    color: #111315;
     position: relative; }
   .dialog__body--center {
     text-align: center; }
@@ -4276,7 +4276,7 @@ hr {
   font-size: 1rem !important;
   border: none;
   background-color: transparent;
-  color: #00abd3;
+  color: #7f878a;
   cursor: pointer;
   padding: 0; }
   @media screen and (min-width: 768px) {
@@ -4540,7 +4540,9 @@ hr {
 .datepicker {
   border: 1px solid #e5e5e7;
   border-radius: 2px;
-  background-color: #fff; }
+  background-color: #fff;
+  cursor: default;
+  user-select: none; }
   .datepicker table tr td, .datepicker table tr th {
     vertical-align: middle; }
   .datepicker__day {
@@ -4571,7 +4573,7 @@ hr {
     padding: 4px 6px;
     font-size: 0.9em;
     border-bottom: 1px solid #f4f4f4;
-    color: #aaaaaa; }
+    color: #555A5D; }
   .datepicker__selected-date {
     display: block;
     text-align: center; }
@@ -4615,7 +4617,7 @@ hr {
  */
 .label {
   color: #fff;
-  background-color: #aaaaaa;
+  background-color: #555A5D;
   display: inline-block;
   border-radius: 2px;
   padding-left: 0.5em;
@@ -4634,7 +4636,7 @@ hr {
   line-height: 1.5911911657em !important;
   font-size: 0.8888888889rem !important;
   color: #fff;
-  background-color: #666666;
+  background-color: #7f878a;
   display: inline-block;
   border-radius: 0.7955955829em;
   padding-left: 0.5em;
@@ -4661,7 +4663,7 @@ hr {
  */
 .tag {
   color: #fff;
-  background-color: #aaaaaa;
+  background-color: #555A5D;
   display: inline-block;
   border-radius: 2px;
   padding-left: 0.5em;
@@ -4922,18 +4924,9 @@ body.menu--sidebar .menu__section {
   body.menu--sidebar .menu__item--sidebar-expand {
     display: none; }
   body.menu--sidebar .toolbar {
-    line-height: 1.414035em !important;
-    font-size: 1.125rem !important;
     top: 0;
     left: 240px;
-    width: calc(100% - 240px); } }
-  @media screen and (min-width: 768px) and (min-width: 768px) {
-    body.menu--sidebar .toolbar {
-      font-size: 1.25rem !important; } }
-  @media screen and (min-width: 768px) and (min-width: 1024px) {
-    body.menu--sidebar .toolbar {
-      font-size: 1.333rem !important; } }
-@media screen and (min-width: 768px) {
+    width: calc(100% - 240px); }
   body.menu--sidebar .content {
     margin-left: 240px;
     padding-top: 3.2rem; }
@@ -5075,11 +5068,11 @@ body.menu--sidebar .menu__sub-nav {
   border-color: #fff transparent transparent;
   border-width: 4px 4px 0; }
 .menu select {
-  color: #aaaaaa; }
+  color: #555A5D; }
 .menu input[type="text"] {
   color: #fff; }
 .menu .input-addon {
-  color: #aaaaaa; }
+  color: #555A5D; }
 
 /**
  * Defines the toolbar.
@@ -5090,7 +5083,7 @@ body.menu--sidebar .menu__sub-nav {
   border-bottom: 1px solid #eaeaed;
   padding: 0.75rem 1rem; }
   .toolbar__breadcrumbs .fa.fa-angle-right {
-    color: #c4c4c4; }
+    color: #6d7478; }
   .toolbar__item {
     margin-left: 1rem;
     float: right; }
@@ -5126,7 +5119,7 @@ body.content-centered .head-bar {
   .pagination__link {
     display: block;
     float: left;
-    border: 1px solid #c4c4c4;
+    border: 1px solid #6d7478;
     padding: 0 0.75rem;
     font-size: 1em;
     line-height: 2em;
@@ -5301,7 +5294,7 @@ fieldset {
       height: 2rem;
       width: 2rem;
       border-radius: 100%;
-      border: 2px solid #666666;
+      border: 2px solid #7f878a;
       border-bottom-color: transparent;
       animation: rotate 1s 0s linear infinite;
       z-index: 2; }
