@@ -1,6 +1,4 @@
-@import "../node_modules/sixteen/src/sixteen/settings";
-
-$base_font_size: 14px;
+$base_font_size: 15px;
 
 $h1-weight: 400;
 $h2-weight: 400;
@@ -27,3 +25,8 @@ $menu_subnav_min_width: 180px;
 $toolbar_height: 3.2rem;
 
 $menu_sidebar_width: 240px;
+
+$form_label_font_size: 85% !default;
+$form_help_font_size: 85% !default;
+
+@import "../node_modules/sixteen/src/sixteen/settings";

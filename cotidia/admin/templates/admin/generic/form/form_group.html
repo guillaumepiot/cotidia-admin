@@ -6,19 +6,19 @@
     </div>
     {% else %}
     {% include "admin/generic/form/label.html" %}
-    <div class="form__control{% if field|is_select %} form__control--select{% elif field|is_radio_button %} form__control--radio-btn{% endif %}">
+    <div class="form__control{% if field|is_checkbox_multiple %} form__control--checkbox-multiple{% elif field|is_input %} form__control--input{% elif field|is_select %} form__control--select{% elif field|is_radio_button %} form__control--radio-btn{% endif %}">
         {{field}}
     </div>
     {% endif %}
     {% endblock %}
     {% block form_group_footer %}
     {% if field.errors %}
-        <div class="form__error">
+        <div class="form__help">
         {% for error in field.errors %}
             {{error}}{% if not forloop.last %}<br>{% endif %}
         {% endfor %}
         </div>
-    {% elif field.help_text %}
+    {% else %}
         <div class="form__help">{{field.help_text|safe}}</div>
     {% endif %}
     {% endblock %}

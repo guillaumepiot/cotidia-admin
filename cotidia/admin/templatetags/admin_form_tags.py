@@ -12,8 +12,23 @@ def is_select(field):
 
 
 @register.filter()
+def is_input(field):
+    print(field.field.widget)
+    if isinstance(field.field.widget, forms.TextInput) \
+            or isinstance(field.field.widget, forms.EmailInput) \
+            or isinstance(field.field.widget, forms.PasswordInput):
+        return True
+    return False
+
+
+@register.filter()
 def is_checkbox(field):
     return isinstance(field.field.widget, forms.CheckboxInput)
+
+
+@register.filter()
+def is_checkbox_multiple(field):
+    return isinstance(field.field.widget, forms.CheckboxSelectMultiple)
 
 
 @register.filter()

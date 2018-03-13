@@ -3,8 +3,7 @@ body{
         .content__list,
         .content__detail,
         .content__delete,
-        .form,
-        .form__actions-inner{
+        .form {
             max-width: $laptop_width;
             padding-left: $horizontal_padding;
             padding-right: $horizontal_padding;

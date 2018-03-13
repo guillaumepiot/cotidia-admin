@@ -9,7 +9,8 @@
 
 @import "../node_modules/sixteen/src/sixteen/components/animation";
 @import "../node_modules/sixteen/src/sixteen/components/grid";  // 10KB
-@import "../node_modules/sixteen/src/sixteen/components/form";  // 12KB
+@import "../node_modules/sixteen/src/sixteen/components/form/base";  // 12KB
+@import "../node_modules/sixteen/src/sixteen/components/form/table";  // 12KB
 @import "../node_modules/sixteen/src/sixteen/components/button";  // 4KB
 @import "../node_modules/sixteen/src/sixteen/components/dialog";  // 4KB
 @import "../node_modules/sixteen/src/sixteen/components/table";  // 2KB

@@ -34,7 +34,7 @@
 
     }
     &__actions-inner{
-        padding: $vertical_padding $horizontal_padding;
+        padding-bottom: 1rem;
 
         &:after {
             content: "";
@@ -45,38 +45,7 @@
 }
 
 fieldset{
-    border-radius: $border_radius;
-    background-color: #fff;
-    border: 1px solid darken(#e7e7e7, 3%);
-    margin: 1rem;
-
-    @media screen and (max-width: $mobile-width) {
-        margin: $vertical_padding 0;
-    }
-
-    legend{
-        // background-color: $grey--light;
-        @include font-size($font_size--emphasis);
-        width: 100%;
-        padding-left: $horizontal_padding;
-        padding-right: $horizontal_padding;
-        padding-top: $vertical_padding;
-        padding-bottom: $vertical_padding;
-        border-top-left-radius: $border-radius;
-        border-top-right-radius: $border-radius;
-        // border-bottom: 1px solid darken($grey--light, 3%);
-        float: left;
-        display: block;
-    }
-
-    > .form__row {
-        padding: 0 $horizontal_padding;
-        .form__group {
-            margin-bottom: 0;
-            padding-top: $vertical_padding;
-            padding-bottom: $vertical_padding;
-        }
-    }
+    margin-top: 1rem;
 
     &.detail > .form__row {
         border-bottom: 1px solid $grey--light;
@@ -84,7 +53,8 @@ fieldset{
             border-bottom: 0;
         }
         .form__group {
-            // border-right: 1px solid $grey--light;
+            margin-top: 0.5rem;
+
             &:last-child {
                 border-right: 0;
             }
@@ -95,13 +65,6 @@ fieldset{
         padding-bottom: 0;
         padding-left: 0;
         padding-right: 0;
-
-        legend {
-            margin-left: 0;
-            margin-right: 0;
-            margin-bottom: 0;
-            width: 100%;
-        }
 
         .table {
             border: none;
