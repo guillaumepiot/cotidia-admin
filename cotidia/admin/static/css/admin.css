@@ -3465,8 +3465,7 @@ hr {
     border-color: #111315 transparent transparent;
     border-width: 5px 5px 0; }
   .form__control--radio-btn {
-    display: flex;
-    margin: 0.75rem 0; }
+    display: flex; }
     .form__control--radio-btn label {
       line-height: 1.5em !important;
       font-size: 1rem !important;
@@ -3488,7 +3487,8 @@ hr {
       user-select: none;
       transition: background 0.4s ease, border-color 0.4s ease;
       border-radius: 0;
-      border-right-width: 0; }
+      border-right-width: 0;
+      border-width: 1px; }
       @media screen and (min-width: 768px) {
         .form__control--radio-btn label {
           font-size: 1rem !important; } }
@@ -3512,7 +3512,7 @@ hr {
     .form__control--radio-btn label:last-of-type, .form__control--radio-btn input[type="radio"]:not(:checked) + label:last-of-type {
       border-top-right-radius: 2px;
       border-bottom-right-radius: 2px;
-      border-right-width: 2px; }
+      border-right-width: 1px; }
     .form__control--radio-btn input[type="radio"] {
       display: none !important; }
     .form__control--radio-btn input[type="radio"]:not(:checked) + label {
@@ -5324,24 +5324,24 @@ body.content-centered .head-bar {
   margin-right: auto; }
 @media screen and (max-width: 767px) {
   body.content-centered .form__actions-inner {
-    padding: 0.75rem 0; } }
+    padding: 1rem 0; } }
 
 .content__inner {
   padding: 0 1rem; }
 .content__list {
   overflow-x: scroll;
-  margin: 0.75rem 1rem; }
+  margin: 1rem 1rem; }
 
 .messages {
-  margin-top: 0.75rem; }
+  margin-top: 1rem; }
 
 .pagination {
-  padding: 0.75rem 0; }
+  padding: 1rem 0; }
   .pagination__link {
     display: block;
     float: left;
     border: 1px solid #6d7478;
-    padding: 0 0.75rem;
+    padding: 0 1rem;
     font-size: 1em;
     line-height: 2em;
     text-transform: uppercase; }
@@ -5432,37 +5432,35 @@ fieldset {
   .errorlist li {
     margin: 0 1rem; }
 
-.head-bar {
-  margin-bottom: 0.75rem; }
-  @media screen and (min-width: 768px) {
-    .head-bar {
-      display: flex;
-      align-items: center; } }
-  @media screen and (min-width: 768px) {
-    .head-bar .form__group {
-      margin-right: 1rem;
-      margin-bottom: 0;
-      flex: 1; } }
-  @media screen and (min-width: 768px) {
-    .head-bar .btn, .head-bar .form__control input[type="file"], .form__control .head-bar input[type="file"] {
-      align-self: center;
-      margin-right: 1rem; } }
-  .head-bar .btn:last-child, .head-bar .form__control input[type="file"]:last-child, .form__control .head-bar input[type="file"]:last-child {
-    margin-right: 0; }
-  .head-bar__item {
+@media screen and (min-width: 768px) {
+  .head-bar {
     display: flex;
-    margin-right: 1rem; }
-    .head-bar__item:last-child {
-      margin-right: 0; }
-    .head-bar__item--search {
-      flex: 1; }
-      .head-bar__item--search .form__text {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-        border-right: none; }
-      .head-bar__item--search .btn, .head-bar__item--search .form__control input[type="file"], .form__control .head-bar__item--search input[type="file"] {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0; }
+    align-items: center; } }
+@media screen and (min-width: 768px) {
+  .head-bar .form__group {
+    margin-right: 1rem;
+    margin-bottom: 0;
+    flex: 1; } }
+@media screen and (min-width: 768px) {
+  .head-bar .btn, .head-bar .form__control input[type="file"], .form__control .head-bar input[type="file"] {
+    align-self: center;
+    margin-right: 1rem; } }
+.head-bar .btn:last-child, .head-bar .form__control input[type="file"]:last-child, .form__control .head-bar input[type="file"]:last-child {
+  margin-right: 0; }
+.head-bar__item {
+  display: flex;
+  margin-right: 1rem; }
+  .head-bar__item:last-child {
+    margin-right: 0; }
+  .head-bar__item--search {
+    flex: 1; }
+    .head-bar__item--search .form__text {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right: none; }
+    .head-bar__item--search .btn, .head-bar__item--search .form__control input[type="file"], .form__control .head-bar__item--search input[type="file"] {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0; }
 
 .table {
   white-space: nowrap; }

@@ -5,8 +5,8 @@ body{
         .content__delete,
         .form {
             max-width: $laptop_width;
-            padding-left: $horizontal_padding;
-            padding-right: $horizontal_padding;
+            padding-left: 1rem;
+            padding-right: 1rem;
             margin-left: auto;
             margin-right: auto;
         }
@@ -18,7 +18,7 @@ body{
 
         @media screen and (max-width: $mobile-width) {
             .form__actions-inner {
-                padding: $vertical_padding 0;
+                padding: 1rem 0;
             }
         }
     }
@@ -26,11 +26,11 @@ body{
 
 .content{
     &__inner{
-        padding: 0 $horizontal_padding;
+        padding: 0 1rem;
     }
     &__list{
         overflow-x: scroll;
-        margin: $vertical_padding $horizontal_padding;
+        margin: 1rem 1rem;
     }
     &__detail{
     }
@@ -39,17 +39,17 @@ body{
 }
 
 .messages{
-    margin-top: $vertical_padding;
+    margin-top: 1rem;
 }
 
 .pagination{
-    padding: $vertical_padding 0;
+    padding: 1rem 0;
 
     &__link{
         display: block;
         float: left;
         border: 1px solid lighten($grey--medium, 10%);
-        padding: 0 $vertical_padding;
+        padding: 0 1rem;
         font-size: 1em;
         line-height: 2em;
         text-transform: uppercase;
