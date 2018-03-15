@@ -15,15 +15,13 @@
 {% endblock toolbar %}
 
 {% block form_actions %}
-<div class="content__inner">
-    <form method="post" action="">
-        {% csrf_token %}
-        <button type="submit" class="btn btn--delete">
-            {% trans "Confirm Delete" %}
-        </button>
-        <a href="{% get_child_admin_url app_label model_name 'update' parent object %}" class="btn btn--transparent pull-right">
-            {% trans "Cancel" %}
-        </a>
-    </form>
-</div>
+<form method="post" action="">
+    {% csrf_token %}
+    <button type="submit" class="btn btn--delete">
+        {% trans "Confirm Delete" %}
+    </button>
+    <a href="{% get_child_admin_url app_label model_name 'update' parent object %}" class="btn btn--cancel pull-right">
+        {% trans "Cancel" %}
+    </a>
+</form>
 {% endblock form_actions %}
