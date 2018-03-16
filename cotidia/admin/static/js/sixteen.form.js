@@ -3,7 +3,10 @@
 (function () {
   function FieldBehaviour (elm) {
 
-    if (! elm.value) elm.parentNode.parentNode.classList.add("form__group--inactive")
+    if (! (elm.value || elm.matches(':-webkit-autofill') || elm.matches(':focus'))) {
+      elm.parentNode.parentNode.classList.add("form__group--inactive")
+    }
+
     elm.addEventListener('focus', function() {
         elm.parentNode.parentNode.classList.add("form__group--active")
         elm.parentNode.parentNode.classList.remove("form__group--inactive")
