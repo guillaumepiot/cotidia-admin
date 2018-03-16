@@ -23,7 +23,7 @@ class {{model_name}}AdminTests(TestCase):
     def test_add_{{model_name|lower}}(self):
         """Test that we can add a new object."""
 
-        url = reverse('{{app_label}}-admin:model-add')
+        url = reverse('{{app_label}}-admin:{{model_name}}-add')
 
         # Test that the page load first
         response = self.c.get(url)

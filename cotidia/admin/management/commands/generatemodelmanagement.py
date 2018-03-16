@@ -26,20 +26,51 @@ class Command(BaseCommand):
     # Show this when the user types help
     help = "Generates the boilerplate code for a given model"
 
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--model',
+            nargs=2,
+            help="The app label and model to generate code for seperated by a"
+                 " space",
+            metavar=("app_label", "model_name")
+        )
+        parser.add_argument(
+            '--replace',
+            nargs='+',
+            help="The components you want to force replacement of even if"
+                 "the file exists"
+        )
+        parser.add_argument(
+            '--hide-snippets',
+            action='store_true',
+            help="Do not show snippets in std-out"
+        )
+        parser.add_argument(
+            '--exclude-fields',
+            nargs="+",
+            help="Removes fields from the list of fields used in views + forms etc"
+        )
+
     def handle(self, *args, **options):
-        app_label = string_prompt("Please enter the app label")
-        model_name = string_prompt("Please enter the model name")
+        if options.get("model"):
+            app_label = options.get("model")[0]
+            model_name = options.get("model")[1]
+        else:
+            app_label = string_prompt("Please enter the app label")
+            model_name = string_prompt("Please enter the model name")
+
         model_class = apps.get_app_config(app_label).get_model(model_name)
         # Gets the field names
-        fields = map(
+        fields = list(map(
             lambda x: (x.verbose_name, x.name),
             filter(  # filters non-editable fields
                 lambda x: x.editable,
                 model_class._meta.get_fields()
             )
-        )
+        ))
         structure = [
             {
+                "name": "views",
                 "path": os.path.join(
                     app_label,
                     'views',
@@ -49,6 +80,7 @@ class Command(BaseCommand):
                 "template": "generation/views.py"
             },
             {
+                "name": "forms",
                 "path": os.path.join(
                     app_label,
                     'forms',
@@ -58,6 +90,7 @@ class Command(BaseCommand):
                 "template": "generation/forms.py"
             },
             {
+                "name": "tests",
                 "path": os.path.join(
                     app_label,
                     'tests',
@@ -67,6 +100,7 @@ class Command(BaseCommand):
                 "template": "generation/tests.py"
             },
             {
+                "name": "urls",
                 "path": os.path.join(
                     app_label,
                     'urls',
@@ -88,17 +122,26 @@ class Command(BaseCommand):
                 app_label,
                 'template': "generation/snippets/menu_snippet.py"
             },
+            {
+                'snippet_name': "Factory snippet: %s/factory.py" % app_label,
+                'template': "generation/snippets/factory.py"
+            },
         ]
+
+        if options["exclude_fields"]:
+            fields = [x for x in fields if x[1] not in options["exclude_fields"]]
 
         context = {
             "model_name": model_class.__name__,
             "model_verbose_name": model_class._meta.verbose_name,
             "app_label": app_label,
-            "fields": list(fields)
-            }
+            "fields": fields
+        }
 
         for template in structure:
-            if not os.path.exists(template["path"]):
+            # checks if user has chosen to replace the template
+            replace_file = template["name"] in options["replace"]
+            if replace_file or not os.path.exists(template["path"]):
                 # Creates directorys if they do not exist
                 os.makedirs(os.path.dirname(
                     template["path"]),
@@ -109,19 +152,22 @@ class Command(BaseCommand):
                                                     context)
                     f.write(file_content)
                     f.close()
+
+                self.stdout.write("Created file %s" %
+                                  template["path"])
             else:
                 self.stdout.write("Skipping %s as file already exists" %
                                   template["path"])
 
+        if not options["hide_snippets"]:
+            snippet_string = "\n=========\nSnippets\n=========\n"
+            for snippet in snippets:
+                name = snippet["snippet_name"]
+                template = snippet["template"]
+                snippet_string += "\n" + '=' * len(name) + "\n"
+                snippet_string += name
+                snippet_string += "\n" + '=' * len(name) + "\n"
+                snippet_string += render_to_string(template, context)
+                snippet_string += "\n\n"
 
-        snippet_string = "\n=========\nSnippets\n=========\n"
-        for snippet in snippets:
-            name = snippet["snippet_name"]
-            template = snippet["template"]
-            snippet_string += "\n" + '=' * len(name) + "\n"
-            snippet_string += name
-            snippet_string += "\n" + '=' * len(name) + "\n"
-            snippet_string += render_to_string(template, context)
-            snippet_string += "\n\n"
-
-        self.stdout.write(snippet_string)
+            self.stdout.write(snippet_string)
