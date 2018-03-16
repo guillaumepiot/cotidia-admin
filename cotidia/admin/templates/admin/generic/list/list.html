@@ -1,4 +1,4 @@
-{% load i18n admin_list_tags %}
+{% load i18n admin_list_tags admin_util_tags %}
 {% if actions %}
 <form action="" method="post">
     {% csrf_token %}
@@ -29,6 +29,17 @@
     </thead>
     <tbody>
     {% for object in object_list %}
+    {% if group_by %}
+    {% ifchanged object|get_attr:group_by %}
+    <tr>
+        {% if row_actions %}
+        <th colspan="{{columns|length|add:1}}" class="table-head-cell"><strong>{{object|get_attr:group_by}}</strong></th>
+        {% else %}
+        <th colspan="{{columns|length}}" class="table-head-cell"><strong>{{object|get_attr:group_by}}</strong></th>
+        {% endif %}
+    </tr>
+    {% endifchanged %}
+    {% endif %}
     <tr onclick="window.location = '{% get_admin_url app_label model_name row_click_action object %}'" data-id="{{object.uuid}}">
         {% if actions %}
             <td onclick="event.stopPropagation()" class="action-column">

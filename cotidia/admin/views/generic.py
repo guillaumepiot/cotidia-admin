@@ -34,6 +34,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
     actions = []
     row_click_action = "update"  # or "detail"
     row_actions = ["view", "update", "delete"]
+    group_by = False
 
     def get_permission_required(self):
         if hasattr(self, "permission_required"):
@@ -64,6 +65,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
         context["add_view"] = self.add_view
         context["row_click_action"] = self.row_click_action
         context["row_actions"] = self.row_actions
+        context["group_by"] = self.group_by
 
         if self.actions:
             action_list = ()
@@ -76,7 +78,6 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
             }
 
         context["filter"] = getattr(self, "filter", None)
-
         return context
 
     def get_template_names(self):
@@ -119,6 +120,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
 
 
 class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
+    group_by = False
 
     def get_template_names(self):
 
@@ -154,7 +156,6 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
         for key in self.request.GET:
             if key[0] != '_':
                 filters[key] = self.request.GET.getlist(key)
-
 
         url_type = "detail"
         context["content_type_id"] = content_type_id
