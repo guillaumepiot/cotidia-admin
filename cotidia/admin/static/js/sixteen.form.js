@@ -3,9 +3,7 @@
 (function () {
   function FieldBehaviour (elm) {
 
-    if (! (elm.value || elm.matches(':-webkit-autofill') || elm.matches(':focus'))) {
-      elm.parentNode.parentNode.classList.add("form__group--inactive")
-    }
+    FieldSetClass(elm)
 
     elm.addEventListener('focus', function() {
         elm.parentNode.parentNode.classList.add("form__group--active")
@@ -19,6 +17,12 @@
         elm.addEventListener('keyup', function() {
             elm.style.height = elm.scrollHeight + "px";
         })
+    }
+  }
+
+  function FieldSetClass (elm) {
+    if (! (elm.value || elm.matches(':-webkit-autofill') || elm.matches(':focus'))) {
+      elm.parentNode.parentNode.classList.add("form__group--inactive")
     }
   }
 
@@ -36,7 +40,13 @@
     var elms = document.querySelectorAll('input[type="email"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="url"], select, textarea');
 
     Array.prototype.forEach.call(elms, function (elm) {
-      new FieldBehaviour(elm)
+      FieldBehaviour(elm)
+    })
+
+    document.addEventListener('formfieldsetclass', function () {
+      Array.prototype.forEach.call(elms, function (elm) {
+        FieldSetClass(elm)
+      })
     })
   }
 
