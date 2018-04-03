@@ -1,4 +1,4 @@
 {% load humanize %}
-{% if display_type == 'currency' %}{{ADMIN_DETAIL_CURRENCY|safe}}{{value|intcomma}}{% elif display_type == 'percent' %}{{value}}%{% elif display_type == 'number' %}{{value}}{% elif display_type == 'email' %}<a href="mailto:{{value}}">{{value}}</a>{% else %}{% if value %}{{value}}{% else %}<span class="text-italic text-grey--medium">No value set.</span>{% endif %}
+{% if display_type == 'currency' %}{{ADMIN_DETAIL_CURRENCY|safe}}{{value|intcomma}}{% elif display_type == 'percent' %}{{value}}%{% elif display_type == 'number' %}{{value}}{% elif display_type == 'email' %}<a href="mailto:{{value}}">{{value}}</a>{% elif display_type == 'link' %}<a href="{{value}}" target="_blank">{{value}}</a>{% elif display_type == 'image' %}{% if value %}<img src="{{value.url}}" style="max-width: 100%;">{% else %}<span class="text-italic text-grey--medium">No image uploaded.</span>{% endif %}{% else %}{% if value %}{{value}}{% else %}<span class="text-italic text-grey--medium">No value set.</span>{% endif %}
 {% endif %}{% if queryloop and not queryloop.last %}, {% endif %}
 
