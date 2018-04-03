@@ -14,6 +14,7 @@ from django.views.generic.base import TemplateView
 from django.apps import apps
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models.deletion import ProtectedError
 
 from cotidia.admin.mixins import StaffPermissionRequiredMixin
 from cotidia.admin.views.mixin import ContextMixin, ChildMixin
@@ -372,6 +373,23 @@ class AdminDeleteView(StaffPermissionRequiredMixin, ContextMixin, DeleteView):
             template,
             "admin/generic/page/confirm_delete.html",
         ]
+
+    def delete(self, request, *args, **kwargs):
+        """Catch protected objects."""
+
+        self.object = self.get_object()
+        try:
+            self.object.delete()
+        except ProtectedError:
+            messages.error(
+                self.request,
+                '{} can not be deleted because it has other objects depending on it.'.format(self.model._meta.verbose_name)
+            )
+            return self.get(request, *args, **kwargs)
+
+        success_url = self.get_success_url()
+
+        return HttpResponseRedirect(success_url)
 
 
 class AdminChildCreateView(ChildMixin, AdminCreateView):
