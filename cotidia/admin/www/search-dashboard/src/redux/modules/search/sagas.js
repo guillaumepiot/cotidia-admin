@@ -54,7 +54,25 @@ function * performSearch () {
 
   const data = yield select((state) => state.search)
 
-  const queryString = { ...data.filters }
+  const queryString = {}
+
+  for (const [key, value] of Object.entries(data.filters)) {
+    if (Object(value) === value) {
+      let val = ''
+
+      if (value.hasOwnProperty('min') && ! value.hasOwnProperty('max')) {
+        val = `${value.min}:`
+      } else if (value.hasOwnProperty('min') && value.hasOwnProperty('max')) {
+        val = `${value.min}:${value.max}`
+      } else if (! value.hasOwnProperty('min') && value.hasOwnProperty('max')) {
+        val = `:${value.max}`
+      }
+
+      queryString[key] = val
+    } else {
+      queryString[key] = value
+    }
+  }
 
   if (data.orderColumn) {
     queryString._order = `${data.orderAscending ? '' : '-'}${data.orderColumn}`

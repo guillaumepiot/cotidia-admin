@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import Text from '../filters/Text'
 import Choice from '../filters/Choice'
 import Boolean from '../filters/Boolean'
+import Number from '../filters/Number'
+import Date from '../filters/Date'
 
 export default class Filter extends Component {
   static propTypes = {
@@ -24,6 +26,14 @@ export default class Filter extends Component {
 
       case 'boolean':
         Component = Boolean
+        break
+
+      case 'number':
+        Component = Number
+        break
+
+      case 'date':
+        Component = Date
         break
 
       case 'text':
