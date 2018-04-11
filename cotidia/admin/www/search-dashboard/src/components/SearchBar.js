@@ -23,6 +23,7 @@ export default class SearchBar extends Component {
   }
 
   state = {
+    action: '',
     searchTerm: null,
   }
 
@@ -54,8 +55,46 @@ export default class SearchBar extends Component {
     this.props.manageColumns()
   }
 
+  selectBatchAction = (e) => this.setState({ action: e.target.value })
+
+  performSelectedBatchAction = () => {
+    if (this.state.action && this.state.action.length) {
+      this.props.performBatchAction(this.state.action)
+    }
+  }
+
   performBatchActionFactory = (action) => () => {
     this.props.performBatchAction(action)
+  }
+
+  renderBatchActions () {
+    if (this.props.batchActions.length === 1) {
+      return this.props.batchActions.map((action) => (
+        <button
+          className='btn btn--transparent'
+          key={action.action}
+          onClick={this.performBatchActionFactory(action.action)}
+          title={action.label}
+          type='button'
+        >
+          {action.label}
+        </button>
+      ))
+    } else if (this.props.batchActions.length > 1) {
+      return (
+        <div className='form__control'>
+          <select className='form__select' onChange={this.selectBatchAction} value={this.state.action}>
+            <option value=''>Choose an action</option>
+            { this.props.batchActions.map((action) => (
+              <option key={action.action} value={action.action}>
+                {action.label}
+              </option>
+            )) }
+          </select>
+          <button onClick={this.performSelectedBatchAction} type='button'>Go</button>
+        </div>
+      )
+    }
   }
 
   render () {
@@ -80,17 +119,7 @@ export default class SearchBar extends Component {
           <span className='fa fa-columns' />
         </button>
 
-        {this.props.batchActions.map((action) => (
-          <button
-            className='btn btn--transparent'
-            key={action.action}
-            onClick={this.performBatchActionFactory(action.action)}
-            title={action.label}
-            type='button'
-          >
-            {action.label}
-          </button>
-        ))}
+        {this.renderBatchActions()}
       </form>
     )
   }
