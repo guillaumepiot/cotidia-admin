@@ -53,7 +53,8 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
         if self.filterset:
             self.filter = self.filterset(
                 self.request.GET,
-                queryset=queryset
+                queryset=queryset,
+                request=self.request
             )
             queryset = self.filter.qs
 
