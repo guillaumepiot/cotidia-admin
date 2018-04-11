@@ -80,7 +80,7 @@ export default class SearchBar extends Component {
           {action.label}
         </button>
       ))
-    } else {
+    } else if (this.props.batchActions.length > 1) {
       return (
         <div className='form__control'>
           <select className='form__select' onChange={this.selectBatchAction} value={this.state.action}>
