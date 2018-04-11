@@ -2339,9 +2339,6 @@
  * Dialog
  */
 /**
- * Modal
- */
-/**
  * Form
  */
 /**
@@ -2599,7 +2596,7 @@ ol {
   list-style-type: decimal; }
 
 figure {
-  margin: 1.5rem 0; }
+  margin: 2rem 0; }
 
 blockquote {
   line-height: 1.414035em !important;
@@ -2608,7 +2605,7 @@ blockquote {
   font-family: Georgia, serif;
   font-style: italic;
   border-left: 4px solid #555A5D;
-  margin: 0.75rem 0;
+  margin: 1rem 0;
   padding-left: 1rem; }
   @media screen and (min-width: 768px) {
     blockquote {
@@ -2626,7 +2623,7 @@ hr {
   border-style: none;
   border-top: 1px solid #f2f2f3;
   padding: 0;
-  margin: 3rem 0; }
+  margin: 4rem 0; }
 
 /*
  * Text styles
@@ -3308,7 +3305,7 @@ hr {
           margin-right: 0;
           padding-right: 0; } }
 .form__group {
-  margin-bottom: 0.375rem;
+  margin-bottom: 0.5rem;
   position: relative; }
   .form__group--required .form__label::after {
     content: "*";
@@ -3426,7 +3423,7 @@ hr {
   .form__control ul {
     list-style: none;
     padding: 0;
-    margin: 0.375rem 0; }
+    margin: 0.5rem 0; }
   .form__control--input, .form__control--select, .form__control--textarea {
     border-bottom: 1px solid #dddddd;
     display: flex; }
@@ -3542,12 +3539,12 @@ hr {
           border-top-color: #fff;
           border-left-color: #fff;
           border-right-color: #fff; }
-  .form__control--checkbox-multiple label {
+  .form__control--checkbox-multiple label, .form__control--radio label {
     color: #7f878a;
     display: inline;
     font-size: 85%;
     line-height: 1.5em; }
-  .form__control--checkbox-multiple input:checked + label {
+  .form__control--checkbox-multiple input:checked + label, .form__control--radio input:checked + label {
     color: #111315; }
   .form__control--inline ul li {
     display: inline-block;
@@ -3599,7 +3596,7 @@ hr {
   display: none;
   z-index: 2; }
 .control-select__option {
-  padding: 0.375rem 1rem;
+  padding: 0.5rem 1rem;
   text-align: left;
   cursor: pointer; }
   .control-select__option--focused, .control-select__option:hover, .control-select__option:focus {
@@ -3626,7 +3623,7 @@ hr {
   border-top: 1px solid #dddddd;
   text-transform: uppercase;
   font-weight: 700;
-  padding: 0.375rem 1rem;
+  padding: 0.5rem 1rem;
   text-align: left; }
 
 [type=submit], button {
@@ -3638,7 +3635,7 @@ fieldset {
   background-color: #fff;
   border: 1px solid #dddddd;
   margin-bottom: 1rem; }
-  fieldset:only-child {
+  fieldset:last-child {
     margin-bottom: 0; }
   fieldset legend {
     line-height: 1.414035em !important;
@@ -3652,8 +3649,8 @@ fieldset {
     margin: 0 -1px;
     padding-left: 1rem;
     padding-right: 1rem;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     width: calc(100% + 2px); }
     @media screen and (min-width: 768px) {
       fieldset legend {
@@ -3665,6 +3662,15 @@ fieldset {
     padding: 0 1rem; }
     fieldset > .form__row .form__group {
       margin-bottom: 0.5rem; }
+  .dialog fieldset {
+    border: none;
+    margin-bottom: 0;
+    padding-top: 1rem; }
+    .dialog fieldset .form__row {
+      padding: 0 1rem; }
+      @media screen and (min-width: 768px) {
+        .dialog fieldset .form__row {
+          padding: 0 2rem; } }
 
 textarea {
   font-family: "Roboto", Helvetica, sans-serif; }
@@ -4282,18 +4288,18 @@ textarea {
     width: 100%; }
   .btn--round {
     border-radius: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 3rem;
+    height: 3rem;
     padding-left: 0;
     padding-right: 0; }
   .btn--round-large {
     border-radius: 50%;
-    width: 3.1rem;
-    height: 3.1rem;
+    width: 3.8rem;
+    height: 3.8rem;
     padding-left: 0;
     padding-right: 0; }
   .btn--large {
-    padding: 0.75rem 1.5rem; }
+    padding: 1rem 1.5rem; }
   .btn--small {
     padding: 0 0.5rem; }
     .btn--small.btn--loading:before {
@@ -4317,7 +4323,7 @@ textarea {
       margin-top: -6px;
       margin-left: -6px; }
   .btn--margin-bottom {
-    margin-bottom: 0.75rem; }
+    margin-bottom: 1rem; }
   .btn--loading:before {
     content: "";
     display: block;
@@ -4339,7 +4345,7 @@ textarea {
     margin-right: 2px;
     margin-bottom: 1px; }
     .btn--tab.btn--outline {
-      padding-bottom: 0.75rem; }
+      padding-bottom: 1rem; }
 
 .btn-group .btn, .btn-group .form__control input[type="file"], .form__control .btn-group input[type="file"] {
   margin-right: 1rem; }
@@ -4385,19 +4391,19 @@ textarea {
     .dialog--modal .dialog__content {
       border-radius: 2px;
       position: relative;
-      border: none;
+      border: 1px solid #f2f2f3;
       background-color: #fff; }
       @media screen and (max-width: 767px) {
         .dialog--modal .dialog__content {
           display: flex;
           flex-direction: column;
-          max-height: calc(100% - 0.9975rem); } }
+          max-height: calc(100% - 1.33rem); } }
     @media screen and (max-width: 767px) {
       .dialog--modal .dialog__body {
         overflow-y: auto; } }
     .dialog--modal .dialog__header {
-      background-color: #fff;
-      border-bottom: none;
+      background-color: #f8f8f9;
+      border-bottom: 1px solid #f2f2f3;
       color: #111315;
       border-top-left-radius: 2px;
       border-top-right-radius: 2px; }
@@ -4413,14 +4419,14 @@ textarea {
     width: calc(100% - 1rem);
     max-width: 540px; }
     .dialog__content:first-child {
-      margin-top: 0.5025rem; }
+      margin-top: 0.67rem; }
     .dialog__content:last-child {
-      margin-bottom: 0.5025rem; }
+      margin-bottom: 0.67rem; }
     @media screen and (min-width: 768px) {
       .dialog__content:first-child {
-        margin-top: 3rem; }
+        margin-top: 4rem; }
       .dialog__content:last-child {
-        margin-bottom: 3rem; } }
+        margin-bottom: 4rem; } }
     .dialog__content--pre {
       border: none;
       background-color: transparent; }
@@ -4498,7 +4504,7 @@ textarea {
   font-size: 1rem !important;
   border: none;
   background-color: transparent;
-  color: #7f878a;
+  color: #00abd3;
   cursor: pointer;
   padding: 0; }
   @media screen and (min-width: 768px) {
@@ -4578,7 +4584,7 @@ textarea {
       display: none; }
     .table--stack-mobile tr {
       display: block;
-      margin-bottom: 0.75rem;
+      margin-bottom: 1rem;
       margin-left: 1rem;
       margin-right: 1rem;
       border: 1px solid #eaeaed;
@@ -4603,11 +4609,11 @@ textarea {
         border-bottom: none; } }
     .table tr th {
       background-color: #f8f8f9;
-      padding: 0.5357142857rem 1rem;
+      padding: 0.7142857143rem 1rem;
       font-weight: 700;
       text-align: left; }
     .table tr td {
-      padding: 0.5357142857rem 1rem;
+      padding: 0.7142857143rem 1rem;
       border-bottom: 1px solid #eaeaed; }
 
 /** ---- FORM ----
@@ -4618,8 +4624,8 @@ textarea {
   background-color: #d3f7ff;
   color: #0082a0;
   border-radius: 2px;
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.75rem; }
+  padding: 1rem 1rem;
+  margin-bottom: 1rem; }
   .alert--error {
     background-color: #ffd5d5;
     color: #a20000; }
@@ -4640,7 +4646,7 @@ textarea {
   position: relative; }
   .tooltip:before {
     background-color: rgba(0, 0, 0, 0.75);
-    padding: 0.375rem 0.7142857143rem;
+    padding: 0.5rem 0.7142857143rem;
     border-radius: 2px;
     white-space: nowrap;
     content: attr(data-tooltip);
@@ -4750,8 +4756,8 @@ textarea {
   .tooltip--small:hover:before {
     line-height: 1.5911911657em !important;
     font-size: 0.8888888889rem !important;
-    top: -1.625rem;
-    padding: 0.1875rem 0.5rem; }
+    top: -1.75rem;
+    padding: 0.25rem 0.5rem; }
     @media screen and (min-width: 768px) {
       .tooltip--small:hover:before {
         font-size: 0.8rem !important; } }
@@ -4923,7 +4929,7 @@ textarea {
         left: -100%;
         width: 100%;
         height: 100%;
-        transition: left 0.3s ease;
+        transition: left 0.4s ease-in;
         overflow-y: scroll; }
         .menu__container .menu__item {
           float: none; }
@@ -4993,7 +4999,7 @@ textarea {
   color: #fff;
   background-color: transparent;
   background-color: var(--menu_link_background_color, transparent);
-  padding: 0.75rem 1rem;
+  padding: 1rem 1rem;
   display: block; }
   @media screen and (max-width: 1023px) {
     .menu-item__link {
@@ -5017,7 +5023,7 @@ textarea {
     border-width: 4px 4px 0;
     content: "";
     display: inline-block;
-    top: -0.1875rem;
+    top: -0.25rem;
     position: relative;
     margin-left: 0.5rem; }
 
@@ -5092,7 +5098,7 @@ textarea {
 body.menu--sidebar .menu__section {
   text-transform: uppercase;
   font-size: 0.9rem;
-  padding: 0.375rem 1rem 0 1rem;
+  padding: 0.5rem 1rem 0 1rem;
   color: var(--menu_background_color_section, #2070b7); }
 @media screen and (min-width: 768px) {
   body.menu--sidebar .menu {
@@ -5282,7 +5288,7 @@ body.menu--sidebar .menu__sub-nav {
   display: none; }
 
 .menu .form__group {
-  padding: 0.75rem 1rem; }
+  padding: 1rem 1rem; }
 .menu .form__control--select:after {
   border-style: solid;
   height: 0;
@@ -5303,7 +5309,7 @@ body.menu--sidebar .menu__sub-nav {
 .toolbar {
   background-color: #f8f8f9;
   border-bottom: 1px solid #eaeaed;
-  padding: 0.75rem 1rem; }
+  padding: 1rem 1rem; }
   .toolbar__breadcrumbs .fa.fa-angle-right {
     color: #6d7478; }
   .toolbar__item {
@@ -5371,7 +5377,7 @@ body.content-centered .head-bar {
  *
  */
 .form--action-fixed-bottom {
-  padding-bottom: 6rem; }
+  padding-bottom: 8rem; }
   .form--action-fixed-bottom .form__actions {
     position: fixed;
     bottom: 0;
@@ -5379,13 +5385,16 @@ body.content-centered .head-bar {
     width: 100%;
     background-color: #f8f8f9;
     border-top: 1px solid #f2f2f3;
-    width: 100%; }
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1rem; }
 .form__label--inline {
   display: inline-block;
-  padding: 0.75rem;
+  padding: 1rem;
   float: right; }
 .form__control ul {
-  margin: 0.75rem 0;
+  margin: 1rem 0;
   padding: 0;
   list-style: none; }
 .form__actions-inner {
@@ -5422,8 +5431,8 @@ fieldset {
 .fieldset_actions {
   padding-left: 1rem;
   padding-right: 1rem;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   background-color: #f8f8f9;
   clear: both; }
 
@@ -5478,7 +5487,7 @@ fieldset {
       content: "";
       display: block;
       position: absolute;
-      top: 1.5rem;
+      top: 2rem;
       left: calc(50% - 1rem);
       height: 2rem;
       width: 2rem;
@@ -5509,7 +5518,7 @@ fieldset {
     .table-header__actions {
       visibility: hidden;
       position: absolute;
-      top: 0.375rem;
+      top: 0.5rem;
       right: 0.5rem; }
       .table-header__actions--active {
         visibility: visible; }
