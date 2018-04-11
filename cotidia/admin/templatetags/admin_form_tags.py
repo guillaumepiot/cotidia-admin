@@ -17,6 +17,7 @@ def is_input(field):
             or isinstance(field.field.widget, forms.EmailInput) \
             or isinstance(field.field.widget, forms.URLInput) \
             or isinstance(field.field.widget, forms.Textarea) \
+            or isinstance(field.field.widget, forms.NumberInput) \
             or isinstance(field.field.widget, forms.PasswordInput):
         return True
     return False
