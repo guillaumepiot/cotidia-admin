@@ -38,14 +38,12 @@
 
     Array.prototype.forEach.call(inputs, function (input) {
       attachSixteenFormGroupBehaviour(input)
+    })
 
-      document.addEventListener('formfieldsetclass', function () {
-        console.log('formfieldsetclass event!')
-        Array.prototype.forEach.call(inputs, function (input) {
-          setFormGroupClass(input)
-        })
+    document.addEventListener('formfieldsetclass', function () {
+      Array.prototype.forEach.call(inputs, function (input) {
+        setFormGroupClass(input)
       })
-
     })
 
     // Textareas should autogrow.
