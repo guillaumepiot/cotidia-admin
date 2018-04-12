@@ -1,34 +1,31 @@
 'use strict';
 
 (function () {
-  function FieldBehaviour (elm) {
+  function attachSixteenFormGroupBehaviour (element) {
+    // First set the initial state of the field. (We have to use setTimeout as autofill may not
+    // yet have registered.)
+    setTimeout(setFormGroupClass, 0, element)
 
-    FieldSetClass(elm)
-
-    elm.addEventListener('focus', function() {
-        elm.parentNode.parentNode.classList.add("form__group--active")
-        elm.parentNode.parentNode.classList.remove("form__group--inactive")
+    // States that change as we go.
+    element.addEventListener('focus', function () {
+      setFormGroupClass(element)
     })
-    elm.addEventListener('blur', function() {
-        elm.parentNode.parentNode.classList.remove("form__group--active")
-        if (! elm.value) elm.parentNode.parentNode.classList.add("form__group--inactive")
+    element.addEventListener('blur', function () {
+      setFormGroupClass(element)
     })
-    if (elm.tagName == 'TEXTAREA'){
-        elm.addEventListener('keyup', function() {
-            elm.style.height = elm.scrollHeight + "px";
-        })
-    }
   }
 
-  function FieldSetClass (elm) {
-    if (! (elm.value || elm.matches(':-webkit-autofill') || elm.matches(':focus'))) {
-      elm.parentNode.parentNode.classList.add("form__group--inactive")
+  function setFormGroupClass (element) {
+    if (! (element.value || element.matches(':-webkit-autofill') || element.matches(':focus'))) {
+      element.parentNode.parentNode.classList.remove('form__group--active')
+      element.parentNode.parentNode.classList.add('form__group--inactive')
+    } else {
+      element.parentNode.parentNode.classList.remove('form__group--inactive')
+      element.parentNode.parentNode.classList.add('form__group--active')
     }
   }
 
   /////////////////////////////////////////////////////////////////////////////
-
-  // Bootstrap any slideshows
 
   function documentReady () {
     return (document.readyState === 'interactive' || document.readyState === 'complete')
@@ -37,15 +34,26 @@
   function bootstrap () {
     document.removeEventListener('readystatechange', bootstrap)
 
-    var elms = document.querySelectorAll('input[type="email"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="url"], select, textarea');
+    var inputs = document.querySelectorAll('input[type="email"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="url"], select, textarea')
 
-    Array.prototype.forEach.call(elms, function (elm) {
-      FieldBehaviour(elm)
+    Array.prototype.forEach.call(inputs, function (input) {
+      attachSixteenFormGroupBehaviour(input)
+
+      document.addEventListener('formfieldsetclass', function () {
+        console.log('formfieldsetclass event!')
+        Array.prototype.forEach.call(inputs, function (input) {
+          setFormGroupClass(input)
+        })
+      })
+
     })
 
-    document.addEventListener('formfieldsetclass', function () {
-      Array.prototype.forEach.call(elms, function (elm) {
-        FieldSetClass(elm)
+    // Textareas should autogrow.
+    var textareas = document.querySelectorAll('textarea')
+
+    Array.prototype.forEach.call(textareas, function (textarea) {
+      textarea.addEventListener('keyup', function () {
+        textarea.style.height = textarea.scrollHeight + 'px'
       })
     })
   }
