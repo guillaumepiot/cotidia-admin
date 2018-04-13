@@ -8,20 +8,25 @@
 
     // States that change as we go.
     element.addEventListener('focus', function () {
-      setFormGroupClass(element)
+      setTimeout(setFormGroupClass, 0, element)
     })
     element.addEventListener('blur', function () {
-      setFormGroupClass(element)
+      setTimeout(setFormGroupClass, 0, element)
     })
   }
 
   function setFormGroupClass (element) {
-    if (! (element.value || element.matches(':-webkit-autofill') || element.matches(':focus'))) {
-      element.parentNode.parentNode.classList.remove('form__group--active')
-      element.parentNode.parentNode.classList.add('form__group--inactive')
+    var group = element.parentNode.parentNode
+
+    if (element.matches(':focus')) {
+      group.classList.remove('form__group--inactive')
+      group.classList.add('form__group--active')
+    } else if (element.value || element.matches(':-webkit-autofill')) {
+      group.classList.remove('form__group--inactive')
+      group.classList.remove('form__group--active')
     } else {
-      element.parentNode.parentNode.classList.remove('form__group--inactive')
-      element.parentNode.parentNode.classList.add('form__group--active')
+      group.classList.remove('form__group--active')
+      group.classList.add('form__group--inactive')
     }
   }
 
