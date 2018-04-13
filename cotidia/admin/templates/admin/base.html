@@ -19,13 +19,28 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         {% block content %}{% endblock content %}
-
-        <script src="{% static "js/es5-shim.min.js" %}"></script>
-        <script src="{% static "js/es5-sham.min.js" %}"></script>
+        {% block footer_scripts %}
         <script src="{% static "js/cookiesHelper.js" %}"></script>
         <script src="{% static "js/menu.js" %}"></script>
         <script src="{% static "js/sixteen.form.js" %}"></script>
         <script src="{% static "js/sixteen.tabs.js" %}"></script>
-        {% block footer_scripts %}{% endblock footer_scripts %}
+        {% endblock footer_scripts %}
+        <noscript id="deferred-styles">
+            <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+        </noscript>
+        <script>
+            var loadDeferredStyles = function() {
+                var addStylesNode = document.getElementById("deferred-styles");
+                var replacement = document.createElement("div");
+                replacement.innerHTML = addStylesNode.textContent;
+                document.body.appendChild(replacement)
+                addStylesNode.parentElement.removeChild(addStylesNode);
+            };
+            var raf = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+            window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+            if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
+            else window.addEventListener('load', loadDeferredStyles);
+        </script>
+        {% csrf_token %}
     </body>
 </html>
