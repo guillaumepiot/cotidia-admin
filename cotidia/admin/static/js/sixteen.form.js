@@ -8,10 +8,10 @@
 
     // States that change as we go.
     element.addEventListener('focus', function () {
-      setFormGroupClass(element)
+      setTimeout(setFormGroupClass, 0, element)
     })
     element.addEventListener('blur', function () {
-      setFormGroupClass(element)
+      setTimeout(setFormGroupClass, 0, element)
     })
   }
 
