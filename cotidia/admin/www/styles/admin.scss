@@ -3,26 +3,31 @@
 
 // Sixteen framework
 @import "settings";
+
 @import "../node_modules/sixteen/src/sixteen/components/reset";
 @import "../node_modules/sixteen/src/sixteen/components/util";
-@import "../node_modules/sixteen/src/sixteen/components/type";  // 1KB
+@import "../node_modules/sixteen/src/sixteen/components/type";
 
+@import "../node_modules/sixteen/src/sixteen/components/alert";
 @import "../node_modules/sixteen/src/sixteen/components/animation";
-@import "../node_modules/sixteen/src/sixteen/components/grid";  // 10KB
-@import "../node_modules/sixteen/src/sixteen/components/form/base";  // 12KB
-@import "../node_modules/sixteen/src/sixteen/components/form/table";  // 12KB
-@import "../node_modules/sixteen/src/sixteen/components/button";  // 4KB
-@import "../node_modules/sixteen/src/sixteen/components/dialog";  // 4KB
-@import "../node_modules/sixteen/src/sixteen/components/table";  // 2KB
-@import "../node_modules/sixteen/src/sixteen/components/alert";  // < 1KB
-@import "../node_modules/sixteen/src/sixteen/components/tooltip";  // 3KB
-@import "../node_modules/sixteen/src/sixteen/components/datepicker";  // 1KB
-@import "../node_modules/sixteen/src/sixteen/components/label";  // 1KB
-@import "../node_modules/sixteen/src/sixteen/components/badge";  // < 1KB
-@import "../node_modules/sixteen/src/sixteen/components/tag";  // < 1KB
+@import "../node_modules/sixteen/src/sixteen/components/badge";
+@import "../node_modules/sixteen/src/sixteen/components/button";
+@import "../node_modules/sixteen/src/sixteen/components/datepicker";
+@import "../node_modules/sixteen/src/sixteen/components/dialog";
+
+// Form
+@import "../node_modules/sixteen/src/sixteen/components/form/base";
+@import "../node_modules/sixteen/src/sixteen/components/form/table";
+
+@import "../node_modules/sixteen/src/sixteen/components/grid";
+@import "../node_modules/sixteen/src/sixteen/components/label";
 @import "../node_modules/sixteen/src/sixteen/components/menu";
+@import "../node_modules/sixteen/src/sixteen/components/table";
+@import "../node_modules/sixteen/src/sixteen/components/tag";
+@import "../node_modules/sixteen/src/sixteen/components/tab";
+@import "../node_modules/sixteen/src/sixteen/components/tooltip";
 @import "../node_modules/sixteen/src/sixteen/components/layout";
-@import "../node_modules/sixteen/src/sixteen/components/util";
+
 
 @import "menu";
 @import "toolbar";
