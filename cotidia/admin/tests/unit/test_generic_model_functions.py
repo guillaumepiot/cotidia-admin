@@ -1,6 +1,8 @@
+from datetime import timedelta, datetime
 from rest_framework.test import APITestCase
 
 from django.urls import reverse
+from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
 
 from cotidia.admin.tests.models import GenericRecord, GenericRecordNoMeta
@@ -11,7 +13,7 @@ from django.conf import settings
 
 
 class AdminSearchDashboardTests(APITestCase):
-    @fixtures.normal_user
+    @fixtures.admin_user
     def setUp(self):
         pass
 
@@ -101,12 +103,12 @@ class AdminSearchDashboardTests(APITestCase):
         GenericRecordFactory(numeric_field=99)
         GenericRecordFactory(numeric_field=101)
         self.client.credentials(
-            HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
+            HTTP_AUTHORIZATION='Token ' + self.admin_user_token.key
         )
         content_type = ContentType.objects.get_for_model(GenericRecord)
         url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
         data = {}
-        response = self.client.get(url, data) 
+        response = self.client.get(url, data)
         self.assertEqual(2, response.data['count'])
 
     def test_getting_data_char_filter(self):
@@ -122,7 +124,7 @@ class AdminSearchDashboardTests(APITestCase):
             GenericRecordFactory(char_field="world")
 
         self.client.credentials(
-            HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
+            HTTP_AUTHORIZATION='Token ' + self.admin_user_token.key
         )
         content_type = ContentType.objects.get_for_model(GenericRecord)
         url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
@@ -154,7 +156,7 @@ class AdminSearchDashboardTests(APITestCase):
             GenericRecordFactory(text_field="world")
 
         self.client.credentials(
-            HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
+            HTTP_AUTHORIZATION='Token ' + self.admin_user_token.key
         )
         content_type = ContentType.objects.get_for_model(GenericRecord)
         url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
@@ -185,7 +187,7 @@ class AdminSearchDashboardTests(APITestCase):
             GenericRecordFactory(boolean_field=True)
 
         self.client.credentials(
-            HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
+            HTTP_AUTHORIZATION='Token ' + self.admin_user_token.key
         )
         content_type = ContentType.objects.get_for_model(GenericRecord)
         url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
@@ -215,7 +217,7 @@ class AdminSearchDashboardTests(APITestCase):
             GenericRecordFactory(choice_field="opt1")
 
         self.client.credentials(
-            HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
+            HTTP_AUTHORIZATION='Token ' + self.admin_user_token.key
         )
         content_type = ContentType.objects.get_for_model(GenericRecord)
         url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
@@ -242,7 +244,7 @@ class AdminSearchDashboardTests(APITestCase):
             GenericRecordFactory(numeric_field=7)
 
         self.client.credentials(
-            HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
+            HTTP_AUTHORIZATION='Token ' + self.admin_user_token.key
         )
         content_type = ContentType.objects.get_for_model(GenericRecord)
         url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
@@ -269,7 +271,7 @@ class AdminSearchDashboardTests(APITestCase):
             GenericRecordFactory(numeric_field=1)
 
         self.client.credentials(
-            HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
+            HTTP_AUTHORIZATION='Token ' + self.admin_user_token.key
         )
         content_type = ContentType.objects.get_for_model(GenericRecord)
         url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
@@ -296,7 +298,7 @@ class AdminSearchDashboardTests(APITestCase):
             GenericRecordFactory(numeric_field=10)
 
         self.client.credentials(
-            HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
+            HTTP_AUTHORIZATION='Token ' + self.admin_user_token.key
         )
         content_type = ContentType.objects.get_for_model(GenericRecord)
         url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
@@ -323,7 +325,7 @@ class AdminSearchDashboardTests(APITestCase):
             GenericRecordFactory(numeric_field=15)
 
         self.client.credentials(
-            HTTP_AUTHORIZATION='Token ' + self.normal_user_token.key
+            HTTP_AUTHORIZATION='Token ' + self.admin_user_token.key
         )
         content_type = ContentType.objects.get_for_model(GenericRecord)
         url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
@@ -340,3 +342,116 @@ class AdminSearchDashboardTests(APITestCase):
 
         for x in response.data['results']:
             self.assertTrue(x['numeric_field'] >= 10 and x['numeric_field'] <=25)
+
+
+    def test_getting_data_date_filter_equal(self):
+        # Creates elements that we are going to test on
+        tz = timezone.now().date()
+        tz2 = timezone.now().date() + timedelta(days=2)
+        for i in range(1, 8):
+            GenericRecordFactory(id=i, date_field=tz)
+
+        for i in range(20):
+            GenericRecordFactory(date_field=tz2)
+
+        self.client.credentials(
+            HTTP_AUTHORIZATION='Token ' + self.admin_user_token.key
+        )
+        content_type = ContentType.objects.get_for_model(GenericRecord)
+        url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
+        data = {"date_field":  tz.strftime("%Y-%m-%d")}
+        response = self.client.get(url, data)
+
+        self.assertEqual(7, response.data['count'])
+
+        # Checks the filter text is in the "next" link in the pagination object
+        # self.assertIn("numeric_field=7", response.data['next'])
+
+        # Checks the ids that matched the filter are included 
+        self.assertIn(7, [x['id'] for x in response.data['results']])
+
+        for x in response.data['results']:
+            self.assertEqual(tz.strftime("%Y-%m-%d"), x['date_field'])
+
+    def test_getting_data_date_filter_lte(self):
+        tz = timezone.now().date()
+        # Creates elements that we are going to test on
+        for i in range(1, 21):
+            GenericRecordFactory(id=i, date_field=tz - timedelta(days=i))
+
+        for i in range(10):
+            GenericRecordFactory(date_field=tz + timedelta(days=i))
+
+        self.client.credentials(
+            HTTP_AUTHORIZATION='Token ' + self.admin_user_token.key
+        )
+        content_type = ContentType.objects.get_for_model(GenericRecord)
+        url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
+        data = {"date_field": ":%s" % tz.strftime("%Y-%m-%d")}
+        response = self.client.get(url, data)
+        self.assertEqual(21, response.data['count'])
+
+        # Checks the filter text is in the "next" link in the pagination object
+        # self.assertIn("numeric_field=%3A11", response.data['next'])
+
+        # Checks the ids that matched the filter are included 
+        self.assertIn(7, [x['id'] for x in response.data['results']])
+
+        for x in response.data['results']:
+            self.assertTrue(
+                datetime.strptime(x['date_field'], "%Y-%m-%d").date() <= tz
+            )
+
+    def test_getting_data_date_filter_gte(self):
+        tz = timezone.now().date()
+        # Creates elements that we are going to test on
+        for i in range(1, 21):
+            GenericRecordFactory(id=i, date_field=tz + timedelta(days=i))
+
+        for i in range(10):
+            GenericRecordFactory(date_field=tz - timedelta(days=i))
+
+        self.client.credentials(
+            HTTP_AUTHORIZATION='Token ' + self.admin_user_token.key
+        )
+        content_type = ContentType.objects.get_for_model(GenericRecord)
+        url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
+        data = {"date_field": "%s:" % tz.strftime("%Y-%m-%d")}
+        response = self.client.get(url, data)
+
+        self.assertEqual(21, response.data['count'])
+
+        # Checks the filter text is in the "next" link in the pagination object
+        # self.assertIn("numeric_field=%3A11", response.data['next'])
+
+        # Checks the ids that matched the filter are included 
+        self.assertIn(7, [x['id'] for x in response.data['results']])
+
+        for x in response.data['results']:
+            self.assertTrue(datetime.strptime(x['date_field'],
+                                              '%Y-%m-%d').date() >= tz)
+
+    def test_getting_data_date_filter_range(self):
+        tz = timezone.now().date()
+        # Creates elements that we are going to test on
+        tz = timezone.now().date()
+        tz1 = tz + timedelta(days=11)
+        tz2 = tz + timedelta(days=20)
+        for i in range(1, 31):
+            GenericRecordFactory(id=i, date_field=tz + timedelta(days=i))
+
+        self.client.credentials(
+            HTTP_AUTHORIZATION='Token ' + self.admin_user_token.key
+        )
+        content_type = ContentType.objects.get_for_model(GenericRecord)
+        url = reverse("generic-api:object-list", kwargs={"app_label": content_type.app_label, "model": content_type.model})
+        data = {"date_field": "%s:%s" % (tz1.strftime("%Y-%m-%d"), tz2.strftime("%Y-%m-%d"))}
+        response = self.client.get(url, data)
+
+        self.assertEqual(10, response.data['count'])
+
+        for x in response.data['results']:
+            self.assertTrue(datetime.strptime(x['date_field'],
+                                              '%Y-%m-%d').date() >= tz1)
+            self.assertTrue(datetime.strptime(x['date_field'],
+                                              '%Y-%m-%d').date() <= tz2)

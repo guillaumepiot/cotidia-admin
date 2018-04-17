@@ -24,7 +24,7 @@ from cotidia.admin.serializers import SortSerializer
 
 PAGE_SIZE = 50
 number_pattern = r"(\-?[0-9]+(?:\.[0-9]+)?)"
-date_pattern = r"(\d{4}-[01]\d-[0-3]\d)"
+date_pattern = r"([0-9]{4}-[0-9]{2}-[0-9]{2})"
 api_patterns = {
     "equal": r"^%s$",
     "lte": r"^:%s$",
@@ -72,7 +72,7 @@ def filter_comparable(field_regex, data_type):
 filter_number = filter_comparable(number_pattern, Decimal)
 filter_date = filter_comparable(
     date_pattern,
-    lambda x: datetime.strptime(x, "%Y-%m-%d")
+    lambda x: datetime.datetime.strptime(x, "%Y-%m-%d").date()
 )
 
 
@@ -112,7 +112,7 @@ def field_filter(filter_fn, query_set, field, values):
 
 
 def date_filter(query_set, field, values):
-    return field_filter(filter_number, query_set, field, values)
+    return field_filter(filter_date, query_set, field, values)
 
 
 def filter_general_query(serializer, values, queryset, query_fields, suffix="__icontains"):
