@@ -24,7 +24,7 @@ from cotidia.admin.serializers import SortSerializer
 
 PAGE_SIZE = 50
 number_pattern = r"(\-?[0-9]+(?:\.[0-9]+)?)"
-date_pattern = r"([0-9]{4}\-[0-9]{2}\-[0-9]{2})"
+date_pattern = r"([0-9]{4}-[0-9]{2}-[0-9]{2})"
 api_patterns = {
     "equal": r"^%s$",
     "lte": r"^:%s$",
