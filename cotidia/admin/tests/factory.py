@@ -1,6 +1,6 @@
 import factory
 import factory.fuzzy
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 from cotidia.admin.tests.models import GenericRecord, GenericRecordNoMeta, GenericRecordTwo
 
 TEST_CHOICES = (
@@ -11,12 +11,14 @@ TEST_CHOICES = (
 INDEX = 0
 
 class GenericRecordNoMetaFactory(factory.django.DjangoModelFactory):
+    date_field = factory.fuzzy.FuzzyDate(date.today() - timedelta(weeks=5))
     class Meta:
         model = GenericRecordNoMeta
 
 
 class GenericRecordNoMeta2Factory(factory.django.DjangoModelFactory):
     char_field = factory.fuzzy.FuzzyText(length=90)
+    date_field = factory.fuzzy.FuzzyDate(date.today() - timedelta(weeks=5))
     class Meta:
         model = GenericRecordTwo
 
