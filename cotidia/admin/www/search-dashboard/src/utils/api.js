@@ -52,7 +52,6 @@ async function _fetch (method, url, data = {}, headers = {}) {
     responseText = await responseForText.text()
   }
 
-
   return {
     ok: response.ok,
     status: response.status,
