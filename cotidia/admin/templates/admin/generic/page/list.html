@@ -9,14 +9,14 @@
 
 {% block toolbar %}
     {% if add_view %}
-    <a href="{% get_admin_url app_label model_name 'add' %}" class="btn btn--create btn--small pull-right">
+    <a href="{% get_admin_url app_label model_name 'add' %}" class="toolbar__item btn btn--create btn--small">
         <span class="fa fa-plus"></span>
         {% blocktrans with verbose_name as verbose_name %}
             Add {{verbose_name}}
         {% endblocktrans %}
     </a>
     {% endif %}
-    <span class="toolbar__title">{{verbose_name_plural}}</span>
+    <div class="toolbar__breadcrumbs">{{verbose_name_plural}}</div>
 {% endblock toolbar %}
 
 {% block page_content %}

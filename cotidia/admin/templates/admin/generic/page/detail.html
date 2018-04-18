@@ -22,17 +22,17 @@
             Edit
         {% endblocktrans %}
     </a>
-    <span class="toolbar__breadcrumbs">
+    <div class="toolbar__breadcrumbs">
         <a href="{% get_admin_url app_label model_name 'list' %}">{{verbose_name_plural}}</a>
         &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
         {% blocktrans with verbose_name as verbose_name %}
             {{object}}
         {% endblocktrans %}
-    </span>
+    </div>
 {% endblock toolbar %}
 
 {% block page_content %}
-<div class="form">
+<div class="content__detail">
     {% for fieldset in fieldsets %}
         {% if fieldset.template_name %}
             {% include fieldset.template_name with object=object %}

@@ -22,7 +22,7 @@
 {% endblock body_class %}
 
 {% block toolbar %}
-    <span class="toolbar__breadcrumbs">
+    <div class="toolbar__breadcrumbs">
         <a href="{% get_admin_url app_label model_name 'list' %}">{{verbose_name_plural}}</a>
         &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
         {% if object %}
@@ -36,7 +36,7 @@
                 Add {{verbose_name}}
             {% endblocktrans %}
         {% endif %}
-    </span>
+    </div>
 {% endblock toolbar %}
 
 

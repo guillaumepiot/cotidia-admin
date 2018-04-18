@@ -9,14 +9,13 @@
 {% endblock body_class %}
 
 {% block toolbar %}
-
     <a href="{% get_admin_url app_label model_name 'add' %}" class="btn btn--create btn--small toolbar__item">
         <span class="fa fa-plus"></span>
         {% blocktrans with verbose_name as verbose_name %}
             Add {{verbose_name}}
         {% endblocktrans %}
     </a>
-    <span class="toolbar__title">{{verbose_name_plural}}</span>
+    <div class="toolbar__breadcrumbs">{{verbose_name_plural}}</div>
 {% endblock toolbar %}
 
 {% block page_content %}

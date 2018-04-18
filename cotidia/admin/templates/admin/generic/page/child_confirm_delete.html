@@ -1,7 +1,7 @@
 {% extends "admin/generic/page/confirm_delete.html" %}{% load i18n admin_list_tags %}
 
 {% block toolbar %}
-    <span class="toolbar__breadcrumbs">
+    <div class="toolbar__breadcrumbs">
         <a href="{% get_admin_url parent_app_label parent_model_name 'detail' parent %}">
             {{parent}}
         </a>
@@ -11,7 +11,7 @@
         </a>
         &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
         {% trans "Confirm delete" %}
-    </span>
+    </div>
 {% endblock toolbar %}
 
 {% block form_actions %}

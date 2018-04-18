@@ -6,16 +6,24 @@
 .toolbar{
     background-color: $grey--lighter;
     border-bottom: 1px solid darken($grey--lighter, 5%);
-    padding: $vertical_padding $horizontal_padding;
+    padding: 0 1rem;
 
     &__breadcrumbs{
+        display: inline-block;
+        line-height: 3.2rem;
+
         .fa.fa-angle-right{
             color: lighten($grey--medium, 10%);
         }
     }
 
     &__item{
+        display: inline-block;
         margin-left: $horizontal_padding;
         float: right;
+
+        &.btn--small {
+            margin-top: 0.6rem;
+        }
     }
 }

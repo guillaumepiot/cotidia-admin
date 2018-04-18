@@ -5344,12 +5344,18 @@ body.menu--sidebar .menu__sub-nav {
 .toolbar {
   background-color: #f8f8f9;
   border-bottom: 1px solid #eaeaed;
-  padding: 1rem 1rem; }
-  .toolbar__breadcrumbs .fa.fa-angle-right {
-    color: #6d7478; }
+  padding: 0 1rem; }
+  .toolbar__breadcrumbs {
+    line-height: 3.2rem;
+    display: inline-block; }
+    .toolbar__breadcrumbs .fa.fa-angle-right {
+      color: #6d7478; }
   .toolbar__item {
+    display: inline-block;
     margin-left: 1rem;
     float: right; }
+    .toolbar__item.btn--small {
+      margin-top: 0.6rem; }
 
 body.content-centered .content__list,
 body.content-centered .content__detail,
@@ -5370,6 +5376,9 @@ body.content-centered .head-bar {
 .content__inner {
   padding: 0 1rem; }
 .content__list {
+  overflow-x: scroll;
+  margin: 1rem 1rem; }
+.content__detail {
   overflow-x: scroll;
   margin: 1rem 1rem; }
 
