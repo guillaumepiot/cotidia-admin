@@ -57,7 +57,8 @@ function * performSearch () {
   const queryString = {}
 
   for (const [key, value] of Object.entries(data.filters)) {
-    if (Object(value) === value) {
+    // If the value is an object, trest it specially.
+    if ((Object(value) === value) && (! Array.isArray(value))) {
       let val = ''
 
       if (value.hasOwnProperty('min') && ! value.hasOwnProperty('max')) {
@@ -70,6 +71,7 @@ function * performSearch () {
 
       queryString[key] = val
     } else {
+      // Anything else (primitives and arrays) can go in raw and be handled by generateURL.
       queryString[key] = value
     }
   }
