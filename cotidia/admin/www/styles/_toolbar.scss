@@ -4,8 +4,8 @@
  */
 
 .toolbar{
-    background-color: $grey--lighter;
-    border-bottom: 1px solid darken($grey--lighter, 5%);
+    background-color: lighten($grey--lighter, 6%);
+    border-bottom: 1px solid $grey--lighter;
     padding: 0 1rem;
 
     &__breadcrumbs{
