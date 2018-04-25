@@ -1,0 +1,7 @@
+{
+  "name": "cotidia-admin",
+  "version": "0.1.0",
+  "dependencies": {
+    "@frctl/fractal": "^1.1.7"
+  }
+}
