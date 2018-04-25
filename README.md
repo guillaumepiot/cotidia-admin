@@ -51,3 +51,18 @@ TEMPLATES = [
 ]
 ```
 
+## Styleguide
+
+```bash
+$ cd styleguide
+$ npm install
+$ fractal start --sync
+```
+
+Run the CSS watch
+
+```bash
+$ cd cotidia/admin/www/
+$ grunt watch-backend-styles
+```
+
