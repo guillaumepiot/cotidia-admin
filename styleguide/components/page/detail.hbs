@@ -1,0 +1,108 @@
+{{> @menu }}
+{{> @toolbar }}
+
+<div class="content">
+    {{> @alert--success }}
+
+    <div class="form">
+        <fieldset class="table-view">
+            <legend>Content</legend>
+            <table class="table table--clickable table--admin-mobile-view">
+                <thead>
+                    <tr>
+                        <th>Language</th>
+                        <th>Title</th>
+                        <th>URL</th>
+                        <th>Content</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr onclick="window.location = '/?preview';">
+                        <td><img src="https://s3.eu-west-2.amazonaws.com/native-finance-staging-static/img/flags/en.png" style="width:16px; position: relative; top:3px;">English <span class="pull-right hidden-tablet hidden-laptop hidden-desktop">Home</span></td>
+                        <td>Home <a class="" href="/admin/cms/page/1/en/title/1/update/"><span class="fa fa-pencil"></span></a></td>
+                        <td>/home/ <a href="/admin/cms/page/1/en/url/1/update/"><span class="fa fa-pencil"></span></a></td>
+                        <td><a class="[ btn btn--small btn--primary ]" href="/?preview"><span class="fa fa-file-text"></span> Preview &amp; Edit</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+        <fieldset class="table-view">
+            <legend>SEO &amp; Social meta data</legend>
+            <div class="form__row">
+                <div class="form__group">
+                    <p>Set the meta data required for search engine to find and index your page properly. Also set the social meta data requried to enhance the Facebook, Twitter and Google sharing.</p>
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Language</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><img src="https://s3.eu-west-2.amazonaws.com/native-finance-staging-static/img/flags/en.png" style="width:16px; position: relative; top:3px;">English</td>
+                        <td><a class="[ btn btn--small btn--change ]" href="/admin/meta-data/1/update?next=/admin/cms/page/1/"><span class="fa fa-file-text"></span> Edit</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+        <fieldset class="table-view">
+            <legend>Dataset</legend>
+            <div class="form__row">
+                <div class="form__group">
+                    <p>The dataset is a set of values which can be used for customisation of the page data, for example to use in meta data for search engine optimisation.</p>
+                </div>
+            </div>
+            <div class="form__row">
+                <div class="form__group"><a class="btn btn--small btn--create" href="/admin/cms/page/1/update/#dataset">Select dataset</a></div>
+            </div>
+        </fieldset>
+        <fieldset class="detail">
+            <legend>Settings</legend>
+            <div class="form__row">
+                <div class="form__group">
+                    <label class="form__label">Display title</label>
+                    <div class="form__control">Home</div>
+                </div>
+                <div class="form__group">
+                    <label class="form__label">Template</label>
+                    <div class="form__control">cms/home.html</div>
+                </div>
+            </div>
+            <div class="form__row">
+                <div class="form__group">
+                    <label class="form__label">Home</label>
+                    <div class="form__control"><span class="fa fa-check text-green"></span></div>
+                </div>
+                <div class="form__group">
+                    <label class="form__label">Hide from navigation</label>
+                    <div class="form__control"><span class="fa fa-close text-red"></span></div>
+                </div>
+            </div>
+            <div class="form__row">
+                <div class="form__group">
+                    <label class="form__label">Unique page identifier</label>
+                    <div class="form__control"></div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="detail">
+            <legend>Redirect</legend>
+            <div class="form__row">
+                <div class="form__group">
+                    <label class="form__label">Redirect to an internal page</label>
+                    <div class="form__control"></div>
+                </div>
+                <div class="form__group">
+                    <label class="form__label">Redirect to a URL</label>
+                    <div class="form__control"><span class="text-italic text-grey--medium">No value set.</span></div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form__actions">
+            <div class="form__actions-inner"><a class="btn btn--change" href="/admin/cms/page/1/update/"><span class="fa fa-cog"></span> Settings</a> <a class="btn btn--cancel pull-right" href="/admin/cms/">Back</a></div>
+        </div>
+    </div>
+</div>
