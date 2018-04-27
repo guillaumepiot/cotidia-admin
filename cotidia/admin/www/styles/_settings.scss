@@ -13,13 +13,17 @@ $menu_link_background_color_active: lighten(#00213E, 6%);
 $menu_link_background_color_active_mobile: lighten(#00213E, 6%);
 $menu_background_color_section: desaturate(lighten($menu_background_color, 30%), 30%);
 
-$menu_subnav_min_width: 180px;
-
-$toolbar_height: 3.2rem;
-
-$menu_sidebar_width: 240px;
-
 $form_label_font_size: 85% !default;
 $form_help_font_size: 85% !default;
 
 @import "../node_modules/sixteen/src/sixteen/settings";
+
+// Admin specific
+$menu_sidebar_width: 240px;
+$menu_subnav_min_width: 180px;
+$toolbar_menu_height: 3.2rem;
+$toolbar_breadcrumbs_height: 3.2rem;
+$toolbar_menu_background_color: #00213E;
+$toolbar_profile_avatar_background_color: lighten(#00213E, 20%);
+$toolbar_profile_avatar_text_color: #fff;
+

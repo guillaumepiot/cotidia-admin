@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 /**
  * Defines the toolbar.
  *
@@ -6,11 +8,20 @@
 .toolbar{
     background-color: lighten($grey--lighter, 6%);
     border-bottom: 1px solid $grey--lighter;
-    padding: 0 1rem;
+
+    &__menu {
+        background-color: $toolbar_menu_background_color;
+        background-color: var(--toolbar_menu_background_color, $toolbar_menu_background_color);
+        line-height: 3.2rem;
+        padding: 0 1rem;
+        display: flex;
+        justify-content: flex-end;
+    }
 
     &__breadcrumbs{
         display: inline-block;
         line-height: 3.2rem;
+        padding: 0 1rem;
 
         .fa.fa-angle-right{
             color: lighten($grey--medium, 10%);
@@ -27,3 +38,80 @@
         }
     }
 }
+
+.toolbar-profile {
+    position: relative;
+
+    &:hover {
+        cursor: pointer;
+
+        .toolbar-profile__menu {
+            display: block;
+        }
+
+        .toolbar-profile__avatar::after {
+            @include triangle(down, 10px, 5px, rgba(255, 255, 255, 1));
+        }
+    }
+
+    &__avatar {
+        @include font-size($font_size--normal);
+        background-color: $toolbar_profile_avatar_background_color;
+        background-color: var(--toolbar_profile_avatar_background_color, $toolbar_profile_avatar_background_color);
+        color: $toolbar_profile_avatar_text_color;
+        color: var(--toolbar_profile_avatar_text_color, $toolbar_profile_avatar_text_color);
+        display: inline-block;
+        width: $toolbar_menu_height - 0.5rem;
+        height: $toolbar_menu_height - 0.5rem;
+        border-radius: ($toolbar_menu_height - 0.5rem) / 2;
+        border-width: 0;
+        text-align: center;
+        position: relative;
+        margin-right: 1rem;
+
+        &::after {
+            content: "";
+            position: absolute;
+            pointer-events: none;
+            right: -1rem;
+            top: ($toolbar_menu_height - 0.5rem) / 2;
+            @include triangle(down, 10px, 5px, rgba(255, 255, 255, 0.5));
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__menu {
+        display: none;
+        position: absolute;
+        top: $toolbar_menu_height;
+        right: -0.5rem;
+        width: 240px;
+        background-color: #fff;
+        border: 1px solid $grey--light;
+        z-index: 1;
+
+        &--active {
+            display: block;
+        }
+    }
+}
+
+.toolbar-profile-menu {
+    &__link {
+        display: block;
+        padding: 0 1rem;
+
+        &:hover {
+            background-color: $grey--lighter;
+        }
+    }
+}
+
+
