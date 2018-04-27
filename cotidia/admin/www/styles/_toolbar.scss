@@ -6,8 +6,8 @@
  */
 
 .toolbar{
-    background-color: lighten($grey--lighter, 6%);
-    border-bottom: 1px solid $grey--lighter;
+    // background-color: lighten($grey--lighter, 6%);
+    // border-bottom: 1px solid $grey--lighter;
 
     &__menu {
         background-color: $toolbar_menu_background_color;
@@ -19,10 +19,13 @@
         align-items: center;
     }
 
+    &__submenu {
+        padding: 0 1rem;
+    }
+
     &__breadcrumbs{
         display: inline-block;
         line-height: 3.2rem;
-        padding: 0 1rem;
 
         .fa.fa-angle-right{
             color: lighten($grey--medium, 10%);
@@ -31,12 +34,9 @@
 
     &__item{
         display: inline-block;
+        margin-top: 0.7rem;
         margin-left: $horizontal_padding;
         float: right;
-
-        &.btn--small {
-            margin-top: 0.6rem;
-        }
     }
 }
 

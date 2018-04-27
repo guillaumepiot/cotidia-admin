@@ -20,7 +20,9 @@
             {% endif %}
         </div>
         {% endblock toolbar_menu %}
-        {% block toolbar %}{% endblock toolbar %}
+        <div class="toolbar__submenu">
+            {% block toolbar %}{% endblock toolbar %}
+        </div>
     </div>
     <div class="content">
         {% include "admin/generic/messages.html" %}

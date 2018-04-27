@@ -5343,29 +5343,26 @@ body.menu--sidebar .menu__sub-nav {
  * Defines the toolbar.
  *
  */
-.toolbar {
-  background-color: #f7f9fa;
-  border-bottom: 1px solid #E5EBED; }
-  .toolbar__menu {
-    background-color: #00213E;
-    background-color: var(--toolbar_menu_background_color, #00213E);
-    line-height: 3.2rem;
-    padding: 0 1rem;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center; }
-  .toolbar__breadcrumbs {
-    display: inline-block;
-    line-height: 3.2rem;
-    padding: 0 1rem; }
-    .toolbar__breadcrumbs .fa.fa-angle-right {
-      color: #6d7478; }
-  .toolbar__item {
-    display: inline-block;
-    margin-left: 1rem;
-    float: right; }
-    .toolbar__item.btn--small {
-      margin-top: 0.6rem; }
+.toolbar__menu {
+  background-color: #00213E;
+  background-color: var(--toolbar_menu_background_color, #00213E);
+  line-height: 3.2rem;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center; }
+.toolbar__submenu {
+  padding: 0 1rem; }
+.toolbar__breadcrumbs {
+  display: inline-block;
+  line-height: 3.2rem; }
+  .toolbar__breadcrumbs .fa.fa-angle-right {
+    color: #6d7478; }
+.toolbar__item {
+  display: inline-block;
+  margin-top: 0.7rem;
+  margin-left: 1rem;
+  float: right; }
 
 .toolbar-profile {
   position: relative; }
@@ -5486,7 +5483,7 @@ body.content-centered .head-bar {
   padding: 0 1rem; }
 .content__list {
   overflow-x: scroll;
-  margin: 1rem 1rem; }
+  margin: 0 1rem 1rem 1rem; }
 .content__detail {
   overflow-x: scroll;
   margin: 1rem 1rem; }
