@@ -16,6 +16,7 @@
         padding: 0 1rem;
         display: flex;
         justify-content: flex-end;
+        align-items: center;
     }
 
     &__breadcrumbs{
@@ -110,6 +111,58 @@
 
         &:hover {
             background-color: $grey--lighter;
+        }
+    }
+}
+
+.toolbar-shortcuts, .toolbar-search {
+    margin-right: 1rem;
+
+    .form__group {
+        margin: 0;
+
+        .form__control {
+            border-radius: 50px;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+
+            &--input, &--select, &--textarea {
+                &:hover {
+                    padding-bottom: calc(0.5rem - 1px);
+
+                    &::after {
+                        margin-top: 0px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.toolbar-shortcuts {
+    .form__group {
+        .form__control {
+            background-color: $toolbar_shortcuts_background_color;
+            background-color: var(--toolbar_shortcuts_background_color, $toolbar_shortcuts_background_color);
+            border-color: $toolbar_shortcuts_background_color;
+            border-color: var(--toolbar_shortcuts_background_color, $toolbar_shortcuts_background_color);
+            select {
+                color: $toolbar_shortcuts_text_color;
+            }
+            &::after {
+                @include triangle(down, 10px, 5px, $toolbar_shortcuts_text_color);
+            }
+        }
+    }
+}
+
+.toolbar-search {
+    .form__group {
+        .form__control {
+            background-color: #fff;
+            border-color: #fff;
         }
     }
 }

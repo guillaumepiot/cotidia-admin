@@ -47,8 +47,8 @@ body.menu--sidebar {
             @include font-size($font_size--emphasis);
             width: 100%;
             height: $toolbar_menu_height;
-            background-color: $menu_background_color;
-            background-color: var(--menu_background_color, $menu_background_color);
+            background-color: $menu_home_background_color;
+            background-color: var(--menu_home_background_color, $menu_home_background_color);
 
             .menu-item__link {
                 height: $toolbar_menu_height;

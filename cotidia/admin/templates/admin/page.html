@@ -4,6 +4,8 @@
     <div class="toolbar">
         {% block toolbar_menu %}
         <div class="toolbar__menu">
+            {% include "admin/menu/shortcuts.html" %}
+            {% include "admin/menu/global_search.html" %}
             {% if request.user %}
             <div class="toolbar-profile">
                 <button class="toolbar-profile__avatar">

@@ -5172,7 +5172,7 @@ body.menu--sidebar .menu__section {
     width: 100%;
     height: 3.2rem;
     background-color: #00213E;
-    background-color: var(--menu_background_color, #00213E); } }
+    background-color: var(--menu_home_background_color, #00213E); } }
   @media screen and (min-width: 768px) and (min-width: 768px) {
     body.menu--sidebar .menu-item--home {
       font-size: 1.25rem !important; } }
@@ -5352,7 +5352,8 @@ body.menu--sidebar .menu__sub-nav {
     line-height: 3.2rem;
     padding: 0 1rem;
     display: flex;
-    justify-content: flex-end; }
+    justify-content: flex-end;
+    align-items: center; }
   .toolbar__breadcrumbs {
     display: inline-block;
     line-height: 3.2rem;
@@ -5431,6 +5432,39 @@ body.menu--sidebar .menu__sub-nav {
   padding: 0 1rem; }
   .toolbar-profile-menu__link:hover {
     background-color: #E5EBED; }
+
+.toolbar-shortcuts, .toolbar-search {
+  margin-right: 1rem; }
+  .toolbar-shortcuts .form__group, .toolbar-search .form__group {
+    margin: 0; }
+    .toolbar-shortcuts .form__group .form__control, .toolbar-search .form__group .form__control {
+      border-radius: 50px;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      padding-left: 1rem;
+      padding-right: 1rem; }
+      .toolbar-shortcuts .form__group .form__control--input:hover, .toolbar-shortcuts .form__group .form__control--select:hover, .toolbar-shortcuts .form__group .form__control--textarea:hover, .toolbar-search .form__group .form__control--input:hover, .toolbar-search .form__group .form__control--select:hover, .toolbar-search .form__group .form__control--textarea:hover {
+        padding-bottom: calc(0.5rem - 1px); }
+        .toolbar-shortcuts .form__group .form__control--input:hover::after, .toolbar-shortcuts .form__group .form__control--select:hover::after, .toolbar-shortcuts .form__group .form__control--textarea:hover::after, .toolbar-search .form__group .form__control--input:hover::after, .toolbar-search .form__group .form__control--select:hover::after, .toolbar-search .form__group .form__control--textarea:hover::after {
+          margin-top: 0px; }
+
+.toolbar-shortcuts .form__group .form__control {
+  background-color: #555A5D;
+  background-color: var(--toolbar_shortcuts_background_color, #555A5D);
+  border-color: #555A5D;
+  border-color: var(--toolbar_shortcuts_background_color, #555A5D); }
+  .toolbar-shortcuts .form__group .form__control select {
+    color: #fff; }
+  .toolbar-shortcuts .form__group .form__control::after {
+    border-style: solid;
+    height: 0;
+    width: 0;
+    border-color: #fff transparent transparent;
+    border-width: 5px 5px 0; }
+
+.toolbar-search .form__group .form__control {
+  background-color: #fff;
+  border-color: #fff; }
 
 body.content-centered .content__list,
 body.content-centered .content__detail,

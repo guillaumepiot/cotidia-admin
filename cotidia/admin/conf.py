@@ -17,6 +17,7 @@ class AdminConf(AppConf):
 
     # A list of links to go to from the main menu
     SHORTCUTS = []
+    SHORTCUTS_TEXT = "Quick links"
 
     # A list of models and fields to search globally
     GLOBAL_SEARCH = []

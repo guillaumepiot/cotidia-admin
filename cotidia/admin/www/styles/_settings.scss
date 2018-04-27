@@ -5,6 +5,7 @@ $h2-weight: 400;
 
 $menu_background_color: #00213E;
 $menu_background_color_mobile: #00213E;
+$menu_home_background_color: #00213E;
 $menu_link_color: #fff;
 $menu_link_background_color: transparent;
 $menu_link_background_color_hover: lighten(#00213E, 12%);
@@ -26,4 +27,6 @@ $toolbar_breadcrumbs_height: 3.2rem;
 $toolbar_menu_background_color: #00213E;
 $toolbar_profile_avatar_background_color: lighten(#00213E, 20%);
 $toolbar_profile_avatar_text_color: #fff;
+$toolbar_shortcuts_background_color: $grey--medium;
+$toolbar_shortcuts_text_color: #fff;
 
