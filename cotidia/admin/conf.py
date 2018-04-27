@@ -9,6 +9,9 @@ class AdminConf(AppConf):
     # the menu
     MENU_DEFINITION = {}
 
+    # Pull menu from apps if not added in the menu definition
+    SHOW_DEFAULT_MENU = True
+
     DETAIL_CURRENCY = "&pound;"
     MAX_SUBSERIALIZER_DEPTH = 4
 

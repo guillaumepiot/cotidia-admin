@@ -87,17 +87,18 @@ def menu(context):
     # Add en empty break for the remaining unordered apps
     permitted_menu.append({'text': ''})
 
-    for app in app_name_list:
-        if app not in processed_apps:
-            try:
-                module = importlib.import_module("{}.menu".format(app))
-                admin_menu = module.admin_menu
-            except (ModuleNotFoundError, AttributeError):
-                admin_menu = None
+    if settings.ADMIN_SHOW_DEFAULT_MENU:
+        for app in app_name_list:
+            if app not in processed_apps:
+                try:
+                    module = importlib.import_module("{}.menu".format(app))
+                    admin_menu = module.admin_menu
+                except (ModuleNotFoundError, AttributeError):
+                    admin_menu = None
 
-            if admin_menu:
-                menu = admin_menu(context)
-                permitted_menu = build_permitted_menu(context, menu, permitted_menu)
+                if admin_menu:
+                    menu = admin_menu(context)
+                    permitted_menu = build_permitted_menu(context, menu, permitted_menu)
 
     context = context.flatten()
     context["menu"] = permitted_menu
