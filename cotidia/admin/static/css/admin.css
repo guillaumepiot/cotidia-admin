@@ -5384,8 +5384,8 @@ body.menu--sidebar .menu__sub-nav {
     color: #fff;
     color: var(--toolbar_profile_avatar_text_color, #fff);
     display: inline-block;
-    width: 2.7rem;
-    height: 2.7rem;
+    width: 38px;
+    height: 38px;
     border-radius: 1.35rem;
     border-width: 0;
     text-align: center;

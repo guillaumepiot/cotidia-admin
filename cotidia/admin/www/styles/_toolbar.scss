@@ -62,8 +62,8 @@
         color: $toolbar_profile_avatar_text_color;
         color: var(--toolbar_profile_avatar_text_color, $toolbar_profile_avatar_text_color);
         display: inline-block;
-        width: $toolbar_menu_height - 0.5rem;
-        height: $toolbar_menu_height - 0.5rem;
+        width: 38px;
+        height: 38px;
         border-radius: ($toolbar_menu_height - 0.5rem) / 2;
         border-width: 0;
         text-align: center;
