@@ -6,21 +6,30 @@
  */
 
 .toolbar{
+    background-color: $toolbar_background_color;
+    background-color: var(--toolbar_background_color, $toolbar_background_color);
+    border-bottom: 1px solid $grey--lighter;
+    border-bottom-color: $toolbar_border_color;
+    border-bottom-color: var(--toolbar_border_color, $toolbar_border_color);
     // background-color: lighten($grey--lighter, 6%);
     // border-bottom: 1px solid $grey--lighter;
 
+    display: flex;
+    justify-content: space-between;
+
+    &__title {
+        padding: 0 1rem;
+        line-height: $toolbar_height;
+        display: flex;
+        align-items: center;
+    }
+
     &__menu {
-        background-color: $toolbar_menu_background_color;
-        background-color: var(--toolbar_menu_background_color, $toolbar_menu_background_color);
-        line-height: 3.2rem;
+        line-height: $toolbar_height;
         padding: 0 1rem;
         display: flex;
         justify-content: flex-end;
         align-items: center;
-    }
-
-    &__submenu {
-        padding: 0 1rem;
     }
 
     &__breadcrumbs{
@@ -34,9 +43,7 @@
 
     &__item{
         display: inline-block;
-        margin-top: 0.7rem;
         margin-left: $horizontal_padding;
-        float: right;
     }
 }
 
@@ -51,7 +58,7 @@
         }
 
         .toolbar-profile__avatar::after {
-            @include triangle(down, 10px, 5px, rgba(255, 255, 255, 1));
+            opacity: 1;
         }
     }
 
@@ -64,7 +71,7 @@
         display: inline-block;
         width: 38px;
         height: 38px;
-        border-radius: ($toolbar_menu_height - 0.5rem) / 2;
+        border-radius: ($toolbar_height - 0.5rem) / 2;
         border-width: 0;
         text-align: center;
         position: relative;
@@ -76,8 +83,11 @@
             position: absolute;
             pointer-events: none;
             right: -1rem;
-            top: ($toolbar_menu_height - 0.5rem) / 2;
+            top: ($toolbar_height - 0.5rem) / 2;
             @include triangle(down, 10px, 5px, rgba(255, 255, 255, 0.5));
+            border-top-color: $toolbar_profile_avatar_arrow_color;
+            border-top-color: var(--toolbar_profile_avatar_arrow_color, $toolbar_profile_avatar_arrow_color);
+            opacity: 0.5;
         }
 
         &:hover {
@@ -92,15 +102,56 @@
     &__menu {
         display: none;
         position: absolute;
-        top: $toolbar_menu_height;
+        top: $toolbar_height;
         right: -0.5rem;
         width: 240px;
         background-color: #fff;
         border: 1px solid $grey--light;
-        z-index: 1;
+        border-top-width: 0;
+        z-index: 10;
 
         &--active {
             display: block;
+        }
+    }
+}
+
+.toolbar-menu {
+    &__btn {
+        margin-right: 1rem;
+    }
+
+    .form__group {
+        margin: 0 1rem 0 0;
+
+        .form__control {
+            background-color: #fff;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            border-color: $grey--light;
+            // border-top: 1px solid $grey--light;
+            // border-left: 1px solid $grey--light;
+            // border-right: 1px solid $grey--light;
+
+            &--input, &--select, &--textarea {
+                &:hover {
+                    padding-bottom: calc(0.5rem - 1px);
+
+                    &::after {
+                        margin-top: -1px;
+                    }
+                }
+            }
+
+            .control-select__options {
+                line-height: 1.5;
+            }
+        }
+
+        .form__help {
+            display: none;
         }
     }
 }
@@ -116,39 +167,15 @@
     }
 }
 
-.toolbar-shortcuts, .toolbar-search {
+.toolbar-shortcuts {
     margin-right: 1rem;
 
     .form__group {
-        margin: 0;
-
         .form__control {
             border-radius: 50px;
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-            padding-left: 1rem;
-            padding-right: 1rem;
-
-            &--input, &--select, &--textarea {
-                &:hover {
-                    padding-bottom: calc(0.5rem - 1px);
-
-                    &::after {
-                        margin-top: 0px;
-                    }
-                }
-            }
-        }
-    }
-}
-
-.toolbar-shortcuts {
-    .form__group {
-        .form__control {
             background-color: $toolbar_shortcuts_background_color;
             background-color: var(--toolbar_shortcuts_background_color, $toolbar_shortcuts_background_color);
-            border-color: $toolbar_shortcuts_background_color;
-            border-color: var(--toolbar_shortcuts_background_color, $toolbar_shortcuts_background_color);
+
             select {
                 color: $toolbar_shortcuts_text_color;
             }
@@ -160,8 +187,11 @@
 }
 
 .toolbar-search {
+    margin-right: 1rem;
+
     .form__group {
         .form__control {
+            border-radius: 50px;
             background-color: #fff;
             border-color: #fff;
         }

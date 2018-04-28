@@ -19,7 +19,7 @@ body.menu--sidebar {
             left: 0;
             height: 100%;
             z-index: 2;
-            padding-bottom: $toolbar_menu_height;
+            padding-bottom: $toolbar_height;
             transition: width 0.3s ease;
 
             &__title{
@@ -46,12 +46,12 @@ body.menu--sidebar {
         .menu-item--home {
             @include font-size($font_size--emphasis);
             width: 100%;
-            height: $toolbar_menu_height;
+            height: $toolbar_height;
             background-color: $menu_home_background_color;
             background-color: var(--menu_home_background_color, $menu_home_background_color);
 
             .menu-item__link {
-                height: $toolbar_menu_height;
+                height: $toolbar_height;
             }
             .menu-item__link-icon {
                 display: none;
@@ -70,7 +70,7 @@ body.menu--sidebar {
         }
         .content {
             margin-left: $menu_sidebar_width;
-            padding-top: $toolbar_menu_height + $toolbar_breadcrumbs_height;
+            padding-top: $toolbar_height;
         }
         .form--action-fixed-bottom,
         .form__actions {
@@ -82,7 +82,7 @@ body.menu--sidebar {
             position: fixed;
             top: 0;
             left: 0;
-            min-height: $toolbar_menu_height;
+            min-height: $toolbar_height;
             width: 100%;
             z-index: 2;
             overflow-y: scroll;
@@ -98,27 +98,27 @@ body.menu--sidebar {
                 text-align: center;
                 align-self: center;
                 flex: 1;
-                margin-right: $toolbar_menu_height;
+                margin-right: $toolbar_height;
             }
             .menu-item__link {
-                height: $toolbar_menu_height;
-                width: $toolbar_menu_height;
+                height: $toolbar_height;
+                width: $toolbar_height;
                 display: flex;
                 justify-content: center;
                 align-items: center;
             }
         }
         .toolbar{
-            top: $toolbar_menu_height;
+            top: $toolbar_height;
             left: 0;
             width: 100%;
         }
         .content{
-            padding-top: $toolbar_menu_height * 2 + $toolbar_breadcrumbs_height;
+            padding-top: $toolbar_height * 2;
         }
     }
     .toolbar{
-        height: $toolbar_menu_height + $toolbar_breadcrumbs_height;
+        height: $toolbar_height;
         position: fixed;
         z-index: 1;
     }
@@ -170,11 +170,11 @@ body.menu--sidebar {
 body.menu--sidebar-collapse {
     @media screen and (min-width: $tablet-width) {
         .menu {
-            width: $toolbar_menu_height;
+            width: $toolbar_height;
         }
         .menu-item__link {
-            width: $toolbar_menu_height;
-            height: $toolbar_menu_height;
+            width: $toolbar_height;
+            height: $toolbar_height;
             text-align: center;
             display: flex;
             justify-content: center;
@@ -199,29 +199,29 @@ body.menu--sidebar-collapse {
             content: none;
         }
         .menu__item--sidebar-collapse{
-            width: $toolbar_menu_height;
+            width: $toolbar_height;
             display: none;
         }
         .menu__item--sidebar-expand{
-            width: $toolbar_menu_height;
+            width: $toolbar_height;
             display: block;
         }
         .menu-item--home {
-            width: $toolbar_menu_height;
+            width: $toolbar_height;
             .menu-item__link-icon {
                 display: block;
             }
         }
         .toolbar {
-            left: $toolbar_menu_height;
-            width: calc(100% - #{$toolbar_menu_height});
+            left: $toolbar_height;
+            width: calc(100% - #{$toolbar_height});
         }
         .content {
-            margin-left: $toolbar_menu_height;
+            margin-left: $toolbar_height;
         }
         .form__actions {
             width: 100%;
-            left: $toolbar_menu_height;
+            left: $toolbar_height;
         }
     }
 }

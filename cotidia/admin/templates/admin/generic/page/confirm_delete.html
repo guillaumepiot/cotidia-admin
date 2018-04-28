@@ -7,19 +7,17 @@
     {% if template_type == "centered" %}content-centered{% endif %}
 {% endblock body_class %}
 
-{% block toolbar %}
-    <div class="toolbar__breadcrumbs">
-        <a href="{% get_admin_url app_label model_name 'list' %}">
-            {{verbose_name_plural}}
-        </a>
-        &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
-        <a href="{% get_admin_url app_label model_name 'detail' object %}">
-            {{object}}
-        </a>
-        &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
-        {% trans "Confirm delete" %}
-    </div>
-{% endblock toolbar %}
+{% block toolbar_title %}
+    <a href="{% get_admin_url app_label model_name 'list' %}">
+        {{verbose_name_plural}}
+    </a>
+    &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
+    <a href="{% get_admin_url app_label model_name 'detail' object %}">
+        {{object}}
+    </a>
+    &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
+    {% trans "Confirm delete" %}
+{% endblock toolbar_title %}
 
 {% block page_content %}
 <div class="content__delete">

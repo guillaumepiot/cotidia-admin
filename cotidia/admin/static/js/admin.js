@@ -1,8 +1,4 @@
 (function(){
-  function showMenu (menu, e) {
-    e.preventDefault()
-    menu.querySelector('.menu__container').classList.add('menu__container--mobile-active')
-  }
 
   function documentReady () {
     return (document.readyState === 'interactive' || document.readyState === 'complete')
@@ -27,7 +23,6 @@
       })
     }
 
-    initMenu()
   }
 
   // Initialize our menu if the document is ready, otherwise listen to its

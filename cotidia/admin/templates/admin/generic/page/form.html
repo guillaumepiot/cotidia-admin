@@ -21,23 +21,21 @@
     {% if template_type == "centered" %}content-centered{% endif %}
 {% endblock body_class %}
 
-{% block toolbar %}
-    <div class="toolbar__breadcrumbs">
-        <a href="{% get_admin_url app_label model_name 'list' %}">{{verbose_name_plural}}</a>
+{% block toolbar_title %}
+    <a href="{% get_admin_url app_label model_name 'list' %}">{{verbose_name_plural}}</a>
+    &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
+    {% if object %}
+        <a href="{% get_admin_url app_label model_name 'detail' object %}">{{object}}</a>
         &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
-        {% if object %}
-            <a href="{% get_admin_url app_label model_name 'detail' object %}">{{object}}</a>
-            &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
-            {% blocktrans with verbose_name as verbose_name %}
-                Edit {{verbose_name}}
-            {% endblocktrans %}
-        {% else %}
-            {% blocktrans with verbose_name as verbose_name %}
-                Add {{verbose_name}}
-            {% endblocktrans %}
-        {% endif %}
-    </div>
-{% endblock toolbar %}
+        {% blocktrans with verbose_name as verbose_name %}
+            Edit {{verbose_name}}
+        {% endblocktrans %}
+    {% else %}
+        {% blocktrans with verbose_name as verbose_name %}
+            Add {{verbose_name}}
+        {% endblocktrans %}
+    {% endif %}
+{% endblock toolbar_title %}
 
 
 {% block page_content %}

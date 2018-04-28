@@ -7,7 +7,8 @@
     {% if template_type == "centered" %}content-centered{% endif %}
 {% endblock body_class %}
 
-{% block toolbar %}
+{% block toolbar_title %}{{verbose_name_plural}}
+
     {% if add_view %}
     <a href="{% get_admin_url app_label model_name 'add' %}" class="toolbar__item btn btn--create btn--small">
         <span class="fa fa-plus"></span>
@@ -16,8 +17,7 @@
         {% endblocktrans %}
     </a>
     {% endif %}
-    <div class="toolbar__breadcrumbs">{{verbose_name_plural}}</div>
-{% endblock toolbar %}
+{% endblock toolbar_title %}
 
 {% block page_content %}
 <div class="content__list">
