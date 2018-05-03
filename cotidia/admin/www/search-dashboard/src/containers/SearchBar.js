@@ -5,6 +5,7 @@ import {
   manageColumns,
   performBatchAction,
   setSearchTerm,
+  switchMode,
 } from '../redux/modules/search/actions'
 
 import SearchBar from '../components/SearchBar'
@@ -12,6 +13,7 @@ import SearchBar from '../components/SearchBar'
 const mapStateToProps = (state) => ({
   batchActions: state.search.batchActions,
   searchTerm: state.search.searchTerm,
+  hasListConfig: state.search.listFields !== null,
 })
 
 const actionCreators = {
@@ -19,6 +21,7 @@ const actionCreators = {
   manageColumns,
   performBatchAction,
   setSearchTerm,
+  switchMode,
 }
 
 export default connect(mapStateToProps, actionCreators)(SearchBar)

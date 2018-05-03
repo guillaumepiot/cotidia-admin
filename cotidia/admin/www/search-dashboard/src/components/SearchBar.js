@@ -16,6 +16,8 @@ export default class SearchBar extends Component {
     performBatchAction: PropTypes.func.isRequired,
     searchTerm: PropTypes.string,
     setSearchTerm: PropTypes.func.isRequired,
+    switchMode: PropTypes.func.isRequired,
+    hasListConfig: PropTypes.bool.isRequired,
   }
 
   static defaultProps = {
@@ -35,6 +37,14 @@ export default class SearchBar extends Component {
     if (nextProps.searchTerm !== this.props.searchTerm) {
       this.setState({ searchTerm: nextProps.searchTerm })
     }
+  }
+
+  displayList = () => {
+    this.props.switchMode('list')
+  }
+
+  displayTable = () => {
+    this.props.switchMode('table')
   }
 
   updateSearchTerm = ({ searchTerm }) => this.setState({ searchTerm })
@@ -68,10 +78,12 @@ export default class SearchBar extends Component {
   }
 
   renderBatchActions () {
-    if (this.props.batchActions.length === 1) {
-      return this.props.batchActions.map((action) => (
+    const { batchActions } = this.props
+
+    if (batchActions.length === 1) {
+      return batchActions.map((action) => (
         <button
-          className='btn btn--transparent'
+          className='btn btn--outline'
           key={action.action}
           onClick={this.performBatchActionFactory(action.action)}
           title={action.label}
@@ -80,12 +92,12 @@ export default class SearchBar extends Component {
           {action.label}
         </button>
       ))
-    } else if (this.props.batchActions.length > 1) {
+    } else if (batchActions.length > 1) {
       return (
         <div className='form__control'>
           <select className='form__select' onChange={this.selectBatchAction} value={this.state.action}>
             <option value=''>Choose an action</option>
-            { this.props.batchActions.map((action) => (
+            { batchActions.map((action) => (
               <option key={action.action} value={action.action}>
                 {action.label}
               </option>
@@ -99,28 +111,42 @@ export default class SearchBar extends Component {
 
   render () {
     return (
-      <form className='head-bar head-bar--filter' onSubmit={this.setSearchTerm}>
-        <TextInput
-          label='Search'
-          name='searchTerm'
-          type='text'
-          updateValue={this.updateSearchTerm}
-          updateValueOnBlur={false}
-          value={this.state.searchTerm}
-        />
+      <>
+        {this.props.hasListConfig && (
+          <div className='head-bar text-right'>
+            <div style={{ flex: 1 }}></div>
 
-        <button className='btn btn--primary btn--transparent' onClick={this.setSearchTerm} type='button'>Filter</button>
+            <button className='btn btn--outline' onClick={this.displayList}>
+              <span className='fa fa-fw fa-list-alt' />
+            </button>
+            <button className='btn btn--outline' onClick={this.displayTable}>
+              <span className='fa fa-fw fa-table' />
+            </button>
+          </div>
+        )}
+        <form className='head-bar head-bar--filter' onSubmit={this.setSearchTerm}>
+          <TextInput
+            label='Search'
+            name='searchTerm'
+            type='text'
+            updateValue={this.updateSearchTerm}
+            updateValueOnBlur={false}
+            value={this.state.searchTerm}
+          />
 
-        <button className='btn btn--transparent' onClick={this.clearSearchTerm} title='Reset filters' type='button'>
-          <span className='fa fa-refresh' />
-        </button>
+          <button className='btn btn--primary btn--outline' onClick={this.setSearchTerm} type='button'>Filter</button>
 
-        <button className='btn btn--transparent' onClick={this.manageColumns} title='Manage column' type='button'>
-          <span className='fa fa-columns' />
-        </button>
+          <button className='btn btn--outline' onClick={this.clearSearchTerm} title='Reset filters' type='button'>
+            <span className='fa fa-fw fa-refresh' />
+          </button>
 
-        {this.renderBatchActions()}
-      </form>
+          <button className='btn btn--outline' onClick={this.manageColumns} title='Manage column' type='button'>
+            <span className='fa fa-fw fa-columns' />
+          </button>
+
+          {this.renderBatchActions()}
+        </form>
+      </>
     )
   }
 }

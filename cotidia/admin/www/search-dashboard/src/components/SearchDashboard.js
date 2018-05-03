@@ -5,11 +5,19 @@ import { FullScreen } from './elements/global'
 import Modal from '../containers/Modal'
 
 import SearchBar from '../containers/SearchBar'
-import SearchResults from '../containers/SearchResults'
+import SearchResultsList from '../containers/SearchResultsList'
+import SearchResultsTable from '../containers/SearchResultsTable'
 
 export default class SearchDashboard extends Component {
+  static propTypes = {
+    bootstrapped: PropTypes.bool.isRequired,
+    networkError: PropTypes.bool.isRequired,
+    searchMode: PropTypes.string.isRequired,
+    hasListConfig: PropTypes.bool.isRequired,
+  }
+
   render () {
-    const { bootstrapped, networkError } = this.props
+    const { bootstrapped, networkError, searchMode, hasListConfig } = this.props
 
     if (networkError) {
       return (
@@ -30,15 +38,17 @@ export default class SearchDashboard extends Component {
     return (
       <div className='content__list'>
         <SearchBar />
-        <SearchResults />
+
+        {hasListConfig && (searchMode === 'list') && (
+          <SearchResultsList />
+        )}
+
+        {searchMode === 'table' && (
+          <SearchResultsTable />
+        )}
 
         <Modal />
       </div>
     )
   }
-}
-
-SearchDashboard.propTypes = {
-  bootstrapped: PropTypes.bool.isRequired,
-  networkError: PropTypes.bool.isRequired,
 }

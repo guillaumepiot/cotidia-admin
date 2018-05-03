@@ -9,6 +9,10 @@ const initialState = {
   defaultColumns: [], // Actual default columns as specifed by config
   visibleColumns: [], // Current visible columns
 
+  listFields: null,
+
+  mode: 'table',
+
   orderColumn: null,
   orderAscending: true,
 
@@ -57,12 +61,19 @@ export default (state = initialState, { type, payload } = {}) => {
         orderColumn: payload.defaultOrderColumn,
         orderAscending: payload.defaultOrderAscending,
         filters: payload.defaultFilters,
+        listFields: payload.listFields,
       }
 
     case types.SET_SEARCH_TERM:
       return {
         ...state,
         searchTerm: payload.term,
+      }
+
+    case types.SWITCH_MODE:
+      return {
+        ...state,
+        mode: payload.mode,
       }
 
     case types.SET_ORDER_COLUMN:

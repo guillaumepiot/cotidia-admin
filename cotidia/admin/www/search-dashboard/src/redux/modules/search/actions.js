@@ -5,6 +5,11 @@ export const setSearchTerm = (term) => ({
   payload: { term },
 })
 
+export const switchMode = (mode) => ({
+  type: types.SWITCH_MODE,
+  payload: { mode },
+})
+
 export const filterColumn = (column) => ({
   type: types.FILTER_COLUMN,
   payload: { column },

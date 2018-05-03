@@ -6,6 +6,7 @@ export const SET_COLUMN_CONFIG = 'search-dashboard/search/SET_COLUMN_CONFIG'
 
 // Actual usage
 export const SET_SEARCH_TERM = 'search-dashboard/search/SET_SEARCH_TERM'
+export const SWITCH_MODE = 'search-dashboard/search/SWITCH_MODE'
 export const FILTER_COLUMN = 'search-dashboard/search/FILTER_COLUMN'
 export const CLEAR_FILTER = 'search-dashboard/search/CLEAR_FILTER'
 export const CLEAR_FILTERS = 'search-dashboard/search/CLEAR_FILTERS'

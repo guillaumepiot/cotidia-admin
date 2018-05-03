@@ -1,0 +1,52 @@
+.search-result {
+    &-list {
+        border: 1px solid $table-row-border-color;
+
+        &__item {
+            border-bottom: 1px solid $table-row-border-color;
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+    }
+
+    &-item {
+        align-items: center;
+        display: flex;
+        padding: 1rem;
+
+        &__checkbox {
+            align-self: stretch;
+            align-items: center;
+            display: flex;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+
+        &__left {
+            flex: 1;
+        }
+
+        &__right {
+            flex: 1;
+            text-align: right;
+        }
+
+        &__top-left {
+            @include font-size($font_size--emphasis);
+        }
+
+        &__top-right {
+            @include font-size($font_size--emphasis);
+        }
+
+        &__bottom-left {
+            color: $grey;
+        }
+
+        &__bottom-right {
+            color: $grey;
+        }
+    }
+}

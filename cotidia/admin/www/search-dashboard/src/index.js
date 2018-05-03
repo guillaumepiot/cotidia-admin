@@ -56,6 +56,16 @@ App.propTypes = {
     })),
   })).isRequired,
   defaultColumns: PropTypes.arrayOf(PropTypes.string),
+  listFields: PropTypes.shape({
+    left: PropTypes.shape({
+      top: PropTypes.string,
+      bottom: PropTypes.string,
+    }),
+    right: PropTypes.shape({
+      top: PropTypes.string,
+      bottom: PropTypes.string,
+    }),
+  }),
   defaultFilters: PropTypes.object,
   defaultOrderBy: PropTypes.string,
   detailURL: PropTypes.string,

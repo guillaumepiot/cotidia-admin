@@ -27,6 +27,7 @@ export function * bootstrap ({ payload: config }) {
       columns: config.columns,
       defaultColumns: config.defaultColumns,
       defaultFilters: config.defaultFilters,
+      listFields: config.listFields,
       defaultOrderColumn,
       defaultOrderAscending,
     },
