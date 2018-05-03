@@ -219,6 +219,17 @@ def get_serializer_default_columns(serializer):
     return fields
 
 
+def get_serializer_list_fields(serializer):
+    fields = None
+
+    try:
+        fields = serializer.SearchProvider.list_fields
+    except AttributeError:
+        pass
+
+    return fields
+
+
 def get_model_structure(
         model,
         endpoint=None,
@@ -232,7 +243,8 @@ def get_model_structure(
     serializer = get_model_serializer_class(model)()
     structure = {
         "columns": get_fields_from_serializer(serializer),
-        "defaultColumns": get_serializer_default_columns(serializer)
+        "defaultColumns": get_serializer_default_columns(serializer),
+        "listFields": get_serializer_list_fields(serializer),
     }
     # If the serializer has batch actions we use them, otherwise there are no
     # batch actions
