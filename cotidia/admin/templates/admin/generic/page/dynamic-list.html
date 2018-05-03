@@ -8,15 +8,14 @@
     {% if template_type == "centered" %}content-centered{% endif %}
 {% endblock body_class %}
 
-{% block toolbar %}
+{% block toolbar_title %}{{verbose_name_plural}}
     <a href="{% get_admin_url app_label model_name 'add' %}" class="btn btn--create btn--small toolbar__item">
         <span class="fa fa-plus"></span>
         {% blocktrans with verbose_name as verbose_name %}
             Add {{verbose_name}}
         {% endblocktrans %}
     </a>
-    <div class="toolbar__breadcrumbs">{{verbose_name_plural}}</div>
-{% endblock toolbar %}
+{% endblock toolbar_title %}
 
 {% block page_content %}
 {% include 'admin/generic/utils/head-filter.html' %}
