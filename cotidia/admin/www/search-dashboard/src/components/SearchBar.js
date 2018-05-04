@@ -117,7 +117,7 @@ export default class SearchBar extends Component {
             <div style={{ flex: 1 }}></div>
 
             <button className='btn btn--outline' onClick={this.displayList}>
-              <span className='fa fa-fw fa-list-alt' />
+              <span className='fa fa-fw fa-list' />
             </button>
             <button className='btn btn--outline' onClick={this.displayTable}>
               <span className='fa fa-fw fa-table' />
