@@ -8,6 +8,47 @@
             &:last-child {
                 border-bottom: none;
             }
+
+            &--clickable {
+                cursor: pointer;
+
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0.05);
+                }
+            }
+        }
+
+        &--loading {
+            position: relative;
+
+            &::before {
+                content: "";
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #fff;
+                opacity: 0.5;
+                z-index: 1;
+            }
+            &::after {
+                content: "";
+                display: block;
+                position: absolute;
+                top: $vertical_padding * 2;
+                left: calc(50% - 1rem);
+                height: 2rem;
+                width: 2rem;
+
+                border-radius: 100%;
+                border: 2px solid $grey;
+                border-bottom-color: transparent;
+
+                animation: rotate 1s 0s linear infinite;
+                z-index: 2;
+            }
         }
     }
 

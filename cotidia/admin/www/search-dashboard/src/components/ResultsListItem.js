@@ -62,7 +62,10 @@ export default class ResultsListItem extends PureComponent {
     }
 
     return (
-      <div className='search-result-list__item search-result-item' onClick={this.handleClickRow}>
+      <div
+        className={`search-result-list__item search-result-item ${this.props.viewItem || this.props.showCheck ? 'search-result-list__item--clickable' : ''}`}
+        onClick={this.handleClickRow}
+      >
         {showCheck && (
           <div className='search-result-item__checkbox' onClick={this.checkItem}>
             <input type='checkbox' checked={checked} />

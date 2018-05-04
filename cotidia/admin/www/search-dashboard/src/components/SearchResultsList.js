@@ -21,6 +21,7 @@ export default class SearchResultsList extends Component {
         bottom: PropTypes.string,
       }),
     }),
+    loading: PropTypes.bool,
     results: PropTypes.arrayOf(PropTypes.object),
     selected: PropTypes.arrayOf(PropTypes.string),
     toggleResultSelected: PropTypes.func.isRequired,
@@ -39,6 +40,7 @@ export default class SearchResultsList extends Component {
       batchActions,
       columns,
       detailURL,
+      loading,
       results,
       selected,
       listFields,
@@ -46,7 +48,7 @@ export default class SearchResultsList extends Component {
 
     return (
       <>
-        <div className='search-result-list'>
+        <div className={`search-result-list ${loading ? 'search-result-list--loading' : ''}`}>
           {results.map((item) => (
             <ResultsListItem
               checked={selected.includes(item.uuid)}
