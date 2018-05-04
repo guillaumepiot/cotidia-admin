@@ -114,7 +114,7 @@ export default class SearchBar extends Component {
       <>
         {this.props.hasListConfig && (
           <div className='head-bar text-right'>
-            <div style={{ flex: 1 }}></div>
+            <div style={{ flex: 1 }} />
 
             <button className='btn btn--outline' onClick={this.displayList}>
               <span className='fa fa-fw fa-list' />
