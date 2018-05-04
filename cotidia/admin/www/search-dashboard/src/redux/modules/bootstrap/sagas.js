@@ -33,6 +33,10 @@ export function * bootstrap ({ payload: config }) {
     },
   })
 
+  if (config.mode) {
+    yield put(searchActions.switchMode(config.mode))
+  }
+
   // If the config doesn't say to override any stored config, retrieve it from localStorage and
   // apply it on top of the setup we just did.
   if (config.overrideStoredConfig !== true) {
@@ -42,6 +46,9 @@ export function * bootstrap ({ payload: config }) {
       if (storedConfig) {
         if (Array.isArray(storedConfig.visibleColumns)) {
           yield put(searchActions.setColumns(storedConfig.visibleColumns))
+        }
+        if (storedConfig.mode) {
+          yield put(searchActions.switchMode(storedConfig.mode))
         }
       }
     } catch {

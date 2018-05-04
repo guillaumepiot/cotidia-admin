@@ -12,8 +12,9 @@ import SearchBar from '../components/SearchBar'
 
 const mapStateToProps = (state) => ({
   batchActions: state.search.batchActions,
-  searchTerm: state.search.searchTerm,
   hasListConfig: state.search.listFields !== null,
+  mode: state.search.mode,
+  searchTerm: state.search.searchTerm,
 })
 
 const actionCreators = {

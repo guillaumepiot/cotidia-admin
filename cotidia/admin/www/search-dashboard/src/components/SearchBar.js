@@ -12,12 +12,13 @@ export default class SearchBar extends Component {
       onComplete: PropTypes.func,
     })),
     clearFilters: PropTypes.func.isRequired,
+    hasListConfig: PropTypes.bool.isRequired,
     manageColumns: PropTypes.func.isRequired,
+    mode: PropTypes.string,
     performBatchAction: PropTypes.func.isRequired,
     searchTerm: PropTypes.string,
     setSearchTerm: PropTypes.func.isRequired,
     switchMode: PropTypes.func.isRequired,
-    hasListConfig: PropTypes.bool.isRequired,
   }
 
   static defaultProps = {
@@ -116,10 +117,10 @@ export default class SearchBar extends Component {
           <div className='head-bar text-right'>
             <div style={{ flex: 1 }} />
 
-            <button className='btn btn--outline' onClick={this.displayList}>
+            <button className={`btn ${this.props.mode === 'list' ? '' : 'btn--outline'}`} onClick={this.displayList}>
               <span className='fa fa-fw fa-list' />
             </button>
-            <button className='btn btn--outline' onClick={this.displayTable}>
+            <button className={`btn ${this.props.mode === 'table' ? '' : 'btn--outline'}`} onClick={this.displayTable}>
               <span className='fa fa-fw fa-table' />
             </button>
           </div>
