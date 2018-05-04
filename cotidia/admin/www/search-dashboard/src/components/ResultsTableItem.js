@@ -9,7 +9,7 @@ export default class ResultsTableItem extends PureComponent {
   static propTypes = {
     checked: PropTypes.bool.isRequired,
     checkItem: PropTypes.func.isRequired,
-    columns: PropTypes.array.isRequired,
+    columns: PropTypes.arrayOf(PropTypes.object).isRequired,
     item: PropTypes.object.isRequired,
     showCheck: PropTypes.bool.isRequired,
     viewItem: PropTypes.func.isRequired,

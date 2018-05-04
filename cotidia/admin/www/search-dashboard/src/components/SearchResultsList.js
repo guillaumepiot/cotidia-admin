@@ -9,10 +9,8 @@ import Pagination from '../containers/Pagination'
 export default class SearchResultsList extends Component {
   static propTypes = {
     batchActions: PropTypes.arrayOf(PropTypes.object),
+    columns: PropTypes.object.isRequired,
     detailURL: PropTypes.string,
-    results: PropTypes.arrayOf(PropTypes.object),
-    selected: PropTypes.arrayOf(PropTypes.string),
-    toggleResultSelected: PropTypes.func.isRequired,
     listFields: PropTypes.shape({
       left: PropTypes.shape({
         top: PropTypes.string,
@@ -23,6 +21,9 @@ export default class SearchResultsList extends Component {
         bottom: PropTypes.string,
       }),
     }),
+    results: PropTypes.arrayOf(PropTypes.object),
+    selected: PropTypes.arrayOf(PropTypes.string),
+    toggleResultSelected: PropTypes.func.isRequired,
   }
 
   viewItem = (item) => {
@@ -36,6 +37,7 @@ export default class SearchResultsList extends Component {
   render () {
     const {
       batchActions,
+      columns,
       detailURL,
       results,
       selected,
@@ -49,6 +51,7 @@ export default class SearchResultsList extends Component {
             <ResultsListItem
               checked={selected.includes(item.uuid)}
               checkItem={this.checkItem}
+              columns={columns}
               key={item.uuid}
               item={item}
               showCheck={batchActions.length > 0}

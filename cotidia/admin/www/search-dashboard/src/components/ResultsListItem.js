@@ -9,10 +9,20 @@ export default class ResultsListItem extends PureComponent {
   static propTypes = {
     checked: PropTypes.bool.isRequired,
     checkItem: PropTypes.func.isRequired,
+    columns: PropTypes.object.isRequired,
     item: PropTypes.object.isRequired,
+    listFields: PropTypes.shape({
+      left: PropTypes.shape({
+        top: PropTypes.string,
+        bottom: PropTypes.string,
+      }),
+      right: PropTypes.shape({
+        top: PropTypes.string,
+        bottom: PropTypes.string,
+      }),
+    }),
     showCheck: PropTypes.bool.isRequired,
     viewItem: PropTypes.func.isRequired,
-    listFields: PropTypes.any,
   }
 
   handleClickRow = () => {
@@ -28,8 +38,28 @@ export default class ResultsListItem extends PureComponent {
     this.props.checkItem(this.props.item)
   }
 
+  getColumnConfig = (columnName) => ({
+    accessor: columnName,
+    display: this.props.columns?.[columnName]?.display || 'verbatim',
+  })
+
   render () {
     const { checked, item, showCheck, listFields } = this.props
+
+    let lt, lb, rt, rb
+
+    if (listFields.left?.top) {
+      lt = this.getColumnConfig(listFields.left.top)
+    }
+    if (listFields.left?.bottom) {
+      lb = this.getColumnConfig(listFields.left.bottom)
+    }
+    if (listFields.right?.top) {
+      rt = this.getColumnConfig(listFields.right.top)
+    }
+    if (listFields.right?.bottom) {
+      rb = this.getColumnConfig(listFields.right.bottom)
+    }
 
     return (
       <div className='search-result-list__item search-result-item' onClick={this.handleClickRow}>
@@ -38,23 +68,23 @@ export default class ResultsListItem extends PureComponent {
             <input type='checkbox' checked={checked} />
           </div>
         )}
-        {listFields.left && (
+        {(lt || lb) && (
           <div className='search-result-item__left'>
-            {listFields.left.top && (
-              <div className='search-result-item__top-left'>{getFormattedValue(item, listFields.left.top, 'verbatim')}</div>
+            {lt && (
+              <div className='search-result-item__top-left'>{getFormattedValue(item, lt.accessor, lt.display)}</div>
             )}
-            {listFields.left.bottom && (
-              <div className='search-result-item__bottom-left'>{getFormattedValue(item, listFields.left.bottom, 'verbatim')}</div>
+            {lb && (
+              <div className='search-result-item__bottom-left'>{getFormattedValue(item, lb.accessor, lb.display)}</div>
             )}
           </div>
         )}
-        {listFields.right && (
+        {(rt || rb) && (
           <div className='search-result-item__right'>
-            {listFields.right.top && (
-              <div className='search-result-item__top-right'>{getFormattedValue(item, listFields.right.top, 'verbatim')}</div>
+            {rt && (
+              <div className='search-result-item__top-right'>{getFormattedValue(item, rt.accessor, rt.display)}</div>
             )}
-            {listFields.right.bottom && (
-              <div className='search-result-item__bottom-right'>{getFormattedValue(item, listFields.right.bottom, 'verbatim')}</div>
+            {rb && (
+              <div className='search-result-item__bottom-right'>{getFormattedValue(item, rb.accessor, rb.display)}</div>
             )}
           </div>
         )}
