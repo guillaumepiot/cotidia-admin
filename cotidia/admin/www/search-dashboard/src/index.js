@@ -12,6 +12,8 @@ import SearchDashboard from './containers/SearchDashboard'
 
 import { FullScreen } from './components/elements/global'
 
+import TypeaheadSwitcher from './typeahead-switcher'
+
 export default function App (props) {
   const { authToken, ...config } = props
 
@@ -85,3 +87,5 @@ App.defaultProps = {
 window.React = React
 window.ReactDOM = ReactDOM
 window.SearchDashboard = App
+
+window.TypeaheadSwitcher = TypeaheadSwitcher
