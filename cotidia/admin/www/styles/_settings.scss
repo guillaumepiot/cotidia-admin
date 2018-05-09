@@ -17,17 +17,20 @@ $menu_background_color_section: desaturate(lighten($menu_background_color, 30%),
 $form_label_font_size: 85% !default;
 $form_help_font_size: 85% !default;
 
+// $table-header-background-color: #f8f8f9;
+// $table-row-border-color: #eaeaed;
+
 @import "../node_modules/sixteen/src/sixteen/settings";
 
 // Admin specific
 $menu_sidebar_width: 240px;
 $menu_subnav_min_width: 180px;
 $toolbar_height: 3.2rem;
-$toolbar_background_color: #E5EBED;
-$toolbar_border_color: #D0D5D7;
+$toolbar_background_color: #f8f8f9;
+$toolbar_border_color: #eaeaed;
+$toolbar_text_color: $grey--dark;
 $toolbar_profile_avatar_background_color: lighten(#00213E, 20%);
 $toolbar_profile_avatar_text_color: #fff;
 $toolbar_profile_avatar_arrow_color: $grey;
 $toolbar_shortcuts_background_color: $grey--medium;
 $toolbar_shortcuts_text_color: #fff;
-

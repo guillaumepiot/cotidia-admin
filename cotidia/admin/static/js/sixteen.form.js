@@ -2,6 +2,9 @@
 
 (function () {
   function attachSixteenFormGroupBehaviour (element) {
+    if (element.parentNode.parentNode.classList.contains('form__group--no-animate')) {
+      return
+    }
     // First set the initial state of the field. (We have to use setTimeout as autofill may not
     // yet have registered.)
     setTimeout(setFormGroupClass, 0, element)
@@ -39,7 +42,7 @@
   function bootstrap () {
     document.removeEventListener('readystatechange', bootstrap)
 
-    var inputs = document.querySelectorAll('input[type="email"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="url"], select, textarea')
+    var inputs = document.querySelectorAll('.form--animate input[type="email"], .form--animate input[type="number"], .form--animate input[type="password"], .form--animate input[type="search"], .form--animate input[type="tel"], .form--animate input[type="text"], .form--animate input[type="url"], .form--animate select, .form--animate textarea')
 
     Array.prototype.forEach.call(inputs, function (input) {
       attachSixteenFormGroupBehaviour(input)

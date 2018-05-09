@@ -3837,6 +3837,7 @@ hr {
   .form__control select {
     line-height: 1.5em !important;
     font-size: 1rem !important;
+    font-family: "Roboto", Helvetica, sans-serif;
     background-color: transparent;
     border: none;
     color: #111315;
@@ -3883,6 +3884,7 @@ hr {
       color: #aaafb1; }
   .form__control select {
     border-radius: 0;
+    padding-right: 1.5rem;
     -webkit-appearance: none;
     -moz-appearance: none; }
   .form__control ul {
@@ -3902,9 +3904,8 @@ hr {
       content: "";
       position: absolute;
       pointer-events: none;
-      right: 1rem;
-      top: 50%;
-      margin-top: -1px;
+      right: 0.5rem;
+      top: calc(0.75rem - 2px);
       border-style: solid;
       height: 0;
       width: 0;
@@ -4042,6 +4043,9 @@ hr {
     order: -1; }
   .input-addon--suffix {
     padding-left: 0.5rem; }
+  .input-addon > .fa {
+    position: relative;
+    top: -1px; }
 
 .control-select__options {
   background-color: #fff;
@@ -4088,9 +4092,9 @@ hr {
   padding: 0.5rem 1rem;
   text-align: left; }
 
-[type=submit], button {
-  -webkit-appearance: none; }
-
+@media screen and (max-width: 767px) {
+  [type=submit], button {
+    -webkit-appearance: none; } }
 fieldset {
   border-radius: 2px;
   background-color: #fff;
@@ -4237,6 +4241,8 @@ textarea {
         border-color: #00abd3;
         border-width: 1px;
         margin-bottom: 0px; }
+    .form--table .form__row .form__group .form__control--radio ul {
+      padding-left: 1rem; }
     .form--table .form__row .form__group .form__help {
       position: absolute;
       top: 0.6rem;
@@ -5344,11 +5350,13 @@ body.menu--sidebar .menu__sub-nav {
  *
  */
 .toolbar {
-  background-color: #E5EBED;
-  background-color: var(--toolbar_background_color, #E5EBED);
+  background-color: #f8f8f9;
+  background-color: var(--toolbar_background_color, #f8f8f9);
   border-bottom: 1px solid #E5EBED;
-  border-bottom-color: #D0D5D7;
-  border-bottom-color: var(--toolbar_border_color, #D0D5D7);
+  border-bottom-color: #eaeaed;
+  border-bottom-color: var(--toolbar_border_color, #eaeaed);
+  color: #111315;
+  color: var(--toolbar_text_color, #111315);
   display: flex;
   justify-content: space-between; }
   .toolbar__title {
@@ -5443,10 +5451,13 @@ body.menu--sidebar .menu__sub-nav {
     padding-left: 1rem;
     padding-right: 1rem;
     border-color: #D0D5D7; }
-    .toolbar-menu .form__group .form__control--input:hover, .toolbar-menu .form__group .form__control--select:hover, .toolbar-menu .form__group .form__control--textarea:hover {
-      padding-bottom: calc(0.5rem - 1px); }
-      .toolbar-menu .form__group .form__control--input:hover::after, .toolbar-menu .form__group .form__control--select:hover::after, .toolbar-menu .form__group .form__control--textarea:hover::after {
-        margin-top: -1px; }
+    .toolbar-menu .form__group .form__control--input, .toolbar-menu .form__group .form__control--select, .toolbar-menu .form__group .form__control--textarea {
+      border-bottom-width: 0; }
+      .toolbar-menu .form__group .form__control--input input, .toolbar-menu .form__group .form__control--input select, .toolbar-menu .form__group .form__control--select input, .toolbar-menu .form__group .form__control--select select, .toolbar-menu .form__group .form__control--textarea input, .toolbar-menu .form__group .form__control--textarea select {
+        padding-right: 1rem; }
+      .toolbar-menu .form__group .form__control--input::after, .toolbar-menu .form__group .form__control--select::after, .toolbar-menu .form__group .form__control--textarea::after {
+        top: calc(1.25rem - 2px);
+        right: 1rem; }
     .toolbar-menu .form__group .form__control .control-select__options {
       line-height: 1.5; }
   .toolbar-menu .form__group .form__help {
@@ -5574,7 +5585,7 @@ body.content-centered .head-bar {
 fieldset {
   margin-top: 1rem; }
   fieldset.detail > .form__row {
-    border-bottom: 1px solid #D0D5D7; }
+    border-bottom: 1px solid #eceeee; }
     fieldset.detail > .form__row:last-child {
       border-bottom: 0; }
     fieldset.detail > .form__row .form__group {
@@ -5590,8 +5601,7 @@ fieldset {
       border-bottom-left-radius: 2px;
       border-bottom-right-radius: 2px; }
       fieldset.table-view .table thead tr th {
-        background-color: #E5EBED;
-        border-bottom: 1px solid #d6dfe3; }
+        border-bottom: 1px solid #D0D5D7; }
       fieldset.table-view .table tbody tr {
         background-color: transparent; }
 
@@ -5608,35 +5618,56 @@ fieldset {
   .errorlist li {
     margin: 0 1rem; }
 
-@media screen and (min-width: 768px) {
-  .head-bar {
-    display: flex;
-    align-items: center; } }
-@media screen and (min-width: 768px) {
-  .head-bar .form__group {
-    margin-right: 1rem;
-    margin-bottom: 0;
-    flex: 1; } }
-@media screen and (min-width: 768px) {
-  .head-bar .btn, .head-bar .form__control input[type="file"], .form__control .head-bar input[type="file"] {
-    align-self: center;
-    margin-right: 1rem; } }
-.head-bar .btn:last-child, .head-bar .form__control input[type="file"]:last-child, .form__control .head-bar input[type="file"]:last-child {
-  margin-right: 0; }
-.head-bar__item {
-  display: flex;
-  margin-right: 1rem; }
-  .head-bar__item:last-child {
+.head-bar {
+  margin-top: 0.5rem; }
+  @media screen and (min-width: 768px) {
+    .head-bar--filter {
+      display: flex;
+      align-items: center; }
+      .head-bar--filter .form__group {
+        margin-bottom: 0;
+        flex: 1; } }
+  .head-bar--actions {
+    border-top: 1px solid #D0D5D7;
+    border-left: 1px solid #D0D5D7;
+    border-right: 1px solid #D0D5D7;
+    background-color: #D0D5D7;
+    padding: 0 1rem; }
+    .head-bar--actions .form__group {
+      display: inline-block;
+      margin: 0.5rem 0; }
+      .head-bar--actions .form__group .form__control--select {
+        background-color: #fff;
+        padding: 0.5rem 0 0.5rem 0.5rem; }
+        .head-bar--actions .form__group .form__control--select:hover {
+          padding-bottom: calc(0.5rem - 1px); }
+        .head-bar--actions .form__group .form__control--select:after {
+          top: calc(1.25rem - 2px); }
+      .head-bar--actions .form__group .form__help {
+        display: none; }
+  @media screen and (min-width: 768px) {
+    .head-bar .form__group {
+      margin-right: 1rem; } }
+  @media screen and (min-width: 768px) {
+    .head-bar .btn, .head-bar .form__control input[type="file"], .form__control .head-bar input[type="file"] {
+      align-self: center;
+      margin-right: 1rem; } }
+  .head-bar .btn:last-child, .head-bar .form__control input[type="file"]:last-child, .form__control .head-bar input[type="file"]:last-child {
     margin-right: 0; }
-  .head-bar__item--search {
-    flex: 1; }
-    .head-bar__item--search .form__text {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-      border-right: none; }
-    .head-bar__item--search .btn, .head-bar__item--search .form__control input[type="file"], .form__control .head-bar__item--search input[type="file"] {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0; }
+  .head-bar__item {
+    display: flex;
+    margin-right: 1rem; }
+    .head-bar__item:last-child {
+      margin-right: 0; }
+    .head-bar__item--search {
+      flex: 1; }
+      .head-bar__item--search .form__text {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-right: none; }
+      .head-bar__item--search .btn, .head-bar__item--search .form__control input[type="file"], .form__control .head-bar__item--search input[type="file"] {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0; }
 
 .table {
   white-space: nowrap; }

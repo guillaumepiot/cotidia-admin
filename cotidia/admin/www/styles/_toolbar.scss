@@ -11,8 +11,8 @@
     border-bottom: 1px solid $grey--lighter;
     border-bottom-color: $toolbar_border_color;
     border-bottom-color: var(--toolbar_border_color, $toolbar_border_color);
-    // background-color: lighten($grey--lighter, 6%);
-    // border-bottom: 1px solid $grey--lighter;
+    color: $toolbar_text_color;
+    color: var(--toolbar_text_color, $toolbar_text_color);
 
     display: flex;
     justify-content: space-between;
@@ -130,18 +130,19 @@
             padding-bottom: 0.5rem;
             padding-left: 1rem;
             padding-right: 1rem;
+
             border-color: $grey--light;
-            // border-top: 1px solid $grey--light;
-            // border-left: 1px solid $grey--light;
-            // border-right: 1px solid $grey--light;
 
             &--input, &--select, &--textarea {
-                &:hover {
-                    padding-bottom: calc(0.5rem - 1px);
+                border-bottom-width: 0;
 
-                    &::after {
-                        margin-top: -1px;
-                    }
+                input, select {
+                    padding-right: 1rem;
+                }
+
+                &::after {
+                    top: calc(1.25rem - 2px);
+                    right: 1rem;
                 }
             }
 

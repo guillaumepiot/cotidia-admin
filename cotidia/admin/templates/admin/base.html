@@ -31,27 +31,31 @@
             <script src="{% static "js/search-dashboard.js" %}"></script>
         {% endif %}
         <script>
-            document.querySelectorAll('[data-typeahead-endpoint]').forEach(function (typeahead) {
-                var endpoint = typeahead.dataset.typeaheadEndpoint
-                var placeholder
-                var minchars = typeahead.dataset.typeaheadMinchars ? parseInt(typeahead.dataset.typeaheadMinchars) : 1
+        // <![CDATA[
+            if (window.React && window.ReactDOM) {
+                document.querySelectorAll('[data-typeahead-endpoint]').forEach(function (typeahead) {
+                    var endpoint = typeahead.dataset.typeaheadEndpoint
+                    var placeholder
+                    var minchars = typeahead.dataset.typeaheadMinchars ? parseInt(typeahead.dataset.typeaheadMinchars) : 1
 
-                if (typeahead.querySelector('[placeholder]')) {
-                    placeholder = typeahead.querySelector('[placeholder]').getAttribute('placeholder')
-                }
+                    if (typeahead.querySelector('[placeholder]')) {
+                        placeholder = typeahead.querySelector('[placeholder]').getAttribute('placeholder')
+                    }
 
-                ReactDOM.render(
-                    React.createElement(
-                        window.TypeaheadSwitcher,
-                        {
-                            apiEndpoint: endpoint,
-                            placeholder: placeholder,
-                            minchars: minchars,
-                        }
-                    ),
-                    typeahead.parentElement
-                )
-            })
+                    ReactDOM.render(
+                        React.createElement(
+                            window.TypeaheadSwitcher,
+                            {
+                                apiEndpoint: endpoint,
+                                placeholder: placeholder,
+                                minchars: minchars,
+                            }
+                        ),
+                        typeahead.parentElement
+                    )
+                })
+            }
+        // ]]>
         </script>
         {% endblock footer_scripts %}
         <noscript id="deferred-styles">

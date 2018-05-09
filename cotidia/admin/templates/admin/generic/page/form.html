@@ -41,7 +41,7 @@
 {% block page_content %}
 {% include "admin/generic/form/non_field_errors.html" %}
 {% include "admin/generic/form/errors.html" %}
-<form action="" method="post" class="form" enctype="multipart/form-data">
+<form action="" method="post" class="form form--animate" enctype="multipart/form-data">
     {% csrf_token %}
 
     {% with fieldset_template_name="admin/generic/form/fieldset_as_div.html" field_template_name="admin/generic/form/field_as_div.html" %}
