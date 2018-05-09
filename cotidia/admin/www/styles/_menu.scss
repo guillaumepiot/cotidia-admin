@@ -11,7 +11,7 @@ body.menu--sidebar {
         color: var(--menu_background_color_section, $menu_background_color_section)
     }
 
-    @media screen and (min-width: $tablet-width) {
+    @media screen and (min-width: $menu_mobile_breakpoint + 1px) {
         .menu {
             width: $menu_sidebar_width;
             position: fixed;
@@ -77,7 +77,7 @@ body.menu--sidebar {
             left: $menu_sidebar_width;
         }
     }
-    @media screen and (max-width: $mobile-width) {
+    @media screen and (max-width: $menu_mobile_breakpoint) {
         .menu {
             position: fixed;
             top: 0;
@@ -168,7 +168,7 @@ body.menu--sidebar {
 }
 
 body.menu--sidebar-collapse {
-    @media screen and (min-width: $tablet-width) {
+    @media screen and (min-width: $menu_mobile_breakpoint + 1px) {
         .menu {
             width: $toolbar_height;
         }
@@ -227,7 +227,7 @@ body.menu--sidebar-collapse {
 }
 
 body.menu--sidebar-hidden {
-    @media screen and (min-width: $tablet-width) {
+    @media screen and (min-width: $menu_mobile_breakpoint + 1px) {
         .menu {
             transition: none;
         }
