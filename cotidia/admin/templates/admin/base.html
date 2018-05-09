@@ -25,7 +25,7 @@
         <script src="{% static "js/admin.js" %}"></script>
         <script src="{% static "js/sixteen.form.js" %}"></script>
         <script src="{% static "js/sixteen.tabs.js" %}"></script>
-        {% if DEBUG %}
+        {% if ADMIN_DEBUG %}
             <script src="http://localhost:3000/search-dashboard.js"></script>
         {% else %}
             <script src="{% static "js/search-dashboard.js" %}"></script>

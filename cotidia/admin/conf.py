@@ -22,5 +22,7 @@ class AdminConf(AppConf):
     # A list of models and fields to search globally
     GLOBAL_SEARCH = []
 
+    DEBUG = False
+
     class Meta:
         prefix = 'admin'

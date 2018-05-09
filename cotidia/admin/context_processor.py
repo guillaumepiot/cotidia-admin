@@ -10,7 +10,8 @@ def admin_settings(request):
         "ADMIN_SHORTCUTS": settings.ADMIN_SHORTCUTS,
         "ADMIN_SHORTCUTS_TEXT": settings.ADMIN_SHORTCUTS_TEXT,
         "ADMIN_GLOBAL_SEARCH": settings.ADMIN_GLOBAL_SEARCH,
-        "DEBUG": settings.DEBUG
+        "DEBUG": settings.DEBUG,
+        "ADMIN_DEBUG": settings.ADMIN_DEBUG
     }
 
     return data
