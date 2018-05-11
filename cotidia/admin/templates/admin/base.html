@@ -20,43 +20,12 @@
         <![endif]-->
         {% block content %}{% endblock content %}
         {% block footer_scripts %}
-        <script src="{% static "js/cookiesHelper.js" %}"></script>
-        <script src="{% static "js/menu.js" %}"></script>
-        <script src="{% static "js/admin.js" %}"></script>
-        <script src="{% static "js/sixteen.form.js" %}"></script>
-        <script src="{% static "js/sixteen.tabs.js" %}"></script>
-        {% if ADMIN_DEBUG %}
-            <script src="http://localhost:3000/search-dashboard.js"></script>
-        {% else %}
-            <script src="{% static "js/search-dashboard.js" %}"></script>
-        {% endif %}
-        <script>
-        // <![CDATA[
-            if (window.React && window.ReactDOM) {
-                document.querySelectorAll('[data-typeahead-endpoint]').forEach(function (typeahead) {
-                    var endpoint = typeahead.dataset.typeaheadEndpoint
-                    var placeholder
-                    var minchars = typeahead.dataset.typeaheadMinchars ? parseInt(typeahead.dataset.typeaheadMinchars) : 1
-
-                    if (typeahead.querySelector('[placeholder]')) {
-                        placeholder = typeahead.querySelector('[placeholder]').getAttribute('placeholder')
-                    }
-
-                    ReactDOM.render(
-                        React.createElement(
-                            window.TypeaheadSwitcher,
-                            {
-                                apiEndpoint: endpoint,
-                                placeholder: placeholder,
-                                minchars: minchars,
-                            }
-                        ),
-                        typeahead.parentElement
-                    )
-                })
-            }
-        // ]]>
-        </script>
+            <script src="{% static "js/cookiesHelper.js" %}"></script>
+            <script src="{% static "js/menu.js" %}"></script>
+            <script src="{% static "js/admin.js" %}"></script>
+            <script src="{% static "js/sixteen.form.js" %}"></script>
+            <script src="{% static "js/sixteen.tabs.js" %}"></script>
+            {% include "admin/partials/js-include.html" %}
         {% endblock footer_scripts %}
         <noscript id="deferred-styles">
             <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
