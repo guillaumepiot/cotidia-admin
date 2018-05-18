@@ -262,11 +262,22 @@ def get_model_structure(
     # batch actions
     if batch_actions == []:
         try:
-            structure["batchActions"] = serializer.SearchProvider.batch_actions
+            batch_actions = serializer.SearchProvider.batch_actions
         except AttributeError:
-            structure["batchActions"] = []
-    else:
-        structure["batchActions"] = batch_actions
+            pass
+
+    for batch_action in batch_actions:
+        url = reverse(
+            'generic-api:batch-action',
+            kwargs={
+                'app_label': model._meta.app_label,
+                'model_name': model._meta.model_name,
+                'action': batch_action['action']
+            }
+        )
+        batch_action['endpoint'] = url
+
+    structure["batchActions"] = batch_actions
 
     if endpoint is not None:
         structure['endpoint'] = endpoint

@@ -14,6 +14,7 @@ from rest_framework.pagination import LimitOffsetPagination
 from django.db.models import Q, F, Count, Case, When, CharField
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
+from django.apps import apps
 
 from cotidia.admin.utils import (
     get_fields_from_model,
@@ -292,7 +293,29 @@ class AdminSearchLookupAPIView(ListAPIView):
     def get_queryset(self):
         query = self.request.GET.get("q")
         results = search_objects(query)
-        print(results)
         return results
 
 
+class AdminBatchActionAPIView(APIView):
+    permission_classes = (permissions.IsAdminUser,)
+
+    def post(self, request, *args, **kwargs):
+
+        app_label = kwargs['app_label']
+        model_name = kwargs['model_name']
+        action = kwargs['action']
+
+        model_class = apps.get_model(app_label, model_name)
+
+        if not request.POST.get('uuids'):
+            return Response(status=400, data={'message': "please supply a list of uuids"})
+
+        else:
+            uuids = request.POST.getlist('uuids')
+            objects = model_class.objects.filter(uuid__in=uuids)
+            for obj in objects:
+                func = getattr(obj, action)
+                func()
+                obj.refresh_from_db()
+
+        return Response(status=204)
