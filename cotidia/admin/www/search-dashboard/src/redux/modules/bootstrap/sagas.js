@@ -11,6 +11,7 @@ export function * bootstrap ({ payload: config }) {
 
   let defaultOrderColumn = config.defaultColumns[0]
   let defaultOrderAscending = true
+  let mode = 'table'
 
   if (config.defaultOrderBy) {
     if (config.defaultOrderBy[0] === '-') {
@@ -19,6 +20,10 @@ export function * bootstrap ({ payload: config }) {
     } else {
       defaultOrderColumn = config.defaultOrderBy
     }
+  }
+
+  if (config.mode) {
+    mode = config.mode
   }
 
   yield put({
@@ -30,12 +35,9 @@ export function * bootstrap ({ payload: config }) {
       listFields: config.listFields,
       defaultOrderColumn,
       defaultOrderAscending,
+      mode,
     },
   })
-
-  if (config.mode) {
-    yield put(searchActions.switchMode(config.mode))
-  }
 
   // If the config doesn't say to override any stored config, retrieve it from localStorage and
   // apply it on top of the setup we just did.

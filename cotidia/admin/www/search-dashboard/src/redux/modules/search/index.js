@@ -62,6 +62,7 @@ export default (state = initialState, { type, payload } = {}) => {
         orderAscending: payload.defaultOrderAscending,
         filters: payload.defaultFilters,
         listFields: payload.listFields,
+        mode: payload.mode,
       }
 
     case types.SET_SEARCH_TERM:
