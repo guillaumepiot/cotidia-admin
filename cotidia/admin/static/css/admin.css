@@ -5350,24 +5350,33 @@ body.menu--sidebar .menu__sub-nav {
   width: calc(100% - 240px);
   height: 3.2rem;
   position: fixed;
-  z-index: 1;
-  padding: 0 1rem; }
+  z-index: 1; }
   @media screen and (max-width: 1023px) {
     .toolbar {
       top: 3.2rem;
       left: 0;
       width: 100%; } }
+  .toolbar a {
+    color: #0057a4;
+    color: var(--toolbar_profile_avatar_background_color, #0057a4); }
   .toolbar__item {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 3.2rem;
-    margin-right: 1rem;
-    position: relative; }
+    padding-left: 1rem;
+    position: relative;
+    float: left; }
+    .toolbar__item--link {
+      padding: 0 1rem; }
+      .toolbar__item--link:hover {
+        color: #fff;
+        background-color: #0057a4;
+        background-color: var(--toolbar_profile_avatar_background_color, #0057a4); }
     .toolbar__item--right {
       float: right;
-      margin-left: 1rem;
-      margin-right: 0; }
+      padding-left: 0;
+      margin-right: 1rem; }
     .toolbar__item .form__group {
       margin: 0; }
       .toolbar__item .form__group .form__control {
