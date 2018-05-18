@@ -14,36 +14,67 @@
     color: $toolbar_text_color;
     color: var(--toolbar_text_color, $toolbar_text_color);
 
-    display: flex;
-    justify-content: space-between;
+    top: 0;
+    left: $menu_sidebar_width;
+    width: calc(100% - #{$menu_sidebar_width});
+    height: $toolbar_height;
+    position: fixed;
+    z-index: 1;
+    padding: 0 1rem;
 
-    &__title {
-        padding: 0 1rem;
-        line-height: $toolbar_height;
-        display: flex;
-        align-items: center;
-    }
-
-    &__menu {
-        line-height: $toolbar_height;
-        padding: 0 1rem;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-    }
-
-    &__breadcrumbs{
-        display: inline-block;
-        line-height: 3.2rem;
-
-        .fa.fa-angle-right{
-            color: lighten($grey--medium, 10%);
-        }
+    @media screen and (max-width: $menu_mobile_breakpoint) {
+        top: $toolbar_height;
+        left: 0;
+        width: 100%;
     }
 
     &__item{
-        display: inline-block;
-        margin-left: $horizontal_padding;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: $toolbar_height;
+        margin-right: $horizontal_padding;
+        position: relative;
+
+        &--right {
+            float: right;
+            margin-left: $horizontal_padding;
+             margin-right: 0;
+        }
+
+        .form__group {
+            margin: 0;
+
+            .form__control {
+                background-color: #fff;
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+                padding-left: 1rem;
+                padding-right: 1rem;
+                border-color: $grey--light;
+
+                &--input, &--select, &--textarea {
+                    border-bottom-width: 0;
+
+                    input, select {
+                        padding-right: 1rem;
+                    }
+
+                    &::after {
+                        top: calc(1.25rem - 2px);
+                        right: 1rem;
+                    }
+                }
+
+                .control-select__options {
+                    line-height: 1.5;
+                }
+            }
+
+            .form__help {
+                display: none;
+            }
+        }
     }
 }
 
@@ -53,7 +84,7 @@
     &:hover {
         cursor: pointer;
 
-        .toolbar-profile__menu {
+        .toolbar-menu {
             display: block;
         }
 
@@ -98,105 +129,70 @@
             outline: none;
         }
     }
-
-    &__menu {
-        display: none;
-        position: absolute;
-        top: $toolbar_height;
-        right: -0.5rem;
-        width: 240px;
-        background-color: #fff;
-        border: 1px solid $grey--light;
-        border-top-width: 0;
-        z-index: 10;
-
-        &--active {
-            display: block;
-        }
-    }
-}
-
-.toolbar-menu {
-    &__btn {
-        margin-right: 1rem;
-    }
-
-    .form__group {
-        margin: 0 1rem 0 0;
-
-        .form__control {
-            background-color: #fff;
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-            padding-left: 1rem;
-            padding-right: 1rem;
-
-            border-color: $grey--light;
-
-            &--input, &--select, &--textarea {
-                border-bottom-width: 0;
-
-                input, select {
-                    padding-right: 1rem;
-                }
-
-                &::after {
-                    top: calc(1.25rem - 2px);
-                    right: 1rem;
-                }
-            }
-
-            .control-select__options {
-                line-height: 1.5;
-            }
-        }
-
-        .form__help {
-            display: none;
-        }
-    }
-}
-
-.toolbar-profile-menu {
-    &__link {
-        display: block;
-        padding: 0 1rem;
-
-        &:hover {
-            background-color: $grey--lighter;
-        }
-    }
 }
 
 .toolbar-shortcuts {
-    margin-right: 1rem;
+    &:hover {
+        cursor: pointer;
 
-    .form__group {
-        .form__control {
-            border-radius: 50px;
-            background-color: $toolbar_shortcuts_background_color;
-            background-color: var(--toolbar_shortcuts_background_color, $toolbar_shortcuts_background_color);
-
-            select {
-                color: $toolbar_shortcuts_text_color;
-            }
-            &::after {
-                @include triangle(down, 10px, 5px, $toolbar_shortcuts_text_color);
-            }
+        .toolbar-menu {
+            display: block;
         }
+    }
+
+    .btn {
+        background-color: $toolbar_profile_avatar_background_color;
+        background-color: var(--toolbar_profile_avatar_background_color, $toolbar_profile_avatar_background_color);
+        border-width: 0;
+        border-radius: 50px;
     }
 }
 
 .toolbar-search {
-    margin-right: 1rem;
-
     .form__group {
         .form__control {
             border-radius: 50px;
             background-color: #fff;
             border-color: #fff;
+            padding: 0.5rem 1rem;
+
+            .control-select__options {
+                padding-top: 1rem;
+                margin-top: -1rem;
+                z-index: -1;
+                border-bottom-left-radius: 1rem;
+                border-bottom-right-radius: 1rem;
+            }
+
+            .control-select__option {
+                color: $grey--dark;
+            }
         }
     }
 }
 
+.toolbar-menu {
+    display: none;
+    position: absolute;
+    top: $toolbar_height;
+    right: -0.5rem;
+    width: 240px;
+    background-color: #fff;
+    border: 1px solid $grey--light;
+    border-top-width: 0;
+    z-index: 10;
 
+    &__link {
+        display: block;
+        padding: 0 1rem;
+        line-height: $toolbar_height;
+
+        &:hover {
+            background-color: $grey--lighter;
+        }
+    }
+
+    &--active {
+        display: block;
+    }
+}

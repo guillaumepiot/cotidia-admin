@@ -1,0 +1,12 @@
+{% load i18n %}{% if ADMIN_SHORTCUTS %}
+<div class="toolbar__item toolbar__item--right toolbar-shortcuts">
+    <button class="btn">
+        + Add
+    </button>
+    <div class="toolbar-menu">
+        {% for s in ADMIN_SHORTCUTS %}
+            <a href="{{s.url}}" class="toolbar-menu__link">{{s.label}}</a>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

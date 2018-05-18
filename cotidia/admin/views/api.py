@@ -17,9 +17,13 @@ from django.core.exceptions import ValidationError
 
 from cotidia.admin.utils import (
     get_fields_from_model,
-    get_model_serializer_class
+    get_model_serializer_class,
+    search_objects
 )
-from cotidia.admin.serializers import SortSerializer
+from cotidia.admin.serializers import (
+    SortSerializer,
+    AdminSearchLookupSerializer
+)
 
 
 PAGE_SIZE = 50
@@ -279,3 +283,16 @@ class SortAPIView(APIView):
             return Response(status=200)
 
         return Response(status=400, data=serializer.errors)
+
+
+class AdminSearchLookupAPIView(ListAPIView):
+    permission_classes = (permissions.IsAdminUser,)
+    serializer_class = AdminSearchLookupSerializer
+
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        results = search_objects(query)
+        print(results)
+        return results
+
+

@@ -8,6 +8,9 @@ from django.db.models.fields import (
     AutoField,
     TextField,
 )
+from django.apps import apps
+from django.db.models import Q
+from django.urls import reverse
 
 from rest_framework import fields, serializers
 
@@ -102,7 +105,6 @@ FIELD_MAPPING = {
         "many": "True",
         "filter": "text"
     }),
-
     "ListSerializer": (lambda: {
         "display": "verbatim",
         "filter": "text"
@@ -230,21 +232,31 @@ def get_serializer_list_fields(serializer):
     return fields
 
 
+def get_serializer_list_mode(serializer):
+    try:
+        return serializer.SearchProvider.default_list_mode
+    except AttributeError:
+        pass
+
+    return 'table'
+
+
 def get_model_structure(
-        model,
-        endpoint=None,
-        detail_endpoint=None,
-        token=None,
-        default_columns=None,
-        default_filters=None,
-        default_order=None,
-        batch_actions=[]
-        ):
+    model,
+    endpoint=None,
+    detail_endpoint=None,
+    token=None,
+    default_columns=None,
+    default_filters=None,
+    default_order=None,
+    batch_actions=[]
+):
     serializer = get_model_serializer_class(model)()
     structure = {
         "columns": get_fields_from_serializer(serializer),
         "defaultColumns": get_serializer_default_columns(serializer),
         "listFields": get_serializer_list_fields(serializer),
+        "mode": get_serializer_list_mode(serializer)
     }
     # If the serializer has batch actions we use them, otherwise there are no
     # batch actions
@@ -270,3 +282,40 @@ def get_model_structure(
         structure['defaultOrderBy'] = default_order[0]
 
     return structure
+
+
+def get_item_url(model, obj):
+        url_name = "{}-admin:{}-detail".format(
+            model._meta.app_label,
+            model._meta.model_name
+        )
+        return reverse(url_name, kwargs={"pk": obj.id})
+
+
+def search_objects(query):
+    results = []
+
+    if not query:
+        return []
+
+    for m in settings.ADMIN_GLOBAL_SEARCH:
+        app_label, model_name = m["model"].split(".")
+        model = apps.get_model(app_label, model_name)
+
+        q_objects = Q()
+
+        for field in m["fields"]:
+            for q in query.split(" "):
+                filter_args = {}
+                lookup = "__icontains"
+                filter_args[field + lookup] = q
+                q_objects.add(Q(**filter_args), Q.OR)
+
+        for item in model.objects.filter(q_objects):
+            results.append({
+                "type": model._meta.verbose_name,
+                "label": item.__str__(),
+                "value": get_item_url(model, item)
+            })
+
+    return results

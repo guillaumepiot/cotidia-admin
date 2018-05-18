@@ -9,27 +9,29 @@
     {% if template_type == "centered" %}content-centered{% endif %}
 {% endblock body_class %}
 
-{% block toolbar_title %}
+{% block content_title %}
     <a href="{% get_admin_url app_label model_name 'list' %}">{{verbose_name_plural}}</a>
-        &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
-        {% blocktrans with verbose_name as verbose_name %}
-            {{object}}
-        {% endblocktrans %}
+    &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
+    {% blocktrans with verbose_name as verbose_name %}
+        {{object}}
+    {% endblocktrans %}
+{% endblock content_title %}
 
-    <a href="{% get_admin_url app_label model_name "delete" object %}" class="btn btn--delete btn--small toolbar__item">
+{% block content_actions %}
+    <a href="{% get_admin_url app_label model_name "delete" object %}" class="btn btn--delete btn--small">
         <span class="fa fa-times"></span>
         {% blocktrans with verbose_name as verbose_name %}
             Delete
         {% endblocktrans %}
     </a>
 
-    <a href="{% get_admin_url app_label model_name 'update' object %}" class="btn btn--change btn--small toolbar__item">
+    <a href="{% get_admin_url app_label model_name 'update' object %}" class="btn btn--change btn--small">
         <span class="fa fa-pencil"></span>
         {% blocktrans with verbose_name as verbose_name %}
             Edit
         {% endblocktrans %}
     </a>
-{% endblock toolbar_title %}
+{% endblock content_actions %}
 
 {% block page_content %}
 <div class="content__detail">

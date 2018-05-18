@@ -11,8 +11,6 @@ from django.urls import reverse, NoReverseMatch
 from django.http import HttpResponseRedirect, Http404
 from django.contrib.contenttypes.models import ContentType
 from django.views.generic.base import TemplateView
-from django.apps import apps
-from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models.deletion import ProtectedError
 
@@ -20,7 +18,7 @@ from cotidia.admin.mixins import StaffPermissionRequiredMixin
 from cotidia.admin.views.mixin import ContextMixin, ChildMixin
 from cotidia.admin.forms import ActionForm
 from cotidia.admin.templatetags.admin_list_tags import get_admin_url
-from cotidia.admin.conf import settings
+from cotidia.admin.utils import search_objects
 
 
 class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
@@ -444,40 +442,8 @@ class AdminGenericSearchView(StaffPermissionRequiredMixin, TemplateView):
 
     template_name = "admin/generic/page/search.html"
 
-    def get_item_url(self, model, obj):
-        url_name = "{}-admin:{}-detail".format(
-            model._meta.app_label,
-            model._meta.model_name
-        )
-        return reverse(url_name, kwargs={"pk": obj.id})
-
     def search_objects(self, query):
-        results = []
-
-        if not query:
-            return []
-
-        for m in settings.ADMIN_GLOBAL_SEARCH:
-            app_label, model_name = m["model"].split(".")
-            model = apps.get_model(app_label, model_name)
-
-            q_objects = Q()
-
-            for field in m["fields"]:
-                for q in query.split(" "):
-                    filter_args = {}
-                    lookup = "__icontains"
-                    filter_args[field + lookup] = q
-                    q_objects.add(Q(**filter_args), Q.OR)
-
-            for item in model.objects.filter(q_objects):
-                results.append({
-                    "type": model._meta.verbose_name,
-                    "representation": item.__str__(),
-                    "url": self.get_item_url(model, item)
-                })
-
-        return results
+        return search_objects(query)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

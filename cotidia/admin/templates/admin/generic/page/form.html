@@ -21,7 +21,7 @@
     {% if template_type == "centered" %}content-centered{% endif %}
 {% endblock body_class %}
 
-{% block toolbar_title %}
+{% block content_title %}
     <a href="{% get_admin_url app_label model_name 'list' %}">{{verbose_name_plural}}</a>
     &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
     {% if object %}
@@ -35,8 +35,7 @@
             Add {{verbose_name}}
         {% endblocktrans %}
     {% endif %}
-{% endblock toolbar_title %}
-
+{% endblock content_title %}
 
 {% block page_content %}
 {% include "admin/generic/form/non_field_errors.html" %}

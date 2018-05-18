@@ -1,5 +1,6 @@
 body{
     &.content-centered{
+        .content__header,
         .content__list,
         .content__detail,
         .content__delete,
@@ -14,6 +15,7 @@ body{
         .head-bar{
             margin-left: auto;
             margin-right: auto;
+            padding: 0;
         }
 
         @media screen and (max-width: $mobile-width) {
@@ -25,18 +27,33 @@ body{
 }
 
 .content{
-    &__inner{
+
+    &__inner {
         padding: 0 1rem;
     }
-    &__list{
+
+    &__list {
         overflow-x: scroll;
         margin: 0 1rem 1rem 1rem;
     }
-    &__detail{
+
+    &__detail {
         overflow-x: scroll;
-        margin: 1rem 1rem;
+        margin: 0rem 1rem;
     }
-    &__delete{
+
+    &__delete {
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1rem;
+    }
+
+    &__title {
+        @include font_size($font_size--medium);
     }
 }
 

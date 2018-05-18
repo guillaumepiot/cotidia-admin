@@ -23,3 +23,8 @@ class SortSerializer(serializers.Serializer):
     data = serializers.ListField(
         child=serializers.UUIDField()
     )
+
+
+class AdminSearchLookupSerializer(serializers.Serializer):
+    value = serializers.CharField()
+    label = serializers.CharField()

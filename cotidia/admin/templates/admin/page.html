@@ -3,20 +3,23 @@
     {% menu %}
     <div class="toolbar">
         {% block toolbar %}
-        <div class="toolbar__title toolbar-title">
-            {% block toolbar_title %}{% endblock toolbar_title %}
-        </div>
-        <div class="toolbar__menu toolbar-menu">
-            {% block toolbar_menu %}
-            {% include "admin/menu/shortcuts.html" %}
-            {% include "admin/menu/global_search.html" %}
-            {% include "admin/menu/profile.html" %}
-            {% endblock toolbar_menu %}
-        </div>
+        {% include "admin/menu/toolbar-profile.html" %}
+        {% include "admin/menu/toolbar-search.html" %}
+        {% include "admin/menu/toolbar-shortcuts.html" %}
         {% endblock toolbar %}
     </div>
     <div class="content">
+        {% block messages %}
         {% include "admin/generic/messages.html" %}
+        {% endblock messages %}
+        <div class="content__header">
+            <div class="content__title">
+                {% block content_title %}{% endblock content_title %}
+            </div>
+            <div class="content__actions">
+                {% block content_actions %}{% endblock content_actions %}
+            </div>
+        </div>
         {% block page_content %}{% endblock page_content %}
     </div>
 {% endblock content %}

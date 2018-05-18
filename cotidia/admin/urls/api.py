@@ -1,7 +1,11 @@
 from django.urls import path
 
-from cotidia.admin.views.api import AdminOrderableAPIView, SortAPIView
-from cotidia.admin.views.api import AdminSearchDashboardAPIView
+from cotidia.admin.views.api import (
+    AdminOrderableAPIView,
+    SortAPIView,
+    AdminSearchDashboardAPIView,
+    AdminSearchLookupAPIView
+)
 
 app_name = "cotidia.admin"
 
@@ -19,5 +23,10 @@ urlpatterns = [
         'list/<str:app_label>/<str:model>',
         AdminSearchDashboardAPIView.as_view(),
         name='object-list'
+    ),
+    path(
+        'search-lookup',
+        AdminSearchLookupAPIView.as_view(),
+        name='search-lookup'
     )
 ]

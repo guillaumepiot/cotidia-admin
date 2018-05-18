@@ -63,11 +63,6 @@ body.menu--sidebar {
         .menu__item--sidebar-expand{
             display: none;
         }
-        .toolbar {
-            top: 0;
-            left: $menu_sidebar_width;
-            width: calc(100% - #{$menu_sidebar_width});
-        }
         .content {
             margin-left: $menu_sidebar_width;
             padding-top: $toolbar_height;
@@ -108,19 +103,9 @@ body.menu--sidebar {
                 align-items: center;
             }
         }
-        .toolbar{
-            top: $toolbar_height;
-            left: 0;
-            width: 100%;
-        }
         .content{
             padding-top: $toolbar_height * 2;
         }
-    }
-    .toolbar{
-        height: $toolbar_height;
-        position: fixed;
-        z-index: 1;
     }
     .messages {
         margin-top: 0;
