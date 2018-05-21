@@ -12,6 +12,7 @@
         {% block messages %}
         {% include "admin/generic/messages.html" %}
         {% endblock messages %}
+        {% block content_header %}
         <div class="content__header">
             <div class="content__title">
                 {% block content_title %}{% endblock content_title %}
@@ -20,6 +21,7 @@
                 {% block content_actions %}{% endblock content_actions %}
             </div>
         </div>
+        {% endblock content_header %}
         {% block page_content %}{% endblock page_content %}
     </div>
 {% endblock content %}
