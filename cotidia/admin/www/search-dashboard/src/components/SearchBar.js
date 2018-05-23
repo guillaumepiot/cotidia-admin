@@ -129,6 +129,7 @@ export default class SearchBar extends Component {
           <TextInput
             label='Search'
             name='searchTerm'
+            prefix={<span className='fa fa-search' />}
             type='text'
             updateValue={this.updateSearchTerm}
             updateValueOnBlur={false}
