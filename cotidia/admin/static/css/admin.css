@@ -5487,6 +5487,10 @@ body.menu--sidebar .menu__sub-nav {
     line-height: 3.2rem; }
     .toolbar-menu__link:hover {
       background-color: #E5EBED; }
+  .toolbar-menu__item {
+    padding: 0.5rem 1rem;
+    color: #111315;
+    border-bottom: 1px solid #D0D5D7; }
   .toolbar-menu--active {
     display: block; }
 
@@ -5569,33 +5573,36 @@ body.content-centered .head-bar {
  * Defines the extra form styles required for the administration.
  *
  */
-.form--action-fixed-bottom {
-  padding-bottom: 8rem; }
-  .form--action-fixed-bottom .form__actions {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #E5EBED;
-    border-top: 1px solid #D0D5D7;
-    width: 100%;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 1rem; }
-.form__label--inline {
-  display: inline-block;
-  padding: 1rem;
-  float: right; }
-.form__control ul {
-  margin: 1rem 0;
-  padding: 0;
-  list-style: none; }
-.form__actions-inner {
-  padding-bottom: 1rem; }
-  .form__actions-inner:after {
-    content: "";
-    clear: both;
-    display: block; }
+.form {
+  padding-left: 1rem;
+  padding-right: 1rem; }
+  .form--action-fixed-bottom {
+    padding-bottom: 8rem; }
+    .form--action-fixed-bottom .form__actions {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #E5EBED;
+      border-top: 1px solid #D0D5D7;
+      width: 100%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      padding-top: 1rem; }
+  .form__label--inline {
+    display: inline-block;
+    padding: 1rem;
+    float: right; }
+  .form__control ul {
+    margin: 1rem 0;
+    padding: 0;
+    list-style: none; }
+  .form__actions-inner {
+    padding-bottom: 1rem; }
+    .form__actions-inner:after {
+      content: "";
+      clear: both;
+      display: block; }
 
 fieldset {
   margin-top: 1rem; }
