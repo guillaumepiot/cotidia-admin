@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import { debounce } from '../utils'
+
 import { TextInput } from '@cotidia/react-ui'
 
 export default class SearchBar extends Component {
@@ -27,17 +29,6 @@ export default class SearchBar extends Component {
 
   state = {
     action: '',
-    searchTerm: null,
-  }
-
-  componentWillMount () {
-    this.setState({ searchTerm: this.props.searchTerm })
-  }
-
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.searchTerm !== this.props.searchTerm) {
-      this.setState({ searchTerm: nextProps.searchTerm })
-    }
   }
 
   displayList = () => {
@@ -48,15 +39,7 @@ export default class SearchBar extends Component {
     this.props.switchMode('table')
   }
 
-  updateSearchTerm = ({ searchTerm }) => this.setState({ searchTerm })
-
-  setSearchTerm = (e) => {
-    if (e) {
-      e.preventDefault()
-    }
-
-    this.props.setSearchTerm(this.state.searchTerm)
-  }
+  updateSearchTerm = debounce(250, ({ searchTerm }) => this.props.setSearchTerm(searchTerm))
 
   clearSearchTerm = (e) => {
     this.props.clearFilters()
@@ -125,7 +108,7 @@ export default class SearchBar extends Component {
             </button>
           </div>
         )}
-        <form className='head-bar head-bar--filter' onSubmit={this.setSearchTerm}>
+        <div className='head-bar head-bar--filter'>
           <TextInput
             label='Search'
             name='searchTerm'
@@ -133,10 +116,8 @@ export default class SearchBar extends Component {
             type='text'
             updateValue={this.updateSearchTerm}
             updateValueOnBlur={false}
-            value={this.state.searchTerm}
+            value={this.props.searchTerm}
           />
-
-          <button className='btn btn--primary btn--outline' onClick={this.setSearchTerm} type='button'>Filter</button>
 
           <button className='btn btn--outline' onClick={this.clearSearchTerm} title='Reset filters' type='button'>
             <span className='fa fa-fw fa-refresh' />
@@ -147,7 +128,7 @@ export default class SearchBar extends Component {
           </button>
 
           {this.renderBatchActions()}
-        </form>
+        </div>
       </>
     )
   }
