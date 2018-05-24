@@ -1,5 +1,6 @@
 import { call, put, select, take, takeEvery } from 'redux-saga/effects'
 
+import { uuid4 } from '../../../utils'
 import { generateURL, fetchAuthenticated } from '../../../utils/api'
 
 import { showModal } from '../modal/sagas'
@@ -50,7 +51,9 @@ export function * manageColumns () {
 }
 
 function * performSearch () {
-  yield put({ type: types.SEARCH_START })
+  const searchID = uuid4()
+
+  yield put({ type: types.SEARCH_START, payload: { id: searchID } })
 
   const data = yield select((state) => state.search)
 
@@ -92,11 +95,14 @@ function * performSearch () {
     if (ok) {
       yield put({
         type: types.STORE_RESULTS,
-        payload: result,
+        payload: {
+          id: searchID,
+          result,
+        },
       })
     }
   } finally {
-    yield put({ type: types.SEARCH_END })
+    yield put({ type: types.SEARCH_END, payload: { id: searchID } })
   }
 }
 

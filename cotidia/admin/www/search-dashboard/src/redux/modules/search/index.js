@@ -22,6 +22,7 @@ const initialState = {
 
   results: [],
   loading: false,
+  searchID: null,
 
   pagination: {
     count: 0,
@@ -94,34 +95,43 @@ export default (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         loading: true,
+        searchID: payload.id,
       }
 
     case types.SEARCH_END:
-      return {
-        ...state,
-        loading: false,
+      if (state.searchID === payload.id) {
+        return {
+          ...state,
+          loading: false,
+        }
+      } else {
+        return state
       }
 
     case types.STORE_RESULTS:
-      return {
-        ...state,
-        // Normally this would be `results: payload.results`, but we need to filter out duplicates
-        // that Django may be senidng us because it's not working correctly. So that's what this
-        // reduce does here - it's building up a new result set by going through each element of the
-        // payload's, and ignoring duplicate UUIDs.
-        results: payload.results.reduce((agg, item) => {
-          if (! agg.find((innerItem) => item.uuid === innerItem.uuid)) {
-            agg.push(item)
-          }
+      if (state.searchID === payload.id) {
+        return {
+          ...state,
+          // Normally this would be `results: payload.results`, but we need to filter out duplicates
+          // that Django may be senidng us because it's not working correctly. So that's what this
+          // reduce does here - it's building up a new result set by going through each element of the
+          // payload's, and ignoring duplicate UUIDs.
+          results: payload.result.results.reduce((agg, item) => {
+            if (! agg.find((innerItem) => item.uuid === innerItem.uuid)) {
+              agg.push(item)
+            }
 
-          return agg
-        }, []),
-        selected: [],
-        pagination: {
-          count: payload.count,
-          next: payload.next,
-          previous: payload.previous,
-        },
+            return agg
+          }, []),
+          selected: [],
+          pagination: {
+            count: payload.result.count,
+            next: payload.result.next,
+            previous: payload.result.previous,
+          },
+        }
+      } else {
+        return state
       }
 
     case types.TOGGLE_COLUMN: {
