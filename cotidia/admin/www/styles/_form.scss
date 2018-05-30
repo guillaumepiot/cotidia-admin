@@ -4,9 +4,6 @@
  */
 
 .form{
-    padding-left: 1rem;
-    padding-right: 1rem;
-
     &--action-fixed-bottom{
         padding-bottom: $vertical_padding * 8;
         .form__actions{
