@@ -34,6 +34,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
     row_click_action = "update"  # or "detail"
     row_actions = ["view", "update", "delete"]
     group_by = False
+    orderable = False  # 'arrow', 'drag'
 
     def get_permission_required(self):
         if hasattr(self, "permission_required"):
@@ -77,6 +78,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
                 "form": ActionForm(action_list=action_list)
             }
 
+        context["orderable"] = getattr(self, "orderable", None)
         context["filter"] = getattr(self, "filter", None)
         return context
 

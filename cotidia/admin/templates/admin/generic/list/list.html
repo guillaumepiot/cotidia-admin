@@ -22,6 +22,9 @@
             {% for column in columns %}
                 <th>{{column.0}}</th>
             {% endfor %}
+            {% if orderable and orderable == 'arrow' %}
+            <th class="text-right">{% trans "Order" %}</th>
+            {% endif %}
             {% if row_actions %}
             <th class="text-right"><span class="sr-only">{% trans "Actions" %}</span></th>
             {% endif %}
@@ -49,6 +52,15 @@
         {% for column in columns %}
             {% render_column column %}
         {% endfor %}
+        {% if orderable and orderable == 'arrow' %}
+            <td class="text-right">
+                <a class="btn btn--small" href="{% url 'generic-admin:order' object.content_type.id object.id %}?action=move-up">
+                    <span class="fa fa-angle-up fa-lg"></span>
+                </a>&nbsp;<a class="btn btn--small {% if forloop.first%}pull-right{% endif %}" href="{% url 'generic-admin:order' object.content_type.id object.id %}?action=move-down">
+                    <span class="fa fa-angle-down fa-lg"></span>
+                </a>
+            </td>
+        {% endif %}
         {% if row_actions %}
         <td class="text-right">
             {% for action in row_actions %}
