@@ -1,5 +1,5 @@
 <li class="menu__item{% if item.nav_items %} menu__item--sub-nav{% endif %} menu-item{% if item.align_right %} menu-item--right{% endif %}">
-    <a href="{% if item.url %}{{item.url}}{% else %}#{% endif %}" class="menu-item__link{% if item.nav_items %} menu-item__link--drop-arrow{% endif %}" title="{{item.text}}">{% if item.icon %}<span class="menu-item__link-icon"><span class="fa fa-{{item.icon}}"></span></span> {% endif %}{% if item.text %}<span class="menu-item__link-text">{{item.text}}</span>{% endif %}</a>
+    <a href="{% if item.url %}{{item.url}}{% else %}#{% endif %}" class="menu-item__link{% if item.nav_items %} menu-item__link--drop-arrow{% endif %}" title="{{item.text|striptags}}">{% if item.icon %}<span class="menu-item__link-icon"><span class="fa fa-{{item.icon}}"></span></span> {% endif %}{% if item.text %}<span class="menu-item__link-text">{{item.text}}</span>{% endif %}</a>
     {% if item.nav_items %}
     <ul class="menu__sub-nav">
     {% for item in item.nav_items %}
