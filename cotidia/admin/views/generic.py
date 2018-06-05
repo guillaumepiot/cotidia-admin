@@ -195,6 +195,20 @@ class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):
     template_type = "centered"  # Options: fluid, centered
     fieldsets = []
 
+    def get_object(self, queryset=None):
+        try:
+            if queryset is None:
+                q = self.get_queryset()
+            else:
+                q = queryset
+
+            key = self.kwargs.get('pk')
+
+            q = q.filter(uuid=key)
+            return q.get()
+        except:
+            return super().get_object(queryset)
+
     def get_permission_required(self):
         if hasattr(self, "permission_required"):
             return self.permission_required
@@ -274,6 +288,20 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
     template_type = "centered"  # Options: fluid, centered
     # TODO
     # fixed actions bar
+
+    def get_object(self, queryset=None):
+        try:
+            if queryset is None:
+                q = self.get_queryset()
+            else:
+                q = queryset
+
+            key = self.kwargs.get('pk')
+
+            q = q.filter(uuid=key)
+            return q.get()
+        except:
+            return super().get_object(queryset)
 
     def get_permission_required(self):
         if hasattr(self, "permission_required"):
