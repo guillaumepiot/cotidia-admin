@@ -18,7 +18,7 @@
     <button type="submit" class="btn btn--delete">
         {% trans "Confirm Delete" %}
     </button>
-    <a href="{% get_child_admin_url app_label model_name 'update' parent object %}" class="btn btn--cancel pull-right">
+    <a href="{% if next %}{{next}}{% else %}{% get_child_admin_url app_label model_name 'update' parent object %}{% endif %}" class="btn btn--cancel pull-right">
         {% trans "Cancel" %}
     </a>
 </form>

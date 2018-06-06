@@ -68,7 +68,7 @@
                     Edit
                 {% endblocktrans %}
             </a>
-            <a href="{% get_admin_url app_label model_name 'list' %}" class="btn btn--cancel pull-right">
+            <a href="{% if next %}{{next}}{% else %}{% get_admin_url app_label model_name 'list' %}{% endif %}" class="btn btn--cancel pull-right">
                 {% trans "Back" %}
             </a>
         </div>

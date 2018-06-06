@@ -107,10 +107,15 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
         return HttpResponseRedirect(self.get_success_url(action_name))
 
     def build_success_url(self):
+
+        if self.request.GET.get('next'):
+            return self.request.GET['next']
+
         url_name = "{}-admin:{}-list".format(
             self.model._meta.app_label,
             self.model._meta.model_name
         )
+
         return reverse(url_name)
 
     def get_success_url(self, action):
@@ -167,7 +172,6 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
         context["app_label"] = app_label
         context["model_name"] = model_name
         context["url_type"] = url_type
-        # context["list"] = self.model.model_has_search_provider
         context["default_columns"] = self.request.GET.getlist("_column")
         context["default_order"] = self.request.GET.getlist("_order")
         context["default_filters"] = filters
@@ -226,6 +230,9 @@ class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):
 
         context["fieldsets"] = self.get_fieldsets()
 
+        if self.request.GET.get('next'):
+            context["next"] = self.request.GET['next']
+
         return context
 
     def get_template_names(self):
@@ -255,6 +262,10 @@ class AdminCreateView(StaffPermissionRequiredMixin, ContextMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        if self.request.GET.get('next'):
+            context["next"] = self.request.GET['next']
+
         return context
 
     def get_template_names(self):
@@ -270,10 +281,15 @@ class AdminCreateView(StaffPermissionRequiredMixin, ContextMixin, CreateView):
         ]
 
     def build_success_url(self):
+
+        if self.request.GET.get('next'):
+            return self.request.GET['next']
+
         url_name = "{}-admin:{}-detail".format(
             self.model._meta.app_label,
             self.model._meta.model_name
         )
+
         return reverse(url_name, args=[self.object.id])
 
     def get_success_url(self):
@@ -314,6 +330,10 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        if self.request.GET.get('next'):
+            context['next'] = self.request.GET['next']
+
         return context
 
     def get_template_names(self):
@@ -329,6 +349,10 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
         ]
 
     def build_success_url(self):
+
+        if self.request.GET.get('next'):
+            return self.request.GET['next']
+
         url_name = "{}-admin:{}-list".format(
             self.model._meta.app_label,
             self.model._meta.model_name
@@ -366,10 +390,15 @@ class AdminDeleteView(StaffPermissionRequiredMixin, ContextMixin, DeleteView):
             )
 
     def build_success_url(self):
+
+        if self.request.GET.get('next'):
+            return self.request.GET['next']
+
         url_name = "{}-admin:{}-list".format(
             self.model._meta.app_label,
             self.model._meta.model_name
         )
+
         return reverse(url_name)
 
     def get_success_url(self):
@@ -388,6 +417,9 @@ class AdminDeleteView(StaffPermissionRequiredMixin, ContextMixin, DeleteView):
         context["model_name"] = self.model._meta.model_name
         context["object_name"] = self.model._meta.object_name
         context["cancel_url"] = self.build_success_url()
+
+        if self.request.GET.get('next'):
+            context['next'] = self.request.GET['next']
 
         return context
 
@@ -500,4 +532,8 @@ class AdminGenericSearchView(StaffPermissionRequiredMixin, TemplateView):
         context["page_obj"] = page_obj
 
         context["url_params"] = "query={}&".format(query)
+
+        if self.request.GET.get('next'):
+            context['next'] = self.request.GET['next']
+
         return context
