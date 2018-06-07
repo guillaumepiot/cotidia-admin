@@ -107,7 +107,9 @@ function * performSearch () {
 }
 
 function * getResultsPage ({ payload: { page } }) {
-  yield put({ type: types.SEARCH_START })
+  const searchID = uuid4()
+
+  yield put({ type: types.SEARCH_START, payload: { id: searchID } })
 
   const pagination = yield select((state) => state.search.pagination)
 
@@ -119,11 +121,14 @@ function * getResultsPage ({ payload: { page } }) {
     if (ok) {
       yield put({
         type: types.STORE_RESULTS,
-        payload: result,
+        payload: {
+          id: searchID,
+          result,
+        },
       })
     }
   } finally {
-    yield put({ type: types.SEARCH_END })
+    yield put({ type: types.SEARCH_END, payload: { id: searchID } })
   }
 }
 
