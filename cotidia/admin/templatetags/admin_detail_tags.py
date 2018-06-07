@@ -11,7 +11,10 @@ def render_detail_field(context, obj, field_attrs):
     label = field_attrs["label"]
     field = field_attrs["field"]
     field_type = field_attrs.get("display_type")
-    value = get_attr(obj, field)
+    fields_split = field.split("__")
+    value = obj
+    for f in fields_split:
+        value = get_attr(value, f)
     app_label = context["app_label"]
     model_name = context["model_name"]
     template = 'admin/{}/{}/detail/{}.html'.format(
