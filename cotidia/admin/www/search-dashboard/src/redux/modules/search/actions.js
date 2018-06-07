@@ -1,5 +1,10 @@
 import * as types from './types'
 
+export const loadStoredConfig = (config) => ({
+  type: types.LOAD_STORED_CONFIG,
+  payload: config,
+})
+
 export const setSearchTerm = (term) => ({
   type: types.SET_SEARCH_TERM,
   payload: { term },
@@ -40,11 +45,6 @@ export const manageColumns = () => ({
 export const toggleColumn = (column) => ({
   type: types.TOGGLE_COLUMN,
   payload: { column },
-})
-
-export const setColumns = (columns) => ({
-  type: types.SET_COLUMNS,
-  payload: { columns },
 })
 
 export const resetColumns = () => ({

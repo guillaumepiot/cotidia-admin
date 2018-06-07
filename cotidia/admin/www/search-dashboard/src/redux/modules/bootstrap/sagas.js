@@ -46,12 +46,7 @@ export function * bootstrap ({ payload: config }) {
       const storedConfig = JSON.parse(localStorage.getItem(config.endpoint))
 
       if (storedConfig) {
-        if (Array.isArray(storedConfig.visibleColumns)) {
-          yield put(searchActions.setColumns(storedConfig.visibleColumns))
-        }
-        if (storedConfig.mode) {
-          yield put(searchActions.switchMode(storedConfig.mode))
-        }
+        yield put(searchActions.loadStoredConfig(storedConfig))
       }
     } catch {
       // pass

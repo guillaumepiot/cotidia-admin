@@ -1,4 +1,5 @@
 import { call, put, select, take, takeEvery } from 'redux-saga/effects'
+import isEqual from 'lodash.isequal'
 
 import { uuid4 } from '../../../utils'
 import { generateURL, fetchAuthenticated } from '../../../utils/api'
@@ -135,18 +136,42 @@ function * getResultsPage ({ payload: { page } }) {
 function * saveColumnConfig () {
   const state = yield select((state) => state.search)
 
-  localStorage.setItem(state.endpoint, JSON.stringify({
-    visibleColumns: state.visibleColumns,
+  const config = {
     mode: state.mode,
-  }))
+    orderColumn: state.orderColumn,
+    orderAscending: state.orderAscending,
+  }
+
+  // Only set visibleColumns if state.visibleColumns differs from state.defaultColumns, just so we
+  // don't end up saving stuff the user didn't directly set and is likely to change
+  if (! isEqual(state.visibleColumns, state.defaultColumns)) {
+    config.visibleColumns = state.visibleColumns
+  }
+
+  if (Object.keys(state.filters).length) {
+    config.filters = state.filters
+  }
+
+  localStorage.setItem(state.endpoint, JSON.stringify(config))
 }
 
 function * removeSavedColumnConfig () {
   const state = yield select((state) => state.search)
 
-  localStorage.setItem(state.endpoint, JSON.stringify({
-    mode: state.mode,
-  }))
+  // Get existing config from localStorage, defaulting to empty object if not set
+  let config = {}
+
+  try {
+    config = JSON.parse(localStorage.getItem(state.endpoint)) || {}
+  } catch {
+    // pass
+  }
+
+  // Delete the visible columns entry
+  delete config.visibleColumns
+
+  // Set the new object back
+  localStorage.setItem(state.endpoint, JSON.stringify(config))
 }
 
 function * performBatchAction ({ payload: { action } }) {
@@ -199,9 +224,15 @@ export default function * watcher () {
   yield takeEvery(types.CLEAR_FILTER, performSearch)
   yield takeEvery(types.CLEAR_FILTERS, performSearch)
 
-  yield takeEvery(types.TOGGLE_COLUMN, saveColumnConfig)
-  yield takeEvery(types.SWITCH_MODE, saveColumnConfig)
   yield takeEvery(types.RESET_COLUMNS, removeSavedColumnConfig)
+  yield takeEvery(
+    [
+      types.SEARCH_START,
+      types.TOGGLE_COLUMN,
+      types.SWITCH_MODE,
+    ],
+    saveColumnConfig
+  )
 
   yield takeEvery(types.GET_RESULTS_PAGE, getResultsPage)
 

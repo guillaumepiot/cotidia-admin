@@ -146,21 +146,53 @@ export default (state = initialState, { type, payload } = {}) => {
       }
     }
 
-    case types.SET_COLUMNS: {
+    case types.LOAD_STORED_CONFIG: {
+      const newState = {}
+
+      if (payload.visibleColumns) {
+        newState.visibleColumns = payload.visibleColumns
+
+        if (! payload.orderColumn) {
+          newState.orderColumn = payload.visibleColumns[0]
+          newState.orderAscending = true
+        }
+      }
+
+      if (payload.orderColumn) {
+        newState.orderColumn = payload.orderColumn
+
+        if (payload.hasOwnProperty('orderAscending')) {
+          newState.orderAscending = payload.orderAscending
+        }
+      }
+
+      if (payload.mode) {
+        newState.mode = payload.mode
+      }
+
+      if (payload.filters) {
+        newState.filters = payload.filters
+      }
+
       return {
         ...state,
-        visibleColumns: payload.columns,
-        orderColumn: payload.columns[0],
-        orderAscending: true,
+        ...newState,
       }
     }
 
-    case types.RESET_COLUMNS: {
+    // case types.SET_COLUMNS:
+    //   return {
+    //     ...state,
+    //     visibleColumns: payload.columns,
+    //     orderColumn: payload.columns[0],
+    //     orderAscending: true,
+    //   }
+
+    case types.RESET_COLUMNS:
       return {
         ...state,
         visibleColumns: state.defaultColumns,
       }
-    }
 
     case types.SET_FILTER_VALUE:
       return {
