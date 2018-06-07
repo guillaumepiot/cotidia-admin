@@ -19,7 +19,7 @@ class {{model_name}}AddForm(BetterModelForm):
                     {% for f in fields %}"{{f.1}}",{% if not forloop.last %}
                     {% endif %}{% endfor %}
                 ),
-                'legend': '{{model_verbose_name}} details'
+                'legend': '{{model_verbose_name|title}} details'
             }),
         )
 
@@ -38,6 +38,6 @@ class {{model_name}}UpdateForm(BetterModelForm):
                     {% for f in fields %}"{{f.1}}",{% if not forloop.last %}
                     {% endif %}{% endfor %}
                 ),
-                'legend': '{{model_verbose_name}} details'
+                'legend': '{{model_verbose_name|title}} details'
             }),
         )

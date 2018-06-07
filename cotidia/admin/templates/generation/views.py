@@ -50,7 +50,7 @@ class {{model_name}}Detail(AdminDetailView):
     permission_required = '{{app_label}}.change_{{model_name|lower}}'
     fieldsets = [
         {
-            "legend": '{{model_verbose_name}} Details',
+            "legend": '{{model_verbose_name|title}} Details',
             "fields": [
                 [
                     {% for field in fields %}{
