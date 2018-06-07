@@ -1,0 +1,19 @@
+{{> @menu }}
+{{> @toolbar--breadcrumb }}
+
+<div class="content">
+    <div class="content__delete">
+        <fieldset>
+            <legend>Are you sure to delete the following member?</legend>
+            <div class="form__row">
+                <p>Daneal Bassiouni</p>
+            </div>
+            <div class="form__row">
+                <p class="text-italic">The operation is not reversible.</p>
+            </div>
+        </fieldset>
+        <form action="" method="post">
+            <input name="csrfmiddlewaretoken" type="hidden" value="69kA0naBHi6uZIRMxwfxfaWpTpAi2Ogeko4jaXUqeyDgSNu3RL8uroZdSKYnMe7i">
+            <button class="btn btn--delete" type="submit">Confirm Delete</button><a class="btn btn--cancel pull-right" href="/admin/team/member/">Cancel</a></form>
+    </div>
+</div>
