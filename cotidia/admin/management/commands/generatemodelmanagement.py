@@ -122,10 +122,6 @@ class Command(BaseCommand):
                 app_label,
                 'template': "generation/snippets/menu_snippet.py"
             },
-            {
-                'snippet_name': "Factory snippet: %s/factory.py" % app_label,
-                'template': "generation/snippets/factory.py"
-            },
         ]
 
         if options["exclude_fields"]:
@@ -138,9 +134,13 @@ class Command(BaseCommand):
             "fields": fields
         }
 
+        replace_fields = options.get("replace", [])
+        if replace_fields is None:
+            replace_fields = []
+
         for template in structure:
             # checks if user has chosen to replace the template
-            replace_file = template["name"] in options["replace"]
+            replace_file = template["name"] in replace_fields
             if replace_file or not os.path.exists(template["path"]):
                 # Creates directorys if they do not exist
                 os.makedirs(os.path.dirname(
