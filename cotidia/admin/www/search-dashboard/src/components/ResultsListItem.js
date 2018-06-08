@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
-import { getFormattedValue } from '../utils/resultItems'
+import { getFormattedValueWithConfig } from '../utils/resultItems'
 
 // Normally we wouldn't bother with perf optimisation, but this takes a render of 250 items down
 // from 130ms to 25-30ms when only one of the items changes (e.g. select an item).
@@ -10,6 +10,7 @@ export default class ResultsListItem extends PureComponent {
     checked: PropTypes.bool.isRequired,
     checkItem: PropTypes.func.isRequired,
     columns: PropTypes.object.isRequired,
+    config: PropTypes.object,
     item: PropTypes.object.isRequired,
     listFields: PropTypes.shape({
       left: PropTypes.shape({
@@ -40,11 +41,13 @@ export default class ResultsListItem extends PureComponent {
 
   getColumnConfig = (columnName) => ({
     accessor: columnName,
-    display: this.props.columns?.[columnName]?.display || 'verbatim',
+    display: this.props.columns?.[columnName]?.display,
   })
 
   render () {
-    const { checked, item, showCheck, listFields } = this.props
+    const { checked, config, item, showCheck, listFields } = this.props
+
+    const getFormattedValue = getFormattedValueWithConfig(config)
 
     let lt, lb, rt, rb
 

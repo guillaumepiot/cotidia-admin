@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
-import { getFormattedValue } from '../utils/resultItems'
+import { getFormattedValueWithConfig } from '../utils/resultItems'
 
 // Normally we wouldn't bother with perf optimisation, but this takes a render of 250 items down
 // from 130ms to 25-30ms when only one of the items changes (e.g. select an item).
@@ -10,6 +10,7 @@ export default class ResultsTableItem extends PureComponent {
     checked: PropTypes.bool.isRequired,
     checkItem: PropTypes.func.isRequired,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+    config: PropTypes.object,
     item: PropTypes.object.isRequired,
     showCheck: PropTypes.bool.isRequired,
     viewItem: PropTypes.func.isRequired,
@@ -32,9 +33,12 @@ export default class ResultsTableItem extends PureComponent {
     const {
       checked,
       columns,
+      config,
       item,
       showCheck,
     } = this.props
+
+    const getFormattedValue = getFormattedValueWithConfig(config)
 
     return (
       <tr className={checked ? 'table__row--active' : null} onClick={this.handleClickRow}>

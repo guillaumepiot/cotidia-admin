@@ -60,6 +60,7 @@ App.propTypes = {
       value: PropTypes.any.isRequired,
     })),
   })).isRequired,
+  config: PropTypes.object,
   defaultColumns: PropTypes.arrayOf(PropTypes.string),
   listFields: PropTypes.shape({
     left: PropTypes.shape({

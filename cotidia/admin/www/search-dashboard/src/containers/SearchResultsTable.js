@@ -17,6 +17,7 @@ import SearchResultsTable from '../components/SearchResultsTable'
 const mapStateToProps = (state) => ({
   batchActions: state.search.batchActions,
   columns: getVisibleColumnConfig(state),
+  config: state.config,
   detailURL: state.search.detailURL,
   displayedColumns: state.search.displayedColumns,
   filters: getActiveFilters(state),

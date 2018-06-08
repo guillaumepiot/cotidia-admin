@@ -1,6 +1,7 @@
 import { put, takeEvery } from 'redux-saga/effects'
 
 import * as types from './types'
+import * as configTypes from '../config/types'
 import * as searchActions from '../search/actions'
 import * as searchTypes from '../search/types'
 
@@ -8,6 +9,8 @@ export function * bootstrap ({ payload: config }) {
   yield put({ type: searchTypes.SET_ENDPOINT, payload: config.endpoint })
   yield put({ type: searchTypes.SET_DETAIL_URL, payload: config.detailURL })
   yield put({ type: searchTypes.SET_BATCH_ACTIONS, payload: config.batchActions })
+
+  yield put({ type: configTypes.SET_CONFIG, payload: config.config })
 
   let defaultOrderColumn = config.defaultColumns[0]
   let defaultOrderAscending = true

@@ -12,6 +12,7 @@ export default class SearchResultsTable extends Component {
     batchActions: PropTypes.arrayOf(PropTypes.object),
     clearFilter: PropTypes.func.isRequired,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+    config: PropTypes.object,
     detailURL: PropTypes.string,
     filterColumn: PropTypes.func.isRequired,
     filters: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -55,6 +56,7 @@ export default class SearchResultsTable extends Component {
       batchActions,
       clearFilter,
       columns,
+      config,
       detailURL,
       filterColumn,
       filters,
@@ -90,6 +92,7 @@ export default class SearchResultsTable extends Component {
                 checked={selected.includes(item.uuid)}
                 checkItem={this.checkItem}
                 columns={columns}
+                config={config}
                 key={item.uuid}
                 item={item}
                 showCheck={batchActions.length > 0}

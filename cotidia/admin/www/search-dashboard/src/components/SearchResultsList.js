@@ -10,6 +10,7 @@ export default class SearchResultsList extends Component {
   static propTypes = {
     batchActions: PropTypes.arrayOf(PropTypes.object),
     columns: PropTypes.object.isRequired,
+    config: PropTypes.object,
     detailURL: PropTypes.string,
     listFields: PropTypes.shape({
       left: PropTypes.shape({
@@ -45,6 +46,7 @@ export default class SearchResultsList extends Component {
     const {
       batchActions,
       columns,
+      config,
       detailURL,
       loading,
       results,
@@ -60,6 +62,7 @@ export default class SearchResultsList extends Component {
               checked={selected.includes(item.uuid)}
               checkItem={this.checkItem}
               columns={columns}
+              config={config}
               key={item.uuid}
               item={item}
               showCheck={batchActions.length > 0}

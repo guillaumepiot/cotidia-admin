@@ -19,6 +19,12 @@ export default (state = initialState, { type, payload } = {}) => {
         bootstrapped: true,
       }
 
+    case types.SET_CONFIG:
+      return {
+        ...state,
+        config: payload,
+      }
+
     default:
       return state
   }
