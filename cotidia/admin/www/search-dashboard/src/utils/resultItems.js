@@ -30,8 +30,22 @@ const formatters = {
 export const getFormattedValue = (item, accessor, format) => {
   const value = getItem(item, accessor)
 
-  const formatter = formatters[format] || formatters.verbatim
+  // If the format config is a function in its own right, just defer to it, passing the whole item,
+  // the field name (accessor) and the value we think that field has.
+  if (typeof format === 'function') {
+    return format(item, accessor, value)
+  }
 
+  // Otherwise, let's assume verbatim and see if an actual formatter was passed in that we can use.
+
+  let formatter = formatters.verbatim
+
+  if (typeof format === 'string') {
+    formatter = formatters[format] || formatters.verbatim
+  }
+
+  // Finally call the formatter on value, or, if the value is an array, on each element within the
+  // array and then join all the results by a comma.
   if (Array.isArray(value)) {
     return value.map((value) => formatter(value)).join(', ')
   } else {
