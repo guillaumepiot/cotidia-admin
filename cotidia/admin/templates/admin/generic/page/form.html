@@ -37,9 +37,13 @@
     {% endif %}
 {% endblock content_title %}
 
-{% block page_content %}
+{% block messages %}
+{{block.super}}
 {% include "admin/generic/form/non_field_errors.html" %}
 {% include "admin/generic/form/errors.html" %}
+{% endblock messages %}
+
+{% block page_content %}
 <form action="" method="post" class="form form--animate" enctype="multipart/form-data">
     {% csrf_token %}
 

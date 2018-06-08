@@ -1,12 +1,7 @@
 {% load i18n %}{% if form.errors %}
 <div class="messages">
     <div class="alert alert--error">
-    <ul class="errorlist"><li>{% trans "Please review the field errors below:" %}</li></ul>
-    {% comment %}
-        {% for key, value in form.errors.items %}
-            {{value}}
-        {% endfor %}
-    {% endcomment %}
+        {% trans "Please review the field errors below." %}
     </div>
 </div>
 {% endif %}
