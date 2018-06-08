@@ -49,7 +49,10 @@ App.propTypes = {
     onComplete: PropTypes.func,
   })),
   columns: PropTypes.objectOf(PropTypes.shape({
-    display: PropTypes.oneOf(['verbatim', 'date', 'datetime', 'boolean']),
+    display: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.string,
+    ]),
     filter: PropTypes.oneOf(['text', 'choice', 'boolean', 'number', 'date']),
     label: PropTypes.string.isRequired,
     options: PropTypes.arrayOf(PropTypes.shape({

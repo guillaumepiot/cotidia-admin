@@ -25,6 +25,21 @@ const formatters = {
   boolean: (value) => (
     value ? <span className='fa fa-check' /> : <span className='fa fa-times' />
   ),
+  link: (value, type) => {
+    let link = value
+
+    if (type === 'mailto') {
+      link = `mailto:${link}`
+    } else if (type === 'tel') {
+      link = `tel:${link}`
+    }
+
+    return <a href={link} onClick={(e) => e.stopPropagation()}>{value}</a>
+  },
+  raw: (value) => <span dangerouslySetInnerHTML={{ __html: value }} />,
+  label: (value, type) => (
+    <span className={`label ${type && `label--${type}`}`}>{value}</span>
+  ),
 }
 
 export const getFormattedValue = (item, accessor, format) => {
@@ -36,19 +51,21 @@ export const getFormattedValue = (item, accessor, format) => {
     return format(item, accessor, value)
   }
 
-  // Otherwise, let's assume verbatim and see if an actual formatter was passed in that we can use.
+  // Otherwise, use the formatter as it was passed in, defaulting to verbatim for a formatter that's not recognised.
 
-  let formatter = formatters.verbatim
+  format = (typeof format === 'string') ? format : 'verbatim'
 
-  if (typeof format === 'string') {
-    formatter = formatters[format] || formatters.verbatim
-  }
+  // Parse the actual name and any formatter agruments out of the compound name as given.
+  const [ actualFormat, ...args ] = format.split(':')
+
+  // Get actual formatter function from formatter name.
+  const formatter = formatters[actualFormat] || formatters.verbatim
 
   // Finally call the formatter on value, or, if the value is an array, on each element within the
   // array and then join all the results by a comma.
   if (Array.isArray(value)) {
-    return value.map((value) => formatter(value)).join(', ')
+    return value.map((value) => formatter(value, ...args)).join(', ')
   } else {
-    return formatter(value)
+    return formatter(value, ...args)
   }
 }
