@@ -32,9 +32,15 @@ export default class SearchResultsTable extends Component {
     selected: [],
   }
 
-  viewItem = (item) => {
+  viewItem = (item, newWindow) => {
     if (this.props.detailURL) {
-      window.location = generateURL(this.props.detailURL, item)
+      const url = generateURL(this.props.detailURL, item)
+
+      if (newWindow) {
+        window.open(url)
+      } else {
+        window.location = url
+      }
     }
   }
 

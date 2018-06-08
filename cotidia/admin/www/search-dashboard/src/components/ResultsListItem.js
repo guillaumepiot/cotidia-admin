@@ -25,9 +25,9 @@ export default class ResultsListItem extends PureComponent {
     viewItem: PropTypes.func.isRequired,
   }
 
-  handleClickRow = () => {
+  handleClickRow = (e) => {
     if (this.props.viewItem) {
-      this.props.viewItem(this.props.item)
+      this.props.viewItem(this.props.item, e.metaKey || e.ctrlKey || e.shiftKey)
     } else if (this.props.showCheck) {
       this.props.checkItem(this.props.item)
     }
