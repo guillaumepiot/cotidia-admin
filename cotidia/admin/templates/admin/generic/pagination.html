@@ -1,13 +1,13 @@
 {% if is_paginated or page_obj%}
     <div class="pagination">
         {% if page_obj.has_previous %}
-            <a href="?{{url_params}}{{url_params_sort}}page={{ page_obj.previous_page_number }}" class="pagination__link pagination__link--previous">previous</a>
+            <a href="?{{filter_params}}&page={{ page_obj.previous_page_number }}" class="pagination__link pagination__link--previous">previous</a>
         {% endif %}
         <span class="pagination__link pagination__link--current">
             Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
         </span>
         {% if page_obj.has_next %}
-            <a href="?{{url_params}}{{url_params_sort}}page={{ page_obj.next_page_number }}" class="pagination__link pagination__link--next">next</a>
+            <a href="?{{filter_params}}&page={{ page_obj.next_page_number }}" class="pagination__link pagination__link--next">next</a>
         {% endif %}
     </div>
 {% endif %}

@@ -1,3 +1,5 @@
+import urllib
+
 from django.views.generic import (
     ListView,
     DetailView,
@@ -62,24 +64,35 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context["columns"] = self.columns
-        context["add_view"] = self.add_view
-        context["row_click_action"] = self.row_click_action
-        context["row_actions"] = self.row_actions
-        context["group_by"] = self.group_by
+        context['columns'] = self.columns
+        context['add_view'] = self.add_view
+        context['row_click_action'] = self.row_click_action
+        context['row_actions'] = self.row_actions
+        context['group_by'] = self.group_by
+
+        context['next'] = self.request.path
+
+        if self.filter and self.filter.data:
+            context['filter_data'] = self.filter.data.dict()
+            if 'page' in context['filter_data']:
+                del context['filter_data']['page']
+            context['filter_params'] = urllib.parse.urlencode(context['filter_data'])
+            context['next'] += '?' + context['filter_params']
+
+        context['next'] = urllib.parse.quote(context['next'])
 
         if self.actions:
             action_list = ()
             for action in self.actions:
                 action_func = getattr(self, action)
-                action_name = getattr(action_func, "action_name", action)
+                action_name = getattr(action_func, 'action_name', action)
                 action_list += (action, action_name),
-            context["actions"] = {
-                "form": ActionForm(action_list=action_list)
+            context['actions'] = {
+                'form': ActionForm(action_list=action_list)
             }
 
-        context["orderable"] = getattr(self, "orderable", None)
-        context["filter"] = getattr(self, "filter", None)
+        context['orderable'] = getattr(self, 'orderable', None)
+        context['filter'] = getattr(self, 'filter', None)
         return context
 
     def get_template_names(self):
@@ -332,6 +345,7 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
         context = super().get_context_data(**kwargs)
 
         if self.request.GET.get('next'):
+            print(self.request.GET['next'])
             context['next'] = self.request.GET['next']
 
         return context
@@ -351,6 +365,7 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
     def build_success_url(self):
 
         if self.request.GET.get('next'):
+            print(self.request.GET['next'])
             return self.request.GET['next']
 
         url_name = "{}-admin:{}-list".format(
