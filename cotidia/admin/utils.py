@@ -98,7 +98,7 @@ FIELD_MAPPING = {
     "AdminModelSerializer": (lambda: {
         "display": "verbatim",
         "many": "True",
-        "filter": "number"
+        "filter": "choice"
     }),
     "ManyRelatedField": (lambda: {
         "display": "verbatim",
@@ -107,7 +107,7 @@ FIELD_MAPPING = {
     }),
     "ListSerializer": (lambda: {
         "display": "verbatim",
-        "filter": "text"
+        "filter": "choice"
     }),
 }
 
@@ -134,7 +134,7 @@ def get_model_serializer_class(model_class):
             return GenericSerializer
 
 
-def get_field_representation(field_name, field, model, prefix="",max_depth=MAX_SUBSERIALIZER_DEPTH):
+def get_field_representation(field_name, field, prefix="", max_depth=MAX_SUBSERIALIZER_DEPTH):
     """ Creates a dict object for a given field using field mapping above
         Fields not in (or a subclass of) elements in the SUPPORTED_FIELD_TYPES
         list will return as "None"
@@ -142,13 +142,13 @@ def get_field_representation(field_name, field, model, prefix="",max_depth=MAX_S
     # Gets the first element that the field is an instance of The list is
     # sorted so the most specific classes are checked first using mro()
     sorted_types = sorted(
-            SUPPORTED_FIELD_TYPES_SERIALIZER,
-            key=lambda x: len(x.mro())
-            )
+        SUPPORTED_FIELD_TYPES_SERIALIZER,
+        key=lambda x: len(x.mro())
+    )
 
     field_type = next(
-            iter([t for t in sorted_types if isinstance(field, t)]),
-            None)
+        iter([t for t in sorted_types if isinstance(field, t)]),
+        None)
     if field_type is None:
         return None
 
@@ -157,23 +157,33 @@ def get_field_representation(field_name, field, model, prefix="",max_depth=MAX_S
             return {}
         else:
             return get_fields_from_serializer(
-                    field,
-                    prefix=("%s%s__") % (
-                        prefix,
-                        field_name
-                        ),
-                    max_depth=max_depth -1)
+                field,
+                prefix=("%s%s__") % (
+                    prefix,
+                    field_name
+                ),
+                max_depth=max_depth - 1
+            )
 
     # Gets the base representation for the given field type
     field_representation = FIELD_MAPPING[field_type.__name__]()
     # Formats the label by changing _s to spaces and capitalising the first
     # letter of each word
-    field_representation['label'] =\
+    field_representation['label'] = \
         field_name.replace("__", " ").replace("_", " ").title()
-    try:
+
+    if hasattr(field, 'choices'):
+        print(field_name, "has choices")
         field_representation['options'] = list(map(lambda x: {"value": x[0], "label": x[1]}, field.choices.items()))
-    except AttributeError:
-        pass
+    elif serializers.BaseSerializer in field_type.mro():
+        print(field_name, "has BaseSerializer")
+        if field_representation['filter'] == 'choice':
+            field_representation['options'] = field.child.get_choices()
+    elif field_representation['filter'] == 'choice':
+        print("get choices for", field_name)
+        field_representation['options'] = field.get_choices()
+    else:
+        print("no filter for", field_name)
 
     return {prefix + field_name: field_representation}
 
@@ -182,17 +192,16 @@ def get_fields_from_model(model):
     return get_fields_from_serializer(get_model_serializer_class(model)())
 
 
-def get_fields_from_serializer(serializer, prefix="",max_depth=MAX_SUBSERIALIZER_DEPTH):
+def get_fields_from_serializer(serializer, prefix="", max_depth=MAX_SUBSERIALIZER_DEPTH):
     fields_representation = {}
     fields = serializer.fields
     for f in fields:
         field_representation = get_field_representation(
-                f,
-                fields[f],
-                serializer,
-                prefix,
-                max_depth
-                )
+            f,
+            fields[f],
+            prefix,
+            max_depth
+        )
         if field_representation is not None:
             fields_representation.update(field_representation)
         else:
