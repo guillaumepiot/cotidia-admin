@@ -19,7 +19,8 @@ from django.apps import apps
 from cotidia.admin.utils import (
     get_fields_from_model,
     get_model_serializer_class,
-    search_objects
+    search_objects,
+    get_field_representation
 )
 from cotidia.admin.serializers import (
     SortSerializer,
@@ -151,7 +152,7 @@ FILTERS = {
 }
 
 
-def get_sub_serializer(serializer,field):
+def get_sub_serializer(serializer, field):
     fields = field.split("__")
     sub_serializer = serializer()
     for f in fields:
@@ -212,8 +213,11 @@ class AdminSearchDashboardAPIView(ListAPIView):
                 suffix = ""
                 try:
                     if field_data[field]['many']:
-                        sub_serializer = get_sub_serializer(serializer, field)
-                        suffix = "__" + sub_serializer.SearchProvider.display_field
+                        if field_data[field]['filter'] == 'choice':
+                            suffix = "__uuid"
+                        else:
+                            sub_serializer = get_sub_serializer(serializer, field)
+                            suffix = "__" + sub_serializer.SearchProvider.display_field
                 except KeyError:
                     pass
                 filter_type = field_data[field]['filter']

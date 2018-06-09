@@ -18,6 +18,9 @@ class AdminModelSerializer(serializers.ModelSerializer):
                 )
         return repr
 
+    def get_choices(self):
+        return list(map(lambda x: {"value": str(x.uuid), "label": getattr(x, self.SearchProvider.display_field)}, self.Meta.model.objects.all()))
+
 
 class SortSerializer(serializers.Serializer):
     data = serializers.ListField(
