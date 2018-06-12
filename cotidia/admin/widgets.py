@@ -382,3 +382,29 @@ class RadioButtonSelect(forms.RadioSelect):
     template_name = 'widgets/radio_button.html'
     option_template_name = 'widgets/radio_option_button.html'
 
+
+class SlugInput(forms.TextInput):
+    class Media:
+        js = ('js/slug.js',)
+
+
+class GeolocateInput(forms.TextInput):
+
+    def render(self, name, value, attrs=None):
+
+        if attrs is None:
+            attrs = {}
+        attrs.update(
+            {
+                'data-geolocate': True,
+                'data-latitude-field': attrs.get('data-latitude-field', 'id_lat'),
+                'data-longitude-field': attrs.get('data-longitude-field', 'id_lng'),
+            }
+        )
+
+        html = super().render(name, value, attrs)
+        return html
+
+    class Media:
+        js = ('js/geolocate.js',)
+

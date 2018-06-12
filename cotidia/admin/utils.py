@@ -173,17 +173,12 @@ def get_field_representation(field_name, field, prefix="", max_depth=MAX_SUBSERI
         field_name.replace("__", " ").replace("_", " ").title()
 
     if hasattr(field, 'choices'):
-        print(field_name, "has choices")
         field_representation['options'] = list(map(lambda x: {"value": x[0], "label": x[1]}, field.choices.items()))
     elif serializers.BaseSerializer in field_type.mro():
-        print(field_name, "has BaseSerializer")
         if field_representation['filter'] == 'choice':
             field_representation['options'] = field.child.get_choices()
     elif field_representation['filter'] == 'choice':
-        print("get choices for", field_name)
         field_representation['options'] = field.get_choices()
-    else:
-        print("no filter for", field_name)
 
     return {prefix + field_name: field_representation}
 
@@ -204,8 +199,6 @@ def get_fields_from_serializer(serializer, prefix="", max_depth=MAX_SUBSERIALIZE
         )
         if field_representation is not None:
             fields_representation.update(field_representation)
-        else:
-            print("Field not supported: %s" % fields[f])
 
     try:
         user_defined_representation = serializer.SearchProvider.field_representation
@@ -269,6 +262,7 @@ def get_model_structure(
     }
     # If the serializer has batch actions we use them, otherwise there are no
     # batch actions
+
     if batch_actions == []:
         try:
             batch_actions = serializer.SearchProvider.batch_actions
@@ -276,15 +270,16 @@ def get_model_structure(
             pass
 
     for batch_action in batch_actions:
-        url = reverse(
-            'generic-api:batch-action',
-            kwargs={
-                'app_label': model._meta.app_label,
-                'model_name': model._meta.model_name,
-                'action': batch_action['action']
-            }
-        )
-        batch_action['endpoint'] = url
+        if not batch_action.get('endpoint'):
+            url = reverse(
+                'generic-api:batch-action',
+                kwargs={
+                    'app_label': model._meta.app_label,
+                    'model_name': model._meta.model_name,
+                    'action': batch_action['action']
+                }
+            )
+            batch_action['endpoint'] = url
 
     structure["batchActions"] = batch_actions
 
