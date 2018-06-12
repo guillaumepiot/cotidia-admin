@@ -6,6 +6,7 @@ from django.utils.safestring import mark_safe
 from django.utils.html import format_html
 from django.utils.dates import MONTHS
 from django.forms.widgets import Widget, Select
+from django.conf import settings
 
 RE_DATE = re.compile(r'(\d{4})-(\d\d?)-(\d\d?)$')
 RE_TIME = re.compile(r'(\d\d?)?:(\d\d?)?$')
@@ -406,5 +407,8 @@ class GeolocateInput(forms.TextInput):
         return html
 
     class Media:
-        js = ('js/geolocate.js',)
+        js = (
+            'https://maps.google.com/maps/api/js?key={}'.format(settings.GOOGLE_MAP_API_KEY),
+            'js/geolocate.js',
+        )
 

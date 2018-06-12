@@ -7,17 +7,77 @@
 
 (function () {
   function Geolocate (el) {
-    console.log("Geolocate")
-    // var slugFrom = el.dataset.slug
-    // var fromField = document.getElementById('id_'+slugFrom)
+    this.latField = document.getElementById(el.dataset.latitudeField)
+    this.lngField = document.getElementById(el.dataset.longitudeField)
+    var context = this
+    el.addEventListener('change', function() {
+      context.geolocateAddress(this.value)
+    })
+    this.map = document.createElement('div')
+    this.map.style.height = "300px"
+    this.map.innerHTML = 'Loading Google map...'
+    el.parentNode.parentNode.append(this.map)
+    this.loadMap()
+  }
 
-    // if (!el.value) {
-    //   fromField.addEventListener('keyup', function() {
-    //     var slug = window.URLify(this.value)
-    //     el.value = slug
-    //     el.parentNode.parentNode.classList.remove('form__group--inactive')
-    //   })
-    // }
+  Geolocate.prototype.geolocateAddress = function(address, map_type) {
+
+    var geocoder = new google.maps.Geocoder()
+    var context = this
+
+    geocoder.geocode( { 'address': address }, function(results, status){
+        if (status == google.maps.GeocoderStatus.OK) {
+          context.latField.value = results[0].geometry.location.lat().toFixed(8)
+          context.lngField.value = results[0].geometry.location.lng().toFixed(8)
+          context.latField.parentNode.parentNode.classList.remove('form__group--inactive')
+          context.lngField.parentNode.parentNode.classList.remove('form__group--inactive')
+          context.loadMap(map_type)
+        }
+
+        else {
+            alert("Geocode was not successful for the following reason: " + status)
+        }
+      }
+    )
+  }
+
+  Geolocate.prototype.loadMap = function() {
+
+    var context = this
+    var lat = this.latField.value || 51.509865
+    var lng = this.lngField.value || -0.118092
+    var zoom = 10
+    var marker = false
+
+    if (this.latField.value) {
+      zoom = 14
+      marker = true
+    }
+    console.log(lat, lng, new google.maps.LatLng(lat, lng))
+    var mapOptions = {
+      'zoom': zoom,
+      'mapTypeId': google.maps.MapTypeId.ROADMAP,
+      'center': new google.maps.LatLng(lat, lng),
+      'scrollwheel': false
+    }
+    var map = new google.maps.Map(this.map, mapOptions)
+
+    if (marker) {
+      marker = new google.maps.Marker({
+        map: map,
+        position: new google.maps.LatLng(lat, lng),
+        draggable: true
+      })
+      google.maps.event.addListener(marker, 'dragend', function() {
+          context.updateLatLon(marker.getPosition())
+        }
+      )
+    }
+  }
+
+  Geolocate.prototype.updateLatLon = function(position) {
+    this.latField.value = position.lat()
+    this.lngField.value = position.lng()
   }
 
   /////////////////////////////////////////////////////////////////////////////
@@ -31,7 +91,7 @@
   function bootstrap () {
     document.removeEventListener('readystatechange', bootstrap)
 
-    var locationFields = document.querySelectorAll('[data-slug]')
+    var locationFields = document.querySelectorAll('[data-geolocate]')
 
     for (var i = 0; i < locationFields.length; i++) {
       new Geolocate(locationFields[i])
