@@ -53,7 +53,7 @@
       zoom = 14
       marker = true
     }
-    console.log(lat, lng, new google.maps.LatLng(lat, lng))
+
     var mapOptions = {
       'zoom': zoom,
       'mapTypeId': google.maps.MapTypeId.ROADMAP,
