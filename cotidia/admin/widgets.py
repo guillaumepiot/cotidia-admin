@@ -408,7 +408,7 @@ class GeolocateInput(forms.TextInput):
 
     class Media:
         js = (
-            'https://maps.google.com/maps/api/js?key={}'.format(settings.GOOGLE_MAP_API_KEY),
+            'https://maps.google.com/maps/api/js?key={}'.format(getattr(settings, 'GOOGLE_MAP_API_KEY', '')),
             'js/geolocate.js',
         )
 
