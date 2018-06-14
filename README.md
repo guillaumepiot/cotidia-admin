@@ -21,12 +21,12 @@ Add generic urls:
 
 ```python
 urlpatterns = [
-    url(
-        r'^admin/generic/',
+    path(
+        'admin/generic/',
         include('cotidia.admin.urls.admin', namespace="generic-admin")
     ),
-    url(
-        r'^api/generic/',
+    path(
+        'api/generic/',
         include('cotidia.admin.urls.api', namespace="generic-api")
     ),
 ]
