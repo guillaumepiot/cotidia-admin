@@ -72,7 +72,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
 
         context['next'] = self.request.path
 
-        if self.filter and self.filter.data:
+        if hasattr(self, 'filter') and self.filter and self.filter.data:
             context['filter_data'] = self.filter.data.dict()
             if 'page' in context['filter_data']:
                 del context['filter_data']['page']
