@@ -9,9 +9,23 @@
   function Geolocate (el) {
     this.latField = document.getElementById(el.dataset.latitudeField)
     this.lngField = document.getElementById(el.dataset.longitudeField)
+    this.lookupTimeout = null
     var context = this
     el.addEventListener('change', function() {
-      context.geolocateAddress(this.value)
+      if (this.value) {
+        context.geolocateAddress(this.value)
+      }
+    })
+    el.addEventListener('keyup', function() {
+      if (this.value) {
+        var value = this.value
+        if (this.lookupTimeout) {
+          clearTimeout(this.lookupTimeout)
+        }
+        this.lookupTimeout = setTimeout(function() {
+              context.geolocateAddress(value)
+          }, 250)
+      }
     })
     this.map = document.createElement('div')
     this.map.style.height = "300px"
@@ -21,7 +35,7 @@
   }
 
   Geolocate.prototype.geolocateAddress = function(address, map_type) {
-
+    console.log('Geolocate')
     var geocoder = new google.maps.Geocoder()
     var context = this
 
