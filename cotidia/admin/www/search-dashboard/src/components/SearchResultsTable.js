@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { generateURL } from '../utils/api'
+import { getItemValue, getFormattedValueWithConfig } from '../utils/resultItems'
 
 import ResultsTableHeader from './ResultsTableHeader'
 import ResultsTableItem from './ResultsTableItem'
@@ -70,6 +71,13 @@ export default class SearchResultsTable extends Component {
       toggleSelectAllResults,
     } = this.props
 
+    let currentCategoryValue = null
+    let formatter = null
+
+    if (config.categoriseBy) {
+      formatter = getFormattedValueWithConfig(config)
+    }
+
     return (
       <>
         <table className={`table ${detailURL ? 'table--clickable' : ''} table--admin-mobile-view ${loading ? 'table--loading' : ''}`}>
@@ -87,18 +95,60 @@ export default class SearchResultsTable extends Component {
             toggleOrderDirection={toggleOrderDirection}
           />
           <tbody>
-            {results.map((item) => (
-              <ResultsTableItem
-                checked={selected.includes(item.uuid)}
-                checkItem={this.checkItem}
-                columns={columns}
-                config={config}
-                key={item.uuid}
-                item={item}
-                showCheck={batchActions.length > 0}
-                viewItem={detailURL ? this.viewItem : null}
-              />
-            ))}
+            {results.map((item) => {
+              if (config.categoriseBy) {
+                let itemValue = getItemValue(item, config.categoriseBy.column)
+
+                if (Array.isArray(itemValue)) {
+                  itemValue = itemValue[0]
+                }
+
+                if (itemValue !== currentCategoryValue) {
+                  currentCategoryValue = itemValue
+
+                  const formattedValue = formatter(
+                    item,
+                    config.categoriseBy.column,
+                    config.categoriseBy.display
+                  )
+
+                  return [
+                    (
+                      <tr className='category-header'>
+                        <td colSpan={columns.length + (batchActions.length > 0 ? 1 : 0)}>
+                          {formattedValue}
+                        </td>
+                      </tr>
+                    ),
+                    (
+                      <ResultsTableItem
+                        checked={selected.includes(item.uuid)}
+                        checkItem={this.checkItem}
+                        columns={columns}
+                        config={config}
+                        key={item.uuid}
+                        item={item}
+                        showCheck={batchActions.length > 0}
+                        viewItem={detailURL ? this.viewItem : null}
+                      />
+                    ),
+                  ]
+                }
+              }
+
+              return (
+                <ResultsTableItem
+                  checked={selected.includes(item.uuid)}
+                  checkItem={this.checkItem}
+                  columns={columns}
+                  config={config}
+                  key={item.uuid}
+                  item={item}
+                  showCheck={batchActions.length > 0}
+                  viewItem={detailURL ? this.viewItem : null}
+                />
+              )
+            })}
           </tbody>
         </table>
 

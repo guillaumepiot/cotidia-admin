@@ -5,6 +5,7 @@ const initialState = {
   datetimeFormat: 'D MMM YYYY @ HH:mm',
   primaryColor: '#00abd3',
   columnsConfigurable: true,
+  categoriseBy: null,
 }
 
 export default (state = initialState, { type, payload } = {}) => {
