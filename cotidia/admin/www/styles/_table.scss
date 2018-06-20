@@ -98,6 +98,11 @@
         }
     }
 
+    &__category-header {
+        background-color: darken(#fff, 8%);
+        cursor: auto;
+    }
+
     .action-column {
         width: 1px;
     }
