@@ -114,7 +114,7 @@ export default class SearchResultsTable extends Component {
 
                   return [
                     (
-                      <tr className='category-header'>
+                      <tr className='table__category-header'>
                         <td colSpan={columns.length + (batchActions.length > 0 ? 1 : 0)}>
                           {formattedValue}
                         </td>
