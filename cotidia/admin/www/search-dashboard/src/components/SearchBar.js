@@ -14,6 +14,7 @@ export default class SearchBar extends Component {
       onComplete: PropTypes.func,
     })),
     clearFilters: PropTypes.func.isRequired,
+    columnsConfigurable: PropTypes.bool.isRequired,
     hasListConfig: PropTypes.bool.isRequired,
     manageColumns: PropTypes.func.isRequired,
     mode: PropTypes.string,
@@ -123,9 +124,11 @@ export default class SearchBar extends Component {
             <span className='fa fa-fw fa-refresh' />
           </button>
 
-          <button className='btn btn--outline' onClick={this.manageColumns} title='Manage column' type='button'>
-            <span className='fa fa-fw fa-columns' />
-          </button>
+          {this.props.columnsConfigurable && (
+            <button className='btn btn--outline' onClick={this.manageColumns} title='Manage column' type='button'>
+              <span className='fa fa-fw fa-columns' />
+            </button>
+          )}
 
           {this.renderBatchActions()}
         </div>

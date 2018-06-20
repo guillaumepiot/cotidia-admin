@@ -12,6 +12,7 @@ import SearchBar from '../components/SearchBar'
 
 const mapStateToProps = (state) => ({
   batchActions: state.search.batchActions,
+  columnsConfigurable: state.config.columnsConfigurable,
   hasListConfig: state.search.listFields !== null,
   mode: state.search.mode,
   searchTerm: state.search.searchTerm,
