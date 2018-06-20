@@ -1,24 +1,24 @@
 import React from 'react'
 import moment from 'moment'
 
-export const getFormattedValueWithConfig = (config) => {
-  const getItem = (item, accessor) => {
-    const parts = accessor.split('__')
+export const getItemValue = (item, accessor) => {
+  const parts = accessor.split('__')
 
-    let value = item
-    let part
+  let value = item
+  let part
 
-    // Go through each part of the accessor and 'recurse' into the data structure:
-    // If item = { a: { b: { c: 'hi' } } } and accessor is a__b__c it'll return `'hi'`
+  // Go through each part of the accessor and 'recurse' into the data structure:
+  // If item = { a: { b: { c: 'hi' } } } and accessor is a__b__c it'll return `'hi'`
 
-    // eslint-disable-next-line no-cond-assign
-    while (part = parts.shift()) {
-      value = value?.[part]
-    }
-
-    return value
+  // eslint-disable-next-line no-cond-assign
+  while (part = parts.shift()) {
+    value = value?.[part]
   }
 
+  return value
+}
+
+export const getFormattedValueWithConfig = (config) => {
   const formatters = {
     verbatim: (value) => (value == null) ? '' : String(value),
     date: (value) => moment(value).format(config.dateFormat),
@@ -44,7 +44,7 @@ export const getFormattedValueWithConfig = (config) => {
   }
 
   return (item, accessor, format) => {
-    const value = getItem(item, accessor)
+    const value = getItemValue(item, accessor)
 
     // If the format config is a function in its own right, just defer to it, passing the whole item,
     // the field name (accessor) and the value we think that field has.
