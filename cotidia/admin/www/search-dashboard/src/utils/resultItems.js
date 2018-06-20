@@ -18,8 +18,8 @@ export const getItemValue = (item, accessor) => {
   return value
 }
 
-export const getFormattedValueWithConfig = (config) => {
-  let listItemSeparator = config.listItemSeparator
+export const getValueFormatter = (config) => {
+  let globalListHandling = config.listHandling
 
   const formatters = {
     verbatim: (value) => (value == null) ? '' : String(value),
@@ -45,7 +45,7 @@ export const getFormattedValueWithConfig = (config) => {
     ),
   }
 
-  return (item, accessor, format) => {
+  return (item, accessor, format, listHandling = globalListHandling) => {
     const value = getItemValue(item, accessor)
 
     // If the format config is a function in its own right, just defer to it, passing the whole item,
@@ -67,7 +67,15 @@ export const getFormattedValueWithConfig = (config) => {
     // Finally call the formatter on value, or, if the value is an array, on each element within the
     // array and then join all the results by a comma.
     if (Array.isArray(value)) {
-      return value.map((value) => formatter(value, ...args)).join(listItemSeparator)
+      const values = value.map((value) => formatter(value, ...args))
+
+      if (listHandling.style === 'string') {
+        return values.join(listHandling.value)
+      } else if (listHandling.style === 'element') {
+        return values.map((value) => (
+          <listHandling.value {...listHandling.props}>{value}</listHandling.value>
+        ))
+      }
     } else {
       return formatter(value, ...args)
     }

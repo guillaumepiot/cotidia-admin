@@ -6,7 +6,10 @@ const initialState = {
   primaryColor: '#00abd3',
   columnsConfigurable: true,
   categoriseBy: null,
-  listItemSeparator: ', ',
+  listHandling: {
+    style: 'string',
+    value: ', ',
+  },
 }
 
 export default (state = initialState, { type, payload } = {}) => {

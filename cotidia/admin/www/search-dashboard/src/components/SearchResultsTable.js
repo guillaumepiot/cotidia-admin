@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { generateURL } from '../utils/api'
-import { getItemValue, getFormattedValueWithConfig } from '../utils/resultItems'
+import { getItemValue, getValueFormatter } from '../utils/resultItems'
 
 import ResultsTableHeader from './ResultsTableHeader'
 import ResultsTableItem from './ResultsTableItem'
@@ -72,10 +72,10 @@ export default class SearchResultsTable extends Component {
     } = this.props
 
     let currentCategoryValue = null
-    let formatter = null
+    let formatValue = null
 
     if (config.categoriseBy) {
-      formatter = getFormattedValueWithConfig(config)
+      formatValue = getValueFormatter(config)
     }
 
     return (
@@ -106,7 +106,7 @@ export default class SearchResultsTable extends Component {
                 if (itemValue !== currentCategoryValue) {
                   currentCategoryValue = itemValue
 
-                  const formattedValue = formatter(
+                  const formattedValue = formatValue(
                     item,
                     config.categoriseBy.column,
                     config.categoriseBy.display
