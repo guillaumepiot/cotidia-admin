@@ -6,6 +6,7 @@ import Filter from '../../components/modals/Filter'
 
 const mapStateToProps = (state, ownProps) => ({
   config: state.search.columns[ownProps.filter],
+  globalConfig: state.config,
   value: state.search.filters[ownProps.filter],
 })
 

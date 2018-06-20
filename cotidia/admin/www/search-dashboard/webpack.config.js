@@ -28,13 +28,22 @@ module.exports = function webpackBootstrap (env) {
     },
     plugins: plugins,
     module: {
-      rules: [{
-        test: /\.js$/,
-        include: path.resolve(__dirname, 'src'),
-        use: [{
-          loader: 'babel-loader',
-        }],
-      }],
+      rules: [
+        {
+          test: /\.js$/,
+          include: path.resolve(__dirname, 'src'),
+          use: [{
+            loader: 'babel-loader',
+          }],
+        },
+        {
+          test: /\.css$/,
+          use: [
+            { loader: 'style-loader' },
+            { loader: 'css-loader' },
+          ],
+        },
+      ],
 
       // see https://github.com/webpack/webpack/issues/198#issuecomment-104688430
       noParse: [ /moment.js/ ],

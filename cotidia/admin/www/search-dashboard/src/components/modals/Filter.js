@@ -11,6 +11,7 @@ export default class Filter extends Component {
   static propTypes = {
     config: PropTypes.object.isRequired,
     filter: PropTypes.string.isRequired,
+    globalConfig: PropTypes.object,
     setFilterValue: PropTypes.func.isRequired,
   }
 
