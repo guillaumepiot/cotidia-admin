@@ -19,6 +19,8 @@ export const getItemValue = (item, accessor) => {
 }
 
 export const getFormattedValueWithConfig = (config) => {
+  let listItemSeparator = config.listItemSeparator
+
   const formatters = {
     verbatim: (value) => (value == null) ? '' : String(value),
     date: (value) => moment(value).format(config.dateFormat),
@@ -65,7 +67,7 @@ export const getFormattedValueWithConfig = (config) => {
     // Finally call the formatter on value, or, if the value is an array, on each element within the
     // array and then join all the results by a comma.
     if (Array.isArray(value)) {
-      return value.map((value) => formatter(value, ...args)).join(', ')
+      return value.map((value) => formatter(value, ...args)).join(listItemSeparator)
     } else {
       return formatter(value, ...args)
     }

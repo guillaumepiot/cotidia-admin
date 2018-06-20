@@ -6,6 +6,7 @@ const initialState = {
   primaryColor: '#00abd3',
   columnsConfigurable: true,
   categoriseBy: null,
+  listItemSeparator: ', ',
 }
 
 export default (state = initialState, { type, payload } = {}) => {
