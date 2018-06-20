@@ -226,7 +226,7 @@ class AdminSearchDashboardAPIView2(ListAPIView):
         qs.filter(q_object)
 
         for field in field_repr.keys():
-            filter_params = self.request.GET.getlist('field')
+            filter_params = self.request.GET.getlist(field)
             if filter_params:
                 if field_repr[field].get('many_to_many_field', False):
                     field += "__uuid"
