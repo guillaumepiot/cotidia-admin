@@ -60,7 +60,24 @@ App.propTypes = {
       value: PropTypes.any.isRequired,
     })),
   })).isRequired,
-  config: PropTypes.object,
+  config: PropTypes.shape({
+    dateFormat: PropTypes.string,
+    datetimeFormat: PropTypes.string,
+    primaryColor: PropTypes.string,
+    columnsConfigurable: PropTypes.boolean,
+    categoriseBy: PropTypes.shape({
+      column: PropTypes.string.isRequired,
+      display: PropTypes.oneOfType([
+        PropTypes.func,
+        PropTypes.string,
+      ]),
+    }),
+    listHandling: PropTypes.shape({
+      style: PropTypes.oneOf('string', 'element').isRequired,
+      value: PropTypes.string.isRequired,
+      props: PropTypes.object,
+    }),
+  }),
   defaultColumns: PropTypes.arrayOf(PropTypes.string),
   listFields: PropTypes.shape({
     left: PropTypes.shape({
