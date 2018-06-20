@@ -51,9 +51,12 @@
     }
 
     &-header {
-        cursor: pointer;
         padding-right: $horizontal_padding * 3 !important;
         position: relative;
+
+        &--clickable {
+            cursor: pointer;
+        }
 
         &__name {
         }

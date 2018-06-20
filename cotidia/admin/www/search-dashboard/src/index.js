@@ -59,6 +59,7 @@ App.propTypes = {
       label: PropTypes.string.isRequired,
       value: PropTypes.any.isRequired,
     })),
+    orderable: PropTypes.bool,
   })).isRequired,
   config: PropTypes.shape({
     dateFormat: PropTypes.string,
