@@ -80,7 +80,6 @@ class AdminModelSerializer(serializers.ModelSerializer):
                 elif isinstance(field, serializers.ListSerializer):
                     default_field_ref = FIELD_MAPPING[field.__class__.__name__]()
                     default_field_ref["options"] = field.child.get_choices()
-                    default_field_ref["many_to_many_field"] = True
                     repr[field_name] = default_field_ref 
                 else:
                     if field_type is None:

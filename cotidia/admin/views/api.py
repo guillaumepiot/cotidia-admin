@@ -228,15 +228,20 @@ class AdminSearchDashboardAPIView2(ListAPIView):
         for field in field_repr.keys():
             filter_params = self.request.GET.getlist(field)
             if filter_params:
-                if field_repr[field].get('many_to_many_field', False):
-                    field += "__uuid"
-                else:
-                    filter_type = field_repr[field]['filter']
-                    qs = FILTERS[filter_type](
-                        qs,
-                        field,
-                        filter_params
-                    )
+                suffix=""
+                if field_repr[field].get('prep_function', False):
+                    filter_params = [
+                        field_repr[field]["prep_function"](param)
+                        for param in filter_params
+                    ]
+                if field_repr[field].get('foreign_key', False):
+                    suffix="__uuid"
+                filter_type = field_repr[field]['filter']
+                qs = FILTERS[filter_type](
+                    qs,
+                    field + suffix,
+                    filter_params
+                )
         
         ordering_params = self.request.GET.getlist('_order')
         if ordering_params:
@@ -293,7 +298,7 @@ class AdminSearchDashboardAPIView(ListAPIView):
                 # Get the relevant filter and apply it
                 suffix = ""
                 try:
-                    if field_data[field]['many']:
+                    if field_data[field]['many_to_many']:
                         if field_data[field]['filter'] == 'choice':
                             suffix = "__uuid"
                         else:

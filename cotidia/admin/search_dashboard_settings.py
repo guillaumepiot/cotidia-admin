@@ -1,3 +1,5 @@
+import uuid
+
 from rest_framework import serializers, fields
 
 
@@ -78,7 +80,8 @@ FIELD_MAPPING = {
     }),
     "AdminModelSerializer": (lambda: {
         "display": "verbatim",
-        "filter": "choice"
+        "filter": "choice",
+        "foreign_key": True
     }),
     # "ManyRelatedField": (lambda: {
     #     "display": "verbatim",
@@ -87,6 +90,7 @@ FIELD_MAPPING = {
     # }),
     "ListSerializer": (lambda: {
         "display": "verbatim",
-        "filter": "choice"
+        "filter": "choice",
+        "foreign_key": True
     }),
 }
