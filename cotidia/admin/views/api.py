@@ -74,7 +74,6 @@ def filter_comparable(field_regex, data_type):
             detail="The following value could not be parsed: %s" % val)
     return temp
 
-
 filter_number = filter_comparable(number_pattern, Decimal)
 filter_date = filter_comparable(
     date_pattern,
@@ -181,6 +180,88 @@ class AdminOrderableAPIView(APIView):
 
 class GenericAdminPaginationStyle(LimitOffsetPagination):
     default_limit = PAGE_SIZE
+
+class AdminSearchDashboardAPIView2(ListAPIView):
+    permission_classes = (permissions.IsAdminUser,)
+    pagination_class = GenericAdminPaginationStyle
+    _model_class=None
+    _serializer_class=None
+
+    def get_model_class(self):
+        if not self._model_class:
+            self._model_class = ContentType.objects.get(
+                app_label=self.kwargs['app_label'],
+                model=self.kwargs['model']
+            ).model_class()
+        return self._model_class
+    
+    def get_serializer_class(self):
+        if not self._serializer_class:
+            model_class = self.get_model_class()
+            self._serializer_class = model_class.SearchProvider.serializer()
+        return self._serializer_class
+
+
+    def get_queryset(self):
+        model_class = self.get_model_class()
+        serializer = model_class.SearchProvider.serializer()()
+        field_repr = serializer.get_field_representation()
+        related_fields = serializer.get_related_fields()
+
+        # pre-fetch related fields
+        qs = model_class.objects.all().select_related(*related_fields)
+
+        # filters the general_search
+        q_object = Q()
+        q_list = self.request.GET.getlist('_q')
+        for val in q_list:
+            q_object = reduce(
+                lambda x, y: x | y,
+                [
+                    Q(**{x + '__icontains': val})
+                    for x in serializer.get_general_query_fields()
+                ],
+            )
+        
+        qs.filter(q_object)
+
+        for field in field_repr.keys():
+            filter_params = self.request.GET.getlist('field')
+            if filter_params:
+                if field_repr[field].get('many_to_many_field', False):
+                    field += "__uuid"
+                else:
+                    filter_type = field_repr[field]['filter']
+                    qs = FILTERS[filter_type](
+                        qs,
+                        field,
+                        filter_params
+                    )
+        
+        ordering_params = self.request.GET.getlist('_order')
+        if ordering_params:
+            # Here we add an annotation to make sure when we order, the value is
+            # empty
+            first_field = ordering_params[0]
+            clean_field_name = first_field[
+                1:] if first_field[0] == '-' else first_field
+            try:
+                condition_blank = Q(**{clean_field_name + "__exact": ""})
+                annotation = {"val_is_empty": Count(Case(
+                    When(condition_blank, then=1), output_field=CharField(),
+                ))}
+                qs = qs.annotate(**annotation)
+                ordering_params = ["val_is_empty"] + ordering_params
+            except (ValidationError, ValueError):
+                # This is added as number an dates all have sensible defaults
+                pass
+            parsed_ordering_params = [
+                parse_ordering(x) for x in ordering_params
+            ]
+            qs.order_by[parsed_ordering_params]
+
+        return qs
+            
 
 
 class AdminSearchDashboardAPIView(ListAPIView):

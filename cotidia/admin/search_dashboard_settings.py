@@ -1,5 +1,6 @@
 from rest_framework import serializers, fields
 
+
 SUPPORTED_FIELDS_TYPES = sorted(
     [
         fields.UUIDField,
@@ -14,9 +15,8 @@ SUPPORTED_FIELDS_TYPES = sorted(
         fields.ChoiceField,
         fields.BooleanField,
         fields.NullBooleanField,
-        # AdminModelSerializer,
+        serializers.ListSerializer
         # serializers.ManyRelatedField,
-        # serializers.ListSerializer
     ],
     key=lambda x: len(x.mro()),
     reverse=True
@@ -76,11 +76,10 @@ FIELD_MAPPING = {
         "display": "verbatim",
         "filter": "number"
     }),
-    # "AdminModelSerializer": (lambda: {
-    #     "display": "verbatim",
-    #     "many": "True",
-    #     "filter": "choice"
-    # }),
+    "AdminModelSerializer": (lambda: {
+        "display": "verbatim",
+        "filter": "choice"
+    }),
     # "ManyRelatedField": (lambda: {
     #     "display": "verbatim",
     #     "many": "True",

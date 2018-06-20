@@ -225,12 +225,10 @@ def get_serializer_default_columns(serializer):
 
 def get_serializer_list_fields(serializer):
     fields = None
-
     try:
         fields = serializer.SearchProvider.list_fields
     except AttributeError:
         pass
-
     return fields
 
 

@@ -5,6 +5,7 @@ from cotidia.admin.search_dashboard_settings import (
 )
 
 class AdminModelSerializer(serializers.ModelSerializer):
+
     def to_representation(self, instance):
         repr = super().to_representation(instance)
         # Must also check that the parent of the parent is not None as the top
@@ -19,6 +20,17 @@ class AdminModelSerializer(serializers.ModelSerializer):
                 raise AttributeError(
                     "%s does not have the display_field defined in the SearchProvider sub class" % str(self.__class__.__name__)
                 )
+        else:
+            # This copies the list of keys so we don't have any iteration 
+            # mutation issues
+            keys = list(repr.keys())
+            for key in keys:
+                # Flattens dicts
+                if isinstance(repr[key], dict):
+                    for subkey, subvalue in repr[key].items():
+                        key_name ="{}__{}".format(key, subkey) 
+                        if key_name not in repr.keys():
+                            repr.update({key_name: subvalue})
         return repr
 
     def get_choices(self):
@@ -31,53 +43,89 @@ class AdminModelSerializer(serializers.ModelSerializer):
                 "%s does not have the display_field defined in the SearchProvider sub class" % str(self.__class__.__name__)
             )
     
+    def get_related_fields(self):
+        if not hasattr(self, "_related_fields"):
+            field_representation = self.get_field_representation()
+            self._related_fields = list(
+                # We make this a set to remove duplicates
+                set(
+                    ['__'.join(key.split('__')[:-1]) for key in field_representation if key.find('__') >= 0]
+                )
+            )
+        return self._related_fields
+    
     def get_choice_queryset(self):
         return self.Meta.model.objects.all()
         
     
     def get_field_representation(self):
-        repr = {}
-        for field_name, field in self.fields.items():
+        if not hasattr(self, "_field_representation"):
+            repr = {}
 
-            if isinstance(field, AdminModelSerializer):
-                nested_repr = field.get_field_representation()
-                for key, value in nested_repr.items():
-                    repr["{}__{}".format(field_name, key)] = value
-            elif isinstance(field, serializers.ListSerializer):
-                default_field_ref = FIELD_MAPPING[field.__class__.__name__]()
-                default_field_ref["options"] = field.child.get_choices()
-                repr[field_name] = default_field_ref 
-            else:
+            for field_name, field in self.fields.items():
                 # Gets the most specific class of we support for the given field type if not it return None
                 field_type = next(  
                     iter(
-                        [t for t in SUPPORTED_FIELDS_TYPES if isinstance(field, t)]),
-                        None
-                    )
-                if field_type is None:
-                    print("Unsupported field {} of type {}".format(field_name,field))
-                
-                default_field_ref = FIELD_MAPPING[field_type.__name__]()
-                if hasattr(field, "choices"):
-                    choices = field.choices
-                    default_field_ref["filter"] = 'choice'
-                    default_field_ref["options"] = [
-                        {"value": value, "label": label} for value, label in field.choices.items()
-                    ]
+                        [t for t in SUPPORTED_FIELDS_TYPES if isinstance(field, t)]
+                    ),
+                    None
+                )
+                if isinstance(field, AdminModelSerializer):
+                    nested_repr = field.get_field_representation()
+                    for key, value in nested_repr.items():
+                        repr["{}__{}".format(field_name, key)] = value
+                    default_field_repr = FIELD_MAPPING[AdminModelSerializer.__name__]()
+                    default_field_repr["options"] = field.get_choices()
+                    repr[field_name] = default_field_repr
+                elif isinstance(field, serializers.ListSerializer):
+                    default_field_ref = FIELD_MAPPING[field.__class__.__name__]()
+                    default_field_ref["options"] = field.child.get_choices()
+                    default_field_ref["many_to_many_field"] = True
+                    repr[field_name] = default_field_ref 
+                else:
+                    if field_type is None:
+                        print("Unsupported field {} of type {}".format(field_name,field))
+                    else:
+                        default_field_ref = FIELD_MAPPING[field_type.__name__]()
+                        if hasattr(field, "choices"):
+                            choices = field.choices
+                            default_field_ref["filter"] = 'choice'
+                            default_field_ref["options"] = [
+                                {"value": value, "label": label} for value, label in field.choices.items()
+                            ]
 
-                repr[field_name] = default_field_ref
+                        repr[field_name] = default_field_ref
 
-        for key, default_field_repr in repr.items():
-            try:
-                overrides = self.SearchProvider.field_representation[key]
-                default_field_repr.update(overrides)
-            except (AttributeError, KeyError):
-                pass
-            repr[key] = default_field_repr
+            for key, default_field_repr in repr.items():
+                try:
+                    overrides = self.SearchProvider.field_representation[key]
+                    default_field_repr.update(overrides)
+                except (AttributeError, KeyError):
+                    pass
+                repr[key] = default_field_repr
+            self._field_representation = repr
             
-        return repr
+        return self._field_representation
+    
+    def get_general_query_fields(self):
+        if hasattr(self, "SearchProvider"):
+            if hasattr(self, "general_query_fields"):
+                return self.general_query_fields
+            elif hasattr(self, "display_field"):
+                return [self.display_field]
+        return ['id']
 
-
+    def get_default_columns(self):
+        try:
+            return self.SearchProvider.default_columns
+        except AttributeError:
+            try:
+                if self.SearchProvider.display_field:
+                    return [self.SearchProvider.display_field]
+                else:
+                    return ['id']
+            except:
+                return ['id']
 
 class SortSerializer(serializers.Serializer):
     data = serializers.ListField(
