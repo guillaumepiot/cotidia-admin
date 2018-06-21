@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { generateURL } from '../utils/api'
-import { getItemValue, getValueFormatter } from '../utils/resultItems'
+import { getValueFormatter } from '../utils/resultItems'
 
 import ResultsTableHeader from './ResultsTableHeader'
 import ResultsTableItem from './ResultsTableItem'
@@ -97,7 +97,7 @@ export default class SearchResultsTable extends Component {
           <tbody>
             {results.map((item) => {
               if (config.categoriseBy) {
-                let itemValue = getItemValue(item, config.categoriseBy.column)
+                let itemValue = item[config.categoriseBy.column]
 
                 if (Array.isArray(itemValue)) {
                   itemValue = itemValue[0]
