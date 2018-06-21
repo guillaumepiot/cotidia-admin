@@ -4,7 +4,6 @@ from cotidia.admin.views.api import (
     AdminOrderableAPIView,
     SortAPIView,
     AdminSearchDashboardAPIView,
-    AdminSearchDashboardAPIView2,
     AdminSearchLookupAPIView,
     AdminBatchActionAPIView
 )
@@ -25,11 +24,6 @@ urlpatterns = [
         'list/<str:app_label>/<str:model>',
         AdminSearchDashboardAPIView.as_view(),
         name='object-list'
-    ),
-    path(
-        'list2/<str:app_label>/<str:model>',
-        AdminSearchDashboardAPIView2.as_view(),
-        name='object-list2'
     ),
     path(
         'batch-action/<str:app_label>/<str:model_name>/<str:action>',

@@ -181,7 +181,7 @@ class AdminOrderableAPIView(APIView):
 class GenericAdminPaginationStyle(LimitOffsetPagination):
     default_limit = PAGE_SIZE
 
-class AdminSearchDashboardAPIView2(ListAPIView):
+class AdminSearchDashboardAPIView(ListAPIView):
     permission_classes = (permissions.IsAdminUser,)
     pagination_class = GenericAdminPaginationStyle
     _model_class=None
@@ -266,85 +266,6 @@ class AdminSearchDashboardAPIView2(ListAPIView):
             qs.order_by[parsed_ordering_params]
 
         return qs
-            
-
-
-class AdminSearchDashboardAPIView(ListAPIView):
-    permission_classes = (permissions.IsAdminUser,)
-    pagination_class = GenericAdminPaginationStyle
-
-    def get_queryset(self):
-        model_class = self.model_class
-        # Gets the field meta data for the model
-        field_data = get_fields_from_model(model_class)
-        query_set = model_class.objects.all()
-
-        q_list = self.request.GET.getlist('_q')
-        serializer = get_model_serializer_class(model_class)
-        try:
-            general_query_field_set = serializer.SearchProvider.general_query_fields
-        except AttributeError:
-            general_query_field_set = ["id"]
-        query_set = filter_general_query(serializer, q_list, query_set, general_query_field_set)
-
-        # Applies filters for each field in get request
-        for field in field_data.keys():
-            # If the field name is reserved (starts with _ we skip the filtering)
-            if field[0] == '_':
-                continue
-            filter_params = self.request.GET.getlist(field)
-            # If there is a filter to apply
-            if filter_params:
-                # Get the relevant filter and apply it
-                suffix = ""
-                try:
-                    if field_data[field]['many_to_many']:
-                        if field_data[field]['filter'] == 'choice':
-                            suffix = "__uuid"
-                        else:
-                            sub_serializer = get_sub_serializer(serializer, field)
-                            suffix = "__" + sub_serializer.SearchProvider.display_field
-                except KeyError:
-                    pass
-                filter_type = field_data[field]['filter']
-                query_set = FILTERS[filter_type](
-                    query_set,
-                    field + suffix,
-                    filter_params
-                )
-
-        ordering_params = self.request.GET.getlist("_order")
-        # Checks the first ordering param exists
-        annotation = None
-        if(ordering_params):
-            # Cleans the "-" to just have the field name
-            clean_field_name = ordering_params[0].replace("-", "")
-            condition_blank = Q(**{clean_field_name + "__exact": ""})
-            # If the the field is blank, then the val_is_empty will be true
-            annotation = {"val_is_empty": Count(Case(
-                When(condition_blank, then=1), output_field=CharField(),
-            ))}
-        ordering_params = list(map(parse_ordering, ordering_params))
-        try:
-            if annotation is not None:
-                query_set = query_set.annotate(**annotation)
-                ordering_params = ["val_is_empty"] + ordering_params
-        except (ValueError, ValidationError) as e:
-            # Neccessary for non string fields, nothing more needs to happen as they have sensible defaults
-            pass
-        return query_set.order_by(*list(ordering_params))
-
-    def get_serializer_class(self):
-        return get_model_serializer_class(self.model_class)
-
-    @property
-    def model_class(self):
-        return ContentType.objects\
-            .get(
-                app_label=self.kwargs['app_label'],
-                model=self.kwargs['model']
-            ).model_class()
-
 
 class SortAPIView(APIView):
     permission_classes = (permissions.IsAdminUser,)

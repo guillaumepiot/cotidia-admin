@@ -11,6 +11,83 @@ from cotidia.admin.utils import get_model_structure
 register = template.Library()
 
 
+@register.inclusion_tag(
+    'admin/partials/search_dashboard_config.py', takes_context=True
+)
+def render_search_dashboard_config2(
+    context,
+    app_label,
+    model_name,
+    url_type,
+    api_token,
+    default_columns=[],
+    default_filters=[],
+    default_order=[],
+    batch_actions=[],
+    endpoint=None
+):
+    model_class = ContentType.objects.get(
+        app_label=app_label,
+        model=model_name
+    ).model_class()
+    serializer = model_class.SearchProvider.serializer()()
+    if endpoint is None:
+        endpoint = reverse(
+            'generic-api:object-list',
+            kwargs={
+
+                "app_label": app_label,
+                "model": model_name
+            }
+        )
+    
+    columns = serializer.get_field_representation()
+    default_columns = serializer.get_default_columns()
+
+    if app_label and model_name and url_type:
+        # To future maintainers: sorry
+        # This gets the url template by doing a reverse lookup on a url that fits convention
+        # It passes a trash ID and then string replaces it with a template tag for js
+        # TODO find a better way of doing this
+        try:
+            url_name = "{}-admin:{}-{}".format(app_label, model_name, url_type)
+            detail_endpoint = reverse(
+                url_name,
+                kwargs={"pk": 9999})
+            detail_endpoint = detail_endpoint.replace("9999", ":id")
+        except NoReverseMatch:
+            detail_endpoint = None
+    else:
+        detail_endpoint = None
+    if endpoint is None:
+        endpoint = reverse(
+            'generic-api:object-list',
+            kwargs={
+                "app_label": app_label,
+                "model": model_name
+            }
+        )
+
+    context =  {
+        "columns": columns,
+        "default_columns": default_columns,
+        "endpoint": endpoint,
+        "list_fields": serializer.get_list_fields()
+    }
+
+    if detail_endpoint is not None:
+        context['detail_endpoint'] = detail_endpoint
+    if api_token is not None:
+        context['auth_token'] = api_token
+    if default_columns:
+        context['default_columns'] = default_columns
+    if default_filters:
+        context['default_filters'] = default_filters
+    if default_order:
+        context['default_order_by'] = default_order[0]
+
+    return context
+
 @register.simple_tag(takes_context=True)
 def render_search_dashboard_config(
     context,
@@ -54,6 +131,14 @@ def render_search_dashboard_config(
             detail_endpoint = None
     else:
         detail_endpoint = None
+    if endpoint is None:
+        endpoint = reverse(
+            'generic-api:object-list',
+            kwargs={
+                "app_label": app_label,
+                "model": model_name
+            }
+        )
 
     return mark_safe(json.dumps(get_model_structure(
         model_class,

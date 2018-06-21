@@ -70,16 +70,19 @@ class AdminModelSerializer(serializers.ModelSerializer):
                     ),
                     None
                 )
+                label = field_name.replace("__", " ").replace('_', ' ').title()
                 if isinstance(field, AdminModelSerializer):
                     nested_repr = field.get_field_representation()
                     for key, value in nested_repr.items():
                         repr["{}__{}".format(field_name, key)] = value
                     default_field_repr = FIELD_MAPPING[AdminModelSerializer.__name__]()
                     default_field_repr["options"] = field.get_choices()
+                    default_field_repr["label"] = label
                     repr[field_name] = default_field_repr
                 elif isinstance(field, serializers.ListSerializer):
                     default_field_ref = FIELD_MAPPING[field.__class__.__name__]()
                     default_field_ref["options"] = field.child.get_choices()
+                    default_field_ref["label"] = label
                     repr[field_name] = default_field_ref 
                 else:
                     if field_type is None:
@@ -92,7 +95,7 @@ class AdminModelSerializer(serializers.ModelSerializer):
                             default_field_ref["options"] = [
                                 {"value": value, "label": label} for value, label in field.choices.items()
                             ]
-
+                        default_field_ref["label"] = label
                         repr[field_name] = default_field_ref
 
             for key, default_field_repr in repr.items():
@@ -106,6 +109,24 @@ class AdminModelSerializer(serializers.ModelSerializer):
             
         return self._field_representation
     
+    def get_primary_color(self):
+        try:
+            return self.SearchProvider.primary_color
+        except AttributeError:
+            return '#00abd3'
+        
+    def get_columns_configurable(self):
+        try:
+            return self.SearchProvider.columns_configurable
+        except AttributeError:
+            return True
+    
+    def get_batch_actions(self):
+        try:
+            return self.SearchProvider.batch_actions
+        except AttributeError:
+            return []
+
     def get_general_query_fields(self):
         if hasattr(self, "SearchProvider"):
             if hasattr(self, "general_query_fields"):
@@ -125,6 +146,13 @@ class AdminModelSerializer(serializers.ModelSerializer):
                     return ['id']
             except:
                 return ['id']
+    
+    def get_list_fields(self):
+        try:
+            return self.SearchProvider.get_list_fields
+        except AttributeError:
+            return None
+
 
 class SortSerializer(serializers.Serializer):
     data = serializers.ListField(
