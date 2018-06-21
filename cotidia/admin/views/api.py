@@ -263,7 +263,7 @@ class AdminSearchDashboardAPIView(ListAPIView):
             parsed_ordering_params = [
                 parse_ordering(x) for x in ordering_params
             ]
-            qs.order_by[parsed_ordering_params]
+            qs.order_by(*parsed_ordering_params)
 
         return qs
 
