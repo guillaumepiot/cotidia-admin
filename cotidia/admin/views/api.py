@@ -206,7 +206,10 @@ class AdminSearchDashboardAPIView(ListAPIView):
 
     def get_queryset(self):
         model_class = self.get_model_class()
-        serializer = model_class.SearchProvider.serializer()()
+        if self.kwargs.get("serializer_class", False):
+            serializer = self.kwargs["serializer_class"]()
+        else:
+            serializer = model_class.SearchProvider.serializer()()
         field_repr = serializer.get_field_representation()
         related_fields = serializer.get_related_fields()
 
