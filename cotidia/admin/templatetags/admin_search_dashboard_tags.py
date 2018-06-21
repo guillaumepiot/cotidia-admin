@@ -87,3 +87,7 @@ def render_search_dashboard_config(
         context['default_order_by'] = default_order[0]
 
     return context
+
+@register.filter(name='json')
+def json_dumps(data):
+    return json.dumps(data)
