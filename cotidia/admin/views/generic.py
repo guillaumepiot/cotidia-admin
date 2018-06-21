@@ -154,6 +154,18 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
             "admin/generic/page/dynamic-list.html",
         ]
 
+    def get_api_endpoint(self, app_label, model_name):
+        if self.kwargs.get("endpoint", False):
+            return self.kwargs["endpoint"]
+        else:
+            return reverse(
+                'generic-api:object-list',
+                kwargs={
+                    "app_label": app_label,
+                    "model": model_name
+                }
+            )
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         try:
@@ -178,6 +190,12 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
                 filters[key] = self.request.GET.getlist(key)
 
         url_type = "detail"
+        print(self.kwargs["serializer_class"])
+        print(type(self.kwargs["serializer_class"]))
+        if self.kwargs.get("serializer_class", False):
+            context["serializer_class"] = self.kwargs["serializer_class"]
+        else:
+            context["serializer_class"] = None
         context["content_type_id"] = content_type_id
         context["verbose_name"] = self.model._meta.verbose_name
         context["verbose_name_plural"] = self.model._meta.verbose_name_plural
@@ -188,6 +206,7 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
         context["default_columns"] = self.request.GET.getlist("_column")
         context["default_order"] = self.request.GET.getlist("_order")
         context["default_filters"] = filters
+        context["endpoint"] = self.get_api_endpoint(app_label, model_name)
 
         try:
             reverse("{}-admin:{}-{}".format(app_label, model_name, url_type),

@@ -24,13 +24,17 @@ def render_search_dashboard_config(
     default_filters=[],
     default_order=[],
     batch_actions=[],
+    serializer_class=None,
     endpoint=None
 ):
     model_class = ContentType.objects.get(
         app_label=app_label,
         model=model_name
     ).model_class()
-    serializer = model_class.SearchProvider.serializer()()
+    if serializer_class is None:
+        serializer = model_class.SearchProvider.serializer()()
+    else:
+        serializer = serializer_class
     if endpoint is None:
         endpoint = reverse(
             'generic-api:object-list',

@@ -19,8 +19,10 @@
     {% if default_filters %} "defaultFilters": {{default_filters|safe}},{% endif %}
     {% if default_order_by %} "defaultOrderBy": {{default_order_by}},{% endif %}
 
-    "primaryColour": {% if primary_color %}"{{primary_color}}"{% else %}"#00abd3"{% endif %},
-    "columnsConfigurable": {% if columns_configurable %}true{% else %}false{% endif %},
+    "config": {
+        "primaryColour": {% if primary_color %}"{{primary_color}}"{% else %}"#00abd3"{% endif %},
+        "columnsConfigurable": {% if columns_configurable %}true{% else %}false{% endif %}
+    },
     "batchActions": {% if batch_actions %}{{batch_actions|safe}}{% else %}[]{% endif %},
     "endpoint": "{{endpoint}}"
 }

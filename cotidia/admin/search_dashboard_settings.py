@@ -23,7 +23,6 @@ SUPPORTED_FIELDS_TYPES = sorted(
     key=lambda x: len(x.mro()),
     reverse=True
 )
-print(SUPPORTED_FIELDS_TYPES)
 
 FIELD_MAPPING = {
     "DateTimeField": (lambda: {

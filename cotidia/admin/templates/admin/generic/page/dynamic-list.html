@@ -27,7 +27,7 @@
 {% block footer_scripts %}
 {{block.super}}
 <script>
-    data = {% render_search_dashboard_config app_label model_name url_type request.user.token.key default_columns default_filters default_order %};
+    data = {% render_search_dashboard_config app_label model_name url_type request.user.token.key default_columns default_filters default_order endpoint=endpoint serializer_class=serializer_class %};
     if (ReactDOM) {
         ReactDOM.render(React.createElement(window.SearchDashboard, data), document.getElementById('search-dashboard'))
     }

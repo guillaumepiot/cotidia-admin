@@ -196,6 +196,8 @@ class AdminSearchDashboardAPIView(ListAPIView):
         return self._model_class
     
     def get_serializer_class(self):
+        if self.kwargs.get("serializer_class", False):
+            return self.kwargs.get("serializer_class")
         if not self._serializer_class:
             model_class = self.get_model_class()
             self._serializer_class = model_class.SearchProvider.serializer()
