@@ -21,6 +21,7 @@
     "prop-types": "^15.6.1",
     "re-reselect": "^2.0.0",
     "react": "^16.2.0",
+    "react-date-range": "^1.0.0-beta",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
@@ -37,6 +38,7 @@
     "ava": "^0.25.0",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^8.0.0-beta.2",
+    "css-loader": "^0.28.11",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
     "eslint-config-standard-react": "^6.0.0",
@@ -46,6 +48,7 @@
     "eslint-plugin-react": "^7.7.0",
     "eslint-plugin-standard": "^3.1.0",
     "npm-run-all": "^4.1.2",
+    "style-loader": "^0.21.0",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.11.1"
   },

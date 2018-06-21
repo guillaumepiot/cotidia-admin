@@ -1,23 +1,25 @@
 import React from 'react'
 import moment from 'moment'
 
-export const getFormattedValueWithConfig = (config) => {
-  const getItem = (item, accessor) => {
-    const parts = accessor.split('__')
+export const getItemValue = (item, accessor) => {
+  const parts = accessor.split('__')
 
-    let value = item
-    let part
+  let value = item
+  let part
 
-    // Go through each part of the accessor and 'recurse' into the data structure:
-    // If item = { a: { b: { c: 'hi' } } } and accessor is a__b__c it'll return `'hi'`
+  // Go through each part of the accessor and 'recurse' into the data structure:
+  // If item = { a: { b: { c: 'hi' } } } and accessor is a__b__c it'll return `'hi'`
 
-    // eslint-disable-next-line no-cond-assign
-    while (part = parts.shift()) {
-      value = value?.[part]
-    }
-
-    return value
+  // eslint-disable-next-line no-cond-assign
+  while (part = parts.shift()) {
+    value = value?.[part]
   }
+
+  return value
+}
+
+export const getValueFormatter = (config) => {
+  let globalListHandling = config.listHandling
 
   const formatters = {
     verbatim: (value) => (value == null) ? '' : String(value),
@@ -43,8 +45,8 @@ export const getFormattedValueWithConfig = (config) => {
     ),
   }
 
-  return (item, accessor, format) => {
-    const value = getItem(item, accessor)
+  return (item, accessor, format, listHandling = globalListHandling) => {
+    const value = getItemValue(item, accessor)
 
     // If the format config is a function in its own right, just defer to it, passing the whole item,
     // the field name (accessor) and the value we think that field has.
@@ -65,7 +67,15 @@ export const getFormattedValueWithConfig = (config) => {
     // Finally call the formatter on value, or, if the value is an array, on each element within the
     // array and then join all the results by a comma.
     if (Array.isArray(value)) {
-      return value.map((value) => formatter(value, ...args)).join(', ')
+      const values = value.map((value) => formatter(value, ...args))
+
+      if (listHandling.style === 'string') {
+        return values.join(listHandling.value)
+      } else if (listHandling.style === 'element') {
+        return values.map((value) => (
+          <listHandling.value {...listHandling.props}>{value}</listHandling.value>
+        ))
+      }
     } else {
       return formatter(value, ...args)
     }

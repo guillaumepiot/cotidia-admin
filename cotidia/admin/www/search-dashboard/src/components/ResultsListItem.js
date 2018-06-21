@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
-import { getFormattedValueWithConfig } from '../utils/resultItems'
+import { getValueFormatter } from '../utils/resultItems'
 
 // Normally we wouldn't bother with perf optimisation, but this takes a render of 250 items down
 // from 130ms to 25-30ms when only one of the items changes (e.g. select an item).
@@ -42,12 +42,13 @@ export default class ResultsListItem extends PureComponent {
   getColumnConfig = (columnName) => ({
     accessor: columnName,
     display: this.props.columns?.[columnName]?.display,
+    listHandling: this.props.columns?.[columnName]?.listHandling,
   })
 
   render () {
     const { checked, config, item, showCheck, listFields } = this.props
 
-    const getFormattedValue = getFormattedValueWithConfig(config)
+    const formatValue = getValueFormatter(config)
 
     let lt, lb, rt, rb
 
@@ -77,20 +78,20 @@ export default class ResultsListItem extends PureComponent {
         {(lt || lb) && (
           <div className='search-result-item__left'>
             {lt && (
-              <div className='search-result-item__top-left'>{getFormattedValue(item, lt.accessor, lt.display)}</div>
+              <div className='search-result-item__top-left'>{formatValue(item, lt.accessor, lt.display, lt.listHandling)}</div>
             )}
             {lb && (
-              <div className='search-result-item__bottom-left'>{getFormattedValue(item, lb.accessor, lb.display)}</div>
+              <div className='search-result-item__bottom-left'>{formatValue(item, lb.accessor, lb.display, lb.listHandling)}</div>
             )}
           </div>
         )}
         {(rt || rb) && (
           <div className='search-result-item__right'>
             {rt && (
-              <div className='search-result-item__top-right'>{getFormattedValue(item, rt.accessor, rt.display)}</div>
+              <div className='search-result-item__top-right'>{formatValue(item, rt.accessor, rt.display, rt.listHandling)}</div>
             )}
             {rb && (
-              <div className='search-result-item__bottom-right'>{getFormattedValue(item, rb.accessor, rb.display)}</div>
+              <div className='search-result-item__bottom-right'>{formatValue(item, rb.accessor, rb.display, rb.listHandling)}</div>
             )}
           </div>
         )}

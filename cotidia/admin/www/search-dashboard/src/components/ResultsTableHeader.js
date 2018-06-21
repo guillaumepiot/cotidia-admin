@@ -71,16 +71,24 @@ export default class ResultsTableHeader extends PureComponent {
             </th>
           )}
           {columns.map((column) => (
-            <th className='table__header table-header' key={column.id} onClick={this.setOrderColumnFactory(column.id)}>
+            <th
+              className={`table__header table-header ${column.orderable !== false ? 'table-header--clickable' : ''}`}
+              key={column.id}
+              onClick={column.orderable !== false ? this.setOrderColumnFactory(column.id) : null}
+            >
               <span className='table-header__name'>
                 {column.label}
-                {' '}
-                {(orderColumn === column.id) ? (orderAscending ? (
-                  <Icon className='table-header__sort table-header__sort--active' icon='long-arrow-down' />
-                ) : (
-                  <Icon className='table-header__sort table-header__sort--active' icon='long-arrow-up' />
-                )) : (
-                  <Icon className='table-header__sort' icon='long-arrow-down' />
+                {(column.orderable !== false) && (
+                  <>
+                    {' '}
+                    {(orderColumn === column.id) ? (orderAscending ? (
+                      <Icon className='table-header__sort table-header__sort--active' icon='long-arrow-down' />
+                    ) : (
+                      <Icon className='table-header__sort table-header__sort--active' icon='long-arrow-up' />
+                    )) : (
+                      <Icon className='table-header__sort' icon='long-arrow-down' />
+                    )}
+                  </>
                 )}
               </span>
 

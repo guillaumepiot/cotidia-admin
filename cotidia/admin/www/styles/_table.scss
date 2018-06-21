@@ -51,9 +51,12 @@
     }
 
     &-header {
-        cursor: pointer;
         padding-right: $horizontal_padding * 3 !important;
         position: relative;
+
+        &--clickable {
+            cursor: pointer;
+        }
 
         &__name {
         }
@@ -93,6 +96,11 @@
             // :hover standard rule in sixteen is `darken(#fff, 2%)`, so let's just double that
             background-color: darken(#fff, 4%);
         }
+    }
+
+    &__category-header {
+        background-color: darken(#fff, 8%);
+        cursor: auto;
     }
 
     .action-column {
