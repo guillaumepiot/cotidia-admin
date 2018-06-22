@@ -1,7 +1,17 @@
 {% load admin_search_dashboard_tags %}
 {
     "columns": {{% for field_name, field_data in columns.items %}
-    "{{field_name}}": {{field_data|json|safe}}{% if not forloop.last %},{% endif %}
+    "{{field_name}}": {
+        {% for key, value in field_data.items %}
+        {% if key == "display" and value == "function" %}
+        "display": {% include field_data.function_template %} {% if not forloop.last %},{% endif %}
+        {% elif key == "options" %}
+        "{{key}}": {{value|safe}} {% if not forloop.last %},{% endif %}
+        {% else %}
+        "{{key}}": "{{value|safe}}" {% if not forloop.last %},{% endif %}
+        {% endif %}
+        {% endfor %}
+    }
     {% endfor %}},
     {% if field_data.list_handling %}"listHandling": {
         {% if field_Data.list_handling.props %}"props": "{{ field_data.list_handling.props | safe }}",{% endif %}
@@ -20,8 +30,8 @@
     {% if default_order_by %} "defaultOrderBy": {{default_order_by}},{% endif %}
 
     "config": {
-        "primaryColour": {% if primary_color %}"{{primary_color}}"{% else %}"#00abd3"{% endif %},
-        "columnsConfigurable": {% if columns_configurable %}true{% else %}false{% endif %}
+        {% if primary_color %}"primaryColour": "{{primary_color}}",{% endif %}
+        {% if columns_configurable %}"columnsConfigurable": true{% endif %}
     },
     "batchActions": {% if batch_actions %}{{batch_actions|safe}}{% else %}[]{% endif %},
     "endpoint": "{{endpoint}}"

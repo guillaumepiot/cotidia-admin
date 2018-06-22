@@ -98,13 +98,20 @@ class AdminModelSerializer(serializers.ModelSerializer):
                         default_field_ref["label"] = label
                         repr[field_name] = default_field_ref
 
-            for key, default_field_repr in repr.items():
-                try:
-                    overrides = self.SearchProvider.field_representation[key]
-                    default_field_repr.update(overrides)
-                except (AttributeError, KeyError):
-                    pass
-                repr[key] = default_field_repr
+            try:
+                override_repr = self.SearchProvider.field_representation
+                for key, default_field_repr in repr.items():
+                    try:
+                        overrides = override_repr[key]
+                        default_field_repr.update(overrides)
+                    except (AttributeError, KeyError):
+                        pass
+                    repr[key] = default_field_repr
+                for key, value in override_repr.items():
+                    if key not in repr.keys():
+                        repr[key] = value
+            except AttributeError:
+                pass
             self._field_representation = repr
             
         return self._field_representation
