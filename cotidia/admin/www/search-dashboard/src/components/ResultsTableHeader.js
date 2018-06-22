@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 import { Icon } from './elements/global'
+import { uuid4 } from '../utils'
 
 export default class ResultsTableHeader extends PureComponent {
   static propTypes = {
@@ -78,7 +79,14 @@ export default class ResultsTableHeader extends PureComponent {
                   key={column.id}
                   onClick={column.orderable !== false ? this.setOrderColumnFactory(column.id) : null}
                 >
-                  <span className='table-header__name'>
+                  {/*
+                  Using a 'random' and always-changing key here means that the span will *always*
+                  rerender, this is because we may change the sort order icon, and because
+                  FontAwesome replaces our span with an SVG, React doesn't know how to perform this
+                  change so just doesn't do anything. If we tell the parent to *alwasy* rerender,
+                  it's not the best on perf, but does mean we get icons actually changing.
+                  */}
+                  <span className='table-header__name' key={uuid4()}>
                     {column.label}
                     {(column.orderable !== false) && (
                       <>
