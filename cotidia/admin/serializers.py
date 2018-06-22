@@ -127,6 +127,12 @@ class AdminModelSerializer(serializers.ModelSerializer):
             return self.SearchProvider.list_handling
         except AttributeError:
             return None
+    
+    def get_categorise_by(self):
+        try:
+            return self.SearchProvider.categorise_by
+        except AttributeError:
+            return None
         
     def get_columns_configurable(self):
         try:

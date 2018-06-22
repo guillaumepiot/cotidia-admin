@@ -90,6 +90,7 @@ def render_search_dashboard_config(
     if default_order:
         context['default_order_by'] = default_order[0]
     context['list_handling'] = serializer.get_global_list_handling()
+    context['categorise_by'] = serializer.get_categorise_by()
 
     return context
 
