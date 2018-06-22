@@ -11,7 +11,7 @@
         "{{key}}": "{{value|safe}}" {% if not forloop.last %},{% endif %}
         {% endif %}
         {% endfor %}
-    }
+    },
     {% endfor %}},
     {% if field_data.list_handling %}"listHandling": {
         {% if field_Data.list_handling.props %}"props": "{{ field_data.list_handling.props | safe }}",{% endif %}
