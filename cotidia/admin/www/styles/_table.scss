@@ -106,4 +106,10 @@
     .action-column {
         width: 1px;
     }
+
+    &-header--separator,
+    &-column--separator {
+        background-color: darken(#fff, 32%);
+        width: 20px;
+    }
 }
