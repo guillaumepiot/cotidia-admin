@@ -18,11 +18,6 @@
         "style": "{{ field_data.list_handling.style}}",
         "value": "{{ field_data.list_handling.value}}"
     },{% endif %}
-
-    {% if categorise_by %}"categoriseBy": {
-        {% if categorise_by.display %}"display": "{{categorise_by.display}}",{% endif %}
-        "column": "{{categorise_by.column}}"
-    },{% endif %}
     {% if auth_token %} "authToken": "{{auth_token}}",{% endif %}
     {% if detail_url %}"detailURL": "{{detail_url}}",{% endif %}
     {% if default_columns %} "defaultColumns": {{default_columns|safe}},{% endif %}
@@ -31,9 +26,13 @@
 
     "config": {
         {% if primary_color %}"primaryColour": "{{primary_color}}",{% endif %}
-        {% if columns_configurable %}"columnsConfigurable": true{% endif %}
-        {% if list_handling %}"listHandling": {{list_handling|json|safe}}{% endif %}
-        {% if columns_configurable %}"columnsConfigurable": true{% endif %}
+        {% if columns_configurable %}"columnsConfigurable": true,{% endif %}
+        {% if list_handling %}"listHandling": {{list_handling|json|safe}},{% endif %}
+        {% if columns_configurable %}"columnsConfigurable": true,{% endif %}
+        {% if categorise_by %}"categoriseBy": {
+            {% if categorise_by.display %}"display": "{{categorise_by.display}}",{% endif %}
+            "column": "{{categorise_by.column}}"
+        },{% endif %}
     },
     "batchActions": {% if batch_actions %}{{batch_actions|safe}}{% else %}[]{% endif %},
     "endpoint": "{{endpoint}}"
