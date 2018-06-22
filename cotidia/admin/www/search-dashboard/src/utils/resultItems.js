@@ -11,6 +11,7 @@ export const getValueFormatter = (config) => {
   const formatters = {
     _verbatim: (value) => value,
     verbatim: (value) => (value == null) ? '' : String(value),
+    currency: (value, _, __, currency) => value && value.toLocaleString('en', { style: 'currency', currency }),
     date: (value) => moment(value).format(config.dateFormat),
     datetime: (value) => moment(value).format(config.datetimeFormat),
     boolean: (value) => (
@@ -84,7 +85,7 @@ export const getValueFormatter = (config) => {
     }
 
     // If value signals that its raw HTML, just wrap it in a React span and dangerouslySetInnerHTML.
-    if (value.__html) {
+    if (value?.__html) {
       return <span dangerouslySetInnerHTML={value} />
     } else {
       return value
