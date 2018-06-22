@@ -6,7 +6,8 @@
         {% if key == "display" and value == "function" %}
         "display": {% include field_data.function_template %} {% if not forloop.last %},{% endif %}
         {% elif key == "options" %}
-        "{{key}}": {{value|json|safe}} {% if not forloop.last %},{% endif %}
+
+        "options": [{% for option in value %}{"value": "{{option.value}}", "label": "{{option.label}}"},{% endfor %}] {% if not forloop.last %},{% endif %}
         {% else %}
         "{{key}}": {{value|json|safe}} {% if not forloop.last %},{% endif %}
         {% endif %}
