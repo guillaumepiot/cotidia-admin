@@ -52,6 +52,7 @@ App.propTypes = {
     display: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.string,
+      PropTypes.array,
     ]),
     filter: PropTypes.oneOf(['text', 'choice', 'boolean', 'number', 'date']),
     label: PropTypes.string.isRequired,

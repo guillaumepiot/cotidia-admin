@@ -1,10 +1,15 @@
 import React from 'react'
 import moment from 'moment'
 
+import FileUpload from '../components/elements/FileUpload'
+
+import { uuid4 } from './'
+
 export const getValueFormatter = (config) => {
   let globalListHandling = config.listHandling
 
   const formatters = {
+    _verbatim: (value) => value,
     verbatim: (value) => (value == null) ? '' : String(value),
     date: (value) => moment(value).format(config.dateFormat),
     datetime: (value) => moment(value).format(config.datetimeFormat),
@@ -22,45 +27,67 @@ export const getValueFormatter = (config) => {
 
       return <a href={link} onClick={(e) => e.stopPropagation()}>{value}</a>
     },
-    raw: (value) => <span dangerouslySetInnerHTML={{ __html: value }} />,
+    raw: (value) => ({ __html: value }),
     label: (value, type) => (
       <span className={`label ${type && `label--${type}`}`}>{value}</span>
+    ),
+    file: (value, item, accessor, endpoint, extraData) => (
+      <FileUpload
+        endpoint={endpoint.replace(':uuid', item.uuid)}
+        extraData={extraData}
+        id={uuid4()}
+        value={value || ''}
+      />
     ),
   }
 
   return (item, accessor, format, listHandling = globalListHandling) => {
-    const value = item[accessor]
+    // Get initial raw value from item.
+    let value = item[accessor]
 
-    // If the format config is a function in its own right, just defer to it, passing the whole item,
-    // the field name (accessor) and the value we think that field has.
-    if (typeof format === 'function') {
-      return format(item, accessor, value)
+    // Construct initial args to pass into formatter.
+    let extraArgs = []
+
+    // If formatter is not a function, try to resolve one.
+    if (! (typeof format === 'function')) {
+      let actualFormat
+
+      // Parse the actual name and any formatter agruments out of the compound name as given.
+      if (typeof format === 'string') {
+        format = format.split(':')
+      }
+
+      if (! Array.isArray(format)) {
+        format = []
+      }
+
+      // Separate format descriptor from its config.
+      [ actualFormat, ...extraArgs ] = format
+
+      // Get actual formatter function from formatter name.
+      format = formatters[actualFormat] || formatters.verbatim
     }
 
-    // Otherwise, use the formatter as it was passed in, defaulting to verbatim for a formatter that's not recognised.
-
-    format = (typeof format === 'string') ? format : 'verbatim'
-
-    // Parse the actual name and any formatter agruments out of the compound name as given.
-    const [ actualFormat, ...args ] = format.split(':')
-
-    // Get actual formatter function from formatter name.
-    const formatter = formatters[actualFormat] || formatters.verbatim
-
-    // Finally call the formatter on value, or, if the value is an array, on each element within the
-    // array and then join all the results by a comma.
+    // Use formatter to get actual value(s) from data.
     if (Array.isArray(value)) {
-      const values = value.map((value) => formatter(value, ...args))
+      const values = value.map((value) => format(value, item, accessor, ...extraArgs))
 
       if (listHandling.style === 'string') {
-        return values.join(listHandling.value)
+        value = values.join(listHandling.value)
       } else if (listHandling.style === 'element') {
-        return values.map((value) => (
+        value = values.map((value) => (
           <listHandling.value {...listHandling.props}>{value}</listHandling.value>
         ))
       }
     } else {
-      return formatter(value, ...args)
+      value = format(value, item, accessor, ...extraArgs)
+    }
+
+    // If value signals that its raw HTML, just wrap it in a React span and dangerouslySetInnerHTML.
+    if (value.__html) {
+      return <span dangerouslySetInnerHTML={value} />
+    } else {
+      return value
     }
   }
 }
