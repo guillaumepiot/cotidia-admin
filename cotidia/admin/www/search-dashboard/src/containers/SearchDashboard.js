@@ -9,7 +9,7 @@ const mapStateToProps = (state) => ({
   networkError: state.bootstrap.networkError,
 
   searchMode: state.search.mode,
-  hasListConfig: state.search.listFields !== null,
+  hasListConfig: state.search.listFields != null,
 })
 
 const actionCreators = { setSearchTerm }
