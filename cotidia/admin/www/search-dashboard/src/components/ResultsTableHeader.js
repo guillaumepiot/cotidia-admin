@@ -70,48 +70,59 @@ export default class ResultsTableHeader extends PureComponent {
               <input type='checkbox' checked={allSelected} />
             </th>
           )}
-          {columns.map((column) => (
-            <th
-              className={`table__header table-header ${column.orderable !== false ? 'table-header--clickable' : ''}`}
-              key={column.id}
-              onClick={column.orderable !== false ? this.setOrderColumnFactory(column.id) : null}
-            >
-              <span className='table-header__name'>
-                {column.label}
-                {(column.orderable !== false) && (
-                  <>
-                    {' '}
-                    {(orderColumn === column.id) ? (orderAscending ? (
-                      <Icon className='table-header__sort table-header__sort--active' icon='long-arrow-down' />
-                    ) : (
-                      <Icon className='table-header__sort table-header__sort--active' icon='long-arrow-up' />
-                    )) : (
-                      <Icon className='table-header__sort' icon='long-arrow-down' />
+          {columns.map((column) => {
+            if (column.type === 'data') {
+              return (
+                <th
+                  className={`table__header table-header ${column.orderable !== false ? 'table-header--clickable' : ''}`}
+                  key={column.id}
+                  onClick={column.orderable !== false ? this.setOrderColumnFactory(column.id) : null}
+                >
+                  <span className='table-header__name'>
+                    {column.label}
+                    {(column.orderable !== false) && (
+                      <>
+                        {' '}
+                        {(orderColumn === column.id) ? (orderAscending ? (
+                          <Icon className='table-header__sort table-header__sort--active' icon='long-arrow-down' />
+                        ) : (
+                          <Icon className='table-header__sort table-header__sort--active' icon='long-arrow-up' />
+                        )) : (
+                          <Icon className='table-header__sort' icon='long-arrow-down' />
+                        )}
+                      </>
                     )}
-                  </>
-                )}
-              </span>
+                  </span>
 
-              {column.filter && (
-                <span className={`table-header__actions ${filters.includes(column.id) ? 'table-header__actions--active' : ''}`}>
-                  {filters.includes(column.id) && (
-                    <button
-                      className={`btn btn--link btn--small pull-right btn--delete`}
-                      onClick={this.clearFilterFactory(column.id)}
-                    >
-                      <Icon icon='times' />
-                    </button>
+                  {column.filter && (
+                    <span className={`table-header__actions ${filters.includes(column.id) ? 'table-header__actions--active' : ''}`}>
+                      {filters.includes(column.id) && (
+                        <button
+                          className={`btn btn--link btn--small pull-right btn--delete`}
+                          onClick={this.clearFilterFactory(column.id)}
+                        >
+                          <Icon icon='times' />
+                        </button>
+                      )}
+                      <button
+                        className={`btn btn--link btn--small pull-right ${filters.includes(column.id) ? 'btn--primary' : 'btn--cancel'}`}
+                        onClick={this.filterColumnFactory(column.id)}
+                      >
+                        <Icon icon='filter' />
+                      </button>
+                    </span>
                   )}
-                  <button
-                    className={`btn btn--link btn--small pull-right ${filters.includes(column.id) ? 'btn--primary' : 'btn--cancel'}`}
-                    onClick={this.filterColumnFactory(column.id)}
-                  >
-                    <Icon icon='filter' />
-                  </button>
-                </span>
-              )}
-            </th>
-          ))}
+                </th>
+              )
+            } else if (column.type === 'separator') {
+              return (
+                <th
+                  className='table__header table-header table-header--separator'
+                  key={column.id}
+                />
+              )
+            }
+          })}
         </tr>
       </thead>
     )

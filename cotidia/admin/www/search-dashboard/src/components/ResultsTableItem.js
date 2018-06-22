@@ -47,11 +47,22 @@ export default class ResultsTableItem extends PureComponent {
             <input type='checkbox' checked={checked} />
           </td>
         )}
-        {columns.map((column) => (
-          <td data-header={column.label} key={column.id}>
-            {formatValue(item, column.accessor, column.display, column.listHandling)}
-          </td>
-        ))}
+        {columns.map((column) => {
+          if (column.type === 'data') {
+            return (
+              <td data-header={column.label} key={column.id}>
+                {formatValue(item, column.accessor, column.display, column.listHandling)}
+              </td>
+            )
+          } else if (column.type === 'separator') {
+            return (
+              <td
+                className='table-column--separator'
+                key={column.id}
+              />
+            )
+          }
+        })}
       </tr>
     )
   }

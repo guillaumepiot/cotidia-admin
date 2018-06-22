@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect'
+import { uuid4 } from '../../../utils'
 
 const identity = _ => _
 
@@ -7,11 +8,23 @@ export const getVisibleColumnConfig = createSelector(
   (state) => state.search.visibleColumns,
   (state) => state.search.columns,
   (visibleColumns, columns) => visibleColumns.map(
-    (column) => columns[column] && ({
-      ...columns[column],
-      id: column,
-      accessor: column,
-    })
+    (column) => {
+      if (columns[column]) {
+        return {
+          ...columns[column],
+          id: column,
+          accessor: column,
+          type: 'data',
+        }
+      }
+
+      if (column === '_separator') {
+        return {
+          id: uuid4(),
+          type: 'separator',
+        }
+      }
+    }
   ).filter(identity)
 )
 
