@@ -32,6 +32,8 @@
     "config": {
         {% if primary_color %}"primaryColour": "{{primary_color}}",{% endif %}
         {% if columns_configurable %}"columnsConfigurable": true{% endif %}
+        {% if list_handling %}"listHandling": {{list_handling|json|safe}}{% endif %}
+        {% if columns_configurable %}"columnsConfigurable": true{% endif %}
     },
     "batchActions": {% if batch_actions %}{{batch_actions|safe}}{% else %}[]{% endif %},
     "endpoint": "{{endpoint}}"

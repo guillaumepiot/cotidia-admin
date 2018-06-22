@@ -121,6 +121,12 @@ class AdminModelSerializer(serializers.ModelSerializer):
             return self.SearchProvider.primary_color
         except AttributeError:
             return '#00abd3'
+    
+    def get_global_list_handling(self):
+        try:
+            return self.SearchProvider.list_handling
+        except AttributeError:
+            return None
         
     def get_columns_configurable(self):
         try:
