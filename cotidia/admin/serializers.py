@@ -148,10 +148,10 @@ class AdminModelSerializer(serializers.ModelSerializer):
 
     def get_general_query_fields(self):
         if hasattr(self, "SearchProvider"):
-            if hasattr(self, "general_query_fields"):
-                return self.general_query_fields
-            elif hasattr(self, "display_field"):
-                return [self.display_field]
+            if hasattr(self.SearchProvider, "general_query_fields"):
+                return self.SearchProvider.general_query_fields
+            elif hasattr(self.SearchProvider, "display_field"):
+                return [self.SearchProvider.display_field]
         return ['id']
 
     def get_default_columns(self):
