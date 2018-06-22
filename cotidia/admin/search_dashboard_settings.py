@@ -11,6 +11,7 @@ SUPPORTED_FIELDS_TYPES = sorted(
         fields.TimeField,
         fields.EmailField,
         fields.CharField,
+        fields.UUIDField,
         fields.IntegerField,
         fields.FloatField,
         fields.DecimalField,
@@ -42,6 +43,10 @@ FIELD_MAPPING = {
         "filter": "date"
     }),
     "CharField": (lambda: {
+        "display": "verbatim",
+        "filter": "text"
+    }),
+    "UUIDField": (lambda: {
         "display": "verbatim",
         "filter": "text"
     }),
