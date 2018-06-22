@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 
 import FileUpload from '../components/elements/FileUpload'
+import { Icon } from '../components/elements/global'
 
 import { uuid4 } from './'
 
@@ -15,7 +16,7 @@ export const getValueFormatter = (config) => {
     date: (value) => moment(value).format(config.dateFormat),
     datetime: (value) => moment(value).format(config.datetimeFormat),
     boolean: (value) => (
-      value ? <span className='fa fa-check' /> : <span className='fa fa-times' />
+      value ? <Icon icon='check' /> : <Icon icon='times' />
     ),
     link: (value, type) => {
       let link = value

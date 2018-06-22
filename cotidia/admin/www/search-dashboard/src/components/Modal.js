@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import { Button } from '@cotidia/react-ui'
 
+import { Icon } from './elements/global'
+
 let incrementingId = 0
 
 const initialState = {
@@ -125,7 +127,7 @@ export default class Modal extends Component {
               { close && (
                 <div className='dialog-header__action dialog-header__action--right'>
                   <button className='dialog-header__action-btn close-dialog' type='button' onClick={handleClose}>
-                    <span className='fa fa-times' />
+                    <Icon icon='times' />
                   </button>
                 </div>
               ) }

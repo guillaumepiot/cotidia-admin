@@ -84,11 +84,11 @@ export default class ResultsTableHeader extends PureComponent {
                       <>
                         {' '}
                         {(orderColumn === column.id) ? (orderAscending ? (
-                          <Icon className='table-header__sort table-header__sort--active' icon='long-arrow-down' />
+                          <Icon className='table-header__sort table-header__sort--active' icon='long-arrow-alt-down' />
                         ) : (
-                          <Icon className='table-header__sort table-header__sort--active' icon='long-arrow-up' />
+                          <Icon className='table-header__sort table-header__sort--active' icon='long-arrow-alt-up' />
                         )) : (
-                          <Icon className='table-header__sort' icon='long-arrow-down' />
+                          <Icon className='table-header__sort' icon='long-arrow-alt-down' />
                         )}
                       </>
                     )}

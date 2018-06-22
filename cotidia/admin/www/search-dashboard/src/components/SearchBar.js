@@ -5,6 +5,8 @@ import { debounce } from '../utils'
 
 import { TextInput } from '@cotidia/react-ui'
 
+import { Icon } from './elements/global'
+
 export default class SearchBar extends Component {
   static propTypes = {
     batchActions: PropTypes.arrayOf(PropTypes.shape({
@@ -102,10 +104,10 @@ export default class SearchBar extends Component {
             <div style={{ flex: 1 }} />
 
             <button className={`btn ${this.props.mode === 'list' ? '' : 'btn--outline'}`} onClick={this.displayList}>
-              <span className='fa fa-fw fa-list' />
+              <Icon fixed icon='bars' />
             </button>
             <button className={`btn ${this.props.mode === 'table' ? '' : 'btn--outline'}`} onClick={this.displayTable}>
-              <span className='fa fa-fw fa-table' />
+              <Icon fixed icon='table' />
             </button>
           </div>
         )}
@@ -113,7 +115,7 @@ export default class SearchBar extends Component {
           <TextInput
             label='Search'
             name='searchTerm'
-            prefix={<span className='fa fa-search' />}
+            prefix={<Icon icon='search' />}
             type='text'
             updateValue={this.updateSearchTerm}
             updateValueOnBlur={false}
@@ -121,12 +123,12 @@ export default class SearchBar extends Component {
           />
 
           <button className='btn btn--outline' onClick={this.clearSearchTerm} title='Reset filters' type='button'>
-            <span className='fa fa-fw fa-refresh' />
+            <Icon fixed icon='sync-alt' />
           </button>
 
           {this.props.columnsConfigurable && (
             <button className='btn btn--outline' onClick={this.manageColumns} title='Manage column' type='button'>
-              <span className='fa fa-fw fa-columns' />
+              <Icon fixed icon='columns' />
             </button>
           )}
 

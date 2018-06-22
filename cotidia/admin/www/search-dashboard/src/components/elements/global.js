@@ -20,15 +20,16 @@ FullScreen.propTypes = {
   children: PropTypes.node,
 }
 
-export const Icon = ({ className, icon, size, animating }) => (
+export const Icon = ({ animating, className, fixed, icon, size }) => (
   <span
-    className={`fa fa-${icon}${animating ? ' fa-spin' : ''}${size ? ` fa-${size}` : ''} ${className}`}
+    className={`fa fa-${icon}${animating ? ' fa-spin' : ''}${fixed ? ' fa-fw' : ''}${size ? ` fa-${size}` : ''} ${className}`}
   />
 )
 
 Icon.propTypes = {
+  animating: PropTypes.bool,
   className: PropTypes.string,
+  fixed: PropTypes.bool,
   icon: PropTypes.string.isRequired,
   size: PropTypes.string,
-  animating: PropTypes.string,
 }
