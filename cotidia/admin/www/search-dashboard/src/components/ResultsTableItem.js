@@ -13,7 +13,7 @@ export default class ResultsTableItem extends PureComponent {
     config: PropTypes.object,
     item: PropTypes.object.isRequired,
     showCheck: PropTypes.bool.isRequired,
-    viewItem: PropTypes.func.isRequired,
+    viewItem: PropTypes.func,
   }
 
   handleClickRow = (e) => {
