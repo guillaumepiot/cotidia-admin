@@ -7,6 +7,7 @@ import configureStore from './redux/create'
 import { bootstrap } from './redux/modules/bootstrap/actions'
 
 import { messageHandlerFactory } from './utils'
+import { appPropTypes } from './utils/propTypes'
 
 import SearchDashboard from './containers/SearchDashboard'
 
@@ -40,74 +41,7 @@ export default function App (props) {
   )
 }
 
-App.propTypes = {
-  authToken: PropTypes.string.isRequired,
-  batchActions: PropTypes.arrayOf(PropTypes.shape({
-    action: PropTypes.string.isRequired,
-    endpoint: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    onComplete: PropTypes.func,
-  })),
-  columns: PropTypes.objectOf(PropTypes.shape({
-    display: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.string,
-      PropTypes.array,
-    ]),
-    filter: PropTypes.oneOf(['text', 'choice', 'boolean', 'number', 'date']),
-    label: PropTypes.string.isRequired,
-    options: PropTypes.arrayOf(PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      value: PropTypes.any.isRequired,
-    })),
-    orderable: PropTypes.bool,
-    listHandling: PropTypes.shape({
-      style: PropTypes.oneOf(['string', 'element']).isRequired,
-      value: PropTypes.string.isRequired,
-      props: PropTypes.object,
-    }),
-  })).isRequired,
-  config: PropTypes.shape({
-    dateFormat: PropTypes.string,
-    datetimeFormat: PropTypes.string,
-    primaryColor: PropTypes.string,
-    columnsConfigurable: PropTypes.boolean,
-    listHandling: PropTypes.shape({
-      style: PropTypes.oneOf(['string', 'element']).isRequired,
-      value: PropTypes.string.isRequired,
-      props: PropTypes.object,
-    }),
-  }),
-  categoriseBy: PropTypes.shape({
-    column: PropTypes.string.isRequired,
-    display: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.string,
-    ]),
-  }),
-  globalActions: PropTypes.arrayOf(PropTypes.shape({
-    action: PropTypes.string.isRequired,
-    icon: PropTypes.string,
-    label: PropTypes.string.isRequired,
-    func: PropTypes.func.isRequired,
-  })),
-  defaultColumns: PropTypes.arrayOf(PropTypes.string),
-  listFields: PropTypes.shape({
-    left: PropTypes.shape({
-      top: PropTypes.string,
-      bottom: PropTypes.string,
-    }),
-    right: PropTypes.shape({
-      top: PropTypes.string,
-      bottom: PropTypes.string,
-    }),
-  }),
-  defaultFilters: PropTypes.object,
-  defaultOrderBy: PropTypes.string,
-  detailURL: PropTypes.string,
-  endpoint: PropTypes.string.isRequired,
-  overrideStoredConfig: PropTypes.bool,
-}
+App.propTypes = appPropTypes
 
 App.defaultProps = {
   batchActions: [],
