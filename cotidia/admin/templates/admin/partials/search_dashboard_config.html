@@ -1,40 +1,75 @@
 {% load admin_search_dashboard_tags %}
 {
-    "columns": {{% for field_name, field_data in columns.items %}
-    "{{field_name}}": {
-        {% for key, value in field_data.items %}
-        {% if key == "display" and value == "function" %}
-        "display": {% include field_data.function_template %} {% if not forloop.last %},{% endif %}
-        {% elif key == "options" %}
-
-        "options": [{% for option in value %}{"value": "{{option.value}}", "label": "{{option.label}}"},{% endfor %}] {% if not forloop.last %},{% endif %}
-        {% else %}
-        "{{key}}": {{value|json|safe}} {% if not forloop.last %},{% endif %}
-        {% endif %}
-        {% endfor %}
-    },
+    endpoint: '{{endpoint}}',
+    columns: {{% for field_name, field_data in columns.items %}
+        {{field_name}}: {
+            {% for key, value in field_data.items %}
+                {% if key == "display" and value == "function" %}
+                    display: {% include field_data.function_template %},
+                {% elif key == "options" %}
+                    options: [
+                        {% for option in value %}
+                            {
+                                value: '{{option.value}}',
+                                label: '{{option.label}}',
+                            },
+                        {% endfor %}
+                    ],
+                {% elif key == "function_template" or key == "foreign_key" %}
+                {% else %}
+                    {{key}}: {{value|json|safe}},
+                {% endif %}
+            {% endfor %}
+        },
     {% endfor %}},
-    {% if field_data.list_handling %}"listHandling": {
-        {% if field_Data.list_handling.props %}"props": "{{ field_data.list_handling.props | safe }}",{% endif %}
-        "style": "{{ field_data.list_handling.style}}",
-        "value": "{{ field_data.list_handling.value}}"
-    },{% endif %}
-    {% if auth_token %} "authToken": "{{auth_token}}",{% endif %}
-    {% if detail_url %}"detailURL": "{{detail_url}}",{% endif %}
-    {% if default_columns %} "defaultColumns": {{default_columns|safe}},{% endif %}
-    {% if default_filters %} "defaultFilters": {{default_filters|safe}},{% endif %}
-    {% if default_order_by %} "defaultOrderBy": {{default_order_by}},{% endif %}
+    {% if field_data.list_handling %}
+        listHandling: {
+            style: '{{ field_data.list_handling.style}}',
+            value: '{{ field_data.list_handling.value}}',
+            {% if field_Data.list_handling.props %}
+                props: '{{ field_data.list_handling.props | safe }}',
+            {% endif %}
+        },
+    {% endif %}
+    {% if auth_token %}
+        authToken: '{{auth_token}}',
+    {% endif %}
+    {% if detail_url %}
+        detailURL: '{{detail_url}}',
+    {% endif %}
+    {% if default_columns %}
+        defaultColumns: {{default_columns|safe}},
+    {% endif %}
+    {% if default_filters %}
+        defaultFilters: {{default_filters|safe}},
+    {% endif %}
+    {% if default_order_by %}
+        defaultOrderBy: {{default_order_by}},
+    {% endif %}
 
-    "config": {
-        {% if primary_color %}"primaryColour": "{{primary_color}}",{% endif %}
-        {% if columns_configurable %}"columnsConfigurable": true,{% endif %}
-        {% if list_handling %}"listHandling": {{list_handling|json|safe}},{% endif %}
-        {% if columns_configurable %}"columnsConfigurable": true,{% endif %}
-        {% if categorise_by %}"categoriseBy": {
-            {% if categorise_by.display %}"display": "{{categorise_by.display}}",{% endif %}
-            "column": "{{categorise_by.column}}"
-        },{% endif %}
+    config: {
+        {% if primary_color %}
+            primaryColour: '{{primary_color}}',
+        {% endif %}
+        {% if columns_configurable %}
+            columnsConfigurable: true,
+        {% endif %}
+        {% if list_handling %}
+            listHandling: {{list_handling|json|safe}},
+        {% endif %}
+        {% if columns_configurable %}
+            columnsConfigurable: true,
+        {% endif %}
+        {% if categorise_by %}
+            categoriseBy: {
+                column: '{{categorise_by.column}}',
+                {% if categorise_by.display %}
+                    display: '{{categorise_by.display}}',
+                {% endif %}
+            },
+        {% endif %}
     },
-    "batchActions": {% if batch_actions %}{{batch_actions|safe}}{% else %}[]{% endif %},
-    "endpoint": "{{endpoint}}"
+    {% if batch_actions %}
+        batchActions: {{batch_actions|safe}},
+    {% endif %}
 }
