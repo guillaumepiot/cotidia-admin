@@ -61,6 +61,11 @@ App.propTypes = {
       value: PropTypes.any.isRequired,
     })),
     orderable: PropTypes.bool,
+    listHandling: PropTypes.shape({
+      style: PropTypes.oneOf(['string', 'element']).isRequired,
+      value: PropTypes.string.isRequired,
+      props: PropTypes.object,
+    }),
   })).isRequired,
   config: PropTypes.shape({
     dateFormat: PropTypes.string,
