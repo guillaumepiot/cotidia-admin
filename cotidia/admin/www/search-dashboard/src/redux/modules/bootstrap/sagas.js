@@ -9,6 +9,7 @@ export function * bootstrap ({ payload: config }) {
   yield put({ type: searchTypes.SET_ENDPOINT, payload: config.endpoint })
   yield put({ type: searchTypes.SET_DETAIL_URL, payload: config.detailURL })
   yield put({ type: searchTypes.SET_BATCH_ACTIONS, payload: config.batchActions })
+  yield put({ type: searchTypes.SET_GLOBAL_ACTIONS, payload: config.globalActions })
 
   yield put({ type: configTypes.SET_CONFIG, payload: config.config })
 

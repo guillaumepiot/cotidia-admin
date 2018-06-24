@@ -5,6 +5,7 @@ const initialState = {
   detailURL: null,
   columns: {}, // Config for all columns
   batchActions: [], // Config for all batch actions
+  globalActions: [], // Config for all global actions
 
   defaultColumns: [], // Actual default columns as specifed by config
   visibleColumns: [], // Current visible columns
@@ -53,6 +54,12 @@ export default (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         batchActions: payload,
+      }
+
+    case types.SET_GLOBAL_ACTIONS:
+      return {
+        ...state,
+        globalActions: payload,
       }
 
     case types.SET_COLUMN_CONFIG:

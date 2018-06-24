@@ -17,10 +17,12 @@ export default class SearchBar extends Component {
     })),
     clearFilters: PropTypes.func.isRequired,
     columnsConfigurable: PropTypes.bool.isRequired,
+    globalActions: PropTypes.array,
     hasListConfig: PropTypes.bool.isRequired,
     manageColumns: PropTypes.func.isRequired,
     mode: PropTypes.string,
     performBatchAction: PropTypes.func.isRequired,
+    performGlobalAction: PropTypes.func.isRequired,
     searchTerm: PropTypes.string,
     setSearchTerm: PropTypes.func.isRequired,
     switchMode: PropTypes.func.isRequired,
@@ -28,6 +30,7 @@ export default class SearchBar extends Component {
 
   static defaultProps = {
     batchActions: [],
+    globalActions: [],
   }
 
   state = {
@@ -64,6 +67,10 @@ export default class SearchBar extends Component {
     this.props.performBatchAction(action)
   }
 
+  performGlobalActionFactory = (action) => () => {
+    this.props.performGlobalAction(action)
+  }
+
   renderBatchActions () {
     const { batchActions } = this.props
 
@@ -97,16 +104,24 @@ export default class SearchBar extends Component {
   }
 
   render () {
+    const {
+      columnsConfigurable,
+      globalActions,
+      hasListConfig,
+      mode,
+      searchTerm,
+    } = this.props
+
     return (
       <>
-        {this.props.hasListConfig && (
+        {hasListConfig && (
           <div className='head-bar text-right'>
             <div style={{ flex: 1 }} />
 
-            <button className={`btn ${this.props.mode === 'list' ? '' : 'btn--outline'}`} onClick={this.displayList}>
+            <button className={`btn ${mode === 'list' ? '' : 'btn--outline'}`} onClick={this.displayList}>
               <Icon fixed icon='bars' />
             </button>
-            <button className={`btn ${this.props.mode === 'table' ? '' : 'btn--outline'}`} onClick={this.displayTable}>
+            <button className={`btn ${mode === 'table' ? '' : 'btn--outline'}`} onClick={this.displayTable}>
               <Icon fixed icon='table' />
             </button>
           </div>
@@ -119,14 +134,28 @@ export default class SearchBar extends Component {
             type='text'
             updateValue={this.updateSearchTerm}
             updateValueOnBlur={false}
-            value={this.props.searchTerm}
+            value={searchTerm}
           />
 
           <button className='btn btn--outline' onClick={this.clearSearchTerm} title='Reset filters' type='button'>
             <Icon fixed icon='sync-alt' />
           </button>
 
-          {this.props.columnsConfigurable && (
+          {globalActions && globalActions.map((action) => (
+            <button
+              className='btn btn--outline'
+              key={action.action}
+              onClick={this.performGlobalActionFactory(action)}
+              title={action.label}
+              type='button'
+            >
+              {action.icon ? (
+                <Icon fixed icon={action.icon} />
+              ) : action.label}
+            </button>
+          ))}
+
+          {columnsConfigurable && (
             <button className='btn btn--outline' onClick={this.manageColumns} title='Manage column' type='button'>
               <Icon fixed icon='columns' />
             </button>

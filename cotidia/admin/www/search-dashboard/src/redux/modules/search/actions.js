@@ -79,6 +79,11 @@ export const performBatchAction = (action) => ({
   payload: { action },
 })
 
+export const performGlobalAction = (action) => ({
+  type: types.PERFORM_GLOBAL_ACTION,
+  payload: { action },
+})
+
 export const handleSearchDashboardMessage = (message) => ({
   type: types.HANDLE_SEARCH_DASHBOARD_MESSAGE,
   payload: { message },

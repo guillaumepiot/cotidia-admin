@@ -2,6 +2,7 @@
 export const SET_ENDPOINT = 'search-dashboard/search/SET_ENDPOINT'
 export const SET_DETAIL_URL = 'search-dashboard/search/SET_DETAIL_URL'
 export const SET_BATCH_ACTIONS = 'search-dashboard/search/SET_BATCH_ACTIONS'
+export const SET_GLOBAL_ACTIONS = 'search-dashboard/search/SET_GLOBAL_ACTIONS'
 export const SET_COLUMN_CONFIG = 'search-dashboard/search/SET_COLUMN_CONFIG'
 
 export const LOAD_STORED_CONFIG = 'search-dashboard/search/LOAD_STORED_CONFIG'
@@ -33,5 +34,6 @@ export const TOGGLE_RESULT_SELECTED = 'search-dashboard/search/TOGGLE_RESULT_SEL
 export const TOGGLE_SELECT_ALL_RESULTS = 'search-dashboard/search/TOGGLE_SELECT_ALL_RESULTS'
 
 export const PERFORM_BATCH_ACTION = 'search-dashboard/search/PERFORM_BATCH_ACTION'
+export const PERFORM_GLOBAL_ACTION = 'search-dashboard/search/PERFORM_GLOBAL_ACTION'
 
 export const HANDLE_SEARCH_DASHBOARD_MESSAGE = 'search-dashboard/search/HANDLE_SEARCH_DASHBOARD_MESSAGE'

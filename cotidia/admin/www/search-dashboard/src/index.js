@@ -85,6 +85,12 @@ App.propTypes = {
       PropTypes.string,
     ]),
   }),
+  globalActions: PropTypes.arrayOf(PropTypes.shape({
+    action: PropTypes.string.isRequired,
+    icon: PropTypes.string,
+    label: PropTypes.string.isRequired,
+    func: PropTypes.func.isRequired,
+  })),
   defaultColumns: PropTypes.arrayOf(PropTypes.string),
   listFields: PropTypes.shape({
     left: PropTypes.shape({

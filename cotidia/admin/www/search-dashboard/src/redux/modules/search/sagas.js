@@ -208,6 +208,15 @@ function * performBatchAction ({ payload: { action } }) {
   }
 }
 
+function * performGlobalAction ({ payload: { action } }) {
+  const { search } = yield select()
+
+  const queryStringData = getSearchQueryString(search)
+  const queryString = generateURL('', { '?': queryStringData })
+
+  action.func(queryStringData, queryString)
+}
+
 function * handleSearchDashboardMessage ({ payload: { message } }) {
   const { search: { endpoint } } = yield select()
 
@@ -243,6 +252,7 @@ export default function * watcher () {
   yield takeEvery(types.GET_RESULTS_PAGE, getResultsPage)
 
   yield takeEvery(types.PERFORM_BATCH_ACTION, performBatchAction)
+  yield takeEvery(types.PERFORM_GLOBAL_ACTION, performGlobalAction)
 
   yield takeEvery(types.HANDLE_SEARCH_DASHBOARD_MESSAGE, handleSearchDashboardMessage)
 }
