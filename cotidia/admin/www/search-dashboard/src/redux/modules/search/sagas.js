@@ -51,13 +51,7 @@ export function * manageColumns () {
   })
 }
 
-function * performSearch () {
-  const searchID = uuid4()
-
-  yield put({ type: types.SEARCH_START, payload: { id: searchID } })
-
-  const data = yield select((state) => state.search)
-
+function getSearchQueryString (data) {
   const queryString = {}
 
   for (const [key, value] of Object.entries(data.filters)) {
@@ -87,6 +81,18 @@ function * performSearch () {
   if (data.searchTerm) {
     queryString._q = data.searchTerm
   }
+
+  return queryString
+}
+
+function * performSearch () {
+  const searchID = uuid4()
+
+  yield put({ type: types.SEARCH_START, payload: { id: searchID } })
+
+  const { search: data } = yield select()
+
+  const queryString = getSearchQueryString(data)
 
   let url = generateURL(data.endpoint, { '?': queryString })
 
