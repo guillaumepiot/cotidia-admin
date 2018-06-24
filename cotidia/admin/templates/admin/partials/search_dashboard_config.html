@@ -46,6 +46,14 @@
     {% if default_order_by %}
         defaultOrderBy: {{default_order_by}},
     {% endif %}
+    {% if categorise_by %}
+        categoriseBy: {
+            column: '{{categorise_by.column}}',
+            {% if categorise_by.display %}
+                display: '{{categorise_by.display}}',
+            {% endif %}
+        },
+    {% endif %}
 
     config: {
         {% if primary_color %}
@@ -59,14 +67,6 @@
         {% endif %}
         {% if columns_configurable %}
             columnsConfigurable: true,
-        {% endif %}
-        {% if categorise_by %}
-            categoriseBy: {
-                column: '{{categorise_by.column}}',
-                {% if categorise_by.display %}
-                    display: '{{categorise_by.display}}',
-                {% endif %}
-            },
         {% endif %}
     },
     {% if batch_actions %}

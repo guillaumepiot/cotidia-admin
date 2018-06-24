@@ -4,7 +4,7 @@ const initialState = {
   endpoint: null,
   detailURL: null,
   columns: {}, // Config for all columns
-  batchActions: [], // Config for all batch acitons
+  batchActions: [], // Config for all batch actions
 
   defaultColumns: [], // Actual default columns as specifed by config
   visibleColumns: [], // Current visible columns
@@ -15,6 +15,8 @@ const initialState = {
 
   orderColumn: null,
   orderAscending: true,
+
+  categoriseBy: null,
 
   filters: {},
 
@@ -64,6 +66,7 @@ export default (state = initialState, { type, payload } = {}) => {
         filters: payload.defaultFilters,
         listFields: payload.listFields,
         mode: payload.mode,
+        categoriseBy: payload.categoriseBy,
       }
 
     case types.SET_SEARCH_TERM:

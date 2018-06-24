@@ -10,9 +10,7 @@ export default class ResultsTableHeader extends PureComponent {
     batchActions: PropTypes.arrayOf(PropTypes.object),
     clearFilter: PropTypes.func.isRequired,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-    config: PropTypes.shape({
-      categoriseBy: PropTypes.any,
-    }),
+    categoriseBy: PropTypes.object,
     filterColumn: PropTypes.func.isRequired,
     filters: PropTypes.arrayOf(PropTypes.string).isRequired,
     orderAscending: PropTypes.bool.isRequired,
@@ -60,10 +58,8 @@ export default class ResultsTableHeader extends PureComponent {
     const {
       allSelected,
       batchActions,
+      categoriseBy,
       columns,
-      config: {
-        categoriseBy,
-      },
       filters,
       orderAscending,
       orderColumn,

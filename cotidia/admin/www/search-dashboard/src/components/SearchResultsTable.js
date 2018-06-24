@@ -12,10 +12,9 @@ export default class SearchResultsTable extends Component {
   static propTypes = {
     batchActions: PropTypes.arrayOf(PropTypes.object),
     clearFilter: PropTypes.func.isRequired,
+    categoriseBy: PropTypes.object,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-    config: PropTypes.shape({
-      categoriseBy: PropTypes.any,
-    }),
+    config: PropTypes.object,
     detailURL: PropTypes.string,
     filterColumn: PropTypes.func.isRequired,
     filters: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -57,6 +56,7 @@ export default class SearchResultsTable extends Component {
   render () {
     const {
       batchActions,
+      categoriseBy,
       clearFilter,
       columns,
       config,
@@ -76,7 +76,7 @@ export default class SearchResultsTable extends Component {
     let currentCategoryValue = null
     let formatValue = null
 
-    if (config.categoriseBy) {
+    if (categoriseBy) {
       formatValue = getValueFormatter(config)
     }
 
@@ -86,8 +86,8 @@ export default class SearchResultsTable extends Component {
           <ResultsTableHeader
             allSelected={this.allSelected()}
             batchActions={batchActions}
+            categoriseBy={categoriseBy}
             columns={columns}
-            config={config}
             filters={filters}
             orderAscending={orderAscending}
             orderColumn={orderColumn}
@@ -99,8 +99,8 @@ export default class SearchResultsTable extends Component {
           />
           <tbody>
             {results.map((item) => {
-              if (config.categoriseBy) {
-                let itemValue = item[config.categoriseBy.column]
+              if (categoriseBy) {
+                let itemValue = item[categoriseBy.column]
 
                 if (Array.isArray(itemValue)) {
                   itemValue = itemValue[0]
@@ -111,8 +111,8 @@ export default class SearchResultsTable extends Component {
 
                   const formattedValue = formatValue(
                     item,
-                    config.categoriseBy.column,
-                    config.categoriseBy.display
+                    categoriseBy.column,
+                    categoriseBy.display
                   )
 
                   return [

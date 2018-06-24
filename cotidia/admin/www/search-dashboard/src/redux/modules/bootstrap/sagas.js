@@ -14,7 +14,6 @@ export function * bootstrap ({ payload: config }) {
 
   let defaultOrderColumn = config.defaultColumns[0]
   let defaultOrderAscending = true
-  let mode = 'table'
 
   if (config.defaultOrderBy) {
     if (config.defaultOrderBy[0] === '-') {
@@ -23,10 +22,6 @@ export function * bootstrap ({ payload: config }) {
     } else {
       defaultOrderColumn = config.defaultOrderBy
     }
-  }
-
-  if (config.mode) {
-    mode = config.mode
   }
 
   yield put({
@@ -38,7 +33,8 @@ export function * bootstrap ({ payload: config }) {
       listFields: config.listFields,
       defaultOrderColumn,
       defaultOrderAscending,
-      mode,
+      mode: config.mode || 'table',
+      categoriseBy: config.categoriseBy || null,
     },
   })
 

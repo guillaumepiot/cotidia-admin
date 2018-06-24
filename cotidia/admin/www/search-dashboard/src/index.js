@@ -67,18 +67,18 @@ App.propTypes = {
     datetimeFormat: PropTypes.string,
     primaryColor: PropTypes.string,
     columnsConfigurable: PropTypes.boolean,
-    categoriseBy: PropTypes.shape({
-      column: PropTypes.string.isRequired,
-      display: PropTypes.oneOfType([
-        PropTypes.func,
-        PropTypes.string,
-      ]),
-    }),
     listHandling: PropTypes.shape({
       style: PropTypes.oneOf(['string', 'element']).isRequired,
       value: PropTypes.string.isRequired,
       props: PropTypes.object,
     }),
+  }),
+  categoriseBy: PropTypes.shape({
+    column: PropTypes.string.isRequired,
+    display: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.string,
+    ]),
   }),
   defaultColumns: PropTypes.arrayOf(PropTypes.string),
   listFields: PropTypes.shape({
