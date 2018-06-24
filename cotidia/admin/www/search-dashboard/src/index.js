@@ -75,7 +75,7 @@ App.propTypes = {
       ]),
     }),
     listHandling: PropTypes.shape({
-      style: PropTypes.oneOf('string', 'element').isRequired,
+      style: PropTypes.oneOf(['string', 'element']).isRequired,
       value: PropTypes.string.isRequired,
       props: PropTypes.object,
     }),
