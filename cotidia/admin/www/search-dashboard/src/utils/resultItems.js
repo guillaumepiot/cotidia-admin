@@ -78,7 +78,7 @@ export const getValueFormatter = (config) => {
         value = values.join(listHandling.value)
       } else if (listHandling.style === 'element') {
         value = values.map((value) => (
-          <listHandling.value {...listHandling.props}>{value}</listHandling.value>
+          <listHandling.value key={value} {...listHandling.props}>{value}</listHandling.value>
         ))
       }
     } else {
