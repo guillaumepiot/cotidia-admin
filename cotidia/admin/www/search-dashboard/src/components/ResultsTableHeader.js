@@ -10,6 +10,9 @@ export default class ResultsTableHeader extends PureComponent {
     batchActions: PropTypes.arrayOf(PropTypes.object),
     clearFilter: PropTypes.func.isRequired,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+    config: PropTypes.shape({
+      categoriseBy: PropTypes.any,
+    }),
     filterColumn: PropTypes.func.isRequired,
     filters: PropTypes.arrayOf(PropTypes.string).isRequired,
     orderAscending: PropTypes.bool.isRequired,
@@ -58,6 +61,9 @@ export default class ResultsTableHeader extends PureComponent {
       allSelected,
       batchActions,
       columns,
+      config: {
+        categoriseBy,
+      },
       filters,
       orderAscending,
       orderColumn,
@@ -72,12 +78,14 @@ export default class ResultsTableHeader extends PureComponent {
             </th>
           )}
           {columns.map((column) => {
+            const orderable = categoriseBy == null && column.orderable !== false
+
             if (column.type === 'data') {
               return (
                 <th
-                  className={`table__header table-header ${column.orderable !== false ? 'table-header--clickable' : ''}`}
+                  className={`table__header table-header ${orderable ? 'table-header--clickable' : ''}`}
                   key={column.id}
-                  onClick={column.orderable !== false ? this.setOrderColumnFactory(column.id) : null}
+                  onClick={orderable ? this.setOrderColumnFactory(column.id) : null}
                 >
                   {/*
                   Using a 'random' and always-changing key here means that the span will *always*
@@ -88,7 +96,7 @@ export default class ResultsTableHeader extends PureComponent {
                   */}
                   <span className='table-header__name' key={uuid4()}>
                     {column.label}
-                    {(column.orderable !== false) && (
+                    {orderable && (
                       <>
                         {' '}
                         {(orderColumn === column.id) ? (orderAscending ? (

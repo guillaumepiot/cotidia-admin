@@ -13,7 +13,9 @@ export default class SearchResultsTable extends Component {
     batchActions: PropTypes.arrayOf(PropTypes.object),
     clearFilter: PropTypes.func.isRequired,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-    config: PropTypes.object,
+    config: PropTypes.shape({
+      categoriseBy: PropTypes.any,
+    }),
     detailURL: PropTypes.string,
     filterColumn: PropTypes.func.isRequired,
     filters: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -85,6 +87,7 @@ export default class SearchResultsTable extends Component {
             allSelected={this.allSelected()}
             batchActions={batchActions}
             columns={columns}
+            config={config}
             filters={filters}
             orderAscending={orderAscending}
             orderColumn={orderColumn}
@@ -114,7 +117,7 @@ export default class SearchResultsTable extends Component {
 
                   return [
                     (
-                      <tr className='table__category-header'>
+                      <tr key={formattedValue} className='table__category-header'>
                         <td colSpan={columns.length + (batchActions.length > 0 ? 1 : 0)}>
                           {formattedValue}
                         </td>
