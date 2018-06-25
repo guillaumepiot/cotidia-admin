@@ -149,20 +149,19 @@ fieldset{
         }
     }
 
-    .form__group {
+    > * {
         @media screen and (min-width: $tablet-width) {
             margin-right: $horizontal_padding;
+
+            &:last-child {
+                margin-right: 0;
+            }
         }
     }
 
     .btn {
         @media screen and (min-width: $tablet-width) {
-            align-self: center;
             margin-right: $horizontal_padding;
-        }
-
-        &:last-child {
-            margin-right: 0;
         }
     }
 

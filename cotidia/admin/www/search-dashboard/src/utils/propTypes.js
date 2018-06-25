@@ -69,6 +69,14 @@ const listFields = PropTypes.shape({
   }),
 })
 
+const extraFilter = PropTypes.shape({
+  label: PropTypes.string.isRequired,
+  field: PropTypes.string, // the field to send in the query
+  type: PropTypes.oneOf(['boolean']),
+})
+
+const extraFilters = PropTypes.arrayOf(extraFilter)
+
 export const appPropTypes = {
   authToken: PropTypes.string.isRequired,
   batchActions,
@@ -80,6 +88,7 @@ export const appPropTypes = {
   listFields,
   defaultFilters: PropTypes.object,
   defaultOrderBy: PropTypes.string,
+  extraFilters,
   detailURL: PropTypes.string,
   endpoint: PropTypes.string.isRequired,
   overrideStoredConfig: PropTypes.bool,

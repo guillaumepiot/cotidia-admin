@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import { debounce } from '../utils'
 
+import { Boolean } from './search-bar-filters'
+
 import { TextInput } from '@cotidia/react-ui'
 
 import { Icon } from './elements/global'
@@ -17,6 +19,8 @@ export default class SearchBar extends Component {
     })),
     clearFilters: PropTypes.func.isRequired,
     columnsConfigurable: PropTypes.bool.isRequired,
+    extraFilters: PropTypes.array,
+    filters: PropTypes.object,
     globalActions: PropTypes.array,
     hasListConfig: PropTypes.bool.isRequired,
     manageColumns: PropTypes.func.isRequired,
@@ -24,12 +28,15 @@ export default class SearchBar extends Component {
     performBatchAction: PropTypes.func.isRequired,
     performGlobalAction: PropTypes.func.isRequired,
     searchTerm: PropTypes.string,
+    setFilterValue: PropTypes.func.isRequired,
     setSearchTerm: PropTypes.func.isRequired,
     switchMode: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
     batchActions: [],
+    extraFilters: [],
+    filters: {},
     globalActions: [],
     mode: 'table',
     searchTerm: '',
@@ -48,6 +55,8 @@ export default class SearchBar extends Component {
   }
 
   updateSearchTerm = debounce(250, ({ searchTerm }) => this.props.setSearchTerm(searchTerm))
+
+  updateFilterValueFactory = (filter) => (value) => this.props.setFilterValue(filter, value)
 
   clearSearchTerm = (e) => {
     this.props.clearFilters()
@@ -108,6 +117,8 @@ export default class SearchBar extends Component {
   render () {
     const {
       columnsConfigurable,
+      extraFilters,
+      filters,
       globalActions,
       hasListConfig,
       mode,
@@ -138,6 +149,16 @@ export default class SearchBar extends Component {
             updateValueOnBlur={false}
             value={searchTerm}
           />
+
+          {extraFilters && extraFilters.map((filter) => {
+            const { type, ...filterProps } = filter
+
+            if (type === 'boolean') {
+              return (
+                <Boolean key={filter.field} {...filterProps} updateValue={this.updateFilterValueFactory(filter.field)} value={filters[filter.field]} />
+              )
+            }
+          })}
 
           <button className='btn btn--outline' onClick={this.clearSearchTerm} title='Reset filters' type='button'>
             <Icon fixed icon='sync-alt' />
