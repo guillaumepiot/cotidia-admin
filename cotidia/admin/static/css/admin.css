@@ -1225,11 +1225,16 @@ hr {
         background-color: rgba(0, 0, 0, 0.35);
         z-index: -1;
         pointer-events: none; }
-    @media screen and (max-width: 767px) {
-      .dialog--modal .dialog__content {
-        display: flex;
-        flex-direction: column;
-        max-height: calc(100% - 1.33rem); } }
+    .dialog--modal .dialog__content {
+      border-radius: 2px;
+      position: relative;
+      border: 1px solid #D0D5D7;
+      background-color: #fff; }
+      @media screen and (max-width: 767px) {
+        .dialog--modal .dialog__content {
+          display: flex;
+          flex-direction: column;
+          max-height: calc(100% - 1.33rem); } }
     @media screen and (max-width: 767px) {
       .dialog--modal .dialog__body {
         overflow-y: auto; } }
@@ -1249,8 +1254,7 @@ hr {
     border: 1px solid #D0D5D7;
     border-radius: 2px;
     width: calc(100% - 1rem);
-    max-width: 540px;
-    position: relative; }
+    max-width: 540px; }
     .dialog__content:first-child {
       margin-top: 0.67rem; }
     .dialog__content:last-child {
@@ -3334,14 +3338,13 @@ fieldset {
     .head-bar--actions .form__group .form__help {
       display: none; }
 @media screen and (min-width: 768px) {
-  .head-bar .form__group {
-    margin-right: 1rem; } }
+  .head-bar > * {
+    margin-right: 1rem; }
+    .head-bar > *:last-child {
+      margin-right: 0; } }
 @media screen and (min-width: 768px) {
   .head-bar .btn, .head-bar .form__control input[type="file"], .form__control .head-bar input[type="file"] {
-    align-self: center;
     margin-right: 1rem; } }
-.head-bar .btn:last-child, .head-bar .form__control input[type="file"]:last-child, .form__control .head-bar input[type="file"]:last-child {
-  margin-right: 0; }
 .head-bar__item {
   display: flex;
   margin-right: 1rem; }
@@ -3394,9 +3397,10 @@ fieldset {
       opacity: 0.5;
       z-index: 1; }
   .table-header {
-    cursor: pointer;
     padding-right: 3rem !important;
     position: relative; }
+    .table-header--clickable {
+      cursor: pointer; }
     .table-header__sort {
       visibility: hidden; }
       .table-header__sort--active {
@@ -3412,8 +3416,14 @@ fieldset {
       visibility: visible; }
   .table .table__row--active {
     background-color: whitesmoke; }
+  .table__category-header {
+    background-color: #c2c2c2 !important;
+    cursor: auto; }
   .table .action-column {
     width: 1px; }
+  .table-header--separator, .table-column--separator {
+    background-color: #adadad;
+    width: 20px; }
 
 .search-result-list {
   border: 1px solid #D0D5D7; }
