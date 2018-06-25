@@ -31,6 +31,8 @@ export default class SearchBar extends Component {
   static defaultProps = {
     batchActions: [],
     globalActions: [],
+    mode: 'table',
+    searchTerm: '',
   }
 
   state = {
