@@ -55,7 +55,7 @@ function getSearchQueryString (data) {
   const queryString = {}
 
   for (const [key, value] of Object.entries(data.filters)) {
-    // If the value is an object, trest it specially.
+    // If the value is an object, treat it specially.
     if ((Object(value) === value) && (! Array.isArray(value))) {
       let val = ''
 
