@@ -1,27 +1,29 @@
 {% load admin_search_dashboard_tags %}
 {
     endpoint: '{{endpoint}}',
-    columns: {{% for field_name, field_data in columns.items %}
-        {{field_name}}: {
-            {% for key, value in field_data.items %}
-                {% if key == "display" and value == "function" %}
-                    display: {% include field_data.function_template %},
-                {% elif key == "options" %}
-                    options: [
-                        {% for option in value %}
-                            {
-                                value: '{{option.value}}',
-                                label: '{{option.label}}',
-                            },
-                        {% endfor %}
-                    ],
-                {% elif key == "function_template" or key == "foreign_key" %}
-                {% else %}
-                    {{key}}: {{value|json|safe}},
-                {% endif %}
-            {% endfor %}
-        },
-    {% endfor %}},
+    columns: {
+        {% for field_name, field_data in columns.items %}
+            {{field_name}}: {
+                {% for key, value in field_data.items %}
+                    {% if key == "display" and value == "function" %}
+                        display: {% include field_data.function_template %},
+                    {% elif key == "options" %}
+                        options: [
+                            {% for option in value %}
+                                {
+                                    value: '{{option.value}}',
+                                    label: '{{option.label}}',
+                                },
+                            {% endfor %}
+                        ],
+                    {% elif key == "function_template" or key == "foreign_key" %}
+                    {% else %}
+                        {{key}}: {{value|json|safe}},
+                    {% endif %}
+                {% endfor %}
+            },
+        {% endfor %}
+    },
     {% if field_data.list_handling %}
         listHandling: {
             style: '{{ field_data.list_handling.style}}',
