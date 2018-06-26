@@ -67,8 +67,11 @@
         {% if list_handling %}
             listHandling: {{list_handling|json|safe}},
         {% endif %}
-        {% if columns_configurable %}
-            columnsConfigurable: true,
+        {% if date_format %}
+            dateFormat: '{{date_format}}',
+        {% endif %}
+        {% if datetime_format %}
+            datetimeFormat: '{{datetime_format}}',
         {% endif %}
     },
     {% if batch_actions %}

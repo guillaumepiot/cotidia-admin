@@ -21,14 +21,14 @@ class AdminModelSerializer(serializers.ModelSerializer):
                     "%s does not have the display_field defined in the SearchProvider sub class" % str(self.__class__.__name__)
                 )
         else:
-            # This copies the list of keys so we don't have any iteration 
+            # This copies the list of keys so we don't have any iteration
             # mutation issues
             keys = list(repr.keys())
             for key in keys:
                 # Flattens dicts
                 if isinstance(repr[key], dict):
                     for subkey, subvalue in repr[key].items():
-                        key_name ="{}__{}".format(key, subkey) 
+                        key_name ="{}__{}".format(key, subkey)
                         if key_name not in repr.keys():
                             repr.update({key_name: subvalue})
         return repr
@@ -42,7 +42,7 @@ class AdminModelSerializer(serializers.ModelSerializer):
             raise AttributeError(
                 "%s does not have the display_field defined in the SearchProvider sub class" % str(self.__class__.__name__)
             )
-    
+
     def get_related_fields(self):
         if not hasattr(self, "_related_fields"):
             field_representation = self.get_field_representation()
@@ -53,18 +53,18 @@ class AdminModelSerializer(serializers.ModelSerializer):
                 )
             )
         return self._related_fields
-    
+
     def get_choice_queryset(self):
         return self.Meta.model.objects.all()
-        
-    
+
+
     def get_field_representation(self):
         if not hasattr(self, "_field_representation"):
             repr = {}
 
             for field_name, field in self.fields.items():
                 # Gets the most specific class of we support for the given field type if not it return None
-                field_type = next(  
+                field_type = next(
                     iter(
                         [t for t in SUPPORTED_FIELDS_TYPES if isinstance(field, t)]
                     ),
@@ -83,7 +83,7 @@ class AdminModelSerializer(serializers.ModelSerializer):
                     default_field_ref = FIELD_MAPPING[field.__class__.__name__]()
                     default_field_ref["options"] = field.child.get_choices()
                     default_field_ref["label"] = label
-                    repr[field_name] = default_field_ref 
+                    repr[field_name] = default_field_ref
                 else:
                     if field_type is None:
                         print("Unsupported field {} of type {}".format(field_name,field))
@@ -113,33 +113,45 @@ class AdminModelSerializer(serializers.ModelSerializer):
             except AttributeError:
                 pass
             self._field_representation = repr
-            
+
         return self._field_representation
-    
+
     def get_primary_color(self):
         try:
             return self.SearchProvider.primary_color
         except AttributeError:
             return '#00abd3'
-    
+
     def get_global_list_handling(self):
         try:
             return self.SearchProvider.list_handling
         except AttributeError:
             return None
-    
+
+    def get_date_format(self):
+        try:
+            return self.SearchProvider.date_format
+        except AttributeError:
+            return None
+
+    def get_datetime_format(self):
+        try:
+            return self.SearchProvider.datetime_format
+        except AttributeError:
+            return None
+
     def get_categorise_by(self):
         try:
             return self.SearchProvider.categorise_by
         except AttributeError:
             return None
-        
+
     def get_columns_configurable(self):
         try:
             return self.SearchProvider.columns_configurable
         except AttributeError:
             return True
-    
+
     def get_batch_actions(self):
         try:
             return self.SearchProvider.batch_actions
@@ -165,7 +177,7 @@ class AdminModelSerializer(serializers.ModelSerializer):
                     return ['id']
             except:
                 return ['id']
-    
+
     def get_list_fields(self):
         try:
             return self.SearchProvider.get_list_fields

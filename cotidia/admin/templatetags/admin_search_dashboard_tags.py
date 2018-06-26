@@ -44,7 +44,7 @@ def render_search_dashboard_config(
                 "model": model_name
             }
         )
-    
+
     columns = serializer.get_field_representation()
     default_columns = serializer.get_default_columns()
 
@@ -91,6 +91,8 @@ def render_search_dashboard_config(
         context['default_order_by'] = default_order[0]
     context['list_handling'] = serializer.get_global_list_handling()
     context['categorise_by'] = serializer.get_categorise_by()
+    context['date_format'] = serializer.get_date_format()
+    context['datetime_format'] = serializer.get_datetime_format()
 
     return context
 
