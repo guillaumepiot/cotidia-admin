@@ -18,7 +18,8 @@ SUPPORTED_FIELDS_TYPES = sorted(
         fields.ChoiceField,
         fields.BooleanField,
         fields.NullBooleanField,
-        serializers.ListSerializer
+        serializers.ListSerializer,
+        serializers.StringRelatedField,
         # serializers.ManyRelatedField,
     ],
     key=lambda x: len(x.mro()),
@@ -95,6 +96,11 @@ FIELD_MAPPING = {
     "ListSerializer": (lambda: {
         "display": "verbatim",
         "filter": "choice",
+        "foreign_key": True
+    }),
+    "StringRelatedField": (lambda: {
+        "display": "verbatim",
+        "filter": "text",
         "foreign_key": True
     }),
 }
