@@ -190,8 +190,7 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
                 filters[key] = self.request.GET.getlist(key)
 
         url_type = "detail"
-        print(self.kwargs["serializer_class"])
-        print(type(self.kwargs["serializer_class"]))
+
         if self.kwargs.get("serializer_class", False):
             context["serializer_class"] = self.kwargs["serializer_class"]
         else:
