@@ -43,6 +43,15 @@ export const getValueFormatter = (config) => {
     ),
   }
 
+  /**
+   * Yikes this code could really do with a huge refactor to make it less disgusting. The main issue
+   * is that it is made to make the implementing devloper's job as easy as possible, so should
+   * handle arrays of things like strings, objects with a __html for raw HTML and even React
+   * elements (e.g. file uploader widgets). And of course, strings and the other two are treated
+   * quite diffrerently.
+   * Anyway, it's all quite disgusting, and I hate the multiple-array-iteration, along with cloning
+   * React elements, etc., but it's the best I can come up with at the moment.
+   */
   return (item, accessor, format, listHandling = globalListHandling) => {
     // Get initial raw value from item.
     let value = item[accessor]
@@ -70,26 +79,41 @@ export const getValueFormatter = (config) => {
       format = formatters[actualFormat] || formatters.verbatim
     }
 
+    const getFinalValue = (value) => {
+      value = format(value, item, accessor, ...extraArgs)
+
+      // If value signals that its raw HTML, just wrap it in a React span and dangerouslySetInnerHTML.
+      if (value?.__html) {
+        return <span dangerouslySetInnerHTML={value} />
+      }
+
+      // Otherwise just return it as-is.
+      return value
+    }
+
     // Use formatter to get actual value(s) from data.
     if (Array.isArray(value)) {
-      const values = value.map((value) => format(value, item, accessor, ...extraArgs))
+      const values = value.map(getFinalValue)
 
       if (listHandling.style === 'string') {
-        value = values.join(listHandling.value)
+        return values.reduce((acc, value, index) => {
+          if (React.isValidElement(value)) {
+            acc.push(React.cloneElement(value, { key: index }))
+          } else {
+            acc.push(value)
+          }
+
+          acc.push(listHandling.value)
+
+          return acc
+        }, []).slice(0, -1)
       } else if (listHandling.style === 'element') {
-        value = values.map((value) => (
-          <listHandling.value key={value} {...listHandling.props}>{value}</listHandling.value>
+        return values.map((value, index) => (
+          <listHandling.value key={index} {...listHandling.props}>{value}</listHandling.value>
         ))
       }
     } else {
-      value = format(value, item, accessor, ...extraArgs)
-    }
-
-    // If value signals that its raw HTML, just wrap it in a React span and dangerouslySetInnerHTML.
-    if (value?.__html) {
-      return <span dangerouslySetInnerHTML={value} />
-    } else {
-      return value
+      return getFinalValue(value)
     }
   }
 }
