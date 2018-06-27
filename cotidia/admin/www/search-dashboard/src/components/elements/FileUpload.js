@@ -1,11 +1,12 @@
 import React, { Component} from 'react'
 import PropTypes from 'prop-types'
 
-export default class FileUpload extends Component {
+class FileUpload extends Component {
   static propTypes = {
     endpoint: PropTypes.string.isRequired,
     extraData: PropTypes.object,
     id: PropTypes.string.isRequired,
+    performSearch: PropTypes.func.isRequired,
     value: PropTypes.string.isRequired,
   }
 
@@ -47,6 +48,8 @@ export default class FileUpload extends Component {
             uploading: false,
             percent: 100,
           })
+
+          this.props.performSearch()
         } catch (e) {
           this.setState({
             uploading: false,
@@ -158,3 +161,10 @@ export default class FileUpload extends Component {
     )
   }
 }
+
+import { connect } from 'react-redux'
+import { performSearch } from '../../redux/modules/search/actions'
+
+const actionCreators = { performSearch }
+
+export default connect(null, actionCreators)(FileUpload)
