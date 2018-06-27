@@ -143,7 +143,7 @@ export default class FileUpload extends Component {
         {value && (
           <>
            {' '}
-            <a href={value} target='_blank' className={`btn btn--primary ${buttonClasses}`}>
+            <a href={value} target='_blank' className={`btn btn--primary`}>
               View
             </a>
           </>
