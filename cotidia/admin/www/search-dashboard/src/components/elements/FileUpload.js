@@ -119,7 +119,7 @@ export default class FileUpload extends Component {
     const { value } = this.props
     const { error, percent, uploading } = this.state
 
-    const id = `file-${id}`
+    const id = `file-${this.props.id}`
 
     return (
       <div>
