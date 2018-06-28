@@ -1,11 +1,11 @@
 {
-  "name": "admin-search-dashboard",
+  "name": "cotidia-admin-frontend",
   "version": "0.1.0",
-  "description": "Cotidia Admin Search Dashboard",
+  "description": "Cotidia Admin Frontend",
   "main": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server --env=development",
-    "clean": "rm -f ../../static/js/search-dashboard.js ../../static/js/search-dashboard.js.map",
+    "clean": "rm -f ../../static/js/admin.js ../../static/js/admin.js.map",
     "build:actual": "webpack -p --env=production",
     "build": "run-s clean build:actual",
     "test": "ava",

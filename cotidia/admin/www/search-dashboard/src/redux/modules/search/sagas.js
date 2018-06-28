@@ -217,7 +217,7 @@ function * performGlobalAction ({ payload: { action } }) {
   action.func(queryStringData, queryString)
 }
 
-function * handleSearchDashboardMessage ({ payload: { message } }) {
+function * handleDynamicListMessage ({ payload: { message } }) {
   const { search: { endpoint } } = yield select()
 
   if (message.endpoint === endpoint) {
@@ -254,5 +254,5 @@ export default function * watcher () {
   yield takeEvery(types.PERFORM_BATCH_ACTION, performBatchAction)
   yield takeEvery(types.PERFORM_GLOBAL_ACTION, performGlobalAction)
 
-  yield takeEvery(types.HANDLE_SEARCH_DASHBOARD_MESSAGE, handleSearchDashboardMessage)
+  yield takeEvery(types.HANDLE_DYNAMIC_LIST_MESSAGE, handleDynamicListMessage)
 }

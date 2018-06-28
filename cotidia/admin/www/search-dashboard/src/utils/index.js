@@ -1,10 +1,10 @@
-import { handleSearchDashboardMessage } from '../redux/modules/search/actions'
+import { handleDynamicListMessage } from '../redux/modules/search/actions'
 
 export const curry = (func, ...outerArgs) => (...innerArgs) => func(...outerArgs, ...innerArgs)
 
 export const messageHandlerFactory = (store) => (event) => {
-  if (event.data && (event.data.target === 'SearchDashboard')) {
-    store.dispatch(handleSearchDashboardMessage(event.data))
+  if (event.data && (event.data.target === 'DynamicList')) {
+    store.dispatch(handleDynamicListMessage(event.data))
   }
 }
 

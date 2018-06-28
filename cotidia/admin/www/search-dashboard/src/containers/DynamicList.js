@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import { setSearchTerm } from '../redux/modules/search/actions'
 
-import SearchDashboard from '../components/SearchDashboard'
+import DynamicList from '../components/DynamicList'
 
 const mapStateToProps = (state) => ({
   bootstrapped: state.bootstrap.bootstrapped,
@@ -14,4 +14,4 @@ const mapStateToProps = (state) => ({
 
 const actionCreators = { setSearchTerm }
 
-export default connect(mapStateToProps, actionCreators)(SearchDashboard)
+export default connect(mapStateToProps, actionCreators)(DynamicList)

@@ -8,7 +8,7 @@ import { bootstrap } from './redux/modules/bootstrap/actions'
 import { messageHandlerFactory } from './utils'
 import { appPropTypes } from './utils/propTypes'
 
-import SearchDashboard from './containers/SearchDashboard'
+import DynamicList from './containers/DynamicList'
 
 import { FullScreen } from './components/elements/global'
 
@@ -20,7 +20,7 @@ export default function App (props) {
   if (! authToken) {
     return (
       <FullScreen>
-        Dashboard configuration not provided.
+        Dynamic list configuration not provided.
       </FullScreen>
     )
   }
@@ -35,7 +35,7 @@ export default function App (props) {
 
   return (
     <Provider store={store}>
-      <SearchDashboard />
+      <DynamicList />
     </Provider>
   )
 }
@@ -53,6 +53,6 @@ App.defaultProps = {
 
 window.React = React
 window.ReactDOM = ReactDOM
-window.SearchDashboard = App
+window.DynamicList = App
 
 window.TypeaheadSwitcher = TypeaheadSwitcher

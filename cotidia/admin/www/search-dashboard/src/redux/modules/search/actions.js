@@ -86,7 +86,7 @@ export const performGlobalAction = (action) => ({
   payload: { action },
 })
 
-export const handleSearchDashboardMessage = (message) => ({
-  type: types.HANDLE_SEARCH_DASHBOARD_MESSAGE,
+export const handleDynamicListMessage = (message) => ({
+  type: types.HANDLE_DYNAMIC_LIST_MESSAGE,
   payload: { message },
 })

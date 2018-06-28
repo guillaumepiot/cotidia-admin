@@ -8,7 +8,7 @@ import SearchBar from '../containers/SearchBar'
 import SearchResultsList from '../containers/SearchResultsList'
 import SearchResultsTable from '../containers/SearchResultsTable'
 
-export default class SearchDashboard extends Component {
+export default class DynamicList extends Component {
   static propTypes = {
     bootstrapped: PropTypes.bool.isRequired,
     networkError: PropTypes.bool.isRequired,
