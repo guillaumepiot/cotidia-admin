@@ -1,32 +1,21 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { generateURL } from '../utils/api'
 import { getValueFormatter } from '../utils/resultItems'
 
-import ResultsTableHeader from './ResultsTableHeader'
-import ResultsTableItem from './ResultsTableItem'
+import ResultsTableHeader from '../containers/ResultsTableHeader'
+import ResultsTableItem from '../containers/ResultsTableItem'
 import Pagination from '../containers/Pagination'
 
 export default class SearchResultsTable extends Component {
   static propTypes = {
     batchActions: PropTypes.arrayOf(PropTypes.object),
-    clearFilter: PropTypes.func.isRequired,
     categoriseBy: PropTypes.object,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
     config: PropTypes.object,
     detailURL: PropTypes.string,
-    filterColumn: PropTypes.func.isRequired,
-    filters: PropTypes.arrayOf(PropTypes.string).isRequired,
     loading: PropTypes.bool,
-    orderAscending: PropTypes.bool.isRequired,
-    orderColumn: PropTypes.string,
     results: PropTypes.arrayOf(PropTypes.object),
-    selected: PropTypes.arrayOf(PropTypes.string),
-    setOrderColumn: PropTypes.func.isRequired,
-    toggleOrderDirection: PropTypes.func.isRequired,
-    toggleResultSelected: PropTypes.func.isRequired,
-    toggleSelectAllResults: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -35,42 +24,15 @@ export default class SearchResultsTable extends Component {
     selected: [],
   }
 
-  viewItem = (item, newWindow) => {
-    if (this.props.detailURL) {
-      const url = generateURL(this.props.detailURL, item)
-
-      if (newWindow) {
-        window.open(url)
-      } else {
-        window.location = url
-      }
-    }
-  }
-
-  checkItem = (item) => this.props.toggleResultSelected(item.uuid)
-
-  allSelected () {
-    return (this.props.results.length && (this.props.selected.length === this.props.results.length)) || false
-  }
-
   render () {
     const {
       batchActions,
       categoriseBy,
-      clearFilter,
       columns,
       config,
       detailURL,
-      filterColumn,
-      filters,
       loading,
-      orderColumn,
-      orderAscending,
       results,
-      selected,
-      setOrderColumn,
-      toggleOrderDirection,
-      toggleSelectAllResults,
     } = this.props
 
     let currentCategoryValue = null
@@ -83,20 +45,7 @@ export default class SearchResultsTable extends Component {
     return (
       <>
         <table className={`table ${detailURL ? 'table--clickable' : ''} table--admin-mobile-view ${loading ? 'table--loading' : ''}`}>
-          <ResultsTableHeader
-            allSelected={this.allSelected()}
-            batchActions={batchActions}
-            categoriseBy={categoriseBy}
-            columns={columns}
-            filters={filters}
-            orderAscending={orderAscending}
-            orderColumn={orderColumn}
-            clearFilter={clearFilter}
-            filterColumn={filterColumn}
-            setOrderColumn={setOrderColumn}
-            toggleSelectAllResults={toggleSelectAllResults}
-            toggleOrderDirection={toggleOrderDirection}
-          />
+          <ResultsTableHeader />
           <tbody>
             {results.map((item) => {
               if (categoriseBy) {
@@ -124,32 +73,14 @@ export default class SearchResultsTable extends Component {
                       </tr>
                     ),
                     (
-                      <ResultsTableItem
-                        checked={selected.includes(item.uuid)}
-                        checkItem={this.checkItem}
-                        columns={columns}
-                        config={config}
-                        key={item.uuid}
-                        item={item}
-                        showCheck={batchActions.length > 0}
-                        viewItem={detailURL ? this.viewItem : null}
-                      />
+                      <ResultsTableItem key={item.uuid} item={item} />
                     ),
                   ]
                 }
               }
 
               return (
-                <ResultsTableItem
-                  checked={selected.includes(item.uuid)}
-                  checkItem={this.checkItem}
-                  columns={columns}
-                  config={config}
-                  key={item.uuid}
-                  item={item}
-                  showCheck={batchActions.length > 0}
-                  viewItem={detailURL ? this.viewItem : null}
-                />
+                <ResultsTableItem key={item.uuid} item={item} />
               )
             })}
           </tbody>

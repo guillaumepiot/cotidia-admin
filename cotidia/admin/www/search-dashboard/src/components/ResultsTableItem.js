@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
+import { generateURL } from '../utils/api'
 import { getValueFormatter } from '../utils/resultItems'
 
 // Normally we wouldn't bother with perf optimisation, but this takes a render of 250 items down
@@ -8,25 +9,38 @@ import { getValueFormatter } from '../utils/resultItems'
 export default class ResultsTableItem extends PureComponent {
   static propTypes = {
     checked: PropTypes.bool.isRequired,
-    checkItem: PropTypes.func.isRequired,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
     config: PropTypes.object,
-    item: PropTypes.object.isRequired,
+    detailURL: PropTypes.string,
+    item: PropTypes.shape({
+      uuid: PropTypes.string.isRequired,
+    }).isRequired,
     showCheck: PropTypes.bool.isRequired,
-    viewItem: PropTypes.func,
+    toggleResultSelected: PropTypes.func.isRequired,
   }
 
   handleClickRow = (e) => {
-    if (this.props.viewItem) {
-      this.props.viewItem(this.props.item, e.metaKey || e.ctrlKey || e.shiftKey)
+    if (this.props.detailURL) {
+      this.viewItem(e.metaKey || e.ctrlKey || e.shiftKey)
     } else if (this.props.showCheck) {
-      this.props.checkItem(this.props.item)
+      this.checkItem()
+    }
+  }
+
+  viewItem = (newWindow = false) => {
+    const url = generateURL(this.props.detailURL, this.props.item)
+
+    if (newWindow) {
+      window.open(url)
+    } else {
+      window.location = url
     }
   }
 
   checkItem = (e) => {
-    e.stopPropagation()
-    this.props.checkItem(this.props.item)
+    e && e.stopPropagation()
+
+    this.props.toggleResultSelected(this.props.item.uuid)
   }
 
   render () {

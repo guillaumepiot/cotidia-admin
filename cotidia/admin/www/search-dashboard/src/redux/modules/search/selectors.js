@@ -33,3 +33,5 @@ export const getActiveFilters = createSelector(
   (state) => state.search.filters,
   (filters) => Object.entries(filters).filter(([key, value]) => value != null).map(([key, value]) => key)
 )
+
+export const allResultsSelected = (state) => (state.search.selected.length === state.search.results.length)

@@ -16,7 +16,7 @@ export default class ResultsTableHeader extends PureComponent {
     orderAscending: PropTypes.bool.isRequired,
     orderColumn: PropTypes.string,
     setOrderColumn: PropTypes.func.isRequired,
-    toggleSelectAllResults: PropTypes.func,
+    toggleSelectAllResults: PropTypes.func.isRequired,
     toggleOrderDirection: PropTypes.func.isRequired,
   }
 
