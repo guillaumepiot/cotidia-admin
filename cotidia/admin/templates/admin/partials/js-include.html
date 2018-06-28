@@ -1,8 +1,8 @@
 {% load static %}
 {% if ADMIN_DEBUG %}
-    <script src="http://localhost:3000/search-dashboard.js"></script>
+    <script src="http://localhost:3000/admin.js"></script>
 {% else %}
-    <script src="{% static "js/search-dashboard.js" %}"></script>
+    <script src="{% static "js/admin.js" %}"></script>
 {% endif %}
 <script>
     // <![CDATA[
@@ -31,4 +31,3 @@
         }
     // ]]>
 </script>
-

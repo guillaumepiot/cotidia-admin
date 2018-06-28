@@ -21,7 +21,7 @@
 
 {% block page_content %}
 {% include 'admin/generic/utils/head-filter.html' %}
-<div id="search-dashboard"></div>
+<div id="dynamic-list"></div>
 {% endblock page_content %}
 
 {% block footer_scripts %}
@@ -30,8 +30,8 @@
     // <![CDATA[
         data = {% render_search_dashboard_config app_label model_name url_type request.user.token.key default_columns default_filters default_order endpoint=endpoint serializer_class=serializer_class %};
 
-        if (window.ReactDOM && window.React && window.SearchDashboard) {
-            ReactDOM.render(React.createElement(SearchDashboard, data), document.getElementById('search-dashboard'))
+        if (window.ReactDOM && window.React && window.DynamicList) {
+            ReactDOM.render(React.createElement(DynamicList, data), document.getElementById('dynamic-list'))
         }
     // ]]>
 </script>

@@ -1,6 +1,7 @@
 import json
 
 from django import template
+from django.core.serializers.json import DjangoJSONEncoder
 from django.urls import NoReverseMatch
 from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
@@ -98,4 +99,4 @@ def render_search_dashboard_config(
 
 @register.filter(name='json')
 def json_dumps(data):
-    return json.dumps(data)
+    return json.dumps(data, cls=DjangoJSONEncoder)
