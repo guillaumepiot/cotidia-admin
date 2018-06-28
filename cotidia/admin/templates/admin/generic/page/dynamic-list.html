@@ -28,7 +28,7 @@
 {{block.super}}
 <script>
     // <![CDATA[
-        data = {% render_search_dashboard_config app_label model_name url_type request.user.token.key default_columns default_filters default_order endpoint=endpoint serializer_class=serializer_class %};
+        data = {% render_search_dashboard_config app_label model_name url_type request.user.token.key default_columns default_filters default_order_by endpoint=endpoint serializer_class=serializer_class %};
 
         if (window.ReactDOM && window.React && window.DynamicList) {
             ReactDOM.render(React.createElement(DynamicList, data), document.getElementById('dynamic-list'))

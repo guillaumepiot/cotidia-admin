@@ -181,11 +181,12 @@ class AdminOrderableAPIView(APIView):
 class GenericAdminPaginationStyle(LimitOffsetPagination):
     default_limit = PAGE_SIZE
 
+
 class AdminSearchDashboardAPIView(ListAPIView):
     permission_classes = (permissions.IsAdminUser,)
     pagination_class = GenericAdminPaginationStyle
-    _model_class=None
-    _serializer_class=None
+    _model_class = None
+    _serializer_class = None
 
     def get_model_class(self):
         if not self._model_class:
@@ -194,7 +195,7 @@ class AdminSearchDashboardAPIView(ListAPIView):
                 model=self.kwargs['model']
             ).model_class()
         return self._model_class
-    
+
     def get_serializer_class(self):
         if self.kwargs.get("serializer_class", False):
             return self.kwargs.get("serializer_class")
@@ -202,7 +203,6 @@ class AdminSearchDashboardAPIView(ListAPIView):
             model_class = self.get_model_class()
             self._serializer_class = model_class.SearchProvider.serializer()
         return self._serializer_class
-
 
     def get_queryset(self):
         model_class = self.get_model_class()
@@ -227,27 +227,37 @@ class AdminSearchDashboardAPIView(ListAPIView):
                     for x in serializer.get_general_query_fields()
                 ],
             )
-        
-        qs.filter(q_object)
 
+        if q_object:
+            qs = qs.filter(q_object)
+
+        # Field filtering
         for field in field_repr.keys():
             filter_params = self.request.GET.getlist(field)
             if filter_params:
-                suffix=""
+                suffix = ""
                 if field_repr[field].get('prep_function', False):
                     filter_params = [
                         field_repr[field]["prep_function"](param)
                         for param in filter_params
                     ]
                 if field_repr[field].get('foreign_key', False):
-                    suffix="__uuid"
+                    suffix = "__uuid"
                 filter_type = field_repr[field]['filter']
                 qs = FILTERS[filter_type](
                     qs,
                     field + suffix,
                     filter_params
                 )
-        
+
+        # Extra filter
+        extra_filters = serializer.get_extra_filters()
+        if extra_filters:
+            for f in extra_filters:
+                if self.request.GET.get(f['field']):
+                    func = getattr(serializer, 'filter_' + f['field'])
+                    qs = func(qs, self.request.GET.get(f['field']))
+
         ordering_params = self.request.GET.getlist('_order')
         if ordering_params:
             # Here we add an annotation to make sure when we order, the value is
@@ -268,9 +278,10 @@ class AdminSearchDashboardAPIView(ListAPIView):
             parsed_ordering_params = [
                 parse_ordering(x) for x in ordering_params
             ]
-            qs.order_by(*parsed_ordering_params)
+            qs = qs.order_by(*parsed_ordering_params)
 
         return qs
+
 
 class SortAPIView(APIView):
     permission_classes = (permissions.IsAdminUser,)

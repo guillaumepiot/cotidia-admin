@@ -57,7 +57,6 @@ class AdminModelSerializer(serializers.ModelSerializer):
     def get_choice_queryset(self):
         return self.Meta.model.objects.all()
 
-
     def get_field_representation(self):
         if not hasattr(self, "_field_representation"):
             repr = {}
@@ -178,9 +177,21 @@ class AdminModelSerializer(serializers.ModelSerializer):
             except:
                 return ['id']
 
+    def get_default_order_by(self):
+        try:
+            return self.SearchProvider.default_order_by
+        except AttributeError:
+            return None
+
     def get_list_fields(self):
         try:
             return self.SearchProvider.get_list_fields
+        except AttributeError:
+            return None
+
+    def get_extra_filters(self):
+        try:
+            return self.SearchProvider.extra_filters
         except AttributeError:
             return None
 

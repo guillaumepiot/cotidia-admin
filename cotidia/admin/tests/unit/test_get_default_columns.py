@@ -1,9 +1,6 @@
-from rest_framework.test import APITestCase
+from django.test import TestCase
 
 from cotidia.admin.serializers import AdminModelSerializer
-
-from cotidia.admin.tests.serializers import ExampleModelOneSerializer
-from cotidia.admin.tests.factory import ExampleModelTwoFactory
 from cotidia.admin.tests.models import ExampleModelOne
 
 
@@ -28,7 +25,7 @@ class TestSerializer2(AdminModelSerializer):
 class TestSerializer3(AdminModelSerializer):
     class Meta:
         model = ExampleModelOne
-    
+
     class SearchProvider:
         display_field = "name"
 
@@ -36,12 +33,12 @@ class TestSerializer3(AdminModelSerializer):
 class TestSerializer4(AdminModelSerializer):
     class Meta:
         model = ExampleModelOne
-    
+
     class SearchProvider:
         display_field = None
 
 
-class FieldRepresentation(APITestCase):
+class DefaultColumnsTests(TestCase):
 
     def test_custom_default_fields(self):
         serializer = TestSerializer1()

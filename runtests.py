@@ -9,6 +9,7 @@ from django.conf import settings
 PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 DEFAULT_SETTINGS = dict(
+    SITE_NAME="Admin test",
     INSTALLED_APPS=[
         "django.contrib.auth",
         "django.contrib.contenttypes",

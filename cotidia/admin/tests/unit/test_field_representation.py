@@ -1,9 +1,9 @@
-from rest_framework.test import APITestCase
+from django.test import TestCase
 from cotidia.admin.tests.serializers import ExampleModelOneSerializer
 from cotidia.admin.tests.factory import ExampleModelTwoFactory
 
 
-class FieldRepresentation(APITestCase):
+class FieldRepresentationTests(TestCase):
 
     def test_integer_generation(self):
         serializer = ExampleModelOneSerializer()
@@ -39,7 +39,7 @@ class FieldRepresentation(APITestCase):
         field_repr = serializer.get_field_representation()
         self.assertEqual(field_repr["decimal_field"]["display"], "verbatim")
         self.assertEqual(field_repr["decimal_field"]["filter"], "number")
-    
+
     def test_char_field(self):
         serializer = ExampleModelOneSerializer()
         field_repr = serializer.get_field_representation()
@@ -54,8 +54,8 @@ class FieldRepresentation(APITestCase):
         self.assertEqual(
             field_repr["choice_field"]["options"],
             [
-                {"label":"Foo", "value":"foo"},
-                {"label":"Bar", "value":"bar"},
+                {"label": "Foo", "value": "foo"},
+                {"label": "Bar", "value": "bar"},
             ]
         )
 
@@ -76,7 +76,7 @@ class FieldRepresentation(APITestCase):
         field_repr = serializer.get_field_representation()
         self.assertEqual(field_repr["email_field"]["display"], "link:mailto")
         self.assertEqual(field_repr["email_field"]["filter"], "text")
-    
+
     def test_boolean_field(self):
         serializer = ExampleModelOneSerializer()
         field_repr = serializer.get_field_representation()
@@ -113,7 +113,7 @@ class FieldRepresentation(APITestCase):
         self.assertIn("other_model__id", field_repr.keys())
         self.assertIn("other_model__name", field_repr.keys())
         self.assertIn("other_model__number", field_repr.keys())
-    
+
     def test_overriding_field_representation_display(self):
         class TmpSerializer(ExampleModelOneSerializer):
             class SearchProvider:
@@ -185,7 +185,7 @@ class FieldRepresentation(APITestCase):
         self.assertEqual(field_repr["datetime_field"]["display"], "datetime_field")
         self.assertEqual(field_repr["time_field"]["display"], "time_field")
 
-    def test_overriding_field_representation_display(self):
+    def test_overriding_field_representation_filter(self):
         class TmpSerializer(ExampleModelOneSerializer):
             class SearchProvider:
                 field_representation = {
@@ -265,7 +265,7 @@ class FieldRepresentation(APITestCase):
         self.assertEqual(field_repr["datetime_field"]
                          ["filter"], "datetime_field")
         self.assertEqual(field_repr["time_field"]["filter"], "time_field")
-    
+
     def test_many_to_many_field(self):
         model1 = ExampleModelTwoFactory.create(name="Foo")
         model2 = ExampleModelTwoFactory.create(name="Bar")
@@ -282,4 +282,12 @@ class FieldRepresentation(APITestCase):
         self.assertIn(
             {"label": model2.name, "value": str(model2.uuid)},
             field_repr["many_to_many_field"]["options"],
+        )
+
+    def test_get_related_fields_fields(self):
+        serializer = ExampleModelOneSerializer()
+        related_fields = serializer.get_related_fields()
+        self.assertEqual(
+            related_fields,
+            ['other_model']
         )

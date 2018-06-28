@@ -23,7 +23,7 @@ def render_search_dashboard_config(
     api_token,
     default_columns=[],
     default_filters=[],
-    default_order=[],
+    default_order_by=None,
     batch_actions=[],
     serializer_class=None,
     endpoint=None
@@ -73,7 +73,7 @@ def render_search_dashboard_config(
             }
         )
 
-    context =  {
+    context = {
         "columns": columns,
         "default_columns": default_columns,
         "endpoint": endpoint,
@@ -88,14 +88,22 @@ def render_search_dashboard_config(
         context['default_columns'] = default_columns
     if default_filters:
         context['default_filters'] = default_filters
-    if default_order:
-        context['default_order_by'] = default_order[0]
+
+    # Default ordering
+    context['default_order_by'] = default_order_by or serializer.get_default_order_by()
+
+    # Extra filters
+    if serializer.get_extra_filters():
+        context['extra_filters'] = serializer.get_extra_filters()
+
     context['list_handling'] = serializer.get_global_list_handling()
     context['categorise_by'] = serializer.get_categorise_by()
     context['date_format'] = serializer.get_date_format()
     context['datetime_format'] = serializer.get_datetime_format()
+    context['columns_configurable'] = serializer.get_columns_configurable()
 
     return context
+
 
 @register.filter(name='json')
 def json_dumps(data):

@@ -4,7 +4,7 @@ from datetime import datetime
 from django.urls import reverse
 from rest_framework.test import APITestCase
 from cotidia.account import fixtures
-from demoadmin.factory import (
+from cotidia.admin.tests.factory import (
     ExampleModelOneFactory,
     ExampleModelTwoFactory,
 )
@@ -15,7 +15,7 @@ class AdminSearchDashboardTests(APITestCase):
     def setUp(self):
         self.url = reverse(
             'generic-api:object-list',
-            kwargs={"app_label": "demoadmin", "model": "examplemodelone"}
+            kwargs={"app_label": "tests", "model": "examplemodelone"}
         )
         self.client.credentials(
             HTTP_AUTHORIZATION='Token ' + self.admin_user_token.key
@@ -52,7 +52,7 @@ class AdminSearchDashboardTests(APITestCase):
         self.assertEqual(response.data['count'], 1)
         self.assertEqual(response.data['next'], None)
         self.assertEqual(response.data['previous'], None)
-        
+
         result = response.data['results'][0]
         self.assertEqual(result['integer_field'], 1)
         self.assertEqual(result['integer_choice_field'], 2)
@@ -96,7 +96,7 @@ class AdminSearchDashboardTests(APITestCase):
         ExampleModelOneFactory(**valid_data)
         ExampleModelOneFactory(**invalid_data)
         response = self.client.get(
-            self.url + '?integer_field=1' 
+            self.url + '?integer_field=1'
         )
         self.assertEqual(response.data["count"], 1)
         self.assertEqual(response.data["results"][0]["integer_field"], 1)
@@ -129,13 +129,13 @@ class AdminSearchDashboardTests(APITestCase):
         for i in range(10):
             ExampleModelOneFactory(integer_field=i+11, **invalid_data)
         response = self.client.get(
-            self.url + '?integer_field=:10' 
+            self.url + '?integer_field=:10'
         )
         self.assertEqual(response.data["count"], 10)
         for result in response.data["results"]:
             self.assertTrue(result["integer_field"] <= 10)
 
-    def test_integer_filters_lte(self):
+    def test_integer_filters_gte(self):
         valid_data = {
             'integer_choice_field': 2,
             'float_field': 10.0,
@@ -163,7 +163,7 @@ class AdminSearchDashboardTests(APITestCase):
         for i in range(10):
             ExampleModelOneFactory(integer_field=i, **invalid_data)
         response = self.client.get(
-            self.url + '?integer_field=10:' 
+            self.url + '?integer_field=10:'
         )
         self.assertEqual(response.data["count"], 10)
         for result in response.data["results"]:
@@ -193,13 +193,13 @@ class AdminSearchDashboardTests(APITestCase):
             'slug_field': "a-slug",
         }
         for i in range(10):
-            ExampleModelOneFactory(integer_field=i+10, **valid_data)
+            ExampleModelOneFactory(integer_field=i + 10, **valid_data)
         for i in range(10):
             ExampleModelOneFactory(integer_field=i, **invalid_data)
         for i in range(10):
-            ExampleModelOneFactory(integer_field=i+21, **invalid_data)
+            ExampleModelOneFactory(integer_field=i + 21, **invalid_data)
         response = self.client.get(
-            self.url + '?integer_field=10:20' 
+            self.url + '?integer_field=10:20'
         )
         self.assertEqual(response.data["count"], 10)
         for result in response.data["results"]:
@@ -234,7 +234,7 @@ class AdminSearchDashboardTests(APITestCase):
         ExampleModelOneFactory(**valid_data)
         ExampleModelOneFactory(**invalid_data)
         response = self.client.get(
-            self.url + '?integer_field=1' 
+            self.url + '?integer_field=1'
         )
         self.assertEqual(response.data["count"], 1)
         self.assertEqual(response.data["results"][0]["integer_field"], 1)
@@ -265,13 +265,13 @@ class AdminSearchDashboardTests(APITestCase):
         for i in range(10):
             ExampleModelOneFactory(float_field=1+i*0.1, **invalid_data)
         response = self.client.get(
-            self.url + '?float_field=:1' 
+            self.url + '?float_field=:1'
         )
         self.assertEqual(response.data["count"], 10)
         for result in response.data["results"]:
             self.assertTrue(result["float_field"] <= 10)
 
-    def test_float_filters_lte(self):
+    def test_float_filters_gte(self):
         valid_data = {
             'integer_choice_field': 2,
             'decimal_field': Decimal('10'),
@@ -297,7 +297,7 @@ class AdminSearchDashboardTests(APITestCase):
         for i in range(10):
             ExampleModelOneFactory(float_field=i*0.1, **invalid_data)
         response = self.client.get(
-            self.url + '?float_field=1:' 
+            self.url + '?float_field=1:'
         )
         self.assertEqual(response.data["count"], 10)
         for result in response.data["results"]:
@@ -362,7 +362,7 @@ class AdminSearchDashboardTests(APITestCase):
         ExampleModelOneFactory(**valid_data)
         ExampleModelOneFactory(**invalid_data)
         response = self.client.get(
-            self.url + '?integer_field=1' 
+            self.url + '?integer_field=1'
         )
         self.assertEqual(response.data["count"], 1)
         self.assertEqual(response.data["results"][0]["integer_field"], 1)
@@ -393,13 +393,13 @@ class AdminSearchDashboardTests(APITestCase):
         for i in range(10):
             ExampleModelOneFactory(decimal_field=1+i*0.1, **invalid_data)
         response = self.client.get(
-            self.url + '?decimal_field=:1' 
+            self.url + '?decimal_field=:1'
         )
         self.assertEqual(response.data["count"], 10)
         for result in response.data["results"]:
             self.assertTrue(Decimal(result["decimal_field"]) <= 1)
 
-    def test_decimal_filters_lte(self):
+    def test_decimal_filters_gte(self):
         valid_data = {
             'integer_choice_field': 2,
             'boolean_field': True,
@@ -423,7 +423,7 @@ class AdminSearchDashboardTests(APITestCase):
         for i in range(10):
             ExampleModelOneFactory(decimal_field=i*0.1, **invalid_data)
         response = self.client.get(
-            self.url + '?decimal_field=1:' 
+            self.url + '?decimal_field=1:'
         )
         self.assertEqual(response.data["count"], 10)
         for result in response.data["results"]:
@@ -503,7 +503,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(
             self.url + '?nullboolean_field=false'
-        ) 
+        )
         self.assertEqual(response.data["count"], 1)
         self.assertFalse(response.data["results"][0]["nullboolean_field"])
 
@@ -515,7 +515,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(
             self.url + '?char_field=hoor'
-        ) 
+        )
         self.assertEqual(response.data["count"], 3)
 
     def test_text_field_filter(self):
@@ -526,7 +526,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(
             self.url + '?text_field=hoor'
-        ) 
+        )
         self.assertEqual(response.data["count"], 3)
 
     def test_slug_field_filter(self):
@@ -537,9 +537,9 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(
             self.url + '?slug_field=hoor'
-        ) 
+        )
         self.assertEqual(response.data["count"], 3)
-    
+
     def test_foreign_key_field_filtering(self):
         em2 = ExampleModelTwoFactory()
         ExampleModelOneFactory(other_model=em2, boolean_field=True)
@@ -549,7 +549,7 @@ class AdminSearchDashboardTests(APITestCase):
             self.url + '?other_model=' + str(em2.uuid)
         )
         self.assertEqual(response.data["count"], 1)
-    
+
     def test_many_to_many_field_filtering(self):
         em2 = ExampleModelTwoFactory(name="Test Item")
         valid_model = ExampleModelOneFactory(

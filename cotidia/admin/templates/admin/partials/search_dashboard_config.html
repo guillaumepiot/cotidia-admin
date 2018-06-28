@@ -45,8 +45,11 @@
     {% if default_filters %}
         defaultFilters: {{default_filters|safe}},
     {% endif %}
+    {% if extra_filters %}
+        extraFilters: {{extra_filters|safe}},
+    {% endif %}
     {% if default_order_by %}
-        defaultOrderBy: {{default_order_by}},
+        defaultOrderBy: '{{default_order_by}}',
     {% endif %}
     {% if categorise_by %}
         categoriseBy: {
@@ -61,9 +64,7 @@
         {% if primary_color %}
             primaryColour: '{{primary_color}}',
         {% endif %}
-        {% if columns_configurable %}
-            columnsConfigurable: true,
-        {% endif %}
+        columnsConfigurable: {{columns_configurable|json}},
         {% if list_handling %}
             listHandling: {{list_handling|json|safe}},
         {% endif %}
