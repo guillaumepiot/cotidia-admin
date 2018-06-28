@@ -90,3 +90,8 @@ export const handleDynamicListMessage = (message) => ({
   type: types.HANDLE_DYNAMIC_LIST_MESSAGE,
   payload: { message },
 })
+
+export const editField = (item, column, value) => ({
+  type: types.EDIT_FIELD,
+  payload: { item, column, value },
+})

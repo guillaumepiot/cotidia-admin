@@ -38,3 +38,4 @@ export const PERFORM_BATCH_ACTION = 'dynamic-list/search/PERFORM_BATCH_ACTION'
 export const PERFORM_GLOBAL_ACTION = 'dynamic-list/search/PERFORM_GLOBAL_ACTION'
 
 export const HANDLE_DYNAMIC_LIST_MESSAGE = 'dynamic-list/search/HANDLE_DYNAMIC_LIST_MESSAGE'
+export const EDIT_FIELD = 'dynamic-list/search/EDIT_FIELD'

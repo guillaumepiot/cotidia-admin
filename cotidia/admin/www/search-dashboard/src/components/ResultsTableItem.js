@@ -2,15 +2,16 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 import { generateURL } from '../utils/api'
-import { getValueFormatter } from '../utils/resultItems'
+
+import ResultTableItemValue from '../containers/ResultsTableItemValue'
 
 // Normally we wouldn't bother with perf optimisation, but this takes a render of 250 items down
 // from 130ms to 25-30ms when only one of the items changes (e.g. select an item).
+// TODO: Is this still required now we're in redux mode?
 export default class ResultsTableItem extends PureComponent {
   static propTypes = {
     checked: PropTypes.bool.isRequired,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-    config: PropTypes.object,
     detailURL: PropTypes.string,
     item: PropTypes.shape({
       uuid: PropTypes.string.isRequired,
@@ -47,12 +48,9 @@ export default class ResultsTableItem extends PureComponent {
     const {
       checked,
       columns,
-      config,
       item,
       showCheck,
     } = this.props
-
-    const formatValue = getValueFormatter(config)
 
     return (
       <tr className={checked ? 'table__row--active' : null} onClick={this.handleClickRow}>
@@ -65,7 +63,7 @@ export default class ResultsTableItem extends PureComponent {
           if (column.type === 'data') {
             return (
               <td data-header={column.label} key={column.id}>
-                {formatValue(item, column.accessor, column.display, column.listHandling)}
+                <ResultTableItemValue column={column} item={item} />
               </td>
             )
           } else if (column.type === 'separator') {

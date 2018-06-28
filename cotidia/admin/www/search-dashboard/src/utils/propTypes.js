@@ -29,6 +29,8 @@ const column = PropTypes.shape({
   })),
   orderable: PropTypes.bool,
   listHandling,
+  editable: PropTypes.bool,
+  editURL: PropTypes.string,
 })
 
 const columns = PropTypes.objectOf(column)

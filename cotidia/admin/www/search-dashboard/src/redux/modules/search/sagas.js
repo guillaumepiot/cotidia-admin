@@ -1,4 +1,5 @@
 import { call, put, select, take, takeEvery } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
 import isEqual from 'lodash.isequal'
 
 import { uuid4 } from '../../../utils'
@@ -227,6 +228,27 @@ function * handleDynamicListMessage ({ payload: { message } }) {
   }
 }
 
+function * editField ({ payload: { item, column, value } }) {
+  const columnConfig = yield select((state) => state.search.columns[column])
+
+  let url = columnConfig.edit_endpoint.replace(':uuid', item)
+
+  try {
+    const { ok } = yield call(
+      fetchAuthenticated,
+      'PATCH',
+      url,
+      { [column]: value }
+    )
+
+    if (ok) {
+      yield put({ type: types.PERFORM_SEARCH })
+    }
+  } catch {
+    // pass
+  }
+}
+
 export default function * watcher () {
   yield takeEvery(types.FILTER_COLUMN, filterColumn)
   yield takeEvery(types.MANAGE_COLUMNS, manageColumns)
@@ -255,4 +277,5 @@ export default function * watcher () {
   yield takeEvery(types.PERFORM_GLOBAL_ACTION, performGlobalAction)
 
   yield takeEvery(types.HANDLE_DYNAMIC_LIST_MESSAGE, handleDynamicListMessage)
+  yield takeEvery(types.EDIT_FIELD, editField)
 }
