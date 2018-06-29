@@ -1,3 +1,70 @@
 .content {
+    &__head {
+        height: $toolbar-height;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 1rem;
+        background-color: #fff;
+    }
+    &__toolbar {
+        height: 3rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 1rem;
+    }
+    &__body {
+        height: calc(100vh - 10rem);
+        position: relative;
+        border-top: 1px solid $table-border-color;
+        border-bottom: 1px solid $table-border-color;
+    }
+    &__foot {
+        height: 3rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 1rem;
+        background-color: #fff;
+    }
 
+    &__title {
+        @include font_size($font_size--medium);
+    }
+
+    &__list {
+        height: 100%;
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: auto;
+        position: absolute;
+        transition: width $animation-speed ease;
+    }
+
+    &__sidebar {
+        height: 100%;
+        top: 0;
+        overflow-y: auto;
+        width: 16rem;
+        position: absolute;
+        right: 0rem;
+        transform: translate(16rem);
+        transition: transform $animation-speed ease;
+        background-color: #fff;
+        border-left: 1px solid $table-border-color;
+
+        fieldset, legend {
+            border-width: 0;
+        }
+    }
+
+    &--sidebar {
+        .content__list {
+            width: calc(100% - 16rem);
+        }
+        .content__sidebar {
+            transform: translate(0);
+        }
+    }
 }

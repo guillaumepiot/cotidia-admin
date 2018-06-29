@@ -1,0 +1,73 @@
+.table {
+    border: none;
+
+    &--sticky {
+        thead {
+            th, td {
+                position: -webkit-sticky; // for safari
+                position: sticky;
+                top: 0;
+                left: 0;
+                z-index: 1;
+
+                &:first-child {
+                    z-index: 3;
+                }
+            }
+        }
+
+        tbody {
+            td {
+                &:first-child {
+                    background-color: #fff;
+                }
+            }
+        }
+
+        tfoot {
+            th, td {
+                position: -webkit-sticky; // for safari
+                position: sticky;
+                bottom: 0;
+                left: 0;
+                z-index: 1;
+            }
+        }
+
+        th, td {
+
+            &.nowrap {
+                white-space: nowrap;
+            }
+
+            &:first-child {
+                position: -webkit-sticky; // for safari
+                position: sticky;
+                left: 0px;
+                // top: 0px; -> doesn't work in Safari 11
+                /*
+                thanks to https://github.com/jonjohnjohnson
+                explanation: https://github.com/w3c/csswg-drafts/issues/865
+                */
+                z-index: 2;
+                width: 200px;
+                box-shadow: inset -2px 0px $grey--light;
+            }
+        }
+    }
+
+    &--admin-mobile-view{
+        @media screen and (max-width: $mobile-width) {
+            thead th, tbody td{
+                display: none;
+            }
+
+            thead th:first-child,
+            tbody td:first-child,
+            .action-column + th:nth-child(2),
+            .action-column + td:nth-child(2){
+                display: table-cell;
+            }
+        }
+    }
+}

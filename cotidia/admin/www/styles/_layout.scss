@@ -27,6 +27,10 @@ body {
             width: calc(100% - #{$menu-width});
             height: calc(100% - #{$toolbar-height});
             overflow: scroll;
+
+            .content__body {
+                height: calc(100vh - 10rem - #{$toolbar-height});
+            }
         }
     }
 }

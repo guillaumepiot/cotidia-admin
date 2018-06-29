@@ -5020,7 +5020,9 @@ body {
     left: 20rem;
     width: calc(100% - 20rem);
     height: calc(100% - 4rem);
-    overflow: scroll; } }
+    overflow: scroll; }
+    .layout__content .content__body {
+      height: calc(100vh - 10rem - 4rem); } }
 
 .menu {
   background-color: #48484c; }
@@ -5035,5 +5037,104 @@ body {
   @media screen and (min-width: 1024px) {
     .toolbar {
       height: 4rem; } }
+
+.content__head {
+  height: 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  background-color: #fff; }
+.content__toolbar {
+  height: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem; }
+.content__body {
+  height: calc(100vh - 10rem);
+  position: relative;
+  border-top: 1px solid #D0D5D7;
+  border-bottom: 1px solid #D0D5D7; }
+.content__foot {
+  height: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  background-color: #fff; }
+.content__title {
+  line-height: 1.3329966542em !important;
+  font-size: 1.265625rem !important; }
+  @media screen and (min-width: 768px) {
+    .content__title {
+      font-size: 1.5625rem !important; } }
+  @media screen and (min-width: 1024px) {
+    .content__title {
+      font-size: 1.776889rem !important; } }
+.content__list {
+  height: 100%;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+  position: absolute;
+  transition: width 0.4s ease; }
+.content__sidebar {
+  height: 100%;
+  top: 0;
+  overflow-y: auto;
+  width: 16rem;
+  position: absolute;
+  right: 0rem;
+  transform: translate(16rem);
+  transition: transform 0.4s ease;
+  background-color: #fff;
+  border-left: 1px solid #D0D5D7; }
+  .content__sidebar fieldset, .content__sidebar legend {
+    border-width: 0; }
+.content--sidebar .content__list {
+  width: calc(100% - 16rem); }
+.content--sidebar .content__sidebar {
+  transform: translate(0); }
+
+.table {
+  border: none; }
+  .table--sticky thead th, .table--sticky thead td {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1; }
+    .table--sticky thead th:first-child, .table--sticky thead td:first-child {
+      z-index: 3; }
+  .table--sticky tbody td:first-child {
+    background-color: #fff; }
+  .table--sticky tfoot th, .table--sticky tfoot td {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    z-index: 1; }
+  .table--sticky th.nowrap, .table--sticky td.nowrap {
+    white-space: nowrap; }
+  .table--sticky th:first-child, .table--sticky td:first-child {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0px;
+    /*
+    thanks to https://github.com/jonjohnjohnson
+    explanation: https://github.com/w3c/csswg-drafts/issues/865
+    */
+    z-index: 2;
+    width: 200px;
+    box-shadow: inset -2px 0px #D0D5D7; }
+  @media screen and (max-width: 767px) {
+    .table--admin-mobile-view thead th, .table--admin-mobile-view tbody td {
+      display: none; }
+    .table--admin-mobile-view thead th:first-child,
+    .table--admin-mobile-view tbody td:first-child,
+    .table--admin-mobile-view .action-column + th:nth-child(2),
+    .table--admin-mobile-view .action-column + td:nth-child(2) {
+      display: table-cell; } }
 
 /*# sourceMappingURL=admin.css.map */
