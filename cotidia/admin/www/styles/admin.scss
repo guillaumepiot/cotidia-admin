@@ -18,17 +18,18 @@
 
 @import "../node_modules/sixteen/src/sixteen/components/grid";
 @import "../node_modules/sixteen/src/sixteen/components/label";
-@import "../node_modules/sixteen/src/sixteen/components/menu";
 @import "../node_modules/sixteen/src/sixteen/components/table";
 @import "../node_modules/sixteen/src/sixteen/components/tag";
 @import "../node_modules/sixteen/src/sixteen/components/tab";
 @import "../node_modules/sixteen/src/sixteen/components/tooltip";
-@import "../node_modules/sixteen/src/sixteen/components/layout";
+// @import "../node_modules/sixteen/src/sixteen/components/layout";
 
-
+@import "layout";
 @import "menu";
 @import "toolbar";
 @import "content";
-@import "form";
 @import "table";
-@import "search";
+@import "pagination";
+// @import "form";
+// @import "table";
+// @import "search";

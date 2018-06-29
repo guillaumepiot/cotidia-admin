@@ -1,0 +1,36 @@
+body {
+    background-color: $body-background-color;
+}
+
+.layout {
+    &__menu {
+        @media screen and (min-width: $menu-breakpoint) {
+            width: $menu-width;
+            min-height: 100%;
+            position: fixed;
+        }
+    }
+    &__toolbar {
+        @media screen and (min-width: $menu-breakpoint) {
+            position: fixed;
+            top: 0;
+            left: $menu-width;
+            height: $toolbar-height;
+            width: calc(100% - #{$menu-width});
+        }
+    }
+    &__content {
+        @media screen and (min-width: $menu-breakpoint) {
+            position: fixed;
+            top: $toolbar-height;
+            left: $menu-width;
+            width: calc(100% - #{$menu-width});
+            height: calc(100% - #{$toolbar-height});
+            overflow: scroll;
+
+            .content__body {
+                height: calc(100vh - 10rem - #{$toolbar-height});
+            }
+        }
+    }
+}

@@ -1,7 +1,60 @@
-.table{
-    white-space: nowrap;
-    // margin: $vertical_padding $horizontal_padding 0;
-    // width: calc(100% - #{$horizontal_padding * 2});
+.table {
+    border: none;
+
+    &--sticky {
+        thead {
+            th, td {
+                position: -webkit-sticky; // for safari
+                position: sticky;
+                top: 0;
+                left: 0;
+                z-index: 1;
+
+                &:first-child {
+                    z-index: 3;
+                }
+            }
+        }
+
+        tbody {
+            td {
+                &:first-child {
+                    background-color: #fff;
+                }
+            }
+        }
+
+        tfoot {
+            th, td {
+                position: -webkit-sticky; // for safari
+                position: sticky;
+                bottom: 0;
+                left: 0;
+                z-index: 1;
+            }
+        }
+
+        th, td {
+
+            &.nowrap {
+                white-space: nowrap;
+            }
+
+            &:first-child {
+                position: -webkit-sticky; // for safari
+                position: sticky;
+                left: 0px;
+                // top: 0px; -> doesn't work in Safari 11
+                /*
+                thanks to https://github.com/jonjohnjohnson
+                explanation: https://github.com/w3c/csswg-drafts/issues/865
+                */
+                z-index: 2;
+                width: 200px;
+                box-shadow: inset -2px 0px $grey--light;
+            }
+        }
+    }
 
     &--admin-mobile-view{
         @media screen and (max-width: $mobile-width) {
@@ -16,100 +69,5 @@
                 display: table-cell;
             }
         }
-    }
-
-    &--loading {
-        position: relative;
-        &:after {
-            content: "";
-            display: block;
-            position: absolute;
-            top: $vertical_padding * 2;
-            left: calc(50% - 1rem);
-            height: 2rem;
-            width: 2rem;
-
-            border-radius: 100%;
-            border: 2px solid $grey;
-            border-bottom-color: transparent;
-
-            animation: rotate 1s 0s linear infinite;
-            z-index: 2;
-        }
-        &:before {
-            content: "";
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #fff;
-            opacity: 0.5;
-            z-index: 1;
-        }
-    }
-
-    &-header {
-        padding-right: $horizontal_padding * 3 !important;
-        position: relative;
-
-        &--clickable {
-            cursor: pointer;
-        }
-
-        &__name {
-        }
-
-        &__sort {
-            visibility: hidden;
-
-            &--active {
-                visibility: visible;
-            }
-        }
-
-        &__actions {
-            visibility: hidden;
-            position: absolute;
-            top: $vertical_padding / 2;
-            right: $horizontal_padding / 2;
-
-            &--active {
-                visibility: visible;
-            }
-        }
-
-        &:hover {
-            .table-header {
-                &__sort,
-                &__actions {
-                    visibility: visible;
-                }
-            }
-        }
-    }
-
-    // Done as a descendent selector as it needs to override sixteen's own `.table tr`
-    .table__row {
-        &--active {
-            // :hover standard rule in sixteen is `darken(#fff, 2%)`, so let's just double that
-            background-color: darken(#fff, 4%);
-        }
-    }
-
-    &__category-header {
-        background-color: darken(#fff, 24%) !important;
-        cursor: auto;
-    }
-
-    .action-column {
-        width: 1px;
-    }
-
-    &-header--separator,
-    &-column--separator {
-        background-color: darken(#fff, 32%);
-        width: 20px;
     }
 }

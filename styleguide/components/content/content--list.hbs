@@ -1,0 +1,76 @@
+<div class="content content--sidebar">
+    <div class="content__head">
+        <div class="content__title">Finance</div>
+        <div class="content__actions">
+            <button class="btn btn--outline  btn--small btn--primary">Action</button>
+        </div>
+    </div>
+    <div class="content__toolbar">
+        <div class="content__filter">Filter</div>
+        <div class="content__actions">
+            <button class="btn btn--outline btn--small" id="toggle-sidebar">
+                <span class="fa fa-filter"></span>
+            </button>
+        </div>
+    </div>
+    <div class="content__body">
+        <div class="content__list">
+            {{> @table--sticky }}
+        </div>
+        <div class="content__sidebar">
+            <form action="" class="form--animate">
+                <fieldset>
+                    <legend>Filter</legend>
+                    <div class="form__row">
+                        <div class="form__group">
+                            <label class="form__label">Job number</label>
+                            <div class="form__control form__control--input">
+                                <input type="text" name="first_name" placeholder="Frank Green">
+                            </div>
+                            <div class="form__help"></div>
+                        </div>
+                    </div>
+                    <div class="form__row">
+                        <div class="form__group">
+                            <label class="form__label">Status</label>
+                            <div class="form__control form__control--select">
+                                <select class="form__select">
+                                    <option class=""></option>
+                                    <option class="A">Active</option>
+                                    <option class="B">Archived</option>
+                                    <option class="C">Pending</option>
+                                </select>
+                            </div>
+                            <div class="form__help"></div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <div class="content__foot">
+        {{> @pagination }}
+        <div class="content__actions">
+            Download as
+            <button class="btn btn--outline  btn--small btn--create">
+                <span class="fa fa-file-text-o"></span>
+                CSV
+            </button>
+            <button class="btn btn--outline  btn--small btn--create">
+                <span class="fa fa-file-pdf-o"></span>
+                PDF
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+    var toggleSidebarBtn = document.getElementById('toggle-sidebar')
+    var content = document.querySelector('.content')
+    toggleSidebarBtn.addEventListener('click', function() {
+        if (content.classList.contains('content--sidebar')) {
+            content.classList.remove('content--sidebar')
+        } else {
+            content.classList.add('content--sidebar')
+        }
+    })
+</script>
