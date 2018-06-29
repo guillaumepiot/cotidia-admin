@@ -39,7 +39,7 @@ export default class ResultsTableItemValue extends Component {
     this.setState({ value })
   }
 
-  saveEdit = (value) => {
+  saveEdit = () => {
     this.props.editField(this.props.item.uuid, this.props.column.accessor, this.state.value)
     this.setState({ editing: false })
   }

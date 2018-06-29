@@ -4,7 +4,7 @@ import { editField } from '../redux/modules/search/actions'
 
 import ResultsTableItemValue from '../components/ResultsTableItemValue'
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = (state) => ({
   config: state.config,
 })
 
