@@ -2697,7 +2697,7 @@ body {
     height: calc(100% - 4rem);
     overflow: scroll; }
     .layout__content .content__body {
-      height: calc(100vh - 10rem - 4rem); } }
+      height: calc(100vh - 11rem - 4rem); } }
 
 .menu {
   background-color: #48484c; }
@@ -2708,13 +2708,121 @@ body {
       min-height: 100%; } }
 
 .toolbar {
-  background-color: #fff; }
+  background-color: #f5f7fb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem; }
   @media screen and (min-width: 1024px) {
     .toolbar {
       height: 4rem; } }
+  .toolbar__left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; }
+    .toolbar__left .toolbar__item {
+      margin-right: 1rem; }
+  .toolbar__right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center; }
+    .toolbar__right .toolbar__item {
+      margin-left: 1rem; }
+  .toolbar__item .form__group {
+    margin: 0; }
+    .toolbar__item .form__group .form__control {
+      background-color: #fff;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      border-color: #D0D5D7; }
+      .toolbar__item .form__group .form__control--input, .toolbar__item .form__group .form__control--select, .toolbar__item .form__group .form__control--textarea {
+        border-bottom-width: 0; }
+        .toolbar__item .form__group .form__control--input input, .toolbar__item .form__group .form__control--input select, .toolbar__item .form__group .form__control--select input, .toolbar__item .form__group .form__control--select select, .toolbar__item .form__group .form__control--textarea input, .toolbar__item .form__group .form__control--textarea select {
+          padding-right: 1rem; }
+        .toolbar__item .form__group .form__control--input::after, .toolbar__item .form__group .form__control--select::after, .toolbar__item .form__group .form__control--textarea::after {
+          top: calc(1.25rem - 2px);
+          right: 1rem; }
+      .toolbar__item .form__group .form__control .control-select__options {
+        line-height: 1.5; }
+    .toolbar__item .form__group .form__help {
+      display: none; }
+
+.toolbar-profile {
+  position: relative; }
+  .toolbar-profile:hover {
+    cursor: pointer; }
+    .toolbar-profile:hover .toolbar-menu {
+      display: block; }
+    .toolbar-profile:hover .toolbar-profile__avatar::after {
+      opacity: 1; }
+  .toolbar-profile__avatar {
+    line-height: 1.5em !important;
+    font-size: 1rem !important;
+    background-color: #0057a4;
+    background-color: var(--toolbar_profile_avatar_background_color, #0057a4);
+    color: #fff;
+    color: var(--toolbar_profile_avatar_text_color, #fff);
+    display: inline-block;
+    width: 38px;
+    height: 38px;
+    border-radius: 1.75rem;
+    border-width: 0;
+    text-align: center;
+    position: relative;
+    margin-right: 1rem;
+    top: 1px; }
+    @media screen and (min-width: 768px) {
+      .toolbar-profile__avatar {
+        font-size: 1rem !important; } }
+    @media screen and (min-width: 1024px) {
+      .toolbar-profile__avatar {
+        font-size: 1rem !important; } }
+    .toolbar-profile__avatar::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      right: -1rem;
+      top: 1.75rem;
+      border-style: solid;
+      height: 0;
+      width: 0;
+      border-color: rgba(255, 255, 255, 0.5) transparent transparent;
+      border-width: 5px 5px 0;
+      border-top-color: #7f878a;
+      border-top-color: var(--toolbar_profile_avatar_arrow_color, #7f878a);
+      opacity: 0.5; }
+    .toolbar-profile__avatar:hover {
+      cursor: pointer; }
+    .toolbar-profile__avatar:focus {
+      outline: none; }
+
+.toolbar-menu {
+  display: none;
+  position: absolute;
+  top: 4rem;
+  right: -0.5rem;
+  width: 240px;
+  background-color: #fff;
+  border: 1px solid #D0D5D7;
+  border-top-width: 0;
+  z-index: 10; }
+  .toolbar-menu__link {
+    display: block;
+    padding: 0 1rem;
+    line-height: 4rem; }
+    .toolbar-menu__link:hover {
+      background-color: #E5EBED; }
+  .toolbar-menu__item {
+    padding: 0.5rem 1rem;
+    color: #111315;
+    border-bottom: 1px solid #D0D5D7; }
+  .toolbar-menu--active {
+    display: block; }
 
 .content__head {
-  height: 4rem;
+  height: 5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2727,7 +2835,7 @@ body {
   align-items: center;
   padding: 0 1rem; }
 .content__body {
-  height: calc(100vh - 10rem);
+  height: calc(100vh - 11rem);
   position: relative;
   border-top: 1px solid #D0D5D7;
   border-bottom: 1px solid #D0D5D7; }
@@ -2758,15 +2866,20 @@ body {
   height: 100%;
   top: 0;
   overflow-y: auto;
-  width: 16rem;
+  width: calc(16rem);
   position: absolute;
   right: 0rem;
   transform: translate(16rem);
   transition: transform 0.4s ease;
   background-color: #fff;
   border-left: 1px solid #D0D5D7; }
-  .content__sidebar fieldset, .content__sidebar legend {
+  .content__sidebar fieldset {
     border-width: 0; }
+    .content__sidebar fieldset legend {
+      border-width: 0;
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0; }
 .content--sidebar .content__list {
   width: calc(100% - 16rem); }
 .content--sidebar .content__sidebar {
