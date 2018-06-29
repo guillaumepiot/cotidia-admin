@@ -8,6 +8,7 @@ body {
             width: $menu-width;
             min-height: 100%;
             position: fixed;
+            z-index: 3;
         }
     }
     &__toolbar {
@@ -17,6 +18,7 @@ body {
             left: $menu-width;
             height: $toolbar-height;
             width: calc(100% - #{$menu-width});
+            z-index: 2;
         }
     }
     &__content {
@@ -27,6 +29,7 @@ body {
             width: calc(100% - #{$menu-width});
             height: calc(100% - #{$toolbar-height});
             overflow: scroll;
+            z-index: 1;
 
             .content__body {
                 height: calc(100vh - 11rem - #{$toolbar-height});

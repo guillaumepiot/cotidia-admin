@@ -145,13 +145,13 @@ table {
  *
  */
 html {
-  font-size: 16px; }
+  font-size: 15px; }
   @media screen and (min-width: 768px) {
     html {
-      font-size: 16px !important; } }
+      font-size: 15px !important; } }
   @media screen and (min-width: 1024px) {
     html {
-      font-size: 16px !important; } }
+      font-size: 15px !important; } }
 
 body {
   color: #444444;
@@ -2680,14 +2680,16 @@ body {
   .layout__menu {
     width: 20rem;
     min-height: 100%;
-    position: fixed; } }
+    position: fixed;
+    z-index: 3; } }
 @media screen and (min-width: 1024px) {
   .layout__toolbar {
     position: fixed;
     top: 0;
     left: 20rem;
     height: 4rem;
-    width: calc(100% - 20rem); } }
+    width: calc(100% - 20rem);
+    z-index: 2; } }
 @media screen and (min-width: 1024px) {
   .layout__content {
     position: fixed;
@@ -2695,7 +2697,8 @@ body {
     left: 20rem;
     width: calc(100% - 20rem);
     height: calc(100% - 4rem);
-    overflow: scroll; }
+    overflow: scroll;
+    z-index: 1; }
     .layout__content .content__body {
       height: calc(100vh - 11rem - 4rem); } }
 
@@ -2709,6 +2712,7 @@ body {
 
 .toolbar {
   background-color: #f5f7fb;
+  border-bottom: 1px solid #e8eaec;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2736,43 +2740,49 @@ body {
       padding-bottom: 0.5rem;
       padding-left: 1rem;
       padding-right: 1rem;
-      border-color: #D0D5D7; }
-      .toolbar__item .form__group .form__control--input, .toolbar__item .form__group .form__control--select, .toolbar__item .form__group .form__control--textarea {
-        border-bottom-width: 0; }
-        .toolbar__item .form__group .form__control--input input, .toolbar__item .form__group .form__control--input select, .toolbar__item .form__group .form__control--select input, .toolbar__item .form__group .form__control--select select, .toolbar__item .form__group .form__control--textarea input, .toolbar__item .form__group .form__control--textarea select {
-          padding-right: 1rem; }
-        .toolbar__item .form__group .form__control--input::after, .toolbar__item .form__group .form__control--select::after, .toolbar__item .form__group .form__control--textarea::after {
-          top: calc(1.25rem - 2px);
-          right: 1rem; }
+      border: 1px solid #d5d9dc;
+      border-radius: 100px; }
+      .toolbar__item .form__group .form__control--input input, .toolbar__item .form__group .form__control--input select, .toolbar__item .form__group .form__control--select input, .toolbar__item .form__group .form__control--select select, .toolbar__item .form__group .form__control--textarea input, .toolbar__item .form__group .form__control--textarea select {
+        padding-right: 1rem; }
+      .toolbar__item .form__group .form__control--input::after, .toolbar__item .form__group .form__control--select::after, .toolbar__item .form__group .form__control--textarea::after {
+        top: calc(1.25rem - 2px);
+        right: 1rem; }
       .toolbar__item .form__group .form__control .control-select__options {
         line-height: 1.5; }
     .toolbar__item .form__group .form__help {
       display: none; }
 
 .toolbar-profile {
-  position: relative; }
+  position: relative;
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
   .toolbar-profile:hover {
     cursor: pointer; }
     .toolbar-profile:hover .toolbar-menu {
-      display: block; }
+      display: block;
+      opacity: 1;
+      right: -0.5rem;
+      transform: translate(0, 4px); }
     .toolbar-profile:hover .toolbar-profile__avatar::after {
       opacity: 1; }
   .toolbar-profile__avatar {
     line-height: 1.5em !important;
     font-size: 1rem !important;
-    background-color: #0057a4;
-    background-color: var(--toolbar_profile_avatar_background_color, #0057a4);
+    background-color: #2d3546;
+    background-color: var(--toolbar_profile_avatar_background_color, #2d3546);
     color: #fff;
     color: var(--toolbar_profile_avatar_text_color, #fff);
     display: inline-block;
-    width: 38px;
-    height: 38px;
+    width: 39px;
+    height: 39px;
     border-radius: 1.75rem;
     border-width: 0;
     text-align: center;
     position: relative;
     margin-right: 1rem;
-    top: 1px; }
+    top: 0; }
     @media screen and (min-width: 768px) {
       .toolbar-profile__avatar {
         font-size: 1rem !important; } }
@@ -2784,36 +2794,58 @@ body {
       position: absolute;
       pointer-events: none;
       right: -1rem;
-      top: 1.75rem;
+      top: calc(50% - 2px);
       border-style: solid;
       height: 0;
       width: 0;
       border-color: rgba(255, 255, 255, 0.5) transparent transparent;
       border-width: 5px 5px 0;
-      border-top-color: #7f878a;
-      border-top-color: var(--toolbar_profile_avatar_arrow_color, #7f878a);
+      border-top-color: #2d3546;
+      border-top-color: var(--toolbar_profile_avatar_arrow_color, #2d3546);
       opacity: 0.5; }
     .toolbar-profile__avatar:hover {
       cursor: pointer; }
     .toolbar-profile__avatar:focus {
       outline: none; }
 
+.toolbar-shortcuts {
+  position: relative;
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .toolbar-shortcuts:hover {
+    cursor: pointer; }
+    .toolbar-shortcuts:hover .toolbar-menu {
+      display: block;
+      opacity: 1;
+      right: -0.5rem;
+      transform: translate(0, 4px); }
+  .toolbar-shortcuts .btn, .toolbar-shortcuts .form__control input[type="file"], .form__control .toolbar-shortcuts input[type="file"] {
+    background-color: #2d3546;
+    background-color: var(--toolbar_profile_avatar_background_color, #2d3546);
+    border-width: 0;
+    border-radius: 50px; }
+
 .toolbar-menu {
-  display: none;
   position: absolute;
-  top: 4rem;
-  right: -0.5rem;
+  top: calc( 4rem - 5px);
+  right: -9999px;
+  opacity: 0;
   width: 240px;
   background-color: #fff;
-  border: 1px solid #D0D5D7;
-  border-top-width: 0;
-  z-index: 10; }
+  border: 1px solid #e8eaec;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  box-shadow: 0px 2px 4px rgba(43, 47, 56, 0.18);
+  transform: translate(0, 0);
+  transition: transform 0.4s ease, opacity 0.4s ease; }
   .toolbar-menu__link {
     display: block;
     padding: 0 1rem;
-    line-height: 4rem; }
+    line-height: 3rem; }
     .toolbar-menu__link:hover {
-      background-color: #E5EBED; }
+      background-color: #f5f7fb; }
   .toolbar-menu__item {
     padding: 0.5rem 1rem;
     color: #111315;

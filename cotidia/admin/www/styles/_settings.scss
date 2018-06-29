@@ -1,5 +1,7 @@
 @import "../node_modules/sixteen/src/sixteen/settings";
 
+$base_font_size: 15px;
+
 $body-background-color: #f4f4f5;
 
 $menu-width: 20rem;
@@ -8,12 +10,11 @@ $menu-background-color: #48484c;
 
 $toolbar-height: 4rem;
 $toolbar-background-color: #f5f7fb;
-// $toolbar_height: 3.2rem;
-// $toolbar_background_color: #f8f8f9;
-// $toolbar_border_color: #eaeaed;
+$toolbar-border-color: #e8eaec;
+$toolbar-form-border-color: #d5d9dc;
 // $toolbar_text_color: $grey--dark;
-$toolbar_profile_avatar_background_color: lighten(#00213E, 20%);
+$toolbar_profile_avatar_background_color: #2d3546;
 $toolbar_profile_avatar_text_color: #fff;
-$toolbar_profile_avatar_arrow_color: $grey;
+$toolbar_profile_avatar_arrow_color: #2d3546;
 // $toolbar_shortcuts_background_color: $grey--medium;
 // $toolbar_shortcuts_text_color: #fff;
