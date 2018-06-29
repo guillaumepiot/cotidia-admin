@@ -1,27 +1,39 @@
 {% extends "admin/base.html" %}{% load i18n admin_menu_tags %}
 {% block content %}
+<div class="layout__menu">
     {% menu %}
+</div>
+<div class="layout__toolbar">
     <div class="toolbar">
-        {% block toolbar %}
+    {% block toolbar %}
+    <div class="toolbar__left">
+        {% block toolbar_left %}
+        {% endblock toolbar_left %}
+    </div>
+    <div class="toolbar__right">
+        {% block toolbar_right %}
         {% include "admin/menu/toolbar-profile.html" %}
         {% include "admin/menu/toolbar-search.html" %}
         {% include "admin/menu/toolbar-shortcuts.html" %}
-        {% endblock toolbar %}
+        {% endblock toolbar_right %}
     </div>
-    <div class="content">
-        {% block messages %}
-        {% include "admin/generic/messages.html" %}
-        {% endblock messages %}
-        {% block content_header %}
-        <div class="content__header">
-            <div class="content__title">
-                {% block content_title %}{% endblock content_title %}
-            </div>
-            <div class="content__actions">
-                {% block content_actions %}{% endblock content_actions %}
-            </div>
+    {% endblock toolbar %}
+    </div>
+</div>
+<div class="layout__content">
+    {% block messages %}
+    {% include "admin/generic/messages.html" %}
+    {% endblock messages %}
+    {% block content_head %}
+    <div class="content__head">
+        <div class="content__title">
+            {% block content_title %}{% endblock content_title %}
         </div>
-        {% endblock content_header %}
-        {% block page_content %}{% endblock page_content %}
+        <div class="content__actions">
+            {% block content_actions %}{% endblock content_actions %}
+        </div>
     </div>
+    {% endblock content_head %}
+    {% block page_content %}{% endblock page_content %}
+</div>
 {% endblock content %}

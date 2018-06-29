@@ -7,5 +7,13 @@ $menu-breakpoint: 1024px;
 $menu-background-color: #48484c;
 
 $toolbar-height: 4rem;
-$toolbar-background-color: #fff;
-
+$toolbar-background-color: #f5f7fb;
+// $toolbar_height: 3.2rem;
+// $toolbar_background_color: #f8f8f9;
+// $toolbar_border_color: #eaeaed;
+// $toolbar_text_color: $grey--dark;
+$toolbar_profile_avatar_background_color: lighten(#00213E, 20%);
+$toolbar_profile_avatar_text_color: #fff;
+$toolbar_profile_avatar_arrow_color: $grey;
+// $toolbar_shortcuts_background_color: $grey--medium;
+// $toolbar_shortcuts_text_color: #fff;

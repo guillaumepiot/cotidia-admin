@@ -29,7 +29,7 @@ body {
             overflow: scroll;
 
             .content__body {
-                height: calc(100vh - 10rem - #{$toolbar-height});
+                height: calc(100vh - 11rem - #{$toolbar-height});
             }
         }
     }

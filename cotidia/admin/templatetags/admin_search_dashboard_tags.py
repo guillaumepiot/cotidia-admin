@@ -28,6 +28,7 @@ def render_search_dashboard_config(
         app_label=app_label,
         model=model_name
     ).model_class()
+
     if endpoint is None:
         endpoint = reverse(
             'generic-api:object-list',

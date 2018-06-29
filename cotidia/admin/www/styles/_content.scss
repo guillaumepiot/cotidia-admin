@@ -1,6 +1,6 @@
 .content {
     &__head {
-        height: $toolbar-height;
+        height: 5rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -15,7 +15,7 @@
         padding: 0 1rem;
     }
     &__body {
-        height: calc(100vh - 10rem);
+        height: calc(100vh - 11rem);
         position: relative;
         border-top: 1px solid $table-border-color;
         border-bottom: 1px solid $table-border-color;
@@ -46,7 +46,7 @@
         height: 100%;
         top: 0;
         overflow-y: auto;
-        width: 16rem;
+        width: calc(16rem);
         position: absolute;
         right: 0rem;
         transform: translate(16rem);
@@ -54,8 +54,15 @@
         background-color: #fff;
         border-left: 1px solid $table-border-color;
 
-        fieldset, legend {
+        fieldset {
             border-width: 0;
+
+            legend {
+                border-width: 0;
+                width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+            }
         }
     }
 
