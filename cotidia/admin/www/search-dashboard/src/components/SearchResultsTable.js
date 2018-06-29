@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { getValueFormatter } from '../utils/resultItems'
 
 import ResultsTableHeader from '../containers/ResultsTableHeader'
+import ResultsTableFooter from '../containers/ResultsTableFooter'
 import ResultsTableItem from '../containers/ResultsTableItem'
 import Pagination from '../containers/Pagination'
 
@@ -46,6 +47,7 @@ export default class SearchResultsTable extends Component {
       <>
         <table className={`table ${detailURL ? 'table--clickable' : ''} table--admin-mobile-view ${loading ? 'table--loading' : ''}`}>
           <ResultsTableHeader />
+          <ResultsTableFooter />
           <tbody>
             {results.map((item) => {
               if (categoriseBy) {
