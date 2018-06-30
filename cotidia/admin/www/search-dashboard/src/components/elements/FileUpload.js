@@ -140,13 +140,13 @@ class FileUpload extends Component {
         />
 
         <label htmlFor={id}>
-          <span className={`btn btn--change`}>{value ? 'Replace' : 'Upload'}</span>
+          <span className={`btn btn--small btn--change`}>{value ? 'Replace' : 'Upload'}</span>
         </label>
 
         {value && (
           <>
            {' '}
-            <a href={value} target='_blank' className={`btn btn--primary`}>
+            <a href={value} target='_blank' className={`btn btn--small btn--primary`}>
               View
             </a>
           </>
