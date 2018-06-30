@@ -39,3 +39,4 @@ export const PERFORM_GLOBAL_ACTION = 'dynamic-list/search/PERFORM_GLOBAL_ACTION'
 
 export const HANDLE_DYNAMIC_LIST_MESSAGE = 'dynamic-list/search/HANDLE_DYNAMIC_LIST_MESSAGE'
 export const EDIT_FIELD = 'dynamic-list/search/EDIT_FIELD'
+export const TOGGLE_SIDEBAR = 'dynamic-list/search/TOGGLE_SIDEBAR'

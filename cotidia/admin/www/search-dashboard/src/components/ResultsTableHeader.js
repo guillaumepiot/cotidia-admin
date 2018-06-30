@@ -69,7 +69,7 @@ export default class ResultsTableHeader extends PureComponent {
       <thead>
         <tr>
           {(batchActions.length > 0) && (
-            <th className='table__header table-header' onClick={this.toggleSelectAllResults}>
+            <th className='nowrap' onClick={this.toggleSelectAllResults}>
               <input type='checkbox' checked={allSelected} />
             </th>
           )}
@@ -79,7 +79,7 @@ export default class ResultsTableHeader extends PureComponent {
             if (column.type === 'data') {
               return (
                 <th
-                  className={`table__header table-header ${orderable ? 'table-header--clickable' : ''}`}
+                  className={`nowrap ${orderable ? 'table-header--clickable' : ''}`}
                   key={column.id}
                   onClick={orderable ? this.setOrderColumnFactory(column.id) : null}
                 >
@@ -129,7 +129,7 @@ export default class ResultsTableHeader extends PureComponent {
             } else if (column.type === 'separator') {
               return (
                 <th
-                  className='table__header table-header table-header--separator'
+                  className='nowrap table-header--separator'
                   key={column.id}
                 />
               )

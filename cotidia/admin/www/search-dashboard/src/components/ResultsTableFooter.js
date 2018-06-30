@@ -59,7 +59,7 @@ export default class ResultsTableFooter extends PureComponent {
       <tfoot>
         <tr>
           {(batchActions.length > 0) && (
-            <th className='table__footer table-footer' />
+            <th />
           )}
           {columns.map((column) => {
             let content = null
@@ -81,10 +81,7 @@ export default class ResultsTableFooter extends PureComponent {
             }
 
             return (
-              <th
-                className='table__footer table-footer'
-                key={column.id}
-              >
+              <th key={column.id}>
                 {content}
               </th>
             )

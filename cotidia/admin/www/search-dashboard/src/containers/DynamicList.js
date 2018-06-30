@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { setSearchTerm } from '../redux/modules/search/actions'
+import { setSearchTerm, toggleSidebar } from '../redux/modules/search/actions'
 
 import DynamicList from '../components/DynamicList'
 
@@ -10,8 +10,10 @@ const mapStateToProps = (state) => ({
 
   searchMode: state.search.mode,
   hasListConfig: state.search.listFields != null,
+
+  showSidebar: state.search.showSidebar,
 })
 
-const actionCreators = { setSearchTerm }
+const actionCreators = { setSearchTerm, toggleSidebar }
 
 export default connect(mapStateToProps, actionCreators)(DynamicList)

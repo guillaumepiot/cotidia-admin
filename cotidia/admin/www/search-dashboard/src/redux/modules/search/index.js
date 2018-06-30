@@ -36,6 +36,8 @@ const initialState = {
   },
 
   selected: [],
+
+  showSidebar: false,
 }
 
 export default (state = initialState, { type, payload } = {}) => {
@@ -251,6 +253,12 @@ export default (state = initialState, { type, payload } = {}) => {
         selected: state.selected.length === state.results.length
           ? []
           : state.results.map((item) => item.uuid),
+      }
+
+    case types.TOGGLE_SIDEBAR:
+      return {
+        ...state,
+        showSidebar: ! state.showSidebar,
       }
 
     default:

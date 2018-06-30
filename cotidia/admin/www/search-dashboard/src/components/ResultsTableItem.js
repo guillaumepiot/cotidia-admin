@@ -62,7 +62,7 @@ export default class ResultsTableItem extends PureComponent {
         {columns.map((column) => {
           if (column.type === 'data') {
             return (
-              <td data-header={column.label} key={column.id}>
+              <td className='nowrap' data-header={column.label} key={column.id}>
                 <ResultTableItemValue column={column} item={item} />
               </td>
             )

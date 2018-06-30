@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import { Icon } from './elements/global'
+
 export default class Pagination extends Component {
   static propTypes = {
     count: PropTypes.number.isRequired,
@@ -12,29 +14,25 @@ export default class Pagination extends Component {
 
   render () {
     return (
-      <>
-        <div>{this.props.count} results.</div>
-
-        <div className='pagination'>
-          <button
-            className='pagination__link pagination__link--previous'
-            disabled={! this.props.previous}
-            onClick={this.props.getPreviousPage}
-            type='button'
-          >
-            Previous Page
-          </button>
-
-          <button
-            className='pagination__link pagination__link--next'
-            disabled={! this.props.next}
-            onClick={this.props.getNextPage}
-            type='button'
-          >
-            Next Page
-          </button>
-        </div>
-      </>
+      <div className='content__pagination'>
+        <button
+          className='btn btn--link'
+          disabled={! this.props.previous}
+          onClick={this.props.getPreviousPage}
+          type='button'
+        >
+          <Icon icon='chevron-left' />
+        </button>
+        {this.props.count} results
+        <button
+          className='btn btn--link'
+          disabled={! this.props.next}
+          onClick={this.props.getNextPage}
+          type='button'
+        >
+          <Icon icon='chevron-right' />
+        </button>
+      </div>
     )
   }
 }
