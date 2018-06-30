@@ -1225,11 +1225,16 @@ hr {
         background-color: rgba(0, 0, 0, 0.35);
         z-index: -1;
         pointer-events: none; }
-    @media screen and (max-width: 767px) {
-      .dialog--modal .dialog__content {
-        display: flex;
-        flex-direction: column;
-        max-height: calc(100% - 1.33rem); } }
+    .dialog--modal .dialog__content {
+      border-radius: 2px;
+      position: relative;
+      border: 1px solid #D0D5D7;
+      background-color: #fff; }
+      @media screen and (max-width: 767px) {
+        .dialog--modal .dialog__content {
+          display: flex;
+          flex-direction: column;
+          max-height: calc(100% - 1.33rem); } }
     @media screen and (max-width: 767px) {
       .dialog--modal .dialog__body {
         overflow-y: auto; } }
@@ -1249,8 +1254,7 @@ hr {
     border: 1px solid #D0D5D7;
     border-radius: 2px;
     width: calc(100% - 1rem);
-    max-width: 540px;
-    position: relative; }
+    max-width: 540px; }
     .dialog__content:first-child {
       margin-top: 0.67rem; }
     .dialog__content:last-child {
@@ -2924,9 +2928,9 @@ body {
     position: sticky;
     top: 0;
     left: 0;
-    z-index: 1; }
+    z-index: 3; }
     .table--sticky thead th:first-child, .table--sticky thead td:first-child {
-      z-index: 3; }
+      z-index: 4; }
   .table--sticky tbody td:first-child {
     background-color: #fff; }
   .table--sticky tfoot th, .table--sticky tfoot td {
@@ -2934,7 +2938,9 @@ body {
     position: sticky;
     bottom: 0;
     left: 0;
-    z-index: 1; }
+    z-index: 3; }
+    .table--sticky tfoot th:first-child, .table--sticky tfoot td:first-child {
+      z-index: 4; }
   .table--sticky th.nowrap, .table--sticky td.nowrap {
     white-space: nowrap; }
   .table--sticky th:first-child, .table--sticky td:first-child {

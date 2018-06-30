@@ -8,10 +8,10 @@
                 position: sticky;
                 top: 0;
                 left: 0;
-                z-index: 1;
+                z-index: 3;
 
                 &:first-child {
-                    z-index: 3;
+                    z-index: 4;
                 }
             }
         }
@@ -30,12 +30,15 @@
                 position: sticky;
                 bottom: 0;
                 left: 0;
-                z-index: 1;
+                z-index: 3;
+
+                &:first-child {
+                    z-index: 4;
+                }
             }
         }
 
         th, td {
-
             &.nowrap {
                 white-space: nowrap;
             }
