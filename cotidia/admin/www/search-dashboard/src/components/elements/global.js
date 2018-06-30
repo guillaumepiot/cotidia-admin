@@ -22,7 +22,7 @@ FullScreen.propTypes = {
 
 export const Icon = ({ animating, className, fixed, icon, size }) => (
   <span
-    className={`fa fa-${icon}${animating ? ' fa-spin' : ''}${fixed ? ' fa-fw' : ''}${size ? ` fa-${size}` : ''} ${className}`}
+    className={`fa fa-${icon}${animating ? ' fa-spin' : ''}${fixed ? ' fa-fw' : ''}${size ? ` fa-${size}` : ''} ${className || ''}`}
   />
 )
 
