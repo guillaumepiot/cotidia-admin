@@ -21,9 +21,6 @@ export default class Date extends Component {
     }),
   }
 
-  updateValue = ({ [this.props.name]: value }) => this.props.updateValue(value)
-
-
   handleDateRangeSelect = (ranges) => {
     this.props.updateValue({
       min: moment(ranges.selection.startDate).format('YYYY-MM-DD'),
@@ -33,8 +30,8 @@ export default class Date extends Component {
 
   render () {
     const selectionRange = {
-      startDate: moment(this.props.data.value?.min),
-      endDate: moment(this.props.data.value?.max),
+      startDate: moment(this.props.value?.min),
+      endDate: moment(this.props.value?.max),
       key: 'selection',
       // color: this.props.globalConfig.primaryColor,
     }
