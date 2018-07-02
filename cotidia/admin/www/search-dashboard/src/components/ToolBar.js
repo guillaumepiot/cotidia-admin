@@ -9,7 +9,7 @@ import { TextInput } from '@cotidia/react-ui'
 
 import { Icon } from './elements/global'
 
-export default class SearchBar extends Component {
+export default class ToolBar extends Component {
   static propTypes = {
     batchActions: PropTypes.arrayOf(PropTypes.shape({
       action: PropTypes.string.isRequired,
