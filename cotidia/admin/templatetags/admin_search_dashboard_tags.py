@@ -20,7 +20,7 @@ def render_search_dashboard_config(
     app_label,
     model_name,
     url_type,
-    api_token,
+    auth_token,
     default_columns=[],
     default_filters=[],
     default_order_by=None,
@@ -75,34 +75,62 @@ def render_search_dashboard_config(
             }
         )
 
+    # Mandatory keys
     context = {
-        "columns": columns,
-        "default_columns": default_columns,
-        "endpoint": endpoint,
-        "list_fields": serializer.get_list_fields()
+        'endpoint': endpoint,
+        'auth_token': auth_token,
+        'columns': columns,
+        'default_columns': default_columns,
     }
+
+    # Optional keys
 
     if detail_endpoint is not None:
         context['detail_endpoint'] = detail_endpoint
-    if api_token is not None:
-        context['auth_token'] = api_token
-    if default_columns:
-        context['default_columns'] = default_columns
+
     if default_filters:
         context['default_filters'] = default_filters
 
     # Default ordering
     context['default_order_by'] = default_order_by or serializer.get_default_order_by()
 
-    # Extra filters
-    if serializer.get_extra_filters():
-        context['extra_filters'] = serializer.get_extra_filters()
+    context['primary_color'] = serializer.get_attribute(
+        'primary_color',
+        default='#00abd3'
+    )
 
-    context['list_handling'] = serializer.get_global_list_handling()
-    context['categorise_by'] = serializer.get_categorise_by()
-    context['date_format'] = serializer.get_date_format()
-    context['datetime_format'] = serializer.get_datetime_format()
-    context['columns_configurable'] = serializer.get_columns_configurable()
+    context['date_format'] = serializer.get_attribute(
+        'date_format',
+        default='D MMM YYYY'
+    )
+
+    context['datetime_format'] = serializer.get_attribute(
+        'datetime_format',
+        default='D MMM YYYY @ HH:mm'
+    )
+
+    context['columns_configurable'] = serializer.get_attribute(
+        'columns_configurable',
+        default=True
+    )
+
+    if serializer.get_attribute('list_handling'):
+        context['list_handling'] = serializer.get_attribute('list_handling')
+
+    if serializer.get_attribute('extra_filters'):
+        context['extra_filters'] = serializer.get_attribute('extra_filters')
+
+    if serializer.get_attribute('toolbar_filters'):
+        context['toolbar_filters'] = serializer.get_attribute('toolbar_filters')
+
+    if serializer.get_attribute('sidebar_filters'):
+        context['sidebar_filters'] = serializer.get_attribute('sidebar_filters')
+
+    if serializer.get_attribute('categorise_by'):
+        context['categorise_by'] = serializer.get_attribute('categorise_by')
+
+    if serializer.get_attribute('list_fields'):
+        context['list_fields'] = serializer.get_attribute('list_fields')
 
     return context
 

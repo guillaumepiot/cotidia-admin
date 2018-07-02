@@ -32,7 +32,7 @@ body {
             z-index: 1;
 
             .content__body {
-                height: calc(100vh - 11rem - #{$toolbar-height});
+                height: calc(100vh - 11.5rem - #{$toolbar-height});
             }
         }
     }

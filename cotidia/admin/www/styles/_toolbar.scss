@@ -29,42 +29,6 @@
             margin-left: 1rem;
         }
     }
-
-    &__item {
-        .form__group {
-            margin: 0;
-
-            .form__control {
-                background-color: #fff;
-                padding-top: 0.5rem;
-                padding-bottom: 0.5rem;
-                padding-left: 1rem;
-                padding-right: 1rem;
-                border: 1px solid $toolbar-form-border-color;
-                border-radius: 100px;
-
-                &--input, &--select, &--textarea {
-
-                    input, select {
-                        padding-right: 1rem;
-                    }
-
-                    &::after {
-                        top: calc(1.25rem - 2px);
-                        right: 1rem;
-                    }
-                }
-
-                .control-select__options {
-                    line-height: 1.5;
-                }
-            }
-
-            .form__help {
-                display: none;
-            }
-        }
-    }
 }
 
 .toolbar-profile {
@@ -161,11 +125,11 @@
     width: 240px;
     background-color: #fff;
     border: 1px solid $toolbar-border-color;
-    border-bottom-left-radius: $border-radius;
-    border-bottom-right-radius: $border-radius;
+    border-radius: $border-radius;
     box-shadow: 0px 2px 4px rgba(43, 47, 56, 0.18);
-    transform: translate(0, 0);
+    transform: translate(0, -4px);
     transition: transform $animation-speed ease, opacity $animation-speed ease;
+    // margin-top: 4px;
 
     // &::before {
     //     content: "";

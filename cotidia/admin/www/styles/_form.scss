@@ -1,0 +1,45 @@
+.form {
+    &__legend {
+        padding: 1rem 1rem;
+        margin-bottom: 0.5rem;
+        border-bottom: 1px solid $table-border-color;
+        font-weight: 500;
+        padding-bottom: calc(1rem - 1px);
+    }
+
+    &__group {
+        &--boxed {
+            margin: 0;
+
+            .form__control {
+                background-color: #fff;
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+                padding-left: 1rem;
+                padding-right: 1rem;
+                border: 1px solid $toolbar-form-border-color;
+                border-radius: 100px;//$border-radius;
+
+                &--input, &--select, &--textarea {
+
+                    input, select {
+                        padding-right: 1rem;
+                    }
+
+                    &::after {
+                        top: calc(1.25rem - 2px);
+                        right: 1rem;
+                    }
+                }
+
+                .control-select__options {
+                    line-height: 1.5;
+                }
+            }
+
+            .form__help {
+                display: none;
+            }
+        }
+    }
+}

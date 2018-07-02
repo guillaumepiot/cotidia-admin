@@ -2,17 +2,18 @@
     <div class="content__head">
         <div class="content__title">Finance</div>
         <div class="content__actions">
-            <button class="btn btn--outline  btn--small btn--primary">Action</button>
-        </div>
-    </div>
-    <div class="content__toolbar">
-        <div class="content__filter">Filter</div>
-        <div class="content__actions">
-            <button class="btn btn--outline btn--small" id="toggle-sidebar">
-                <span class="fa fa-filter"></span>
+            <button class="btn btn--outline  btn--small">
+                <span class="fa fa-columns"></span>
+            </button>
+            <button class="btn btn--outline  btn--small">
+                <span class="fa fa-table"></span>
+            </button>
+            <button class="btn btn--outline  btn--small">
+                <span class="fa fa-list"></span>
             </button>
         </div>
     </div>
+    {{> @content-toolbar }}
     <div class="content__body">
         <div class="content__list">
             {{> @table--sticky }}
@@ -20,7 +21,12 @@
         <div class="content__sidebar">
             <form action="" class="form--animate">
                 <fieldset>
-                    <legend>Filter</legend>
+                    <div class="form__legend">
+                        Filter
+                        <button type="button" class="btn btn--link btn--small toggle-sidebar">
+                            <span class="fa fa-times"></span>
+                        </button>
+                    </div>
                     <div class="form__row">
                         <div class="form__group">
                             <label class="form__label">Job number</label>
@@ -51,26 +57,28 @@
     <div class="content__foot">
         {{> @pagination }}
         <div class="content__actions">
-            Download as
             <button class="btn btn--outline  btn--small">
-                <span class="fa fa-file-text-o"></span>
+                <span class="fa fa-file-alt"></span>
                 CSV
             </button>
             <button class="btn btn--outline  btn--small">
-                <span class="fa fa-file-pdf-o"></span>
+                <span class="fa fa-file-pdf"></span>
                 PDF
             </button>
         </div>
     </div>
 </div>
 <script>
-    var toggleSidebarBtn = document.getElementById('toggle-sidebar')
+    var toggleSidebarBtns = document.querySelectorAll('.toggle-sidebar')
     var content = document.querySelector('.content')
-    toggleSidebarBtn.addEventListener('click', function() {
-        if (content.classList.contains('content--sidebar')) {
-            content.classList.remove('content--sidebar')
-        } else {
-            content.classList.add('content--sidebar')
-        }
+    toggleSidebarBtns.forEach(function(elm) {
+        elm.addEventListener('click', function() {
+            if (content.classList.contains('content--sidebar')) {
+                content.classList.remove('content--sidebar')
+            } else {
+                content.classList.add('content--sidebar')
+            }
+        })
     })
+
 </script>

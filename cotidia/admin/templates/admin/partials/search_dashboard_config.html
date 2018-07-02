@@ -48,6 +48,12 @@
     {% if extra_filters %}
         extraFilters: {{extra_filters|safe}},
     {% endif %}
+    {% if toolbar_filters %}
+        toolbarFilters: {{toolbar_filters|safe}},
+    {% endif %}
+    {% if sidebar_filters %}
+        sidebarFilters: {{sidebar_filters|safe}},
+    {% endif %}
     {% if default_order_by %}
         defaultOrderBy: '{{default_order_by}}',
     {% endif %}

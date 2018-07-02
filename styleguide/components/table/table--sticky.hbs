@@ -1,8 +1,33 @@
 <table class="table table--clickable table--sticky">
     <thead>
         <tr>
-            <th class="nowrap">Job number</th>
-            <th class="nowrap">Status</th>
+            <th class="table-cell--checkbox">
+                <input type="checkbox">
+            </th>
+            <th class="nowrap">
+                <span class="table-header__name">Job number</span>
+                <span class="table-header__sort">
+                    <span class="fa fa-long-arrow-alt-down"></span>
+                </span>
+                <span class="table-header__filter tooltip tooltip--bottom-center" data-tooltip="Filter">
+                    <span class="fa fa-filter"></span>
+                </span>
+                <span class="table-header__drag">
+                    <span class="fa fa-bars"></span>
+                </span>
+            </th>
+            <th class="nowrap">
+                <span class="table-header__name">Status</span>
+                <span class="table-header__sort table-header__sort--active">
+                    <span class="fa fa-long-arrow-alt-down"></span>
+                </span>
+                <span class="table-header__filter table-header__filter--active">
+                    <span class="fa fa-filter"></span>
+                </span>
+                <span class="table-header__drag">
+                    <span class="fa fa-bars"></span>
+                </span>
+            </th>
             <th class="nowrap">Contact</th>
             <th class="nowrap">Staff cost</th>
             <th class="nowrap">Expenses</th>
@@ -31,11 +56,12 @@
             <th></th>
             <th></th>
             <th></th>
-            <th><span class="text-micro text-uppercase">Total</span><br>1,000</th>
-            <th><span class="text-micro text-uppercase">&nbsp;</span><br>500</th>
-            <th><span class="text-micro text-uppercase">&nbsp;</span><br>1500</th>
-            <th><span class="text-micro text-uppercase">&nbsp;</span><br>2000</th>
-            <th><span class="text-micro text-uppercase">Average</span><br>25%</div></th>
+            <th>Grand total</th>
+            <th>1,000</th>
+            <th>500</th>
+            <th>1500</th>
+            <th>2000</th>
+            <th>25%</th>
             <th></th>
             <th></th>
         </tr>

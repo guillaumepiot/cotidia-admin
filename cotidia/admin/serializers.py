@@ -38,7 +38,6 @@ class AdminModelSerializer(serializers.ModelSerializer):
             qs = self.get_choice_queryset()
             return [{"value": str(x.uuid), "label": getattr(x, self.SearchProvider.display_field)} for x in qs]
         except AttributeError as e:
-            print(e)
             raise AttributeError(
                 "%s does not have the display_field defined in the SearchProvider sub class" % str(self.__class__.__name__)
             )
@@ -115,41 +114,17 @@ class AdminModelSerializer(serializers.ModelSerializer):
 
         return self._field_representation
 
-    def get_primary_color(self):
+    def get_attribute(self, attr, default=None):
         try:
-            return self.SearchProvider.primary_color
+            return getattr(self.SearchProvider, attr)
         except AttributeError:
-            return '#00abd3'
-
-    def get_global_list_handling(self):
-        try:
-            return self.SearchProvider.list_handling
-        except AttributeError:
-            return None
-
-    def get_date_format(self):
-        try:
-            return self.SearchProvider.date_format
-        except AttributeError:
-            return None
-
-    def get_datetime_format(self):
-        try:
-            return self.SearchProvider.datetime_format
-        except AttributeError:
-            return None
+            return default
 
     def get_categorise_by(self):
         try:
             return self.SearchProvider.categorise_by
         except AttributeError:
             return None
-
-    def get_columns_configurable(self):
-        try:
-            return self.SearchProvider.columns_configurable
-        except AttributeError:
-            return True
 
     def get_batch_actions(self):
         try:

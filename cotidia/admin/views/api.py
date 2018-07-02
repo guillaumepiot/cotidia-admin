@@ -253,10 +253,10 @@ class AdminSearchDashboardAPIView(ListAPIView):
         # Extra filter
         extra_filters = serializer.get_extra_filters()
         if extra_filters:
-            for f in extra_filters:
-                if self.request.GET.get(f['field']):
-                    func = getattr(serializer, 'filter_' + f['field'])
-                    qs = func(qs, self.request.GET.get(f['field']))
+            for k in extra_filters.keys():
+                if self.request.GET.get(k):
+                    func = getattr(serializer, 'filter_' + k)
+                    qs = func(qs, self.request.GET.get(k))
 
         ordering_params = self.request.GET.getlist('_order')
         if ordering_params:

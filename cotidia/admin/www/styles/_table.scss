@@ -10,16 +10,14 @@
                 left: 0;
                 z-index: 3;
 
-                &:first-child {
+                &:first-child, &:nth-child(2) {
                     z-index: 4;
                 }
             }
-        }
 
-        tbody {
-            td {
-                &:first-child {
-                    background-color: #fff;
+            th:hover {
+                .table-header__sort, .table-header__filter, .table-header__drag {
+                    opacity: 1;
                 }
             }
         }
@@ -32,7 +30,7 @@
                 left: 0;
                 z-index: 3;
 
-                &:first-child {
+                &:first-child, &:nth-child(2) {
                     z-index: 4;
                 }
             }
@@ -43,18 +41,23 @@
                 white-space: nowrap;
             }
 
-            &:first-child {
+            &:first-child, &:nth-child(2) {
                 position: -webkit-sticky; // for safari
                 position: sticky;
                 left: 0px;
-                // top: 0px; -> doesn't work in Safari 11
-                /*
-                thanks to https://github.com/jonjohnjohnson
-                explanation: https://github.com/w3c/csswg-drafts/issues/865
-                */
                 z-index: 2;
+            }
+            &:nth-child(2) {
+                left: 2.2rem;
                 width: 200px;
-                box-shadow: inset -2px 0px $grey--light;
+                box-shadow: inset -1px 0px $grey--light;
+                // border-right: 1px solid $grey--light;
+            }
+
+            &.table-cell {
+                &--checkbox {
+                    padding-right: 0;
+                }
             }
         }
     }
@@ -71,6 +74,51 @@
             .action-column + td:nth-child(2){
                 display: table-cell;
             }
+        }
+    }
+}
+
+.table-header {
+    &__name {
+
+    }
+
+    &__sort {
+        cursor: pointer;
+        opacity: 0;
+        color: $grey;
+        &--active {
+            opacity: 1;
+        }
+        &:hover {
+            color: $grey--dark;
+        }
+    }
+
+    &__filter {
+        cursor: pointer;
+        opacity: 0;
+        color: $grey;
+        margin-left: 0.5rem;
+        position: relative;
+        &--active {
+            opacity: 1;
+        }
+        &:hover {
+            color: $grey--dark;
+        }
+    }
+
+    &__drag {
+        cursor: pointer;
+        opacity: 0;
+        color: $grey;
+        margin-left: 0.5rem;
+        &--active {
+            opacity: 1;
+        }
+        &:hover {
+            color: $grey--dark;
         }
     }
 }
