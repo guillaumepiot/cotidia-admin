@@ -5,6 +5,8 @@ export const SET_DETAIL_URL = 'dynamic-list/search/SET_DETAIL_URL'
 export const SET_BATCH_ACTIONS = 'dynamic-list/search/SET_BATCH_ACTIONS'
 export const SET_GLOBAL_ACTIONS = 'dynamic-list/search/SET_GLOBAL_ACTIONS'
 export const SET_EXTRA_FILTERS = 'dynamic-list/search/SET_EXTRA_FILTERS'
+export const SET_TOOLBAR_FILTERS = 'dynamic-list/search/SET_TOOLBAR_FILTERS'
+export const SET_SIDEBAR_FILTERS = 'dynamic-list/search/SET_SIDEBAR_FILTERS'
 export const SET_COLUMN_CONFIG = 'dynamic-list/search/SET_COLUMN_CONFIG'
 
 export const LOAD_STORED_CONFIG = 'dynamic-list/search/LOAD_STORED_CONFIG'

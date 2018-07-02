@@ -8,7 +8,9 @@ const initialState = {
   batchActions: [], // Config for all batch actions
   globalActions: [], // Config for all global actions
 
-  extraFilters: [],
+  extraFilters: {},
+  toolbarFilters: [],
+  sidebarFilters: [],
 
   defaultColumns: [], // Actual default columns as specifed by config
   visibleColumns: [], // Current visible columns
@@ -77,6 +79,18 @@ export default (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         extraFilters: payload,
+      }
+
+    case types.SET_TOOLBAR_FILTERS:
+      return {
+        ...state,
+        toolbarFilters: payload,
+      }
+
+    case types.SET_SIDEBAR_FILTERS:
+      return {
+        ...state,
+        sidebarFilters: payload,
       }
 
     case types.SET_COLUMN_CONFIG:

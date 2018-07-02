@@ -15,6 +15,7 @@ const mapStateToProps = (state) => ({
   extraFilters: state.search.extraFilters,
   filters: state.search.filters,
   searchTerm: state.search.searchTerm,
+  toolbarFilters: state.search.toolbarFilters,
 })
 
 const actionCreators = {

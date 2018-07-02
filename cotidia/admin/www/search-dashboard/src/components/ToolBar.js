@@ -18,7 +18,7 @@ export default class ToolBar extends Component {
       onComplete: PropTypes.func,
     })),
     clearFilters: PropTypes.func.isRequired,
-    extraFilters: PropTypes.array,
+    extraFilters: PropTypes.object,
     filters: PropTypes.object,
     globalActions: PropTypes.array,
     performBatchAction: PropTypes.func.isRequired,
@@ -26,15 +26,16 @@ export default class ToolBar extends Component {
     setFilterValue: PropTypes.func.isRequired,
     setSearchTerm: PropTypes.func.isRequired,
     toggleSidebar: PropTypes.func.isRequired,
+    toolbarFilters: PropTypes.array,
   }
 
   static defaultProps = {
     batchActions: [],
-    extraFilters: [],
     filters: {},
     globalActions: [],
     mode: 'table',
     searchTerm: '',
+    toolbarFilters: [],
   }
 
   state = {
@@ -100,6 +101,7 @@ export default class ToolBar extends Component {
       extraFilters,
       filters,
       searchTerm,
+      toolbarFilters,
     } = this.props
 
     return (
@@ -116,12 +118,18 @@ export default class ToolBar extends Component {
             value={searchTerm}
           />
 
-          {extraFilters && extraFilters.map((filter) => {
-            const { type, ...filterProps } = filter
+          {toolbarFilters && toolbarFilters.map((filter) => {
+            const { filter: type, ...filterProps } = extraFilters[filter]
 
             if (type === 'boolean') {
               return (
-                <Boolean key={filter.field} {...filterProps} updateValue={this.updateFilterValueFactory(filter.field)} value={filters[filter.field]} />
+                <Boolean
+                  key={filter}
+                  {...filterProps}
+                  name={filter}
+                  updateValue={this.updateFilterValueFactory(filter)}
+                  value={filters[filter]}
+                />
               )
             }
           })}
