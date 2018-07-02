@@ -200,14 +200,6 @@ export default (state = initialState, { type, payload } = {}) => {
       }
     }
 
-    // case types.SET_COLUMNS:
-    //   return {
-    //     ...state,
-    //     visibleColumns: payload.columns,
-    //     orderColumn: payload.columns[0],
-    //     orderAscending: true,
-    //   }
-
     case types.RESET_COLUMNS:
       return {
         ...state,
