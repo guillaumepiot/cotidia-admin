@@ -18,7 +18,6 @@ export default class ToolBar extends Component {
       onComplete: PropTypes.func,
     })),
     clearFilters: PropTypes.func.isRequired,
-    extraFilters: PropTypes.object,
     filters: PropTypes.object,
     globalActions: PropTypes.array,
     performBatchAction: PropTypes.func.isRequired,
@@ -98,7 +97,6 @@ export default class ToolBar extends Component {
 
   render () {
     const {
-      extraFilters,
       filters,
       searchTerm,
       toolbarFilters,
@@ -119,7 +117,7 @@ export default class ToolBar extends Component {
           />
 
           {toolbarFilters && toolbarFilters.map((filter) => {
-            const { filter: type, ...filterProps } = extraFilters[filter]
+            const { filter: type, ...filterProps } = filter
 
             if (type === 'boolean') {
               return (

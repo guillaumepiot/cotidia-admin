@@ -35,3 +35,33 @@ export const getActiveFilters = createSelector(
 )
 
 export const allResultsSelected = (state) => (state.search.selected.length === state.search.results.length)
+
+const getFiltersArray = (state, filters) => {
+  if (! filters) {
+    return []
+  }
+
+  return filters.map((filter) => {
+    // First see if the filter is present in the "extraFilters" object.
+    if (state.search.extraFilters.hasOwnProperty(filter)) {
+      return {
+        ...state.search.extraFilters[filter],
+        name: filter,
+      }
+    }
+
+    // If not, see if it's a colmn with that filter
+    if (state.search.columns.hasOwnProperty(filter)) {
+      if (state.search.columns[filter].filter) {
+        return {
+          filter: state.search.columns[filter].filter,
+          label: state.search.columns[filter].label,
+          name: filter,
+          options: state.search.columns[filter].options,
+        }
+      }
+    }
+  }).filter(identity)
+}
+
+export const getToolbarFilters = (state) => getFiltersArray(state, state.search.toolbarFilters)

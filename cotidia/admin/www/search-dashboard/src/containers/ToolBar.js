@@ -8,14 +8,15 @@ import {
   toggleSidebar,
 } from '../redux/modules/search/actions'
 
+import { getToolbarFilters } from '../redux/modules/search/selectors'
+
 import ToolBar from '../components/ToolBar'
 
 const mapStateToProps = (state) => ({
   batchActions: state.search.batchActions,
-  extraFilters: state.search.extraFilters,
   filters: state.search.filters,
   searchTerm: state.search.searchTerm,
-  toolbarFilters: state.search.toolbarFilters,
+  toolbarFilters: getToolbarFilters(state),
 })
 
 const actionCreators = {
