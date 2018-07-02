@@ -40,7 +40,7 @@ const initialState = {
 
   selected: [],
 
-  showSidebar: false,
+  showSidebar: true,
 }
 
 export default (state = initialState, { type, payload } = {}) => {

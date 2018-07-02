@@ -124,8 +124,8 @@ export default class ToolBar extends Component {
                 <Boolean
                   key={filterProps.name}
                   {...filterProps}
-                  updateValue={this.updateFilterValueFactory(filter)}
-                  value={filters[filter]}
+                  updateValue={this.updateFilterValueFactory(filter.name)}
+                  value={filters[filter.name]}
                 />
               )
             }

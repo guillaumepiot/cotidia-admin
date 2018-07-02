@@ -8,14 +8,14 @@ export default class Number extends Component {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     updateValue: PropTypes.func.isRequired,
-    value: PropTypes.number,
+    value: PropTypes.string,
   }
 
   static defaultProps = {
     value: '',
   }
 
-  updateValue = ({ [this.props.name]: value }) => this.props.updateValue(Number(value))
+  updateValue = ({ [this.props.name]: value }) => this.props.updateValue(value)
 
   render () {
     return (
