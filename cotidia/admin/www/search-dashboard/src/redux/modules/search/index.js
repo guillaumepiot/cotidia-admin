@@ -1,6 +1,7 @@
 import * as types from './types'
 
 const initialState = {
+  title: null,
   endpoint: null,
   detailURL: null,
   columns: {}, // Config for all columns
@@ -42,6 +43,12 @@ const initialState = {
 
 export default (state = initialState, { type, payload } = {}) => {
   switch (type) {
+    case types.SET_TITLE:
+      return {
+        ...state,
+        title: payload,
+      }
+
     case types.SET_ENDPOINT:
       return {
         ...state,

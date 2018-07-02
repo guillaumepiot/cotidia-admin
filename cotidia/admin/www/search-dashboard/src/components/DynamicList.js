@@ -4,11 +4,13 @@ import PropTypes from 'prop-types'
 import { FullScreen, Icon } from './elements/global'
 import Modal from '../containers/Modal'
 
+import Header from '../containers/Header'
 import SearchFilterSidebar from '../containers/SearchFilterSidebar'
-import SearchBar from '../containers/SearchBar'
+import ToolBar from '../containers/ToolBar'
 import SearchResultsList from '../containers/SearchResultsList'
 import SearchResultsTable from '../containers/SearchResultsTable'
 import Pagination from '../containers/Pagination'
+import GlobalActions from '../containers/GlobalActions'
 
 export default class DynamicList extends Component {
   static propTypes = {
@@ -17,10 +19,7 @@ export default class DynamicList extends Component {
     searchMode: PropTypes.string.isRequired,
     hasListConfig: PropTypes.bool.isRequired,
     showSidebar: PropTypes.bool.isRequired,
-    toggleSidebar: PropTypes.func.isRequired,
   }
-
-  toggleSidebar = () => this.props.toggleSidebar()
 
   render () {
     const {
@@ -50,7 +49,8 @@ export default class DynamicList extends Component {
     return (
       <>
         <div className={`content ${showSidebar && 'content--sidebar'}`}>
-          <SearchBar />
+          <Header />
+          <ToolBar />
 
           <div className='content__body'>
             <div className='content__list'>
@@ -62,22 +62,13 @@ export default class DynamicList extends Component {
                 <SearchResultsTable />
               )}
             </div>
+
+            <SearchFilterSidebar />
           </div>
 
           <div className='content__foot'>
             <Pagination />
-
-            <div className='content__actions'>
-              Download as
-              <button className='btn btn--outline btn--small btn--create'>
-                <Icon icon='file-text-o' />
-                CSV
-              </button>
-              <button className='btn btn--outline btn--small btn--create'>
-                <Icon icon='file-pdf-o' />
-                PDF
-              </button>
-            </div>
+            <GlobalActions />
           </div>
         </div>
 

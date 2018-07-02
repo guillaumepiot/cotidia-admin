@@ -94,4 +94,5 @@ export const appPropTypes = {
   globalActions,
   listFields,
   overrideStoredConfig: PropTypes.bool,
+  title: PropTypes.string.isRequired,
 }

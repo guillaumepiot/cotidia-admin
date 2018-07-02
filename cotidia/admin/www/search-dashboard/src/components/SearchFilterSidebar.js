@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 // import { debounce } from '../utils'
 
-// import { Boolean } from './search-bar-filters'
+// import { Boolean } from './inline-filters'
 
 // import { TextInput } from '@cotidia/react-ui'
 
