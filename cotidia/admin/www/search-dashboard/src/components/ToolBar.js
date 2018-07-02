@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { debounce } from '../utils'
 
-import { Boolean } from './inline-filters'
+import Boolean from './inline-filters/Boolean'
 
 import { TextInput } from '@cotidia/react-ui'
 
@@ -122,9 +122,8 @@ export default class ToolBar extends Component {
             if (type === 'boolean') {
               return (
                 <Boolean
-                  key={filter}
+                  key={filterProps.name}
                   {...filterProps}
-                  name={filter}
                   updateValue={this.updateFilterValueFactory(filter)}
                   value={filters[filter]}
                 />

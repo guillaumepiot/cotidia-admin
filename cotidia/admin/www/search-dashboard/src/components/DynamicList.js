@@ -5,7 +5,7 @@ import { FullScreen, Icon } from './elements/global'
 import Modal from '../containers/Modal'
 
 import Header from '../containers/Header'
-import SearchFilterSidebar from '../containers/SearchFilterSidebar'
+import FilterSidebar from '../containers/FilterSidebar'
 import ToolBar from '../containers/ToolBar'
 import SearchResultsList from '../containers/SearchResultsList'
 import SearchResultsTable from '../containers/SearchResultsTable'
@@ -63,7 +63,7 @@ export default class DynamicList extends Component {
               )}
             </div>
 
-            <SearchFilterSidebar />
+            <FilterSidebar />
           </div>
 
           <div className='content__foot'>

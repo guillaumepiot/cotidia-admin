@@ -65,3 +65,4 @@ const getFiltersArray = (state, filters) => {
 }
 
 export const getToolbarFilters = (state) => getFiltersArray(state, state.search.toolbarFilters)
+export const getSidebarFilters = (state) => getFiltersArray(state, state.search.sidebarFilters)

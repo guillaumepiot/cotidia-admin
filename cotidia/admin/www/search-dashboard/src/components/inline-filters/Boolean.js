@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Checkbox } from '@cotidia/react-ui'
 
-export class Boolean extends Component {
+export default class Boolean extends Component {
   static propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
