@@ -1,13 +1,16 @@
 import * as types from './types'
 
 const initialState = {
+  title: null,
   endpoint: null,
   detailURL: null,
   columns: {}, // Config for all columns
   batchActions: [], // Config for all batch actions
   globalActions: [], // Config for all global actions
 
-  extraFilters: [],
+  extraFilters: {},
+  toolbarFilters: [],
+  sidebarFilters: [],
 
   defaultColumns: [], // Actual default columns as specifed by config
   visibleColumns: [], // Current visible columns
@@ -37,11 +40,17 @@ const initialState = {
 
   selected: [],
 
-  showSidebar: false,
+  showSidebar: true,
 }
 
 export default (state = initialState, { type, payload } = {}) => {
   switch (type) {
+    case types.SET_TITLE:
+      return {
+        ...state,
+        title: payload,
+      }
+
     case types.SET_ENDPOINT:
       return {
         ...state,
@@ -70,6 +79,18 @@ export default (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         extraFilters: payload,
+      }
+
+    case types.SET_TOOLBAR_FILTERS:
+      return {
+        ...state,
+        toolbarFilters: payload,
+      }
+
+    case types.SET_SIDEBAR_FILTERS:
+      return {
+        ...state,
+        sidebarFilters: payload,
       }
 
     case types.SET_COLUMN_CONFIG:
@@ -199,14 +220,6 @@ export default (state = initialState, { type, payload } = {}) => {
         ...newState,
       }
     }
-
-    // case types.SET_COLUMNS:
-    //   return {
-    //     ...state,
-    //     visibleColumns: payload.columns,
-    //     orderColumn: payload.columns[0],
-    //     orderAscending: true,
-    //   }
 
     case types.RESET_COLUMNS:
       return {

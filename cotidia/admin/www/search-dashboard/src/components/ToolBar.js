@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 
 import { debounce } from '../utils'
 
-import { Boolean } from './search-bar-filters'
+import Boolean from './inline-filters/Boolean'
 
 import { TextInput } from '@cotidia/react-ui'
 
 import { Icon } from './elements/global'
 
-export default class SearchBar extends Component {
+export default class ToolBar extends Component {
   static propTypes = {
     batchActions: PropTypes.arrayOf(PropTypes.shape({
       action: PropTypes.string.isRequired,
@@ -18,41 +18,30 @@ export default class SearchBar extends Component {
       onComplete: PropTypes.func,
     })),
     clearFilters: PropTypes.func.isRequired,
-    columnsConfigurable: PropTypes.bool.isRequired,
-    extraFilters: PropTypes.array,
     filters: PropTypes.object,
     globalActions: PropTypes.array,
-    hasListConfig: PropTypes.bool.isRequired,
-    manageColumns: PropTypes.func.isRequired,
-    mode: PropTypes.string,
     performBatchAction: PropTypes.func.isRequired,
-    performGlobalAction: PropTypes.func.isRequired,
     searchTerm: PropTypes.string,
     setFilterValue: PropTypes.func.isRequired,
     setSearchTerm: PropTypes.func.isRequired,
-    switchMode: PropTypes.func.isRequired,
+    toggleSidebar: PropTypes.func.isRequired,
+    toolbarFilters: PropTypes.array,
   }
 
   static defaultProps = {
     batchActions: [],
-    extraFilters: [],
     filters: {},
     globalActions: [],
     mode: 'table',
     searchTerm: '',
+    toolbarFilters: [],
   }
 
   state = {
     action: '',
   }
 
-  displayList = () => {
-    this.props.switchMode('list')
-  }
-
-  displayTable = () => {
-    this.props.switchMode('table')
-  }
+  toggleSidebar = () => this.props.toggleSidebar()
 
   updateSearchTerm = debounce(250, ({ searchTerm }) => this.props.setSearchTerm(searchTerm))
 
@@ -60,10 +49,6 @@ export default class SearchBar extends Component {
 
   clearSearchTerm = (e) => {
     this.props.clearFilters()
-  }
-
-  manageColumns = (e) => {
-    this.props.manageColumns()
   }
 
   selectBatchAction = (e) => this.setState({ action: e.target.value })
@@ -76,10 +61,6 @@ export default class SearchBar extends Component {
 
   performBatchActionFactory = (action) => () => {
     this.props.performBatchAction(action)
-  }
-
-  performGlobalActionFactory = (action) => () => {
-    this.props.performGlobalAction(action)
   }
 
   renderBatchActions () {
@@ -116,31 +97,16 @@ export default class SearchBar extends Component {
 
   render () {
     const {
-      columnsConfigurable,
-      extraFilters,
       filters,
-      globalActions,
-      hasListConfig,
-      mode,
       searchTerm,
+      toolbarFilters,
     } = this.props
 
     return (
-      <>
-        {hasListConfig && (
-          <div className='head-bar text-right'>
-            <div style={{ flex: 1 }} />
-
-            <button className={`btn ${mode === 'list' ? '' : 'btn--outline'}`} onClick={this.displayList}>
-              <Icon fixed icon='bars' />
-            </button>
-            <button className={`btn ${mode === 'table' ? '' : 'btn--outline'}`} onClick={this.displayTable}>
-              <Icon fixed icon='table' />
-            </button>
-          </div>
-        )}
-        <div className='head-bar head-bar--filter'>
+      <div className='content__toolbar'>
+        <div className='content__filter'>
           <TextInput
+            controlOnly
             label='Search'
             name='searchTerm'
             prefix={<Icon icon='search' />}
@@ -150,43 +116,34 @@ export default class SearchBar extends Component {
             value={searchTerm}
           />
 
-          {extraFilters && extraFilters.map((filter) => {
-            const { type, ...filterProps } = filter
+          {toolbarFilters && toolbarFilters.map((filter) => {
+            const { filter: type, ...filterProps } = filter
 
             if (type === 'boolean') {
               return (
-                <Boolean key={filter.field} {...filterProps} updateValue={this.updateFilterValueFactory(filter.field)} value={filters[filter.field]} />
+                <Boolean
+                  key={filterProps.name}
+                  {...filterProps}
+                  updateValue={this.updateFilterValueFactory(filter.name)}
+                  value={filters[filter.name]}
+                />
               )
             }
           })}
+        </div>
 
-          <button className='btn btn--outline' onClick={this.clearSearchTerm} title='Reset filters' type='button'>
-            <Icon fixed icon='sync-alt' />
+        <div className='content__actions'>
+          <button className='btn btn--outline btn--small' onClick={this.clearSearchTerm} title='Reset filters' type='button'>
+            <Icon icon='sync-alt' />
           </button>
 
-          {globalActions && globalActions.map((action) => (
-            <button
-              className='btn btn--outline'
-              key={action.action}
-              onClick={this.performGlobalActionFactory(action)}
-              title={action.label}
-              type='button'
-            >
-              {action.icon ? (
-                <Icon fixed icon={action.icon} />
-              ) : action.label}
-            </button>
-          ))}
-
-          {columnsConfigurable && (
-            <button className='btn btn--outline' onClick={this.manageColumns} title='Manage column' type='button'>
-              <Icon fixed icon='columns' />
-            </button>
-          )}
-
           {this.renderBatchActions()}
+
+          <button className='btn btn--outline btn--small' onClick={this.toggleSidebar}>
+            <Icon icon='filter' />
+          </button>
         </div>
-      </>
+      </div>
     )
   }
 }

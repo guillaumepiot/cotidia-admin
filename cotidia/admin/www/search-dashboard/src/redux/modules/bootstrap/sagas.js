@@ -6,11 +6,14 @@ import * as searchActions from '../search/actions'
 import * as searchTypes from '../search/types'
 
 export function * bootstrap ({ payload: config }) {
+  yield put({ type: searchTypes.SET_TITLE, payload: config.title })
   yield put({ type: searchTypes.SET_ENDPOINT, payload: config.endpoint })
   yield put({ type: searchTypes.SET_DETAIL_URL, payload: config.detailURL })
-  yield put({ type: searchTypes.SET_BATCH_ACTIONS, payload: config.batchActions })
-  yield put({ type: searchTypes.SET_GLOBAL_ACTIONS, payload: config.globalActions })
-  yield put({ type: searchTypes.SET_EXTRA_FILTERS, payload: config.extraFilters })
+  yield put({ type: searchTypes.SET_BATCH_ACTIONS, payload: config.batchActions || [] })
+  yield put({ type: searchTypes.SET_GLOBAL_ACTIONS, payload: config.globalActions || [] })
+  yield put({ type: searchTypes.SET_EXTRA_FILTERS, payload: config.extraFilters || {} })
+  yield put({ type: searchTypes.SET_TOOLBAR_FILTERS, payload: config.toolbarFilters || [] })
+  yield put({ type: searchTypes.SET_SIDEBAR_FILTERS, payload: config.sidebarFilters || [] })
 
   yield put({ type: configTypes.SET_CONFIG, payload: config.config })
 

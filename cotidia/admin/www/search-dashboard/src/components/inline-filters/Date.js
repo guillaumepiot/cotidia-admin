@@ -12,23 +12,17 @@ import { staticRanges } from '../elements/global'
 
 export default class Date extends Component {
   static propTypes = {
-    config: PropTypes.shape({
-      label: PropTypes.string.isRequired,
-    }).isRequired,
-    data: PropTypes.shape({
-      value: PropTypes.shape({
-        min: PropTypes.string,
-        max: PropTypes.string,
-      }),
-    }).isRequired,
-    globalConfig: PropTypes.shape({
-      primaryColor: PropTypes.string,
+    label: PropTypes.string.isRequired,
+    // name: PropTypes.string.isRequired,
+    updateValue: PropTypes.func.isRequired,
+    value: PropTypes.shape({
+      min: PropTypes.string,
+      max: PropTypes.string,
     }),
-    updateField: PropTypes.func.isRequired,
   }
 
   handleDateRangeSelect = (ranges) => {
-    this.props.updateField('value', {
+    this.props.updateValue({
       min: moment(ranges.selection.startDate).format('YYYY-MM-DD'),
       max: moment(ranges.selection.endDate).format('YYYY-MM-DD'),
     })
@@ -36,15 +30,15 @@ export default class Date extends Component {
 
   render () {
     const selectionRange = {
-      startDate: moment(this.props.data.value?.min),
-      endDate: moment(this.props.data.value?.max),
+      startDate: moment(this.props.value?.min),
+      endDate: moment(this.props.value?.max),
       key: 'selection',
-      color: this.props.globalConfig.primaryColor,
+      // color: this.props.globalConfig.primaryColor,
     }
 
     return (
       <>
-        <p>{this.props.config.label} is within the range:</p>
+        <p>{this.props.label} is within the range:</p>
 
         <DateRangePicker
           dateDisplayFormat='YYYY-MM-DD'
