@@ -1,5 +1,22 @@
 import PropTypes from 'prop-types'
 
+const stringList = PropTypes.arrayOf(PropTypes.string)
+
+const option = PropTypes.shape({
+  label: PropTypes.string.isRequired,
+  value: PropTypes.any.isRequired,
+})
+
+const options = PropTypes.arrayOf(option)
+
+const listHandling = PropTypes.shape({
+  style: PropTypes.oneOf(['string', 'element']).isRequired,
+  value: PropTypes.string.isRequired,
+  props: PropTypes.object,
+})
+
+// ---
+
 const batchAction = PropTypes.shape({
   action: PropTypes.string.isRequired,
   endpoint: PropTypes.string.isRequired,
@@ -9,10 +26,12 @@ const batchAction = PropTypes.shape({
 
 const batchActions = PropTypes.arrayOf(batchAction)
 
-const listHandling = PropTypes.shape({
-  style: PropTypes.oneOf(['string', 'element']).isRequired,
-  value: PropTypes.string.isRequired,
-  props: PropTypes.object,
+const categoriseBy = PropTypes.shape({
+  column: PropTypes.string.isRequired,
+  display: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.string,
+  ]),
 })
 
 const column = PropTypes.shape({
@@ -23,10 +42,7 @@ const column = PropTypes.shape({
   ]),
   filter: PropTypes.oneOf(['text', 'choice', 'boolean', 'number', 'date']),
   label: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string.isRequired,
-    value: PropTypes.any.isRequired,
-  })),
+  options,
   orderable: PropTypes.bool,
   listHandling,
   editable: PropTypes.bool,
@@ -43,13 +59,13 @@ const config = PropTypes.shape({
   listHandling,
 })
 
-const categoriseBy = PropTypes.shape({
-  column: PropTypes.string.isRequired,
-  display: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.string,
-  ]),
+const extraFilter = PropTypes.shape({
+  label: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(['boolean', 'text', 'number', 'date', 'choice']),
+  options,
 })
+
+const extraFilters = PropTypes.objectOf(extraFilter)
 
 const globalAction = PropTypes.shape({
   action: PropTypes.string.isRequired,
@@ -71,21 +87,13 @@ const listFields = PropTypes.shape({
   }),
 })
 
-const extraFilter = PropTypes.shape({
-  label: PropTypes.string.isRequired,
-  field: PropTypes.string, // the field to send in the query
-  type: PropTypes.oneOf(['boolean']),
-})
-
-const extraFilters = PropTypes.arrayOf(extraFilter)
-
 export const appPropTypes = {
   authToken: PropTypes.string.isRequired,
   batchActions,
   columns: columns.isRequired,
   config,
   categoriseBy,
-  defaultColumns: PropTypes.arrayOf(PropTypes.string),
+  defaultColumns: stringList,
   defaultFilters: PropTypes.object,
   defaultOrderBy: PropTypes.string,
   detailURL: PropTypes.string,
@@ -94,5 +102,7 @@ export const appPropTypes = {
   globalActions,
   listFields,
   overrideStoredConfig: PropTypes.bool,
+  sidebarFilters: stringList,
   title: PropTypes.string.isRequired,
+  toolbarFilters: stringList,
 }
