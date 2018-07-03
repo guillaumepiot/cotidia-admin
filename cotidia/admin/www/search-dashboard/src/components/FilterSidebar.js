@@ -63,30 +63,6 @@ export default class FilterSidebar extends Component {
                 )
               }
             })}
-
-            {/* <div className='form__row'>
-              <div className='form__group'>
-                <label className='form__label'>Job number</label>
-                <div className='form__control form__control--input'>
-                  <input type='text' name='first_name' placeholder='Frank Green' />
-                </div>
-                <div className='form__help' />
-              </div>
-            </div>
-            <div className='form__row'>
-              <div className='form__group'>
-                <label className='form__label'>Status</label>
-                <div className='form__control form__control--select'>
-                  <select className='form__select'>
-                    <option className='' />
-                    <option className='A'>Active</option>
-                    <option className='B'>Archived</option>
-                    <option className='C'>Pending</option>
-                  </select>
-                </div>
-                <div className='form__help' />
-              </div>
-            </div> */}
           </fieldset>
         </form>
       </div>
