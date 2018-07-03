@@ -251,7 +251,7 @@ class AdminSearchDashboardAPIView(ListAPIView):
                 )
 
         # Extra filter
-        extra_filters = serializer.get_extra_filters()
+        extra_filters = serializer.get_option('extra_filters')
         if extra_filters:
             for k in extra_filters.keys():
                 if self.request.GET.get(k):

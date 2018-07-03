@@ -19,7 +19,7 @@ def render_search_dashboard_config(
     context,
     app_label,
     model_name,
-    url_type,
+    url_action,
     auth_token,
     default_columns=[],
     default_filters=[],
@@ -51,21 +51,6 @@ def render_search_dashboard_config(
     columns = serializer.get_field_representation()
     default_columns = serializer.get_default_columns()
 
-    if app_label and model_name and url_type:
-        # To future maintainers: sorry
-        # This gets the url template by doing a reverse lookup on a url that fits convention
-        # It passes a trash ID and then string replaces it with a template tag for js
-        # TODO find a better way of doing this
-        try:
-            url_name = "{}-admin:{}-{}".format(app_label, model_name, url_type)
-            detail_endpoint = reverse(
-                url_name,
-                kwargs={"pk": 9999})
-            detail_endpoint = detail_endpoint.replace("9999", ":id")
-        except NoReverseMatch:
-            detail_endpoint = None
-    else:
-        detail_endpoint = None
     if endpoint is None:
         endpoint = reverse(
             'generic-api:object-list',
@@ -85,52 +70,74 @@ def render_search_dashboard_config(
 
     # Optional keys
 
-    if detail_endpoint is not None:
-        context['detail_endpoint'] = detail_endpoint
+    detail_url = serializer.get_option('detail_url')
+
+    if not detail_url and app_label and model_name and url_action:
+        # To future maintainers: sorry
+        # This gets the url template by doing a reverse lookup on a url that fits convention
+        # It passes a trash ID and then string replaces it with a template tag for js
+        # TODO find a better way of doing this
+        try:
+            url_name = "{}-admin:{}-{}".format(app_label, model_name, url_action)
+            detail_url = reverse(
+                url_name,
+                kwargs={"pk": 9999})
+            detail_url = detail_url.replace("9999", ":id")
+        except NoReverseMatch:
+            detail_url = None
+    else:
+        detail_url = None
+
+    if serializer.get_option('enable_detail_url', default=serializer.enable_detail_url):
+        context['detail_url'] = detail_url
 
     if default_filters:
         context['default_filters'] = default_filters
 
     # Default ordering
-    context['default_order_by'] = default_order_by or serializer.get_default_order_by()
-
-    context['primary_color'] = serializer.get_attribute(
+    context['default_order_by'] = serializer.get_option(
+        'default_order_by',
+        default=default_order_by
+    )
+    context['primary_color'] = serializer.get_option(
         'primary_color',
         default='#00abd3'
     )
 
-    context['date_format'] = serializer.get_attribute(
+    context['date_format'] = serializer.get_option(
         'date_format',
         default='D MMM YYYY'
     )
 
-    context['datetime_format'] = serializer.get_attribute(
+    context['datetime_format'] = serializer.get_option(
         'datetime_format',
         default='D MMM YYYY @ HH:mm'
     )
 
-    context['columns_configurable'] = serializer.get_attribute(
+    context['columns_configurable'] = serializer.get_option(
         'columns_configurable',
         default=True
     )
 
-    if serializer.get_attribute('list_handling'):
-        context['list_handling'] = serializer.get_attribute('list_handling')
+    if serializer.get_option('list_handling'):
+        context['list_handling'] = serializer.get_option('list_handling')
 
-    if serializer.get_attribute('extra_filters'):
-        context['extra_filters'] = serializer.get_attribute('extra_filters')
+    if serializer.get_option('extra_filters'):
+        context['extra_filters'] = serializer.get_option('extra_filters')
 
-    if serializer.get_attribute('toolbar_filters'):
-        context['toolbar_filters'] = serializer.get_attribute('toolbar_filters')
+    if serializer.get_option('toolbar_filters'):
+        context['toolbar_filters'] = serializer.get_option('toolbar_filters')
 
-    if serializer.get_attribute('sidebar_filters'):
-        context['sidebar_filters'] = serializer.get_attribute('sidebar_filters')
+    if serializer.get_option('sidebar_filters'):
+        context['sidebar_filters'] = serializer.get_option('sidebar_filters')
 
-    if serializer.get_attribute('categorise_by'):
-        context['categorise_by'] = serializer.get_attribute('categorise_by')
+    if serializer.get_option('categorise_by'):
+        context['categorise_by'] = serializer.get_option('categorise_by')
 
-    if serializer.get_attribute('list_fields'):
-        context['list_fields'] = serializer.get_attribute('list_fields')
+    if serializer.get_option('list_fields'):
+        context['list_fields'] = serializer.get_option('list_fields')
+
+    context['batch_actions'] = serializer.get_option('batch_actions', default=batch_actions)
 
     return context
 

@@ -4,7 +4,9 @@ from cotidia.admin.search_dashboard_settings import (
     FIELD_MAPPING
 )
 
+
 class AdminModelSerializer(serializers.ModelSerializer):
+    enable_detail_url = True
 
     def to_representation(self, instance):
         repr = super().to_representation(instance)
@@ -28,7 +30,7 @@ class AdminModelSerializer(serializers.ModelSerializer):
                 # Flattens dicts
                 if isinstance(repr[key], dict):
                     for subkey, subvalue in repr[key].items():
-                        key_name ="{}__{}".format(key, subkey)
+                        key_name = "{}__{}".format(key, subkey)
                         if key_name not in repr.keys():
                             repr.update({key_name: subvalue})
         return repr
@@ -39,7 +41,7 @@ class AdminModelSerializer(serializers.ModelSerializer):
             return [{"value": str(x.uuid), "label": getattr(x, self.SearchProvider.display_field)} for x in qs]
         except AttributeError as e:
             raise AttributeError(
-                "%s does not have the display_field defined in the SearchProvider sub class" % str(self.__class__.__name__)
+                "%s does not have the display_field defined in the SearchProvider sub class. Error: %s" % (str(self.__class__), str(e))
             )
 
     def get_related_fields(self):
@@ -114,23 +116,11 @@ class AdminModelSerializer(serializers.ModelSerializer):
 
         return self._field_representation
 
-    def get_attribute(self, attr, default=None):
+    def get_option(self, attr, default=None):
         try:
             return getattr(self.SearchProvider, attr)
         except AttributeError:
             return default
-
-    def get_categorise_by(self):
-        try:
-            return self.SearchProvider.categorise_by
-        except AttributeError:
-            return None
-
-    def get_batch_actions(self):
-        try:
-            return self.SearchProvider.batch_actions
-        except AttributeError:
-            return []
 
     def get_general_query_fields(self):
         if hasattr(self, "SearchProvider"):
@@ -151,24 +141,6 @@ class AdminModelSerializer(serializers.ModelSerializer):
                     return ['id']
             except:
                 return ['id']
-
-    def get_default_order_by(self):
-        try:
-            return self.SearchProvider.default_order_by
-        except AttributeError:
-            return None
-
-    def get_list_fields(self):
-        try:
-            return self.SearchProvider.get_list_fields
-        except AttributeError:
-            return None
-
-    def get_extra_filters(self):
-        try:
-            return self.SearchProvider.extra_filters
-        except AttributeError:
-            return None
 
 
 class SortSerializer(serializers.Serializer):

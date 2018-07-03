@@ -2732,6 +2732,8 @@ textarea {
     align-items: center; }
     .toolbar__right .toolbar__item {
       margin-left: 1rem; }
+  .toolbar__item .form__group {
+    margin: 0; }
 
 .toolbar-profile {
   position: relative;

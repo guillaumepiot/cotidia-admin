@@ -29,6 +29,12 @@
             margin-left: 1rem;
         }
     }
+
+    &__item {
+        .form__group {
+            margin: 0;
+        }
+    }
 }
 
 .toolbar-profile {
