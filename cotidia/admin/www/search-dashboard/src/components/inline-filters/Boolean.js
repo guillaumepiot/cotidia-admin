@@ -19,12 +19,14 @@ export default class Boolean extends Component {
 
   render () {
     return (
-      <Checkbox
-        name={this.props.name}
-        label={this.props.label}
-        updateValue={this.updateValue}
-        value={this.props.value}
-      />
+      <div className='form__group'>
+        <Checkbox
+          name={this.props.name}
+          label={this.props.label}
+          updateValue={this.updateValue}
+          value={this.props.value}
+        />
+      </div>
     )
   }
 }
