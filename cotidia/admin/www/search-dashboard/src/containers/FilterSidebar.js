@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import {
   setFilterValue,
-  // toggleSidebar,
+  toggleSidebar,
 } from '../redux/modules/search/actions'
 
 import { getSidebarFilters } from '../redux/modules/search/selectors'
@@ -17,7 +17,7 @@ const mapStateToProps = (state) => ({
 
 const actionCreators = {
   setFilterValue,
-  // toggleSidebar,
+  toggleSidebar,
 }
 
 export default connect(mapStateToProps, actionCreators)(FilterSidebar)
