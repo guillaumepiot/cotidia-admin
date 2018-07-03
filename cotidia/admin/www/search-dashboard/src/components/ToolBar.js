@@ -20,6 +20,7 @@ export default class ToolBar extends Component {
     clearFilters: PropTypes.func.isRequired,
     filters: PropTypes.object,
     globalActions: PropTypes.array,
+    hasSidebar: PropTypes.bool.isRequired,
     performBatchAction: PropTypes.func.isRequired,
     searchTerm: PropTypes.string,
     setFilterValue: PropTypes.func.isRequired,
@@ -98,6 +99,7 @@ export default class ToolBar extends Component {
   render () {
     const {
       filters,
+      hasSidebar,
       searchTerm,
       toolbarFilters,
     } = this.props
@@ -141,9 +143,11 @@ export default class ToolBar extends Component {
 
           {this.renderBatchActions()}
 
-          <button className='btn btn--outline btn--small' onClick={this.toggleSidebar}>
-            <Icon icon='filter' />
-          </button>
+          {hasSidebar && (
+            <button className='btn btn--outline btn--small' onClick={this.toggleSidebar}>
+              <Icon icon='filter' />
+            </button>
+          )}
         </div>
       </div>
     )
