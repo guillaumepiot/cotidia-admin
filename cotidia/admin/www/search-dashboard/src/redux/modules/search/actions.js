@@ -15,8 +15,8 @@ export const switchMode = (mode) => ({
   payload: { mode },
 })
 
-export const filterColumn = (column) => ({
-  type: types.FILTER_COLUMN,
+export const configureFilter = (column) => ({
+  type: types.CONFIGURE_FILTER,
   payload: { column },
 })
 

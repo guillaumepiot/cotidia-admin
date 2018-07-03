@@ -10,7 +10,7 @@ import { showModal } from '../modal/sagas'
 import * as types from './types'
 import * as modalTypes from '../modal/types'
 
-export function * filterColumn ({ payload: { column } }) {
+export function * configureFilter ({ payload: { column } }) {
   const { columns, filters } = yield select((state) => state.search)
 
   const { submittedData } = yield call(showModal, {
@@ -251,7 +251,7 @@ function * editField ({ payload: { item, column, value } }) {
 }
 
 export default function * watcher () {
-  yield takeEvery(types.FILTER_COLUMN, filterColumn)
+  yield takeEvery(types.CONFIGURE_FILTER, configureFilter)
   yield takeEvery(types.MANAGE_COLUMNS, manageColumns)
 
   yield takeEvery(types.PERFORM_SEARCH, performSearch)

@@ -11,7 +11,7 @@ export default class ResultsTableHeader extends Component {
     clearFilter: PropTypes.func.isRequired,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
     categoriseBy: PropTypes.object,
-    filterColumn: PropTypes.func.isRequired,
+    configureFilter: PropTypes.func.isRequired,
     filters: PropTypes.arrayOf(PropTypes.string).isRequired,
     orderAscending: PropTypes.bool.isRequired,
     orderColumn: PropTypes.string,
@@ -24,12 +24,12 @@ export default class ResultsTableHeader extends Component {
     batchActions: [],
   }
 
-  filterColumnFactory = (column) => (e) => {
+  configureFilterFactory = (column) => (e) => {
     // Because this event will be a button inside a component that it also looking for a click
     // event, we should stop the propagation of the event so both aren't handled.
     e.stopPropagation()
 
-    this.props.filterColumn(column)
+    this.props.configureFilter(column)
   }
 
   clearFilterFactory = (column) => (e) => {
@@ -135,7 +135,7 @@ export default class ResultsTableHeader extends Component {
 
                       <button
                         className='btn btn--link btn--small'
-                        onClick={this.filterColumnFactory(column.id)}
+                        onClick={this.configureFilterFactory(column.id)}
                       >
                         <Icon icon='filter' />
                       </button>
