@@ -2915,6 +2915,15 @@ textarea {
     z-index: 3; }
     .table--sticky thead th:first-child, .table--sticky thead td:first-child {
       z-index: 4; }
+    .table--sticky thead th::after, .table--sticky thead td::after {
+      content: "";
+      display: block;
+      height: 1px;
+      width: 100%;
+      background-color: #D0D5D7;
+      position: absolute;
+      bottom: 0;
+      left: 0; }
   .table--sticky thead th:hover .table-header__item {
     opacity: 1; }
   .table--sticky tfoot th, .table--sticky tfoot td {
@@ -2925,6 +2934,15 @@ textarea {
     z-index: 3; }
     .table--sticky tfoot th:first-child, .table--sticky tfoot td:first-child {
       z-index: 4; }
+    .table--sticky tfoot th::after, .table--sticky tfoot td::after {
+      content: "";
+      display: block;
+      height: 1px;
+      width: 100%;
+      background-color: #D0D5D7;
+      position: absolute;
+      top: 0;
+      left: 0; }
   .table--sticky th.nowrap, .table--sticky td.nowrap {
     white-space: nowrap; }
   .table--sticky th:first-child, .table--sticky td:first-child {
@@ -2936,6 +2954,9 @@ textarea {
     box-shadow: inset -1px 0px #D0D5D7; }
   .table--sticky th.table-cell--checkbox, .table--sticky td.table-cell--checkbox {
     padding-right: 0; }
+  .table--sticky th.table-cell--category, .table--sticky td.table-cell--category {
+    background-color: #f5f7fb;
+    color: #111315; }
   .table--action thead th:first-child, .table--action thead th:nth-child(2), .table--action thead td:first-child, .table--action thead td:nth-child(2) {
     z-index: 4; }
   .table--action tfoot th:first-child, .table--action tfoot th:nth-child(2), .table--action tfoot td:first-child, .table--action tfoot td:nth-child(2) {

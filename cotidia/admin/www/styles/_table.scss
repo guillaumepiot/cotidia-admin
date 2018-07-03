@@ -13,6 +13,17 @@
                 &:first-child {
                     z-index: 4;
                 }
+
+                &::after {
+                    content: "";
+                    display: block;
+                    height: 1px;
+                    width: 100%;
+                    background-color: $table-row-border-color;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                }
             }
 
             th:hover {
@@ -32,6 +43,17 @@
 
                 &:first-child {
                     z-index: 4;
+                }
+
+                &::after {
+                    content: "";
+                    display: block;
+                    height: 1px;
+                    width: 100%;
+                    background-color: $table-row-border-color;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
                 }
             }
         }
@@ -53,6 +75,11 @@
             &.table-cell {
                 &--checkbox {
                     padding-right: 0;
+                }
+                &--category {
+                    background-color: $toolbar-background-color;
+                    color: $grey--dark;
+                    // &:first-child
                 }
             }
         }
