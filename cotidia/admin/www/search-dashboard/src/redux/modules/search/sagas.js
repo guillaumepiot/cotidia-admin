@@ -46,7 +46,6 @@ export function * manageColumns () {
     modalProps: {
       title: 'Configure columns',
       cancelButton: 'Close',
-      // otherButtons: <button className='btn btn--delete' type='button'>Reset columns</button>,
       form: true,
     },
   })
