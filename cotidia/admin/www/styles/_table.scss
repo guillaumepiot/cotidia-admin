@@ -79,7 +79,9 @@
                 &--category {
                     background-color: $toolbar-background-color;
                     color: $grey--dark;
-                    // &:first-child
+                    &:first-child {
+                        box-shadow: none;
+                    }
                 }
             }
         }

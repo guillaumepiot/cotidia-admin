@@ -5,6 +5,7 @@
         border-bottom: 1px solid $table-border-color;
         font-weight: 500;
         padding-bottom: calc(1rem - 1px);
+        background-color: $table-header-background-color;
     }
 
     &__group {

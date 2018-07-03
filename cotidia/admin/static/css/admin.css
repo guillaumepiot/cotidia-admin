@@ -2957,6 +2957,8 @@ textarea {
   .table--sticky th.table-cell--category, .table--sticky td.table-cell--category {
     background-color: #f5f7fb;
     color: #111315; }
+    .table--sticky th.table-cell--category:first-child, .table--sticky td.table-cell--category:first-child {
+      box-shadow: none; }
   .table--action thead th:first-child, .table--action thead th:nth-child(2), .table--action thead td:first-child, .table--action thead td:nth-child(2) {
     z-index: 4; }
   .table--action tfoot th:first-child, .table--action tfoot th:nth-child(2), .table--action tfoot td:first-child, .table--action tfoot td:nth-child(2) {
@@ -2996,7 +2998,8 @@ textarea {
   margin-bottom: 0.5rem;
   border-bottom: 1px solid #D0D5D7;
   font-weight: 500;
-  padding-bottom: calc(1rem - 1px); }
+  padding-bottom: calc(1rem - 1px);
+  background-color: #eef0f5; }
 .form__group--boxed {
   margin: 0; }
   .form__group--boxed .form__control {
