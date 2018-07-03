@@ -11,7 +11,7 @@ import EditNumber from './editors/Number'
 
 import { Icon } from './elements/global'
 
-// TODO: Look into PureComponent like we do in ResultsTableItem
+// TODO: Look into PureComponent like we do in ResultsTableItem. But redux...?
 export default class ResultsTableItemValue extends Component {
   static propTypes = {
     column: PropTypes.object.isRequired,

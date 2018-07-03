@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { getValueFormatter } from '../utils/resultItems'
 
-export default class ResultsTableFooter extends PureComponent {
+export default class ResultsTableFooter extends Component {
   static propTypes = {
     batchActions: PropTypes.array,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
