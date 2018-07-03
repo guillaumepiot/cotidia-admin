@@ -8,8 +8,8 @@ export default class Number extends Component {
     label: PropTypes.string.isRequired,
     updateValue: PropTypes.func.isRequired,
     value: PropTypes.shape({
-      min: PropTypes.string.isRequired,
-      max: PropTypes.string.isRequired,
+      min: PropTypes.string,
+      max: PropTypes.string,
     }),
   }
 
