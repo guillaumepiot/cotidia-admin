@@ -2909,6 +2909,8 @@ textarea {
 
 .table {
   border: none; }
+  .table th, .table td {
+    position: relative; }
   .table--sticky thead th, .table--sticky thead td {
     position: -webkit-sticky;
     position: sticky;
@@ -2994,6 +2996,70 @@ textarea {
     opacity: 1; }
   .table-header__item:hover {
     color: #111315; }
+
+.table-cell-editable {
+  min-width: 170px; }
+  .table-cell-editable:hover .table-cell-editable__action--edit {
+    opacity: 1; }
+  .table-cell-editable__value {
+    padding: 0.5rem 1rem;
+    position: absolute;
+    width: calc(100% - 32px);
+    height: 100%;
+    top: 0;
+    left: 0; }
+  .table-cell-editable__action {
+    width: 32px;
+    background-color: transparent;
+    border-width: 0; }
+    .table-cell-editable__action:hover {
+      cursor: pointer; }
+    .table-cell-editable__action--edit {
+      color: #7f878a;
+      position: absolute;
+      width: 32px;
+      height: 100%;
+      top: 0;
+      right: 0;
+      opacity: 0; }
+      .table-cell-editable__action--edit:hover {
+        color: #111315; }
+    .table-cell-editable__action--save {
+      color: #00b100;
+      background-color: #fff;
+      position: absolute;
+      width: 32px;
+      height: 100%;
+      top: 0;
+      right: 32px; }
+      .table-cell-editable__action--save:hover {
+        color: #fff;
+        background-color: #00b100; }
+    .table-cell-editable__action--cancel {
+      color: #d50000;
+      background-color: #fff;
+      position: absolute;
+      width: 32px;
+      height: 100%;
+      top: 0;
+      right: 0; }
+      .table-cell-editable__action--cancel:hover {
+        color: #fff;
+        background-color: #d50000; }
+  .table-cell-editable .form__group {
+    position: absolute;
+    width: calc(100% - 64px);
+    height: 100%;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0 0 0 1rem;
+    background-color: #fff; }
+    .table-cell-editable .form__group .form__control input, .table-cell-editable .form__group .form__control select {
+      min-height: 40px;
+      padding: 0 1rem 0 0; }
+    .table-cell-editable .form__group .form__control--select::after {
+      top: 18px; }
 
 .form__legend {
   padding: 1rem 1rem;

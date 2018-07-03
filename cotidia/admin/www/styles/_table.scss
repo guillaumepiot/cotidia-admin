@@ -1,5 +1,8 @@
 .table {
     border: none;
+    th, td {
+        position: relative;
+    }
 
     &--sticky {
         thead {
@@ -152,6 +155,106 @@
         }
         &:hover {
             color: $grey--dark;
+        }
+    }
+}
+
+.table-cell-editable {
+    // display: flex;
+    // margin: -0.5rem -1rem;
+    min-width: 170px;
+
+    &:hover {
+        .table-cell-editable__action--edit {
+            opacity: 1;
+        }
+    }
+
+    &__value {
+        // flex: 1;
+        padding: 0.5rem 1rem;
+        position: absolute;
+        width: calc(100% - 32px);
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+    &__action {
+        width: 32px;
+        background-color: transparent;
+        border-width: 0;
+        // border-left: 1px solid $table-row-border-color;
+        // align-items: stretch;
+        &:hover {
+            cursor: pointer;
+            // color: #fff;
+            // background-color: $background_color--change;
+        }
+
+        &--edit {
+            color: $grey;
+            position: absolute;
+            width: 32px;
+            height: 100%;
+            top: 0;
+            right: 0;
+            opacity: 0;
+
+            &:hover {
+                color: $grey--dark;
+            }
+        }
+        &--save {
+            color: $background_color--create;
+            background-color: #fff;
+            position: absolute;
+            width: 32px;
+            height: 100%;
+            top: 0;
+            right: 32px;
+
+            &:hover {
+                color: #fff;
+                background-color: $background_color--create;
+            }
+        }
+        &--cancel {
+            color: $background_color--delete;
+            background-color: #fff;
+            position: absolute;
+            width: 32px;
+            height: 100%;
+            top: 0;
+            right: 0;
+
+            &:hover {
+                color: #fff;
+                background-color: $background_color--delete;
+            }
+        }
+    }
+
+    .form__group {
+        position: absolute;
+        width: calc(100% - 64px);
+        height: 100%;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 0 0 0 1rem;
+        background-color: #fff;
+
+        .form__control {
+            input, select {
+                min-height: 40px;
+                padding: 0 1rem 0 0;
+            }
+
+            &--select {
+                &::after {
+                    top: 18px;
+                }
+            }
         }
     }
 }
