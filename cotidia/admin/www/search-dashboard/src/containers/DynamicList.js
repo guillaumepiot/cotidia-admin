@@ -11,6 +11,7 @@ const mapStateToProps = (state) => ({
   searchMode: state.search.mode,
   hasListConfig: state.search.listFields != null,
 
+  hasSidebar: state.search.sidebarFilters && state.search.sidebarFilters.length > 0,
   showSidebar: state.search.showSidebar,
 })
 

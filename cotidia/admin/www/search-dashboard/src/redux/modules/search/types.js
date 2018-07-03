@@ -14,7 +14,7 @@ export const LOAD_STORED_CONFIG = 'dynamic-list/search/LOAD_STORED_CONFIG'
 // Actual usage
 export const SET_SEARCH_TERM = 'dynamic-list/search/SET_SEARCH_TERM'
 export const SWITCH_MODE = 'dynamic-list/search/SWITCH_MODE'
-export const FILTER_COLUMN = 'dynamic-list/search/FILTER_COLUMN'
+export const CONFIGURE_FILTER = 'dynamic-list/search/CONFIGURE_FILTER'
 export const CLEAR_FILTER = 'dynamic-list/search/CLEAR_FILTER'
 export const CLEAR_FILTERS = 'dynamic-list/search/CLEAR_FILTERS'
 export const SET_ORDER_COLUMN = 'dynamic-list/search/SET_ORDER_COLUMN'

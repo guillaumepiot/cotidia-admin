@@ -18,6 +18,7 @@ export default class DynamicList extends Component {
     networkError: PropTypes.bool.isRequired,
     searchMode: PropTypes.string.isRequired,
     hasListConfig: PropTypes.bool.isRequired,
+    hasSidebar: PropTypes.bool.isRequired,
     showSidebar: PropTypes.bool.isRequired,
   }
 
@@ -26,6 +27,7 @@ export default class DynamicList extends Component {
       bootstrapped,
       networkError,
       searchMode,
+      hasSidebar,
       showSidebar,
       hasListConfig,
     } = this.props
@@ -48,7 +50,7 @@ export default class DynamicList extends Component {
 
     return (
       <>
-        <div className={`content ${showSidebar && 'content--sidebar'}`}>
+        <div className={`content ${hasSidebar && showSidebar && 'content--sidebar'}`}>
           <Header />
           <ToolBar />
 

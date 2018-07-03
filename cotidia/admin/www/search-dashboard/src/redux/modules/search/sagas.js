@@ -10,19 +10,27 @@ import { showModal } from '../modal/sagas'
 import * as types from './types'
 import * as modalTypes from '../modal/types'
 
-export function * filterColumn ({ payload: { column } }) {
-  const { columns, filters } = yield select((state) => state.search)
+export function * configureFilter ({ payload: { filter } }) {
+  const { columns, extraFilters, filters } = yield select((state) => state.search)
+
+  let title = 'Filter'
+
+  if (columns[filter]) {
+    title = columns[filter].label
+  } else {
+    title = extraFilters[filter].label
+  }
 
   const { submittedData } = yield call(showModal, {
     component: 'Filter',
-    componentProps: { filter: column },
+    componentProps: { filter },
     modalProps: {
-      title: columns[column].label,
+      title: title,
       form: true,
       submitButton: 'Update filter',
     },
     data: {
-      value: filters[column],
+      value: filters[filter],
     },
     modalActions: {
       submittedData: take(modalTypes.SUBMIT_MODAL),
@@ -33,7 +41,7 @@ export function * filterColumn ({ payload: { column } }) {
     yield put({
       type: types.SET_FILTER_VALUE,
       payload: {
-        filter: column,
+        filter,
         value: submittedData.payload.value,
       },
     })
@@ -46,7 +54,6 @@ export function * manageColumns () {
     modalProps: {
       title: 'Configure columns',
       cancelButton: 'Close',
-      // otherButtons: <button className='btn btn--delete' type='button'>Reset columns</button>,
       form: true,
     },
   })
@@ -251,7 +258,7 @@ function * editField ({ payload: { item, column, value } }) {
 }
 
 export default function * watcher () {
-  yield takeEvery(types.FILTER_COLUMN, filterColumn)
+  yield takeEvery(types.CONFIGURE_FILTER, configureFilter)
   yield takeEvery(types.MANAGE_COLUMNS, manageColumns)
 
   yield takeEvery(types.PERFORM_SEARCH, performSearch)

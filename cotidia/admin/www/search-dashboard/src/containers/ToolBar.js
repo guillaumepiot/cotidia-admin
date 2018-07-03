@@ -15,6 +15,7 @@ import ToolBar from '../components/ToolBar'
 const mapStateToProps = (state) => ({
   batchActions: state.search.batchActions,
   filters: state.search.filters,
+  hasSidebar: state.search.sidebarFilters && state.search.sidebarFilters.length > 0,
   searchTerm: state.search.searchTerm,
   toolbarFilters: getToolbarFilters(state),
 })

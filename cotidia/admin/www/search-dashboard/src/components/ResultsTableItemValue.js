@@ -11,7 +11,7 @@ import EditNumber from './editors/Number'
 
 import { Icon } from './elements/global'
 
-// TODO: Look into PureComponent like we do in ResultsTableItem
+// TODO: Look into PureComponent like we do in ResultsTableItem. But redux...?
 export default class ResultsTableItemValue extends Component {
   static propTypes = {
     column: PropTypes.object.isRequired,
@@ -58,7 +58,11 @@ export default class ResultsTableItemValue extends Component {
     const formattedValue = formatValue(item, column.accessor, column.display, column.listHandling)
 
     if (column.editable) {
-      let innerComponent = formattedValue
+      let innerComponent = (
+        <div className='table-cell-editable__value'>
+          {formattedValue}
+        </div>
+      )
 
       if (editing) {
         const props = {
@@ -87,20 +91,35 @@ export default class ResultsTableItemValue extends Component {
       }
 
       return (
-        <div>
+        <div className='table-cell-editable'>
           {innerComponent}
           {editing ? (
             <>
-              <button key='save' className='btn btn--small btn--primary' onClick={this.saveEdit}>
-                <Icon icon='check-square' />
+              <button
+                className='table-cell-editable__action table-cell-editable__action--save'
+                key='save'
+                onClick={this.saveEdit}
+                type='button'
+              >
+                <Icon icon='check' />
               </button>
-              <button key='cancel' className='btn btn--small btn--delete' onClick={this.cancelEdit}>
-                <Icon icon='trash-alt' />
+              <button
+                className='table-cell-editable__action table-cell-editable__action--cancel'
+                key='cancel'
+                onClick={this.cancelEdit}
+                type='button'
+              >
+                <Icon icon='times' />
               </button>
             </>
           ) : (
-            <button key='edit' className='btn btn--small btn--change' onClick={this.startEditing}>
-              <Icon icon='edit' />
+            <button
+              className='table-cell-editable__action table-cell-editable__action--edit'
+              key='edit'
+              onClick={this.startEditing}
+              type='button'
+            >
+              <Icon icon='pen' />
             </button>
           )}
         </div>

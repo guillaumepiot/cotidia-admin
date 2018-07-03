@@ -1,17 +1,17 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Icon } from './elements/global'
 import { uuid4 } from '../utils'
 
-export default class ResultsTableHeader extends PureComponent {
+export default class ResultsTableHeader extends Component {
   static propTypes = {
     allSelected: PropTypes.bool.isRequired,
     batchActions: PropTypes.arrayOf(PropTypes.object),
     clearFilter: PropTypes.func.isRequired,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
     categoriseBy: PropTypes.object,
-    filterColumn: PropTypes.func.isRequired,
+    configureFilter: PropTypes.func.isRequired,
     filters: PropTypes.arrayOf(PropTypes.string).isRequired,
     orderAscending: PropTypes.bool.isRequired,
     orderColumn: PropTypes.string,
@@ -24,12 +24,12 @@ export default class ResultsTableHeader extends PureComponent {
     batchActions: [],
   }
 
-  filterColumnFactory = (column) => (e) => {
+  configureFilterFactory = (column) => (e) => {
     // Because this event will be a button inside a component that it also looking for a click
     // event, we should stop the propagation of the event so both aren't handled.
     e.stopPropagation()
 
-    this.props.filterColumn(column)
+    this.props.configureFilter(column)
   }
 
   clearFilterFactory = (column) => (e) => {
@@ -77,12 +77,18 @@ export default class ResultsTableHeader extends PureComponent {
             const orderable = categoriseBy == null && column.orderable !== false
 
             if (column.type === 'data') {
+              const isOrderColumn = orderColumn === column.id
+              const isFiltered = filters.includes(column.id)
+
               return (
                 <th
-                  className={`nowrap ${orderable ? 'table-header--clickable' : ''}`}
+                  className='nowrap'
                   key={column.id}
                   onClick={orderable ? this.setOrderColumnFactory(column.id) : null}
                 >
+                  <span className='table-header__name'>
+                    {column.label}
+                  </span>
                   {/*
                   Using a 'random' and always-changing key here means that the span will *always*
                   rerender, this is because we may change the sort order icon, and because
@@ -90,35 +96,46 @@ export default class ResultsTableHeader extends PureComponent {
                   change so just doesn't do anything. If we tell the parent to *alwasy* rerender,
                   it's not the best on perf, but does mean we get icons actually changing.
                   */}
-                  <span className='table-header__name' key={uuid4()}>
-                    {column.label}
-                    {orderable && (
-                      <>
-                        {' '}
-                        {(orderColumn === column.id) ? (orderAscending ? (
-                          <Icon className='table-header__sort table-header__sort--active' icon='long-arrow-alt-down' />
-                        ) : (
-                          <Icon className='table-header__sort table-header__sort--active' icon='long-arrow-alt-up' />
-                        )) : (
-                          <Icon className='table-header__sort' icon='long-arrow-alt-down' />
-                        )}
-                      </>
-                    )}
-                  </span>
+                  {orderable && (
+                    <span
+                      className={`table-header__item ${isOrderColumn ? 'table-header__item--active' : ''}`}
+                      key={uuid4()}
+                    >
+                      {isOrderColumn && orderAscending && (
+                        <Icon icon='long-arrow-alt-down' />
+                      )}
+                      {isOrderColumn && ! orderAscending && (
+                        <Icon icon='long-arrow-alt-up' />
+                      )}
+                      {! isOrderColumn && (
+                        <Icon icon='long-arrow-alt-down' />
+                      )}
+                    </span>
+                  )}
+
+                  {isFiltered && (
+                    <span
+                      className='table-header__item tooltip tooltip--bottom-center table-header__item--active'
+                      data-tooltip='Clear filter'
+                    >
+                      <button
+                        className={`btn btn--link btn--small`}
+                        onClick={this.clearFilterFactory(column.id)}
+                      >
+                        <Icon icon='times' />
+                      </button>
+                    </span>
+                  )}
 
                   {column.filter && (
-                    <span className={`table-header__actions ${filters.includes(column.id) ? 'table-header__actions--active' : ''}`}>
-                      {filters.includes(column.id) && (
-                        <button
-                          className={`btn btn--link btn--small pull-right btn--delete`}
-                          onClick={this.clearFilterFactory(column.id)}
-                        >
-                          <Icon icon='times' />
-                        </button>
-                      )}
+                    <span
+                      className={`table-header__item tooltip tooltip--bottom-center ${isFiltered ? 'table-header__item--active' : ''}`}
+                      data-tooltip='Filter'
+                    >
+
                       <button
-                        className={`btn btn--link btn--small pull-right ${filters.includes(column.id) ? 'btn--primary' : 'btn--cancel'}`}
-                        onClick={this.filterColumnFactory(column.id)}
+                        className='btn btn--link btn--small'
+                        onClick={this.configureFilterFactory(column.id)}
                       >
                         <Icon icon='filter' />
                       </button>

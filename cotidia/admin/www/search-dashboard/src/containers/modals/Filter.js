@@ -5,7 +5,7 @@ import { setFilterValue } from '../../redux/modules/search/actions'
 import Filter from '../../components/modals/Filter'
 
 const mapStateToProps = (state, ownProps) => ({
-  config: state.search.columns[ownProps.filter],
+  config: state.search.columns[ownProps.filter] || state.search.extraFilters[ownProps.filter],
   globalConfig: state.config,
   value: state.search.filters[ownProps.filter],
 })

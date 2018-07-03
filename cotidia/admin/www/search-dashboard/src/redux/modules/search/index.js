@@ -250,6 +250,8 @@ export default (state = initialState, { type, payload } = {}) => {
         ...state,
         searchTerm: null,
         filters: {},
+        orderColumn: null,
+        orderAscending: true,
       }
 
     case types.TOGGLE_RESULT_SELECTED:

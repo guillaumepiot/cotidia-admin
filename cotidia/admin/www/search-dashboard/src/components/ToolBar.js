@@ -20,6 +20,7 @@ export default class ToolBar extends Component {
     clearFilters: PropTypes.func.isRequired,
     filters: PropTypes.object,
     globalActions: PropTypes.array,
+    hasSidebar: PropTypes.bool.isRequired,
     performBatchAction: PropTypes.func.isRequired,
     searchTerm: PropTypes.string,
     setFilterValue: PropTypes.func.isRequired,
@@ -98,6 +99,7 @@ export default class ToolBar extends Component {
   render () {
     const {
       filters,
+      hasSidebar,
       searchTerm,
       toolbarFilters,
     } = this.props
@@ -105,16 +107,18 @@ export default class ToolBar extends Component {
     return (
       <div className='content__toolbar'>
         <div className='content__filter'>
-          <TextInput
-            controlOnly
-            label='Search'
-            name='searchTerm'
-            prefix={<Icon icon='search' />}
-            type='text'
-            updateValue={this.updateSearchTerm}
-            updateValueOnBlur={false}
-            value={searchTerm}
-          />
+          <div className='form__group form__group--boxed'>
+            <TextInput
+              controlOnly
+              label='Search'
+              name='searchTerm'
+              prefix={<Icon icon='search' />}
+              type='text'
+              updateValue={this.updateSearchTerm}
+              updateValueOnBlur={false}
+              value={searchTerm}
+            />
+          </div>
 
           {toolbarFilters && toolbarFilters.map((filter) => {
             const { filter: type, ...filterProps } = filter
@@ -139,9 +143,11 @@ export default class ToolBar extends Component {
 
           {this.renderBatchActions()}
 
-          <button className='btn btn--outline btn--small' onClick={this.toggleSidebar}>
-            <Icon icon='filter' />
-          </button>
+          {hasSidebar && (
+            <button className='btn btn--outline btn--small' onClick={this.toggleSidebar}>
+              <Icon icon='filter' />
+            </button>
+          )}
         </div>
       </div>
     )
