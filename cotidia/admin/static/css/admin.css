@@ -2915,7 +2915,7 @@ textarea {
     z-index: 3; }
     .table--sticky thead th:first-child, .table--sticky thead td:first-child {
       z-index: 4; }
-  .table--sticky thead th:hover .table-header__sort, .table--sticky thead th:hover .table-header__filter, .table--sticky thead th:hover .table-header__drag {
+  .table--sticky thead th:hover .table-header__item {
     opacity: 1; }
   .table--sticky tfoot th, .table--sticky tfoot td {
     position: -webkit-sticky;
@@ -2959,32 +2959,15 @@ textarea {
     .table--admin-mobile-view .action-column + td:nth-child(2) {
       display: table-cell; } }
 
-.table-header__sort {
-  cursor: pointer;
-  opacity: 0;
-  color: #7f878a; }
-  .table-header__sort--active {
-    opacity: 1; }
-  .table-header__sort:hover {
-    color: #111315; }
-.table-header__filter {
+.table-header__item {
   cursor: pointer;
   opacity: 0;
   color: #7f878a;
   margin-left: 0.5rem;
   position: relative; }
-  .table-header__filter--active {
+  .table-header__item--active {
     opacity: 1; }
-  .table-header__filter:hover {
-    color: #111315; }
-.table-header__drag {
-  cursor: pointer;
-  opacity: 0;
-  color: #7f878a;
-  margin-left: 0.5rem; }
-  .table-header__drag--active {
-    opacity: 1; }
-  .table-header__drag:hover {
+  .table-header__item:hover {
     color: #111315; }
 
 .form__legend {

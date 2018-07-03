@@ -16,7 +16,7 @@
             }
 
             th:hover {
-                .table-header__sort, .table-header__filter, .table-header__drag {
+                .table-header__item {
                     opacity: 1;
                 }
             }
@@ -112,37 +112,12 @@
 
     }
 
-    &__sort {
-        cursor: pointer;
-        opacity: 0;
-        color: $grey;
-        &--active {
-            opacity: 1;
-        }
-        &:hover {
-            color: $grey--dark;
-        }
-    }
-
-    &__filter {
+    &__item {
         cursor: pointer;
         opacity: 0;
         color: $grey;
         margin-left: 0.5rem;
         position: relative;
-        &--active {
-            opacity: 1;
-        }
-        &:hover {
-            color: $grey--dark;
-        }
-    }
-
-    &__drag {
-        cursor: pointer;
-        opacity: 0;
-        color: $grey;
-        margin-left: 0.5rem;
         &--active {
             opacity: 1;
         }
