@@ -2895,6 +2895,8 @@ textarea {
 .content__filter {
   display: flex;
   align-items: center; }
+  .content__filter .form__group {
+    margin: 0 1rem 0 0; }
 .content__actions .btn, .content__actions .form__control input[type="file"], .form__control .content__actions input[type="file"] {
   margin-left: 0.5rem; }
 .content--sidebar .content__list {
@@ -3000,25 +3002,23 @@ textarea {
   font-weight: 500;
   padding-bottom: calc(1rem - 1px);
   background-color: #eef0f5; }
-.form__group--boxed {
-  margin: 0; }
-  .form__group--boxed .form__control {
-    background-color: #fff;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    border: 1px solid #d5d9dc;
-    border-radius: 2px; }
-    .form__group--boxed .form__control--input input, .form__group--boxed .form__control--input select, .form__group--boxed .form__control--select input, .form__group--boxed .form__control--select select, .form__group--boxed .form__control--textarea input, .form__group--boxed .form__control--textarea select {
-      padding-right: 1rem; }
-    .form__group--boxed .form__control--input::after, .form__group--boxed .form__control--select::after, .form__group--boxed .form__control--textarea::after {
-      top: calc(1.25rem - 2px);
-      right: 1rem; }
-    .form__group--boxed .form__control .control-select__options {
-      line-height: 1.5; }
-  .form__group--boxed .form__help {
-    display: none; }
+.form__group--boxed .form__control {
+  background-color: #fff;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border: 1px solid #d5d9dc;
+  border-radius: 2px; }
+  .form__group--boxed .form__control--input input, .form__group--boxed .form__control--input select, .form__group--boxed .form__control--select input, .form__group--boxed .form__control--select select, .form__group--boxed .form__control--textarea input, .form__group--boxed .form__control--textarea select {
+    padding-right: 1rem; }
+  .form__group--boxed .form__control--input::after, .form__group--boxed .form__control--select::after, .form__group--boxed .form__control--textarea::after {
+    top: calc(1.25rem - 2px);
+    right: 1rem; }
+  .form__group--boxed .form__control .control-select__options {
+    line-height: 1.5; }
+.form__group--boxed .form__help {
+  display: none; }
 
 .btn .svg-inline--fa, .form__control input[type="file"] .svg-inline--fa {
   vertical-align: -0.18em; }

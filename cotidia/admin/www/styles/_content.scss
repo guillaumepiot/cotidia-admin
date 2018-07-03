@@ -69,6 +69,10 @@
     &__filter {
         display: flex;
         align-items: center;
+
+        .form__group {
+            margin: 0 1rem 0 0;
+        }
     }
 
     &__actions {
