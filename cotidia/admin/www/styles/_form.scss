@@ -18,7 +18,7 @@
                 padding-left: 1rem;
                 padding-right: 1rem;
                 border: 1px solid $toolbar-form-border-color;
-                border-radius: 100px;//$border-radius;
+                border-radius: $border-radius;
 
                 &--input, &--select, &--textarea {
 

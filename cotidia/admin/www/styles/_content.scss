@@ -14,6 +14,7 @@
         align-items: center;
         padding: 0 1rem;
         border-top: 1px solid $toolbar-border-color;
+        background-color: $toolbar-background-color;
     }
     &__body {
         height: calc(100vh - 11.5rem);
@@ -28,6 +29,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 0 1rem;
+        background-color: $toolbar-background-color;
     }
 
     &__title {
@@ -64,6 +66,17 @@
         }
     }
 
+    &__filter {
+        display: flex;
+        align-items: center;
+    }
+
+    &__actions {
+        .btn {
+            margin-left: 0.5rem;
+        }
+    }
+
     &--sidebar {
         .content__list {
             width: calc(100% - 16rem);
@@ -71,5 +84,11 @@
         .content__sidebar {
             transform: translate(0);
         }
+    }
+}
+
+.content-filter {
+    &__item {
+        margin-right: 0.5rem;
     }
 }

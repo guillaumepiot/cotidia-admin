@@ -10,7 +10,7 @@
                 left: 0;
                 z-index: 3;
 
-                &:first-child, &:nth-child(2) {
+                &:first-child {
                     z-index: 4;
                 }
             }
@@ -30,7 +30,7 @@
                 left: 0;
                 z-index: 3;
 
-                &:first-child, &:nth-child(2) {
+                &:first-child {
                     z-index: 4;
                 }
             }
@@ -41,23 +41,52 @@
                 white-space: nowrap;
             }
 
-            &:first-child, &:nth-child(2) {
+            &:first-child {
                 position: -webkit-sticky; // for safari
                 position: sticky;
                 left: 0px;
-                z-index: 2;
-            }
-            &:nth-child(2) {
-                left: 2.2rem;
                 width: 200px;
+                z-index: 2;
                 box-shadow: inset -1px 0px $grey--light;
-                // border-right: 1px solid $grey--light;
             }
 
             &.table-cell {
                 &--checkbox {
                     padding-right: 0;
                 }
+            }
+        }
+    }
+
+    &--action {
+        thead {
+            th, td {
+                &:first-child, &:nth-child(2) {
+                    z-index: 4;
+                }
+            }
+        }
+
+        tfoot {
+            th, td {
+                &:first-child, &:nth-child(2) {
+                    z-index: 4;
+                }
+            }
+        }
+
+        th, td {
+            &:first-child, &:nth-child(2) {
+                position: -webkit-sticky; // for safari
+                position: sticky;
+                left: 0px;
+                z-index: 2;
+                box-shadow: none;
+            }
+            &:nth-child(2) {
+                left: 2.2rem;
+                width: 200px;
+                box-shadow: inset -1px 0px $grey--light;
             }
         }
     }

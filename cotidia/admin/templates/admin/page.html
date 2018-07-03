@@ -21,19 +21,21 @@
     </div>
 </div>
 <div class="layout__content">
-    {% block messages %}
-    {% include "admin/generic/messages.html" %}
-    {% endblock messages %}
-    {% block content_head %}
-    <div class="content__head">
-        <div class="content__title">
-            {% block content_title %}{% endblock content_title %}
+    <div class="content">
+        {% block messages %}
+        {% include "admin/generic/messages.html" %}
+        {% endblock messages %}
+        {% block content_head %}
+        <div class="content__head">
+            <div class="content__title">
+                {% block content_title %}{% endblock content_title %}
+            </div>
+            <div class="content__actions">
+                {% block content_actions %}{% endblock content_actions %}
+            </div>
         </div>
-        <div class="content__actions">
-            {% block content_actions %}{% endblock content_actions %}
-        </div>
+        {% endblock content_head %}
+        {% block page_content %}{% endblock page_content %}
     </div>
-    {% endblock content_head %}
-    {% block page_content %}{% endblock page_content %}
 </div>
 {% endblock content %}
