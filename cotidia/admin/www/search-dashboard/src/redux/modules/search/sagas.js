@@ -231,7 +231,8 @@ function * handleDynamicListMessage ({ payload: { message } }) {
 function * editField ({ payload: { item, column, value } }) {
   const columnConfig = yield select((state) => state.search.columns[column])
 
-  let url = columnConfig.edit_endpoint.replace(':uuid', item)
+  // TODO: Get full item object and pass it in to generateURL so that we have richer formatting of the URL.
+  let url = generateURL(columnConfig.edit_endpoint, { uuid: item })
 
   try {
     const { ok } = yield call(
