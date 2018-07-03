@@ -28,6 +28,7 @@ export default class Number extends Component {
           <div className='form__control'>
             <TextInput
               autoFocus
+              controlOnly
               name='min'
               type='number'
               updateValue={this.updateMin}
@@ -40,6 +41,7 @@ export default class Number extends Component {
           <label className='form__label'>and at most</label>
           <div className='form__control'>
             <TextInput
+            controlOnly
               name='max'
               type='number'
               updateValue={this.updateMax}
