@@ -105,16 +105,18 @@ export default class ToolBar extends Component {
     return (
       <div className='content__toolbar'>
         <div className='content__filter'>
-          <TextInput
-            controlOnly
-            label='Search'
-            name='searchTerm'
-            prefix={<Icon icon='search' />}
-            type='text'
-            updateValue={this.updateSearchTerm}
-            updateValueOnBlur={false}
-            value={searchTerm}
-          />
+          <div className='form__group form__group--boxed'>
+            <TextInput
+              controlOnly
+              label='Search'
+              name='searchTerm'
+              prefix={<Icon icon='search' />}
+              type='text'
+              updateValue={this.updateSearchTerm}
+              updateValueOnBlur={false}
+              value={searchTerm}
+            />
+          </div>
 
           {toolbarFilters && toolbarFilters.map((filter) => {
             const { filter: type, ...filterProps } = filter
