@@ -112,6 +112,7 @@ export default class ToolBar extends Component {
               controlOnly
               label='Search'
               name='searchTerm'
+              placeholder='Search'
               prefix={<Icon icon='search' />}
               type='text'
               updateValue={this.updateSearchTerm}
