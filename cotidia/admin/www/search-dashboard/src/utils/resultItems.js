@@ -1,10 +1,11 @@
 import React from 'react'
 import moment from 'moment'
 
+import { generateURL } from './api'
+import { uuid4 } from './'
+
 import FileUpload from '../components/elements/FileUpload'
 import { Icon } from '../components/elements/global'
-
-import { uuid4 } from './'
 
 export const getValueFormatter = (config) => {
   let globalListHandling = config.listHandling
@@ -35,7 +36,7 @@ export const getValueFormatter = (config) => {
     ),
     file: (value, item, accessor, endpoint, extraData) => (
       <FileUpload
-        endpoint={endpoint.replace(':uuid', item.uuid)}
+        endpoint={generateURL(endpoint, item)}
         extraData={extraData}
         id={uuid4()}
         value={value || ''}
