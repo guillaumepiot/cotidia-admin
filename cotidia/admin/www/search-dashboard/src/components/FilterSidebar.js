@@ -15,12 +15,12 @@ export default class FilterSidebar extends Component {
     hasSidebarFilters: PropTypes.bool.isRequired,
     setFilterValue: PropTypes.func.isRequired,
     sidebarFilters: PropTypes.array,
-    toggleSidebar: PropTypes.func.isRequired,
+    showSidebar: PropTypes.func.isRequired,
   }
 
   updateFilterValueFactory = (filter) => (value) => this.props.setFilterValue(filter, value)
 
-  hideSidebar = () => this.props.toggleSidebar()
+  hideSidebar = () => this.props.showSidebar(false)
 
   render () {
     const {

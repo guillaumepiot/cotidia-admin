@@ -15,7 +15,10 @@ export function * bootstrap ({ payload: config }) {
   yield put({ type: searchTypes.SET_TOOLBAR_FILTERS, payload: config.toolbarFilters || [] })
   yield put({ type: searchTypes.SET_SIDEBAR_FILTERS, payload: config.sidebarFilters || [] })
 
-  yield put({ type: configTypes.SET_CONFIG, payload: config.config })
+  const { sidebarStartsShown = false, ...configRest } = config.config
+
+  yield put({ type: searchTypes.SHOW_SIDEBAR, payload: { show: sidebarStartsShown } })
+  yield put({ type: configTypes.SET_CONFIG, payload: configRest })
 
   let defaultOrderColumn = config.defaultColumns[0]
   let defaultOrderAscending = true

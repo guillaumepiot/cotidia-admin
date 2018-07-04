@@ -278,6 +278,12 @@ export default (state = initialState, { type, payload } = {}) => {
         showSidebar: ! state.showSidebar,
       }
 
+    case types.SHOW_SIDEBAR:
+      return {
+        ...state,
+        showSidebar: payload.show,
+      }
+
     default:
       return state
   }

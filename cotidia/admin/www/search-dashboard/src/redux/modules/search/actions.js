@@ -101,3 +101,4 @@ export const editField = (item, column, value) => ({
 })
 
 export const toggleSidebar = () => ({ type: types.TOGGLE_SIDEBAR })
+export const showSidebar = (show) => ({ type: types.SHOW_SIDEBAR, payload: { show } })
