@@ -7,6 +7,7 @@ import { generateURL, fetchAuthenticated } from '../../../utils/api'
 
 import { showModal } from '../modal/sagas'
 
+import { refreshCurrentPage } from './actions'
 import * as types from './types'
 import * as modalTypes from '../modal/types'
 
@@ -137,6 +138,7 @@ function * performSearch () {
         type: types.STORE_RESULTS,
         payload: {
           id: searchID,
+          url,
           result,
         },
       })
@@ -147,13 +149,17 @@ function * performSearch () {
 }
 
 function * getResultsPage ({ payload: { page } }) {
+  const pagination = yield select((state) => state.search.pagination)
+
+  const url = pagination[page]
+
+  if (! url) {
+    return
+  }
+
   const searchID = uuid4()
 
   yield put({ type: types.SEARCH_START, payload: { id: searchID } })
-
-  const pagination = yield select((state) => state.search.pagination)
-
-  const url = page === 'next' ? pagination.next : pagination.previous
 
   try {
     const { ok, data: result } = yield call(fetchAuthenticated, 'GET', url)
@@ -163,6 +169,7 @@ function * getResultsPage ({ payload: { page } }) {
         type: types.STORE_RESULTS,
         payload: {
           id: searchID,
+          url,
           result,
         },
       })
@@ -274,8 +281,8 @@ function * editField ({ payload: { item, column, value } }) {
       { [column]: value }
     )
 
-    if (ok) {
-      yield put({ type: types.PERFORM_SEARCH })
+    if (true || ok) {
+      yield put(refreshCurrentPage())
     }
   } catch {
     // pass

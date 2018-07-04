@@ -56,6 +56,10 @@ export const setFilterValue = (filter, value) => ({
   payload: { filter, value },
 })
 
+export const refreshCurrentPage = () => ({
+  type: types.GET_RESULTS_PAGE,
+  payload: { page: 'current' },
+})
 export const getPreviousPage = () => ({
   type: types.GET_RESULTS_PAGE,
   payload: { page: 'previous' },
