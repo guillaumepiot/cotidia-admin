@@ -59,26 +59,51 @@ export function * manageColumns () {
   })
 }
 
+// Ensure value is an actual value, otherwise coerce to empty string. Here, we say that 0 is an
+// actual value, but anything else falsy isn't.
+function getValue (value) {
+  if (value === 0) {
+    return value
+  }
+
+  return value || ''
+}
+
+export function getFilterValue (value) {
+  // If the value is an object, treat it specially.
+  if ((Object(value) === value) && (! Array.isArray(value))) {
+    let val = ''
+
+    if (value.hasOwnProperty('min') && ! value.hasOwnProperty('max')) {
+      val = `${getValue(value.min)}:`
+    } else if (value.hasOwnProperty('min') && value.hasOwnProperty('max')) {
+      val = `${getValue(value.min)}:${getValue(value.max)}`
+    } else if (! value.hasOwnProperty('min') && value.hasOwnProperty('max')) {
+      val = `:${getValue(value.max)}`
+    }
+
+    // If min and max both had no value, skip this filter.
+    if (val !== ':') {
+      return val
+    }
+  } else {
+    // Anything else (primitives and arrays) can go in raw and be handled by generateURL.
+
+    // Though if value is the empty string or null/undefined, skip this filter.
+    if (value !== '' && value != null) {
+      return value
+    }
+  }
+}
+
 function getSearchQueryString (data) {
   const queryString = {}
 
   for (const [key, value] of Object.entries(data.filters)) {
-    // If the value is an object, treat it specially.
-    if ((Object(value) === value) && (! Array.isArray(value))) {
-      let val = ''
+    const val = getFilterValue(value)
 
-      if (value.hasOwnProperty('min') && ! value.hasOwnProperty('max')) {
-        val = `${value.min}:`
-      } else if (value.hasOwnProperty('min') && value.hasOwnProperty('max')) {
-        val = `${value.min}:${value.max}`
-      } else if (! value.hasOwnProperty('min') && value.hasOwnProperty('max')) {
-        val = `:${value.max}`
-      }
-
+    if (val != null) {
       queryString[key] = val
-    } else {
-      // Anything else (primitives and arrays) can go in raw and be handled by generateURL.
-      queryString[key] = value
     }
   }
 
