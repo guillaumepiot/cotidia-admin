@@ -307,6 +307,7 @@ export default function * watcher () {
       types.SEARCH_START,
       types.TOGGLE_COLUMN,
       types.SWITCH_MODE,
+      types.MOVE_COLUMN,
     ],
     saveColumnConfig
   )

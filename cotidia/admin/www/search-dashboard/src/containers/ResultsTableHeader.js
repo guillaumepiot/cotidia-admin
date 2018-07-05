@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import {
   clearFilter,
   configureFilter,
+  moveColumn,
   setOrderColumn,
   toggleOrderDirection,
   toggleSelectAllResults,
@@ -29,6 +30,7 @@ const mapStateToProps = (state) => ({
 const actionCreators = {
   clearFilter,
   configureFilter,
+  moveColumn,
   setOrderColumn,
   toggleOrderDirection,
   toggleSelectAllResults,
