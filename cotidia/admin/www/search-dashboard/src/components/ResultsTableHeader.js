@@ -198,7 +198,7 @@ export default class ResultsTableHeader extends Component {
                 />
               )
             } else if (column.type === 'separator') {
-              return <SeparatorHeader key={column.id} />
+              return <SeparatorHeader key={column.id} index={index} />
             }
           })}
         </SortableList>
