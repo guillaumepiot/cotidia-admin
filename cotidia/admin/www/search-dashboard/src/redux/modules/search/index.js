@@ -34,6 +34,7 @@ const initialState = {
 
   pagination: {
     count: 0,
+    current: null,
     next: null,
     previous: null,
   },
@@ -167,6 +168,7 @@ export default (state = initialState, { type, payload } = {}) => {
           selected: [],
           pagination: {
             count: payload.result.count,
+            current: payload.url,
             next: payload.result.next,
             previous: payload.result.previous,
           },
@@ -274,6 +276,12 @@ export default (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         showSidebar: ! state.showSidebar,
+      }
+
+    case types.SHOW_SIDEBAR:
+      return {
+        ...state,
+        showSidebar: payload.show,
       }
 
     default:

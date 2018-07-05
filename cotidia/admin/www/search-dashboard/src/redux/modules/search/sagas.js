@@ -7,6 +7,7 @@ import { generateURL, fetchAuthenticated } from '../../../utils/api'
 
 import { showModal } from '../modal/sagas'
 
+import { refreshCurrentPage } from './actions'
 import * as types from './types'
 import * as modalTypes from '../modal/types'
 
@@ -59,26 +60,51 @@ export function * manageColumns () {
   })
 }
 
+// Ensure value is an actual value, otherwise coerce to empty string. Here, we say that 0 is an
+// actual value, but anything else falsy isn't.
+function getValue (value) {
+  if (value === 0) {
+    return value
+  }
+
+  return value || ''
+}
+
+export function getFilterValue (value) {
+  // If the value is an object, treat it specially.
+  if ((Object(value) === value) && (! Array.isArray(value))) {
+    let val = ''
+
+    if (value.hasOwnProperty('min') && ! value.hasOwnProperty('max')) {
+      val = `${getValue(value.min)}:`
+    } else if (value.hasOwnProperty('min') && value.hasOwnProperty('max')) {
+      val = `${getValue(value.min)}:${getValue(value.max)}`
+    } else if (! value.hasOwnProperty('min') && value.hasOwnProperty('max')) {
+      val = `:${getValue(value.max)}`
+    }
+
+    // If min and max both had no value, skip this filter.
+    if (val !== ':') {
+      return val
+    }
+  } else {
+    // Anything else (primitives and arrays) can go in raw and be handled by generateURL.
+
+    // Though if value is the empty string or null/undefined, skip this filter.
+    if (value !== '' && value != null) {
+      return value
+    }
+  }
+}
+
 function getSearchQueryString (data) {
   const queryString = {}
 
   for (const [key, value] of Object.entries(data.filters)) {
-    // If the value is an object, treat it specially.
-    if ((Object(value) === value) && (! Array.isArray(value))) {
-      let val = ''
+    const val = getFilterValue(value)
 
-      if (value.hasOwnProperty('min') && ! value.hasOwnProperty('max')) {
-        val = `${value.min}:`
-      } else if (value.hasOwnProperty('min') && value.hasOwnProperty('max')) {
-        val = `${value.min}:${value.max}`
-      } else if (! value.hasOwnProperty('min') && value.hasOwnProperty('max')) {
-        val = `:${value.max}`
-      }
-
+    if (val != null) {
       queryString[key] = val
-    } else {
-      // Anything else (primitives and arrays) can go in raw and be handled by generateURL.
-      queryString[key] = value
     }
   }
 
@@ -112,6 +138,7 @@ function * performSearch () {
         type: types.STORE_RESULTS,
         payload: {
           id: searchID,
+          url,
           result,
         },
       })
@@ -122,13 +149,17 @@ function * performSearch () {
 }
 
 function * getResultsPage ({ payload: { page } }) {
+  const pagination = yield select((state) => state.search.pagination)
+
+  const url = pagination[page]
+
+  if (! url) {
+    return
+  }
+
   const searchID = uuid4()
 
   yield put({ type: types.SEARCH_START, payload: { id: searchID } })
-
-  const pagination = yield select((state) => state.search.pagination)
-
-  const url = page === 'next' ? pagination.next : pagination.previous
 
   try {
     const { ok, data: result } = yield call(fetchAuthenticated, 'GET', url)
@@ -138,6 +169,7 @@ function * getResultsPage ({ payload: { page } }) {
         type: types.STORE_RESULTS,
         payload: {
           id: searchID,
+          url,
           result,
         },
       })
@@ -239,7 +271,7 @@ function * editField ({ payload: { item, column, value } }) {
   const columnConfig = yield select((state) => state.search.columns[column])
 
   // TODO: Get full item object and pass it in to generateURL so that we have richer formatting of the URL.
-  let url = generateURL(columnConfig.edit_endpoint, { uuid: item })
+  let url = generateURL(columnConfig.editEndpoint, { uuid: item })
 
   try {
     const { ok } = yield call(
@@ -249,8 +281,8 @@ function * editField ({ payload: { item, column, value } }) {
       { [column]: value }
     )
 
-    if (ok) {
-      yield put({ type: types.PERFORM_SEARCH })
+    if (true || ok) {
+      yield put(refreshCurrentPage())
     }
   } catch {
     // pass

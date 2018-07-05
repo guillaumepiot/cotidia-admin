@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
 import { uuid4 } from '../../../utils'
+import { getFilterValue } from './sagas'
 
 const identity = _ => _
 
@@ -31,7 +32,10 @@ export const getVisibleColumnConfig = createSelector(
 // Filter out any filters that aren't (loosely) equal to null, and then map to the keys.
 export const getActiveFilters = createSelector(
   (state) => state.search.filters,
-  (filters) => Object.entries(filters).filter(([key, value]) => value != null).map(([key, value]) => key)
+  (filters) =>
+    Object.entries(filters)
+      .filter(([key, value]) => getFilterValue(value) != null)
+      .map(([key, value]) => key)
 )
 
 export const allResultsSelected = (state) => (state.search.selected.length === state.search.results.length)

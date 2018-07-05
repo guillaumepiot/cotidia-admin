@@ -56,6 +56,10 @@ export const setFilterValue = (filter, value) => ({
   payload: { filter, value },
 })
 
+export const refreshCurrentPage = () => ({
+  type: types.GET_RESULTS_PAGE,
+  payload: { page: 'current' },
+})
 export const getPreviousPage = () => ({
   type: types.GET_RESULTS_PAGE,
   payload: { page: 'previous' },
@@ -97,3 +101,4 @@ export const editField = (item, column, value) => ({
 })
 
 export const toggleSidebar = () => ({ type: types.TOGGLE_SIDEBAR })
+export const showSidebar = (show) => ({ type: types.SHOW_SIDEBAR, payload: { show } })

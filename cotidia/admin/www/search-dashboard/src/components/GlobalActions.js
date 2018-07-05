@@ -35,7 +35,10 @@ export default class GlobalActions extends Component {
             type='button'
           >
             {action.icon && (
-              <Icon icon={action.icon} />
+              <>
+                <Icon icon={action.icon} />
+                {' '}
+              </>
             )}
             {action.label}
           </button>

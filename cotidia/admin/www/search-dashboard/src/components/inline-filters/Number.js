@@ -25,7 +25,6 @@ export default class Number extends Component {
           <label className='form__label'>{label} is at least</label>
           <div className='form__control'>
             <TextInput
-              autoFocus
               controlOnly
               name='min'
               type='number'
