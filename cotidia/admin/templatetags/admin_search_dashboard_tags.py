@@ -138,6 +138,7 @@ def render_search_dashboard_config(
         context['list_fields'] = serializer.get_option('list_fields')
 
     context['batch_actions'] = serializer.get_option('batch_actions', default=batch_actions)
+    context['sidebar_starts_shown'] = serializer.get_option('sidebar_starts_shown')
 
     return context
 

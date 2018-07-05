@@ -80,6 +80,9 @@
         {% if datetime_format %}
             datetimeFormat: '{{datetime_format}}',
         {% endif %}
+        {% if sidebar_starts_shown %}
+            sidebarStartsShown: {{sidebar_starts_shown|json}},
+        {% endif %}
     },
     {% if batch_actions %}
         batchActions: {{batch_actions|safe}},

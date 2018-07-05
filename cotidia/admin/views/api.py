@@ -160,6 +160,13 @@ def get_sub_serializer(serializer, field):
     return sub_serializer
 
 
+def get_query_dict_value(d, k):
+    v = d.get(k)
+    if isinstance(v, list):
+        v = d.getlist(k)
+    return v
+
+
 class AdminOrderableAPIView(APIView):
     permission_classes = (permissions.IsAdminUser,)
 
@@ -233,30 +240,39 @@ class AdminSearchDashboardAPIView(ListAPIView):
 
         # Field filtering
         for field in field_repr.keys():
-            filter_params = self.request.GET.getlist(field)
+            filter_params = get_query_dict_value(self.request.GET, field)
             if filter_params:
-                suffix = ""
-                if field_repr[field].get('prep_function', False):
-                    filter_params = [
-                        field_repr[field]["prep_function"](param)
-                        for param in filter_params
-                    ]
-                if field_repr[field].get('foreign_key', False):
-                    suffix = "__uuid"
-                filter_type = field_repr[field]['filter']
-                qs = FILTERS[filter_type](
-                    qs,
-                    field + suffix,
-                    filter_params
-                )
+                # If the field has a custom filter function, use it instead
+                if hasattr(serializer, 'filter_' + field):
+                    func = getattr(serializer, 'filter_' + field)
+                    qs = func(qs, get_query_dict_value(self.request.GET, field))
+                else:
+                    suffix = ""
+                    if field_repr[field].get('prep_function', False):
+                        filter_params = [
+                            field_repr[field]["prep_function"](param)
+                            for param in filter_params
+                        ]
+                    elif field_repr[field].get('filter_lookup_key', None):
+                        suffix = "__" + field_repr[field].get('filter_lookup_key')
+                    elif field_repr[field].get('foreign_key', False):
+                        suffix = "__uuid"
+                    filter_type = field_repr[field]['filter']
+                    qs = FILTERS[filter_type](
+                        qs,
+                        field + suffix,
+                        filter_params
+                    )
 
         # Extra filter
         extra_filters = serializer.get_option('extra_filters')
+
+        # Apply extra filters
         if extra_filters:
             for k in extra_filters.keys():
-                if self.request.GET.get(k):
+                if self.request.GET.getlist(k):
                     func = getattr(serializer, 'filter_' + k)
-                    qs = func(qs, self.request.GET.get(k))
+                    qs = func(qs, get_query_dict_value(self.request.GET, k))
 
         ordering_params = self.request.GET.getlist('_order')
         if ordering_params:

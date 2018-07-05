@@ -26,13 +26,18 @@ class AdminModelSerializer(serializers.ModelSerializer):
             # This copies the list of keys so we don't have any iteration
             # mutation issues
             keys = list(repr.keys())
+
             for key in keys:
                 # Flattens dicts
                 if isinstance(repr[key], dict):
+                    serializer = self.fields[key]
+                    display_field = serializer.SearchProvider.display_field
                     for subkey, subvalue in repr[key].items():
+                        # print(subkey, subvalue)
                         key_name = "{}__{}".format(key, subkey)
                         if key_name not in repr.keys():
                             repr.update({key_name: subvalue})
+                    repr[key] = repr[key][display_field]
         return repr
 
     def get_choices(self):
