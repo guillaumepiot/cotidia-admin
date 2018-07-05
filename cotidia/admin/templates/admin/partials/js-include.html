@@ -11,9 +11,14 @@
                 var endpoint = typeahead.dataset.typeaheadEndpoint
                 var placeholder
                 var minchars = typeahead.dataset.typeaheadMinchars ? parseInt(typeahead.dataset.typeaheadMinchars) : 1
+                var extraGroupClasses = null
 
                 if (typeahead.querySelector('[placeholder]')) {
                     placeholder = typeahead.querySelector('[placeholder]').getAttribute('placeholder')
+                }
+
+                if (typeahead.querySelector('.form__group')) {
+                    extraGroupClasses = Array.prototype.slice.call(typeahead.querySelector('.form__group').classList)
                 }
 
                 ReactDOM.render(
@@ -23,6 +28,7 @@
                             apiEndpoint: endpoint,
                             placeholder: placeholder,
                             minchars: minchars,
+                            extraGroupClasses: extraGroupClasses,
                         }
                     ),
                     typeahead.parentElement
