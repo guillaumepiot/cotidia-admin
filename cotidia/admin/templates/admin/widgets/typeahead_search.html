@@ -1,0 +1,10 @@
+<form action="{{form_action_url}}" method="get" data-typeahead-endpoint="{{lookup_url}} data-typeahead-minchars="3">
+    <div class="form__group{% if extra_form_group_classes %} {{extra_form_group_classes}}{% endif %}">
+        <div class="form__control form__control--input form__control--input-addon">
+            <input class="form__text" type="text" name="q" placeholder="{{placeholder}}">
+            <div class="input-addon input-addon--prefix">
+                <span class="fa fa-search"></span>
+            </div>
+        </div>
+    </div>
+</form>
