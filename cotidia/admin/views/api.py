@@ -107,10 +107,13 @@ def number_filter(query_set, field, values):
 
 
 def field_filter(filter_fn, query_set, field, values):
-    """Filter the fields with a given function
-        The function must return a Q-object
-        Each value is "OR"ed against eachother."""
+    """
+    Filter the fields with a given function
 
+    The function must return a Q-object
+    """
+
+    # Each value is "OR"ed against eachother if it is a list.
     if isinstance(values, list):
         q_object = filter_fn(field, values.pop())
         for value in values:
