@@ -44,3 +44,5 @@ export const HANDLE_DYNAMIC_LIST_MESSAGE = 'dynamic-list/search/HANDLE_DYNAMIC_L
 export const EDIT_FIELD = 'dynamic-list/search/EDIT_FIELD'
 export const TOGGLE_SIDEBAR = 'dynamic-list/search/TOGGLE_SIDEBAR'
 export const SHOW_SIDEBAR = 'dynamic-list/search/SHOW_SIDEBAR'
+
+export const MOVE_COLUMN = 'dynamic-list/search/MOVE_COLUMN'

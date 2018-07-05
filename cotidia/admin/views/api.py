@@ -5,7 +5,7 @@ import datetime
 from functools import reduce
 
 from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, UpdateAPIView
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
@@ -187,6 +187,28 @@ class AdminOrderableAPIView(APIView):
 
 class GenericAdminPaginationStyle(LimitOffsetPagination):
     default_limit = PAGE_SIZE
+
+class AdminSearchDashboardUpdateView(UpdateAPIView):
+    _serializer_class = None
+    _model_class = None
+    lookup_field = 'uuid'
+    lookup_url_kwarg = 'uuid'
+
+    def get_model_class(self):
+        if not self._model_class:
+            self._model_class = ContentType.objects.get(
+                app_label=self.kwargs['app_label'],
+                model=self.kwargs['model']
+            ).model_class()
+        return self._model_class
+
+    def get_serializer_class(self):
+        if self.kwargs.get("serializer_class", False):
+            return self.kwargs.get("serializer_class")
+        if not self._serializer_class:
+            model_class = self.get_model_class()
+            self._serializer_class = model_class.SearchProvider.serializer()
+        return self._serializer_class
 
 
 class AdminSearchDashboardAPIView(ListAPIView):

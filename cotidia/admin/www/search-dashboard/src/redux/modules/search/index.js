@@ -284,6 +284,18 @@ export default (state = initialState, { type, payload } = {}) => {
         showSidebar: payload.show,
       }
 
+    case types.MOVE_COLUMN: {
+      const visibleColumns = [ ...state.visibleColumns ]
+
+      // Swap the elements using splice magic.
+      visibleColumns.splice(payload.to, 0, ...visibleColumns.splice(payload.from, 1))
+
+      return {
+        ...state,
+        visibleColumns,
+      }
+    }
+
     default:
       return state
   }

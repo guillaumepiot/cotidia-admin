@@ -52,11 +52,12 @@ const column = PropTypes.shape({
 const columns = PropTypes.objectOf(column)
 
 const config = PropTypes.shape({
+  columnsConfigurable: PropTypes.boolean,
   dateFormat: PropTypes.string,
   datetimeFormat: PropTypes.string,
-  primaryColor: PropTypes.string,
-  columnsConfigurable: PropTypes.boolean,
   listHandling,
+  primaryColor: PropTypes.string,
+  sidebarStartsShown: PropTypes.boolean,
 })
 
 const extraFilter = PropTypes.shape({
