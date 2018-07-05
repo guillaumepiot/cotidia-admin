@@ -57,6 +57,7 @@ const config = PropTypes.shape({
   datetimeFormat: PropTypes.string,
   listHandling,
   primaryColor: PropTypes.string,
+  sidebarStartsShown: PropTypes.boolean,
 })
 
 const extraFilter = PropTypes.shape({
