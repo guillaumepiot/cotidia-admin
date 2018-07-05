@@ -80,8 +80,13 @@ class AdminModelSerializer(serializers.ModelSerializer):
                     default_field_repr["label"] = label
                     repr[field_name] = default_field_repr
                 elif isinstance(field, serializers.ListSerializer):
-                    default_field_ref = FIELD_MAPPING[field.__class__.__name__]()
-                    default_field_ref["options"] = field.child.get_choices()
+                    try: 
+                        default_field_ref = FIELD_MAPPING[field.__class__.__name__]()
+                        default_field_ref["options"] = field.child.get_choices()
+                        default_field_ref["label"] = label
+                    except AttributeError as error:
+                        default_field_ref = FIELD_MAPPING[field.child.__class__.__name__]()
+                        default_field_ref["filter"] = None
                     default_field_ref["label"] = label
                     repr[field_name] = default_field_ref
                 else:
