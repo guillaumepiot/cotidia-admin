@@ -54,6 +54,11 @@ export const getValueFormatter = (config) => {
    * React elements, etc., but it's the best I can come up with at the moment.
    */
   return (item, accessor, format, listHandling = globalListHandling) => {
+    // If we don't have an item there's not a lot we can do here. Bail.
+    if (! item) {
+      return null
+    }
+
     // Get initial raw value from item.
     let value = item[accessor]
 
