@@ -326,6 +326,10 @@ class AdminSearchDashboardAPIView(ListAPIView):
                 parse_ordering(x) for x in ordering_params
             ]
             qs = qs.order_by(*parsed_ordering_params)
+        else:
+            default_order_by = serializer.get_option('default_order_by')
+            if default_order_by:
+                qs = qs.order_by(default_order_by)
 
         return qs
 
