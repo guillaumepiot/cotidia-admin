@@ -156,12 +156,13 @@
         &:hover {
             color: $grey--dark;
         }
+        .btn.btn--small {
+            line-height: 1rem !important;
+        }
     }
 }
 
 .table-cell-editable {
-    // display: flex;
-    // margin: -0.5rem -1rem;
     min-width: 170px;
 
     &:hover {
