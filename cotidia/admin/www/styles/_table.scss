@@ -140,24 +140,27 @@
 }
 
 .table-header {
-    &__name {
-
-    }
-
     &__item {
+        color: $grey;
         cursor: pointer;
         opacity: 0;
-        color: $grey;
-        margin-left: 0.5rem;
         position: relative;
-        &--active {
-            opacity: 1;
-        }
+        transition: opacity $animation-speed--fast ease;
+
         &:hover {
             color: $grey--dark;
         }
+
+        &--active {
+            opacity: 1;
+        }
+
         .btn.btn--small {
             line-height: 1rem !important;
+        }
+
+        &:not(:only-child) {
+            margin-left: 0.5rem;
         }
     }
 }
