@@ -6,6 +6,7 @@ import { Select } from '@cotidia/react-ui'
 export default class TypeaheadSwitcher extends Component {
   static propTypes = {
     apiEndpoint: PropTypes.string.isRequired,
+    extraGroupClasses: PropTypes.arrayOf(PropTypes.string),
     minchars: PropTypes.number,
     placeholder: PropTypes.string,
   }
@@ -50,6 +51,7 @@ export default class TypeaheadSwitcher extends Component {
   render () {
     return (
       <Select
+        extraGroupClasses={this.props.extraGroupClasses}
         name='q'
         minCharSearch={this.props.minchars}
         options={this.state.options}
