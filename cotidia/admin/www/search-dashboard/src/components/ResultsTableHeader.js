@@ -20,8 +20,8 @@ const Header = SortableElement(({
   column,
   isFiltered,
   isOrderColumn,
-  orderable,
   orderAscending,
+  orderable,
   setOrderColumn,
   clearFilter,
   filterColumn,
@@ -190,8 +190,8 @@ export default class ResultsTableHeader extends Component {
                   column={column}
                   isFiltered={isFiltered}
                   isOrderColumn={isOrderColumn}
-                  orderable={orderable}
                   orderAscending={orderAscending}
+                  orderable={orderable}
                   setOrderColumn={orderable ? this.setOrderColumnFactory(column.id) : null}
                   clearFilter={this.clearFilterFactory(column.id)}
                   filterColumn={this.configureFilterFactory(column.id)}
