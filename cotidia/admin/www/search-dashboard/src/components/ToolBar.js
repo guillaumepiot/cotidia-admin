@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { debounce } from '../utils'
 
-import Boolean from './inline-filters/Boolean'
+import * as inlineFilters from './inline-filters'
 
 import { TextInput } from '@cotidia/react-ui'
 
@@ -124,14 +124,29 @@ export default class ToolBar extends Component {
           {toolbarFilters && toolbarFilters.map((filter) => {
             const { filter: type, ...filterProps } = filter
 
+            let Component
+
             if (type === 'boolean') {
+              Component = inlineFilters.Boolean
+            } else if (type === 'text') {
+              Component = inlineFilters.Text
+            } else if (type === 'number') {
+              Component = inlineFilters.Number
+            } else if (type === 'date') {
+              Component = inlineFilters.Date
+            } else if (type === 'choice') {
+              Component = inlineFilters.Choice
+            }
+
+            if (Component) {
               return (
-                <Boolean
-                  key={filterProps.name}
-                  {...filterProps}
-                  updateValue={this.updateFilterValueFactory(filter.name)}
-                  value={filters[filter.name]}
-                />
+                <div className='form__row' key={filterProps.name}>
+                  <Component
+                    {...filterProps}
+                    updateValue={this.updateFilterValueFactory(filter.name)}
+                    value={filters[filter.name]}
+                  />
+                </div>
               )
             }
           })}
