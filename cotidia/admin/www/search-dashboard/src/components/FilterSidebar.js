@@ -3,11 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Icon } from './elements/global'
 
-import Boolean from './inline-filters/Boolean'
-import Text from './inline-filters/Text'
-import Number from './inline-filters/Number'
-import Date from './inline-filters/Date'
-import Choice from './inline-filters/Choice'
+import * as inlineFilters from './inline-filters'
 
 export default class FilterSidebar extends Component {
   static propTypes = {
@@ -51,21 +47,22 @@ export default class FilterSidebar extends Component {
               let Component
 
               if (type === 'boolean') {
-                Component = Boolean
+                Component = inlineFilters.Boolean
               } else if (type === 'text') {
-                Component = Text
+                Component = inlineFilters.Text
               } else if (type === 'number') {
-                Component = Number
+                Component = inlineFilters.Number
               } else if (type === 'date') {
-                Component = Date
+                Component = inlineFilters.Date
               } else if (type === 'choice') {
-                Component = Choice
+                Component = inlineFilters.Choice
               }
 
               if (Component) {
                 return (
                   <div className='form__row' key={filterProps.name}>
-                    <Component {...filterProps}
+                    <Component
+                      {...filterProps}
                       updateValue={this.updateFilterValueFactory(filter.name)}
                       value={filters[filter.name]}
                     />
