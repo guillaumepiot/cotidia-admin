@@ -16,6 +16,8 @@
                                 },
                             {% endfor %}
                         ],
+                    {% elif key == "after_edit_function_template" %}
+                        afterEdit: {% include field_data.after_edit_function_template %},
                     {% elif key == "function_template" or key == "foreign_key" %}
                     {% else %}
                         {{key}}: {{value|json|safe}},
