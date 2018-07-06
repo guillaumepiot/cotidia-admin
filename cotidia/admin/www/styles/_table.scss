@@ -200,7 +200,13 @@
 
 
 .table-cell-editable {
+    display: flex;
+    justify-content: space-between;
     min-width: 170px;
+    margin-top: -0.5rem;
+    margin-bottom: -0.5rem;
+    margin-left: -1rem;
+    margin-right: -1rem;
 
     &:hover {
         .table-cell-editable__action--edit {
@@ -209,33 +215,20 @@
     }
 
     &__value {
-        // flex: 1;
-        padding: 0.5rem 1rem;
-        position: absolute;
-        width: calc(100% - 32px);
-        height: 100%;
-        top: 0;
-        left: 0;
+        padding-left: 1rem;
+        flex: 1;
     }
+
     &__action {
         width: 32px;
         background-color: transparent;
         border-width: 0;
-        // border-left: 1px solid $table-row-border-color;
-        // align-items: stretch;
         &:hover {
             cursor: pointer;
-            // color: #fff;
-            // background-color: $background_color--change;
         }
 
         &--edit {
             color: $grey;
-            position: absolute;
-            width: 32px;
-            height: 100%;
-            top: 0;
-            right: 0;
             opacity: 0;
 
             &:hover {
@@ -245,11 +238,6 @@
         &--save {
             color: $background_color--create;
             background-color: #fff;
-            position: absolute;
-            width: 32px;
-            height: 100%;
-            top: 0;
-            right: 32px;
 
             &:hover {
                 color: #fff;
@@ -259,11 +247,6 @@
         &--cancel {
             color: $background_color--delete;
             background-color: #fff;
-            position: absolute;
-            width: 32px;
-            height: 100%;
-            top: 0;
-            right: 0;
 
             &:hover {
                 color: #fff;
@@ -273,29 +256,33 @@
     }
 
     .form__group {
-        position: absolute;
-        width: calc(100% - 64px);
-        height: 100%;
-        top: 0;
-        left: 0;
         margin: 0;
-        padding: 0 0 0 1rem;
         background-color: #fff;
+        min-height: 40px;
 
         .form__control {
+            border-bottom: 0;
+            padding-bottom: 0px;
+            // position: relative;
+            // top: 1px;
+
             input, select {
-                min-height: 40px;
-                padding: 0 1rem 0 0;
+                padding: 0.5rem 1rem;
             }
 
-            &--select {
+            &--input, &--select, &--textarea {
                 &::after {
                     top: 18px;
                 }
             }
+
             .control-select__options {
                 z-index: 5;
             }
+        }
+
+        .form__help {
+            display: none;
         }
     }
 }
