@@ -203,6 +203,14 @@ class AdminSearchDashboardUpdateView(UpdateAPIView):
     lookup_field = 'uuid'
     lookup_url_kwarg = 'uuid'
 
+    def get_permissions(self):
+        if self.kwargs.get("permissions_classes"):
+            self.permission_classes = self.kwargs.get("permissions_classes")
+        return super().get_permissions()
+
+    def get_queryset(self):
+        return self.get_model_class().objects.all()
+
     def get_model_class(self):
         if not self._model_class:
             self._model_class = ContentType.objects.get(
@@ -225,6 +233,11 @@ class AdminSearchDashboardAPIView(ListAPIView):
     pagination_class = GenericAdminPaginationStyle
     _model_class = None
     _serializer_class = None
+
+    def get_permissions(self):
+        if self.kwargs.get("permissions_classes"):
+            self.permission_classes = self.kwargs.get("permissions_classes")
+        return super().get_permissions()
 
     def get_model_class(self):
         if not self._model_class:
@@ -251,8 +264,14 @@ class AdminSearchDashboardAPIView(ListAPIView):
         field_repr = serializer.get_field_representation()
         related_fields = serializer.get_related_fields()
 
-        # pre-fetch related fields
-        qs = model_class.objects.all().select_related(*related_fields)
+        # Get the queryset
+        if serializer.get_option('get_queryset'):
+            qs = serializer.get_option('get_queryset')()
+        else:
+            qs = model_class.objects.all()
+
+        # Pre-fetch related fields
+        qs = qs.select_related(*related_fields)
 
         # filters the general_search
         q_object = Q()
