@@ -283,6 +283,10 @@ function * editField ({ payload: { item, column, value } }) {
 
     if (true || ok) {
       yield put(refreshCurrentPage())
+
+      if (columnConfig.afterEdit) {
+        columnConfig.afterEdit(value)
+      }
     }
   } catch {
     // pass
