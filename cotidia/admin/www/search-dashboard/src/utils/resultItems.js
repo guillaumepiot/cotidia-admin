@@ -14,12 +14,16 @@ export const getValueFormatter = (config) => {
     _verbatim: (value) => value,
     verbatim: (value) => (value == null) ? '' : String(value),
     currency: (value, _, __, currency) => value && value.toLocaleString('en', { style: 'currency', currency }),
-    date: (value) => moment(value).format(config.dateFormat),
-    datetime: (value) => moment(value).format(config.datetimeFormat),
+    date: (value) => value && moment(value).format(config.dateFormat),
+    datetime: (value) => value && moment(value).format(config.datetimeFormat),
     boolean: (value) => (
       value ? <Icon icon='check' /> : <Icon icon='times' />
     ),
     link: (value, type) => {
+      if (! value) {
+        return null
+      }
+
       let link = value
 
       if (type === 'mailto') {
@@ -31,7 +35,7 @@ export const getValueFormatter = (config) => {
       return <a href={link} onClick={(e) => e.stopPropagation()}>{value}</a>
     },
     raw: (value) => ({ __html: value }),
-    label: (value, type) => (
+    label: (value, type) => value && (
       <span className={`label ${type && `label--${type}`}`}>{value}</span>
     ),
     file: (value, item, accessor, endpoint, extraData) => (
@@ -85,7 +89,7 @@ export const getValueFormatter = (config) => {
       format = formatters[actualFormat] || formatters.verbatim
     }
 
-    const getFinalValue = (value) => {
+    const formatValue = (value) => {
       value = format(value, item, accessor, ...extraArgs)
 
       // If value signals that its raw HTML, just wrap it in a React span and dangerouslySetInnerHTML.
@@ -99,7 +103,7 @@ export const getValueFormatter = (config) => {
 
     // Use formatter to get actual value(s) from data.
     if (Array.isArray(value)) {
-      const values = value.map(getFinalValue)
+      const values = value.map(formatValue)
 
       if (listHandling.style === 'string') {
         return values.reduce((acc, value, index) => {
@@ -119,7 +123,7 @@ export const getValueFormatter = (config) => {
         ))
       }
     } else {
-      return getFinalValue(value)
+      return formatValue(value)
     }
   }
 }
