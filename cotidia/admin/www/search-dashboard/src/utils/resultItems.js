@@ -11,7 +11,6 @@ export const getValueFormatter = (config) => {
   let globalListHandling = config.listHandling
 
   const formatters = {
-    _verbatim: (value) => value,
     verbatim: (value) => (value == null) ? '' : String(value),
     currency: (value, _, __, currency) => value && value.toLocaleString('en', { style: 'currency', currency }),
     date: (value) => value && moment(value).format(config.dateFormat),
