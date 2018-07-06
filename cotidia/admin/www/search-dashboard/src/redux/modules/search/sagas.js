@@ -180,6 +180,13 @@ function * getResultsPage ({ payload: { page } }) {
 }
 
 function * saveColumnConfig () {
+  // If we're in storage override mode, don't save anything to storage.
+  const overrideStoredConfig = yield select((state) => state.config.overrideStoredConfig)
+
+  if (overrideStoredConfig === true) {
+    return
+  }
+
   const state = yield select((state) => state.search)
 
   const config = {
@@ -202,6 +209,13 @@ function * saveColumnConfig () {
 }
 
 function * removeSavedColumnConfig () {
+  // If we're in storage override mode, don't save anything to storage.
+  const overrideStoredConfig = yield select((state) => state.config.overrideStoredConfig)
+
+  if (overrideStoredConfig === true) {
+    return
+  }
+
   const state = yield select((state) => state.search)
 
   // Get existing config from localStorage, defaulting to empty object if not set

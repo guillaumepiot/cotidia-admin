@@ -18,7 +18,13 @@ export function * bootstrap ({ payload: config }) {
   const { sidebarStartsShown = false, ...configRest } = config.config
 
   yield put({ type: searchTypes.SHOW_SIDEBAR, payload: { show: sidebarStartsShown } })
-  yield put({ type: configTypes.SET_CONFIG, payload: configRest })
+  yield put({
+    type: configTypes.SET_CONFIG,
+    payload: {
+      ...configRest,
+      overrideStoredConfig: config.overrideStoredConfig || false,
+    },
+  })
 
   let defaultOrderColumn = config.defaultColumns[0]
   let defaultOrderAscending = true

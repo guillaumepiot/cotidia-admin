@@ -9,6 +9,7 @@ const initialState = {
     style: 'string',
     value: ', ',
   },
+  overrideStoredConfig: false,
 }
 
 export default (state = initialState, { type, payload } = {}) => {
