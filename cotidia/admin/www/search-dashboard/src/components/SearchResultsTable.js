@@ -7,6 +7,8 @@ import ResultsTableHeader from '../containers/ResultsTableHeader'
 import ResultsTableFooter from '../containers/ResultsTableFooter'
 import ResultsTableItem from '../containers/ResultsTableItem'
 
+const CATEGORY_ROW_COLSPAN = 3
+
 export default class SearchResultsTable extends Component {
   static propTypes = {
     batchActions: PropTypes.arrayOf(PropTypes.object),
@@ -38,6 +40,9 @@ export default class SearchResultsTable extends Component {
     let currentCategoryValue = null
     let formatValue = null
 
+    const hasBatchActions = batchActions.length > 0
+    const categoryRowUnusedColspan = columns.length - CATEGORY_ROW_COLSPAN + (hasBatchActions ? 1 : 0)
+
     if (categoriseBy) {
       formatValue = getValueFormatter(config)
     }
@@ -67,10 +72,10 @@ export default class SearchResultsTable extends Component {
                 return [
                   (
                     <tr key={formattedValue}>
-                      <td className='table-cell--category nowrap' colSpan={3}>
+                      <td className='table-cell--category nowrap' colSpan={CATEGORY_ROW_COLSPAN}>
                         {formattedValue}
                       </td>
-                      <td className='table-cell--category' colSpan={columns.length - 3 + (batchActions.length > 0 ? 1 : 0)} />
+                      <td className='table-cell--category' colSpan={categoryRowUnusedColspan} />
                     </tr>
                   ),
                   (
