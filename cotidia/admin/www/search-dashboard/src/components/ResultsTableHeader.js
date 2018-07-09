@@ -173,8 +173,10 @@ export default class ResultsTableHeader extends Component {
         >
           {(batchActions.length > 0) && (
             <BatchActionsHeader
-              toggleSelectAllResults={this.toggleSelectAllResults}
               allSelected={allSelected}
+              disabled
+              index={-1}
+              toggleSelectAllResults={this.toggleSelectAllResults}
             />
           )}
           {columns.map((column, index) => {
