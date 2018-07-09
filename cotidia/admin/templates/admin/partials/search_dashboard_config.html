@@ -92,4 +92,19 @@
     {% if batch_actions %}
         batchActions: {{batch_actions|safe}},
     {% endif %}
+    {% if global_actions %}
+        globalActions: [
+            {% for action in global_actions %}
+                {
+                    {% for key, value in action.items %}
+                        {% if key == "function_template" %}
+                            func: {% include value %},
+                        {% else %}
+                            {{key}}: {{value|json|safe}},
+                        {% endif %}
+                    {% endfor %}
+                },
+            {% endfor %}
+        ],
+    {% endif %}
 }
