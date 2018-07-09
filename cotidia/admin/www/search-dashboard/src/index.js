@@ -48,7 +48,7 @@ App.defaultProps = {
   defaultFilters: {},
   defaultOrderBy: null,
   detailURL: null,
-  overrideStoredConfig: false,
+  ignoreStoredConfig: false,
 }
 
 window.React = React
