@@ -9,7 +9,7 @@ from django.views.generic import (
     View
 )
 from django.contrib import messages
-from django.urls import reverse, NoReverseMatch
+from django.urls import reverse
 from django.http import HttpResponseRedirect, Http404
 from django.contrib.contenttypes.models import ContentType
 from django.views.generic.base import TemplateView
@@ -19,7 +19,6 @@ from django.db.models.deletion import ProtectedError
 from cotidia.admin.mixins import StaffPermissionRequiredMixin
 from cotidia.admin.views.mixin import ContextMixin, ChildMixin
 from cotidia.admin.forms import ActionForm
-from cotidia.admin.templatetags.admin_list_tags import get_admin_url
 from cotidia.admin.utils import search_objects
 
 
@@ -143,90 +142,54 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
     group_by = False
 
     def get_template_names(self):
-
-        template = "admin/{app}/{model}/dynamic-list.html".format(
+        template = 'admin/{app}/{model}/dynamic-list.html'.format(
             app=self.model._meta.app_label,
             model=self.model._meta.model_name
         )
 
         return [
             template,
-            "admin/generic/page/dynamic-list.html",
+            'admin/generic/page/dynamic-list.html',
         ]
-
-    def get_api_endpoint(self, app_label, model_name):
-        if self.kwargs.get("endpoint", False):
-            return self.kwargs["endpoint"]
-        else:
-            return reverse(
-                'generic-api:object-list',
-                kwargs={
-                    "app_label": app_label,
-                    "model": model_name
-                }
-            )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        # TODO: This check shouldn't be in `get-context_data` but I don't know
+        #       Django well enough to know where it *should* be, so can someone
+        #       fix this?
         try:
-            content_type_id = ContentType.objects.get(app_label=kwargs["app_label"], model=kwargs["model"]).id
+            self.model = ContentType.objects.get(
+                app_label=kwargs['app_label'],
+                model=kwargs['model']
+            ).model_class()
         except ContentType.DoesNotExist:
             raise Http404()
-
-        self.model = ContentType.objects.get_for_id(content_type_id).model_class()
-        app_label = self.model._meta.app_label
-        model_name = self.model._meta.model_name
-
-        # Checks if there is an "add url"
-        try:
-            get_admin_url(app_label, model_name, "add")
-            add_view = True
-        except NoReverseMatch:
-            add_view = False
-
-        filters = {}
-        for key in self.request.GET:
-            if key[0] != '_':
-                filters[key] = self.request.GET.getlist(key)
-
-        url_type = "detail"
-
-        if self.kwargs.get("serializer_class", False):
-            context["serializer_class"] = self.kwargs["serializer_class"]
         else:
-            context["serializer_class"] = None
-        context["content_type_id"] = content_type_id
-        context["verbose_name"] = self.model._meta.verbose_name
-        context["verbose_name_plural"] = self.model._meta.verbose_name_plural
-        context["add_view"] = add_view
-        context["app_label"] = app_label
-        context["model_name"] = model_name
-        context["url_type"] = url_type
-        context["default_columns"] = self.request.GET.getlist("_column")
-        context["default_order"] = self.request.GET.getlist("_order")
-        context["default_filters"] = filters
-        context["endpoint"] = self.get_api_endpoint(app_label, model_name)
+            context['app_label'] = self.model._meta.app_label
+            context['model_name'] = self.model._meta.model_name
 
-        try:
-            reverse(
-                f"{app_label}-admin:{model_name}-{url_type}",
-                kwargs={"id": "1"}
-            )
-            context["app_label"] = app_label
-            context["model_name"] = model_name
-            context["url_type"] = url_type
-        except NoReverseMatch:
-            pass
+            if self.kwargs.get('serializer_class'):
+                context['serializer_class'] = self.kwargs['serializer_class']
 
-        # Has add view?
-        try:
-            reverse(f"{app_label}-admin:{model_name}-add")
-            context["add_view"] = True
-        except:
-            context["add_view"] = False
+            if self.kwargs.get('endpoint'):
+                context['endpoint'] = self.kwargs['endpoint']
+
+            if self.request.GET.get('_column'):
+                context['default_colunms'] = self.request.GET.getlist('_column')
+
+            if self.request.GET.get('_order'):
+                context['default_order'] = self.request.GET.getlist('_order')
+
+            # Generate list of all filters from GET parameters.
+            filters = {}
+            for key in self.request.GET:
+                if key[0] != '_':
+                    filters[key] = self.request.GET.getlist(key)
+
+            context['default_filters'] = filters
 
         return context
-
 
 class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):
     template_type = "centered"  # Options: fluid, centered

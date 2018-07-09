@@ -1,6 +1,7 @@
 {% load admin_search_dashboard_tags %}
 {
     endpoint: '{{endpoint}}',
+    title: '{{title}}',
     columns: {
         {% for field_name, field_data in columns.items %}
             {{field_name}}: {
@@ -72,7 +73,9 @@
         {% if primary_color %}
             primaryColour: '{{primary_color}}',
         {% endif %}
-        columnsConfigurable: {{columns_configurable|json}},
+        {% if columns_configurable == False %}
+            columnsConfigurable: false,
+        {% endif %}
         {% if list_handling %}
             listHandling: {{list_handling|json|safe}},
         {% endif %}

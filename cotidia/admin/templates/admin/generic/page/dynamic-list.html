@@ -4,25 +4,22 @@
     {{verbose_name}}
 {% endblock title %}
 
-{% block body_class %}
-    {% if template_type == "centered" %}content-centered{% endif %}
-{% endblock body_class %}
-
-{% block content_head %}{% endblock content_head %}
-
-{% block page_content %}
-<div id="dynamic-list"></div>
-{% endblock page_content %}
+{% block layout_content %}
+    <div id="dynamic-list"></div>
+{% endblock layout_content %}
 
 {% block footer_scripts %}
-{{block.super}}
-<script>
-    // <![CDATA[
-        data = {% render_search_dashboard_config app_label model_name url_type request.user.token.key default_columns default_filters default_order_by endpoint=endpoint serializer_class=serializer_class %};
+    {{block.super}}
+    <script>
+        // <![CDATA[
+            var dynamicListData = {% render_search_dashboard_config app_label model_name request.user.token.key serializer_class=serializer_class endpoint=endpoint default_colunms=default_colunms default_order=default_order default_filters=default_filters %}
 
-        if (window.ReactDOM && window.React && window.DynamicList) {
-            ReactDOM.render(React.createElement(DynamicList, data), document.getElementById('dynamic-list'))
-        }
-    // ]]>
-</script>
+            if (window.ReactDOM && window.React && window.DynamicList) {
+                ReactDOM.render(
+                    React.createElement(DynamicList, dynamicListData),
+                    document.getElementById('dynamic-list')
+                )
+            }
+        // ]]>
+    </script>
 {% endblock footer_scripts %}

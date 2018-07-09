@@ -1,3 +1,4 @@
+from django.urls import reverse, NoReverseMatch
 from rest_framework import serializers
 from cotidia.admin.search_dashboard_settings import (
     SUPPORTED_FIELDS_TYPES,
@@ -63,6 +64,37 @@ class AdminModelSerializer(serializers.ModelSerializer):
     def get_choice_queryset(self):
         return self.Meta.model.objects.all()
 
+    def get_endpoint(self):
+        return reverse(
+                'generic-api:object-list',
+                kwargs={
+                    'app_label': self.Meta.model._meta.app_label,
+                    'model': self.Meta.model._meta.model_name
+                }
+            )
+
+    def get_detail_url(self):
+        if self.get_option('enable_detail_url', default=True):
+            detail_url = self.get_option('detail_url')
+
+            if not detail_url:
+                try:
+                    # Here we generate a concrete URL for the detial view based
+                    # on a fake ID of `9999`. Later we will string replace this
+                    # for the `:id` placeholder to create a prototype URL.
+                    fake_detail_url = reverse(
+                        '{app_label}-admin:{model_name}-detail'.format(
+                            app_label=self.Meta.model._meta.app_label,
+                            model_name=self.Meta.model._meta.model_name
+                        ),
+                        kwargs={'pk': '9999'}
+                    )
+                except NoReverseMatch:
+                    pass
+                else:
+                    # Create prototype URL from concrete one.
+                    return fake_detail_url.replace('9999', ':id')
+
     def get_field_representation(self):
         if not hasattr(self, "_field_representation"):
             repr = {}
@@ -127,30 +159,24 @@ class AdminModelSerializer(serializers.ModelSerializer):
         return self._field_representation
 
     def get_option(self, attr, default=None):
-        try:
-            return getattr(self.SearchProvider, attr)
-        except AttributeError:
-            return default
+        if hasattr(self, "SearchProvider"):
+            return getattr(self.SearchProvider, attr, default)
+
+        return default
 
     def get_general_query_fields(self):
-        if hasattr(self, "SearchProvider"):
-            if hasattr(self.SearchProvider, "general_query_fields"):
-                return self.SearchProvider.general_query_fields
-            elif hasattr(self.SearchProvider, "display_field"):
-                return [self.SearchProvider.display_field]
-        return ['id']
+        return self.get_option(
+            'general_query_fields',
+            default=self.get_option(
+                'display_field',
+                default=['id']
+            )
+        )
 
     def get_default_columns(self):
-        try:
-            return self.SearchProvider.default_columns
-        except AttributeError:
-            try:
-                if self.SearchProvider.display_field:
-                    return [self.SearchProvider.display_field]
-                else:
-                    return ['id']
-            except:
-                return ['id']
+        return self.get_option('default_columns', default=[
+            self.get_option('display_field', default='id')
+        ])
 
 
 class SortSerializer(serializers.Serializer):
