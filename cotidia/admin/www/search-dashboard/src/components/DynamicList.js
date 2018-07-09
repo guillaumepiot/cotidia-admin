@@ -50,7 +50,7 @@ export default class DynamicList extends Component {
 
     return (
       <>
-        <div className={`content ${hasSidebar && showSidebar && 'content--sidebar'}`}>
+        <div className={`content ${(hasSidebar && showSidebar) ? 'content--sidebar' : ''}`}>
           <Header />
           <ToolBar />
 
