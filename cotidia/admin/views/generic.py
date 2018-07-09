@@ -208,8 +208,10 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
         context["endpoint"] = self.get_api_endpoint(app_label, model_name)
 
         try:
-            reverse("{}-admin:{}-{}".format(app_label, model_name, url_type),
-                    kwargs={"id": "1"})
+            reverse(
+                f"{app_label}-admin:{model_name}-{url_type}",
+                kwargs={"id": "1"}
+            )
             context["app_label"] = app_label
             context["model_name"] = model_name
             context["url_type"] = url_type
@@ -218,7 +220,7 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
 
         # Has add view?
         try:
-            reverse("{}-admin:{}-{}".format(app_label, model_name, "add"))
+            reverse(f"{app_label}-admin:{model_name}-add")
             context["add_view"] = True
         except:
             context["add_view"] = False
