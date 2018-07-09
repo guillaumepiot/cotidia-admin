@@ -47,8 +47,25 @@ export default class SearchResultsTable extends Component {
       formatValue = getValueFormatter(config)
     }
 
+    const tableClassName = [
+      'table',
+      `table--sticky`,
+    ]
+
+    if (detailURL) {
+      tableClassName.push('table--clickable')
+    }
+
+    if (loading) {
+      tableClassName.push('table--loading')
+    }
+
+    if (hasBatchActions) {
+      tableClassName.push('table--action')
+    }
+
     return (
-      <table className={`table table--sticky ${detailURL ? 'table--clickable' : ''} ${loading ? 'table--loading' : ''}`}>
+      <table className={tableClassName.join(' ')}>
         <ResultsTableHeader />
         <ResultsTableFooter />
         <tbody>
