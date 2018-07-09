@@ -1,7 +1,7 @@
 {% load i18n %}{% if ADMIN_GLOBAL_SEARCH %}
 <div class="toolbar__item toolbar__item--right toolbar-search">
     <form action="{% url 'generic-admin:search' %}" method="get" data-typeahead-endpoint="{% url 'generic-api:search-lookup' %}">
-        <div class="form__group">
+        <div class="form__group form__group--boxed">
             <div class="form__control form__control--input form__control--input-addon">
                 <input class="form__text" type="text" name="q"" placeholder="Search">
                 <div class="input-addon input-addon--prefix">

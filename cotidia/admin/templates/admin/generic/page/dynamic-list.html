@@ -8,19 +8,9 @@
     {% if template_type == "centered" %}content-centered{% endif %}
 {% endblock body_class %}
 
-{% block content_title %}{{verbose_name_plural}}{% endblock content_title %}
-
-{% block content_actions %}
-    <a href="{% get_admin_url app_label model_name 'add' %}" class="btn btn--create btn--small">
-        <span class="fa fa-plus"></span>
-        {% blocktrans with verbose_name as verbose_name %}
-            Add {{verbose_name}}
-        {% endblocktrans %}
-    </a>
-{% endblock content_actions %}
+{% block content_head %}{% endblock content_head %}
 
 {% block page_content %}
-{% include 'admin/generic/utils/head-filter.html' %}
 <div id="dynamic-list"></div>
 {% endblock page_content %}
 
