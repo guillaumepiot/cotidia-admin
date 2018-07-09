@@ -90,7 +90,7 @@ const SeparatorHeader = SortableElement(() => (
 
 const BatchActionsHeader = SortableElement(({ toggleSelectAllResults, allSelected }) => (
   <th className='nowrap' onClick={toggleSelectAllResults}>
-    <input type='checkbox' checked={allSelected} />
+    <input type='checkbox' checked={allSelected} readOnly />
   </th>
 ))
 
