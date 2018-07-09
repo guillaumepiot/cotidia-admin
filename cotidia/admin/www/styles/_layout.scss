@@ -1,3 +1,9 @@
+body.content-centered {
+    .content {
+        max-width: $laptop-width;
+        margin: 0 auto;
+    }
+}
 .layout {
     &__menu {
         @media screen and (min-width: $menu-breakpoint) {

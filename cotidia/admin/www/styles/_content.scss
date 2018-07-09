@@ -81,6 +81,10 @@
         }
     }
 
+    &__detail, form {
+        margin: 0 1rem;
+    }
+
     &--sidebar {
         .content__list {
             width: calc(100% - 16rem);
