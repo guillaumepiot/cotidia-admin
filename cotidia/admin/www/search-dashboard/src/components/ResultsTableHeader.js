@@ -90,7 +90,7 @@ const SeparatorHeader = SortableElement(() => (
 
 const BatchActionsHeader = SortableElement(({ toggleSelectAllResults, allSelected }) => (
   <th className='nowrap' onClick={toggleSelectAllResults}>
-    <input type='checkbox' checked={allSelected} />
+    <input type='checkbox' checked={allSelected} readOnly />
   </th>
 ))
 
@@ -173,8 +173,10 @@ export default class ResultsTableHeader extends Component {
         >
           {(batchActions.length > 0) && (
             <BatchActionsHeader
-              toggleSelectAllResults={this.toggleSelectAllResults}
               allSelected={allSelected}
+              disabled
+              index={-1}
+              toggleSelectAllResults={this.toggleSelectAllResults}
             />
           )}
           {columns.map((column, index) => {
