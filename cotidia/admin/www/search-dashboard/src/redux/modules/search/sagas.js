@@ -181,9 +181,9 @@ function * getResultsPage ({ payload: { page } }) {
 
 function * saveColumnConfig () {
   // If we're in storage override mode, don't save anything to storage.
-  const overrideStoredConfig = yield select((state) => state.config.overrideStoredConfig)
+  const ignoreStoredConfig = yield select((state) => state.config.ignoreStoredConfig)
 
-  if (overrideStoredConfig === true) {
+  if (ignoreStoredConfig === true) {
     return
   }
 
@@ -210,9 +210,9 @@ function * saveColumnConfig () {
 
 function * removeSavedColumnConfig () {
   // If we're in storage override mode, don't save anything to storage.
-  const overrideStoredConfig = yield select((state) => state.config.overrideStoredConfig)
+  const ignoreStoredConfig = yield select((state) => state.config.ignoreStoredConfig)
 
-  if (overrideStoredConfig === true) {
+  if (ignoreStoredConfig === true) {
     return
   }
 

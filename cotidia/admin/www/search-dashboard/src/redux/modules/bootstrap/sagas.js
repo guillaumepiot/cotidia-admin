@@ -22,7 +22,7 @@ export function * bootstrap ({ payload: config }) {
     type: configTypes.SET_CONFIG,
     payload: {
       ...configRest,
-      overrideStoredConfig: config.overrideStoredConfig || false,
+      ignoreStoredConfig: config.ignoreStoredConfig || false,
     },
   })
 
@@ -54,7 +54,7 @@ export function * bootstrap ({ payload: config }) {
 
   // If the config doesn't say to override any stored config, retrieve it from localStorage and
   // apply it on top of the setup we just did.
-  if (config.overrideStoredConfig !== true) {
+  if (config.ignoreStoredConfig !== true) {
     try {
       const storedConfig = JSON.parse(localStorage.getItem(config.endpoint))
 
