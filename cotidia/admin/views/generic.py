@@ -184,7 +184,7 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
                 context['default_colunms'] = self.request.GET.getlist('_column')
 
             if self.request.GET.get('_order'):
-                context['default_order'] = self.request.GET.getlist('_order')
+                context['default_order_by'] = self.request.GET.getlist('_order')
 
             # Generate list of all filters from GET parameters.
             filters = {}

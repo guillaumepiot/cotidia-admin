@@ -20,7 +20,7 @@ def render_search_dashboard_config(
     serializer=None,
     endpoint=None,
     default_colunms=None,
-    default_order=None,
+    default_order_by=None,
     default_filters=None,
     batch_actions=None,
 ):
@@ -50,14 +50,14 @@ def render_search_dashboard_config(
         default_colunms = serializer.get_default_columns()
 
     # Calculate default_oder_by
-    if not default_order:
-        default_order = serializer.get_option('default_order_by')
+    if not default_order_by:
+        default_order_by = serializer.get_option('default_order_by')
 
     context['verbose_name'] = model._meta.verbose_name
     context['verbose_name_plural'] = model._meta.verbose_name_plural
 
     context['default_columns'] = default_colunms
-    context['default_order'] = default_order
+    context['default_order_by'] = default_order_by
     context['default_filters'] = default_filters
 
     context['endpoint'] = endpoint
