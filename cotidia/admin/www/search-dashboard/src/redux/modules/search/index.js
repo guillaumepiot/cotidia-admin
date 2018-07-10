@@ -24,6 +24,7 @@ const initialState = {
 
   categoriseBy: null,
 
+  initialFilters: {},
   filters: {},
 
   searchTerm: null,
@@ -102,6 +103,7 @@ export default (state = initialState, { type, payload } = {}) => {
         visibleColumns: payload.defaultColumns,
         orderColumn: payload.defaultOrderColumn,
         orderAscending: payload.defaultOrderAscending,
+        initialFilters: payload.defaultFilters,
         filters: payload.defaultFilters,
         listFields: payload.listFields,
         mode: payload.mode,
@@ -251,7 +253,7 @@ export default (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         searchTerm: null,
-        filters: {},
+        filters: state.initialFilters,
         orderColumn: null,
         orderAscending: true,
       }
