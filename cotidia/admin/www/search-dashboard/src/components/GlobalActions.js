@@ -28,7 +28,7 @@ export default class GlobalActions extends Component {
       <div className='content__actions'>
         {globalActions.map((action) => (
           <button
-            className='btn btn--outline btn--small btn--create'
+            className={`btn btn--outline btn--small ${action.classes || ''}`}
             key={action.action}
             onClick={this.performGlobalActionFactory(action)}
             title={action.label}

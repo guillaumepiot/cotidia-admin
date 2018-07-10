@@ -72,6 +72,7 @@ const globalAction = PropTypes.shape({
   action: PropTypes.string.isRequired,
   icon: PropTypes.string,
   label: PropTypes.string.isRequired,
+  classes: PropTypes.string,
   func: PropTypes.func.isRequired,
 })
 
