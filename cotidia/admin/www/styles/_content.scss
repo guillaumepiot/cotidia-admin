@@ -1,4 +1,13 @@
 .content {
+    &--sticky {
+        .content__body {
+            height: calc(100vh - 11.5rem);
+            position: relative;
+            border-top: 1px solid $table-border-color;
+            border-bottom: 1px solid $table-border-color;
+            overflow: hidden;
+        }
+    }
     &__head {
         height: 5rem;
         display: flex;
@@ -16,20 +25,13 @@
         border-top: 1px solid $toolbar-border-color;
         background-color: $toolbar-background-color;
     }
-    &__body {
-        height: calc(100vh - 11.5rem);
-        position: relative;
-        border-top: 1px solid $table-border-color;
-        border-bottom: 1px solid $table-border-color;
-        overflow: hidden;
-    }
     &__foot {
         height: 3rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 0 1rem;
-        background-color: $toolbar-background-color;
+        // background-color: $toolbar-background-color;
     }
 
     &__title {
@@ -79,10 +81,6 @@
         .btn {
             margin-left: 0.5rem;
         }
-    }
-
-    &__detail, form {
-        margin: 0 1rem;
     }
 
     &--sidebar {

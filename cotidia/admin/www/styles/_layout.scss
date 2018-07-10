@@ -1,13 +1,13 @@
 body {
     &.content-centered {
-        .content {
+        .content__body, .content__foot, .content__head {
             max-width: $laptop-width;
             margin: 0 auto;
             padding: 0 1rem;
         }
     }
     &.content-padded {
-        .content {
+        .content__body {
             padding: 0 1rem;
         }
     }
@@ -42,7 +42,7 @@ body {
             overflow: scroll;
             z-index: 1;
 
-            .content__body {
+            &.content--sticky .content__body {
                 height: calc(100vh - 11.5rem - #{$toolbar-height});
             }
         }
