@@ -1,14 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
 
 import { Provider } from 'react-redux'
 import configureStore from './redux/create'
 import { bootstrap } from './redux/modules/bootstrap/actions'
 
 import { messageHandlerFactory } from './utils'
+import { appPropTypes } from './utils/propTypes'
 
-import SearchDashboard from './containers/SearchDashboard'
+import DynamicList from './containers/DynamicList'
 
 import { FullScreen } from './components/elements/global'
 
@@ -20,7 +20,7 @@ export default function App (props) {
   if (! authToken) {
     return (
       <FullScreen>
-        Dashboard configuration not provided.
+        Dynamic list configuration not provided.
       </FullScreen>
     )
   }
@@ -35,67 +35,12 @@ export default function App (props) {
 
   return (
     <Provider store={store}>
-      <SearchDashboard />
+      <DynamicList />
     </Provider>
   )
 }
 
-App.propTypes = {
-  authToken: PropTypes.string.isRequired,
-  batchActions: PropTypes.arrayOf(PropTypes.shape({
-    action: PropTypes.string.isRequired,
-    endpoint: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    onComplete: PropTypes.func,
-  })),
-  columns: PropTypes.objectOf(PropTypes.shape({
-    display: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.string,
-    ]),
-    filter: PropTypes.oneOf(['text', 'choice', 'boolean', 'number', 'date']),
-    label: PropTypes.string.isRequired,
-    options: PropTypes.arrayOf(PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      value: PropTypes.any.isRequired,
-    })),
-    orderable: PropTypes.bool,
-  })).isRequired,
-  config: PropTypes.shape({
-    dateFormat: PropTypes.string,
-    datetimeFormat: PropTypes.string,
-    primaryColor: PropTypes.string,
-    columnsConfigurable: PropTypes.boolean,
-    categoriseBy: PropTypes.shape({
-      column: PropTypes.string.isRequired,
-      display: PropTypes.oneOfType([
-        PropTypes.func,
-        PropTypes.string,
-      ]),
-    }),
-    listHandling: PropTypes.shape({
-      style: PropTypes.oneOf('string', 'element').isRequired,
-      value: PropTypes.string.isRequired,
-      props: PropTypes.object,
-    }),
-  }),
-  defaultColumns: PropTypes.arrayOf(PropTypes.string),
-  listFields: PropTypes.shape({
-    left: PropTypes.shape({
-      top: PropTypes.string,
-      bottom: PropTypes.string,
-    }),
-    right: PropTypes.shape({
-      top: PropTypes.string,
-      bottom: PropTypes.string,
-    }),
-  }),
-  defaultFilters: PropTypes.object,
-  defaultOrderBy: PropTypes.string,
-  detailURL: PropTypes.string,
-  endpoint: PropTypes.string.isRequired,
-  overrideStoredConfig: PropTypes.bool,
-}
+App.propTypes = appPropTypes
 
 App.defaultProps = {
   batchActions: [],
@@ -103,11 +48,11 @@ App.defaultProps = {
   defaultFilters: {},
   defaultOrderBy: null,
   detailURL: null,
-  overrideStoredConfig: false,
+  ignoreStoredConfig: false,
 }
 
 window.React = React
 window.ReactDOM = ReactDOM
-window.SearchDashboard = App
+window.DynamicList = App
 
 window.TypeaheadSwitcher = TypeaheadSwitcher

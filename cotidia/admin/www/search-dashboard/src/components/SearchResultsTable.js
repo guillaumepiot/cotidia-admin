@@ -1,31 +1,23 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { generateURL } from '../utils/api'
-import { getItemValue, getValueFormatter } from '../utils/resultItems'
+import { getValueFormatter } from '../utils/resultItems'
 
-import ResultsTableHeader from './ResultsTableHeader'
-import ResultsTableItem from './ResultsTableItem'
-import Pagination from '../containers/Pagination'
+import ResultsTableHeader from '../containers/ResultsTableHeader'
+import ResultsTableFooter from '../containers/ResultsTableFooter'
+import ResultsTableItem from '../containers/ResultsTableItem'
+
+const CATEGORY_ROW_COLSPAN = 3
 
 export default class SearchResultsTable extends Component {
   static propTypes = {
     batchActions: PropTypes.arrayOf(PropTypes.object),
-    clearFilter: PropTypes.func.isRequired,
+    categoriseBy: PropTypes.object,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
     config: PropTypes.object,
     detailURL: PropTypes.string,
-    filterColumn: PropTypes.func.isRequired,
-    filters: PropTypes.arrayOf(PropTypes.string).isRequired,
     loading: PropTypes.bool,
-    orderAscending: PropTypes.bool.isRequired,
-    orderColumn: PropTypes.string,
     results: PropTypes.arrayOf(PropTypes.object),
-    selected: PropTypes.arrayOf(PropTypes.string),
-    setOrderColumn: PropTypes.func.isRequired,
-    toggleOrderDirection: PropTypes.func.isRequired,
-    toggleResultSelected: PropTypes.func.isRequired,
-    toggleSelectAllResults: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -34,126 +26,88 @@ export default class SearchResultsTable extends Component {
     selected: [],
   }
 
-  viewItem = (item, newWindow) => {
-    if (this.props.detailURL) {
-      const url = generateURL(this.props.detailURL, item)
-
-      if (newWindow) {
-        window.open(url)
-      } else {
-        window.location = url
-      }
-    }
-  }
-
-  checkItem = (item) => this.props.toggleResultSelected(item.uuid)
-
-  allSelected () {
-    return (this.props.results.length && (this.props.selected.length === this.props.results.length)) || false
-  }
-
   render () {
     const {
       batchActions,
-      clearFilter,
+      categoriseBy,
       columns,
       config,
       detailURL,
-      filterColumn,
-      filters,
       loading,
-      orderColumn,
-      orderAscending,
       results,
-      selected,
-      setOrderColumn,
-      toggleOrderDirection,
-      toggleSelectAllResults,
     } = this.props
 
     let currentCategoryValue = null
     let formatValue = null
 
-    if (config.categoriseBy) {
+    const hasBatchActions = batchActions.length > 0
+    const categoryRowUnusedColspan = columns.length - CATEGORY_ROW_COLSPAN + (hasBatchActions ? 1 : 0)
+
+    if (categoriseBy) {
       formatValue = getValueFormatter(config)
     }
 
+    const tableClassName = [
+      'table',
+      `table--sticky`,
+    ]
+
+    if (detailURL) {
+      tableClassName.push('table--clickable')
+    }
+
+    if (loading) {
+      tableClassName.push('table--loading')
+    }
+
+    if (hasBatchActions) {
+      tableClassName.push('table--action')
+    }
+
     return (
-      <>
-        <table className={`table ${detailURL ? 'table--clickable' : ''} table--admin-mobile-view ${loading ? 'table--loading' : ''}`}>
-          <ResultsTableHeader
-            allSelected={this.allSelected()}
-            batchActions={batchActions}
-            columns={columns}
-            filters={filters}
-            orderAscending={orderAscending}
-            orderColumn={orderColumn}
-            clearFilter={clearFilter}
-            filterColumn={filterColumn}
-            setOrderColumn={setOrderColumn}
-            toggleSelectAllResults={toggleSelectAllResults}
-            toggleOrderDirection={toggleOrderDirection}
-          />
-          <tbody>
-            {results.map((item) => {
-              if (config.categoriseBy) {
-                let itemValue = getItemValue(item, config.categoriseBy.column)
+      <table className={tableClassName.join(' ')}>
+        <ResultsTableHeader />
+        <ResultsTableFooter />
+        <tbody>
+          {results.map((item) => {
+            if (categoriseBy) {
+              let itemValue = item[categoriseBy.column]
 
-                if (Array.isArray(itemValue)) {
-                  itemValue = itemValue[0]
-                }
-
-                if (itemValue !== currentCategoryValue) {
-                  currentCategoryValue = itemValue
-
-                  const formattedValue = formatValue(
-                    item,
-                    config.categoriseBy.column,
-                    config.categoriseBy.display
-                  )
-
-                  return [
-                    (
-                      <tr className='table__category-header'>
-                        <td colSpan={columns.length + (batchActions.length > 0 ? 1 : 0)}>
-                          {formattedValue}
-                        </td>
-                      </tr>
-                    ),
-                    (
-                      <ResultsTableItem
-                        checked={selected.includes(item.uuid)}
-                        checkItem={this.checkItem}
-                        columns={columns}
-                        config={config}
-                        key={item.uuid}
-                        item={item}
-                        showCheck={batchActions.length > 0}
-                        viewItem={detailURL ? this.viewItem : null}
-                      />
-                    ),
-                  ]
-                }
+              if (Array.isArray(itemValue)) {
+                itemValue = itemValue[0]
               }
 
-              return (
-                <ResultsTableItem
-                  checked={selected.includes(item.uuid)}
-                  checkItem={this.checkItem}
-                  columns={columns}
-                  config={config}
-                  key={item.uuid}
-                  item={item}
-                  showCheck={batchActions.length > 0}
-                  viewItem={detailURL ? this.viewItem : null}
-                />
-              )
-            })}
-          </tbody>
-        </table>
+              if (itemValue !== currentCategoryValue) {
+                currentCategoryValue = itemValue
 
-        <Pagination />
-      </>
+                const formattedValue = formatValue(
+                  item,
+                  categoriseBy.column,
+                  categoriseBy.display
+                )
+
+                return [
+                  (
+                    <tr key={formattedValue}>
+                      <td className='table-cell--category nowrap' colSpan={CATEGORY_ROW_COLSPAN}>
+                        {formattedValue}
+                      </td>
+                      <td className='table-cell--category' colSpan={categoryRowUnusedColspan} />
+                    </tr>
+                  ),
+                  (
+                    <ResultsTableItem key={item.uuid} item={item} />
+                  ),
+                ]
+              }
+            }
+
+            return (
+              <ResultsTableItem key={item.uuid} item={item} />
+            )
+          })}
+        </tbody>
+      </table>
     )
   }
 }

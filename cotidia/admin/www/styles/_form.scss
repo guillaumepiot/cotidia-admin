@@ -1,187 +1,43 @@
-/**
- * Defines the extra form styles required for the administration.
- *
- */
-
-.form{
-    &--action-fixed-bottom{
-        padding-bottom: $vertical_padding * 8;
-        .form__actions{
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: $grey--lighter;
-            border-top: 1px solid $grey--light;
-            width: 100%;
-            padding-left: 1rem;
-            padding-right: 1rem;
-            padding-top: 1rem;
-        }
-    }
-    &__label{
-        &--inline{
-            display: inline-block;
-            padding: $vertical_padding;
-            float: right;
-        }
-    }
-    &__control{
-        ul{
-            margin: $vertical_padding 0;
-            padding: 0;
-            list-style: none;
-        }
-    }
-    &__actions{
-
-    }
-    &__actions-inner{
-        padding-bottom: 1rem;
-
-        &:after {
-            content: "";
-            clear: both;
-            display: block;
-        }
-    }
-}
-
-fieldset{
-    margin-top: 1rem;
-
-    &.detail > .form__row {
-        border-bottom: 1px solid lighten($table-border-color, 10%);
-        &:last-child {
-            border-bottom: 0;
-        }
-        .form__group {
-            margin-top: 0.5rem;
-
-            &:last-child {
-                border-right: 0;
-            }
-        }
+.form {
+    &__legend {
+        padding: 1rem 1rem;
+        margin-bottom: 0.5rem;
+        border-bottom: 1px solid $table-border-color;
+        font-weight: 500;
+        padding-bottom: calc(1rem - 1px);
+        background-color: $table-header-background-color;
     }
 
-    &.table-view {
-        padding-bottom: 0;
-        padding-left: 0;
-        padding-right: 0;
+    &__group {
+        &--boxed {
+            .form__control {
+                background-color: #fff;
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+                padding-left: 1rem;
+                padding-right: 1rem;
+                border: 1px solid $toolbar-form-border-color;
+                border-radius: $border-radius;
 
-        .table {
-            border: none;
-            border-bottom-left-radius: $border-radius;
-            border-bottom-right-radius: $border-radius;
-            thead {
-                tr {
-                    th {
-                        border-bottom: 1px solid $table-border-color;
+                &--input, &--select, &--textarea {
+
+                    input, select {
+                        padding-right: 1rem;
+                    }
+
+                    &::after {
+                        top: calc(1.25rem - 2px);
+                        right: 1rem;
                     }
                 }
-            }
-            tbody {
-                tr {
-                    background-color: transparent;
-                }
-            }
-        }
-    }
-}
 
-.fieldset_actions {
-    padding-left: $horizontal_padding;
-    padding-right: $horizontal_padding;
-    padding-top: $vertical_padding;
-    padding-bottom: $vertical_padding;
-    background-color: $grey--lighter;
-    clear: both;
-}
-
-.errorlist {
-    padding: 0;
-    li{
-        margin: 0 $horizontal_padding;
-    }
-}
-
-.head-bar{
-
-    &--filter {
-        @media screen and (min-width: $tablet-width) {
-            display: flex;
-            align-items: center;
-
-            .form__group {
-                margin-bottom: 0;
-                flex: 1;
-            }
-        }
-    }
-
-    &--actions {
-        border-top: 1px solid $table-border-color;
-        border-left: 1px solid $table-border-color;
-        border-right: 1px solid $table-border-color;
-        background-color: $table-border-color;
-        padding: 0 1rem;
-
-        .form__group {
-            display: inline-block;
-            margin: 0.5rem 0;
-
-            .form__control--select {
-                background-color: #fff;
-                padding: 0.5rem 0 0.5rem 0.5rem;
-
-                &:hover {
-                    padding-bottom: calc(0.5rem - 1px);
-                }
-
-                &:after {
-                    top: calc(1.25rem - 2px);
+                .control-select__options {
+                    line-height: 1.5;
                 }
             }
 
             .form__help {
                 display: none;
-            }
-        }
-    }
-
-    .form__group {
-        @media screen and (min-width: $tablet-width) {
-            margin-right: $horizontal_padding;
-        }
-    }
-
-    .btn {
-        @media screen and (min-width: $tablet-width) {
-            align-self: center;
-            margin-right: $horizontal_padding;
-        }
-
-        &:last-child {
-            margin-right: 0;
-        }
-    }
-
-    &__item{
-        display: flex;
-        margin-right: $horizontal_padding;
-        &:last-child {
-            margin-right: 0;
-        }
-        &--search{
-            flex: 1;
-            .form__text {
-                border-top-right-radius: 0;
-                border-bottom-right-radius: 0;
-                border-right: none;
-            }
-            .btn {
-                border-top-left-radius: 0;
-                border-bottom-left-radius: 0;
             }
         }
     }

@@ -5,7 +5,7 @@ import datetime
 from functools import reduce
 
 from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, UpdateAPIView
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
@@ -74,7 +74,6 @@ def filter_comparable(field_regex, data_type):
             detail="The following value could not be parsed: %s" % val)
     return temp
 
-
 filter_number = filter_comparable(number_pattern, Decimal)
 filter_date = filter_comparable(
     date_pattern,
@@ -108,12 +107,20 @@ def number_filter(query_set, field, values):
 
 
 def field_filter(filter_fn, query_set, field, values):
-    """Filter the fields with a given function
-        The function must return a Q-object
-        Each value is "OR"ed against eachother."""
-    q_object = filter_fn(field, values.pop())
-    for value in values:
-        q_object |= filter_fn(field, value)
+    """
+    Filter the fields with a given function
+
+    The function must return a Q-object
+    """
+
+    # Each value is "OR"ed against eachother if it is a list.
+    if isinstance(values, list):
+        q_object = filter_fn(field, values.pop())
+        for value in values:
+            q_object |= filter_fn(field, value)
+    else:
+        q_object = filter_fn(field, values)
+
     return query_set.filter(q_object)
 
 
@@ -161,6 +168,13 @@ def get_sub_serializer(serializer, field):
     return sub_serializer
 
 
+def get_query_dict_value(d, k):
+    v = d.get(k)
+    if isinstance(v, list):
+        v = d.getlist(k)
+    return v
+
+
 class AdminOrderableAPIView(APIView):
     permission_classes = (permissions.IsAdminUser,)
 
@@ -183,81 +197,160 @@ class GenericAdminPaginationStyle(LimitOffsetPagination):
     default_limit = PAGE_SIZE
 
 
-class AdminSearchDashboardAPIView(ListAPIView):
-    permission_classes = (permissions.IsAdminUser,)
-    pagination_class = GenericAdminPaginationStyle
+class AdminSearchDashboardUpdateView(UpdateAPIView):
+    _serializer_class = None
+    _model_class = None
+    lookup_field = 'uuid'
+    lookup_url_kwarg = 'uuid'
+
+    def get_permissions(self):
+        if self.kwargs.get("permissions_classes"):
+            self.permission_classes = self.kwargs.get("permissions_classes")
+        return super().get_permissions()
 
     def get_queryset(self):
-        model_class = self.model_class
-        # Gets the field meta data for the model
-        field_data = get_fields_from_model(model_class)
-        query_set = model_class.objects.all()
+        return self.get_model_class().objects.all()
 
-        q_list = self.request.GET.getlist('_q')
-        serializer = get_model_serializer_class(model_class)
-        try:
-            general_query_field_set = serializer.SearchProvider.general_query_fields
-        except AttributeError:
-            general_query_field_set = ["id"]
-        query_set = filter_general_query(serializer, q_list, query_set, general_query_field_set)
-
-        # Applies filters for each field in get request
-        for field in field_data.keys():
-            # If the field name is reserved (starts with _ we skip the filtering)
-            if field[0] == '_':
-                continue
-            filter_params = self.request.GET.getlist(field)
-            # If there is a filter to apply
-            if filter_params:
-                # Get the relevant filter and apply it
-                suffix = ""
-                try:
-                    if field_data[field]['many']:
-                        if field_data[field]['filter'] == 'choice':
-                            suffix = "__uuid"
-                        else:
-                            sub_serializer = get_sub_serializer(serializer, field)
-                            suffix = "__" + sub_serializer.SearchProvider.display_field
-                except KeyError:
-                    pass
-                filter_type = field_data[field]['filter']
-                query_set = FILTERS[filter_type](
-                    query_set,
-                    field + suffix,
-                    filter_params
-                )
-
-        ordering_params = self.request.GET.getlist("_order")
-        # Checks the first ordering param exists
-        annotation = None
-        if(ordering_params):
-            # Cleans the "-" to just have the field name
-            clean_field_name = ordering_params[0].replace("-", "")
-            condition_blank = Q(**{clean_field_name + "__exact": ""})
-            # If the the field is blank, then the val_is_empty will be true
-            annotation = {"val_is_empty": Count(Case(
-                When(condition_blank, then=1), output_field=CharField(),
-            ))}
-        ordering_params = list(map(parse_ordering, ordering_params))
-        try:
-            if annotation is not None:
-                query_set = query_set.annotate(**annotation)
-                ordering_params = ["val_is_empty"] + ordering_params
-        except (ValueError, ValidationError) as e:
-            # Neccessary for non string fields, nothing more needs to happen as they have sensible defaults
-            pass
-        return query_set.order_by(*list(ordering_params))
-
-    def get_serializer_class(self):
-        return get_model_serializer_class(self.model_class)
-
-    @property
-    def model_class(self):
-        return ContentType.objects\
-            .get(
+    def get_model_class(self):
+        if not self._model_class:
+            self._model_class = ContentType.objects.get(
                 app_label=self.kwargs['app_label'],
                 model=self.kwargs['model']
             ).model_class()
+        return self._model_class
+
+    def get_serializer_class(self):
+        if self.kwargs.get("serializer_class", False):
+            return self.kwargs.get("serializer_class")
+        if not self._serializer_class:
+            model_class = self.get_model_class()
+            self._serializer_class = model_class.SearchProvider.serializer()
+        return self._serializer_class
+
+
+class AdminSearchDashboardAPIView(ListAPIView):
+    permission_classes = (permissions.IsAdminUser,)
+    pagination_class = GenericAdminPaginationStyle
+    _model_class = None
+    _serializer_class = None
+
+    def get_permissions(self):
+        if self.kwargs.get("permissions_classes"):
+            self.permission_classes = self.kwargs.get("permissions_classes")
+        return super().get_permissions()
+
+    def get_model_class(self):
+        if not self._model_class:
+            self._model_class = ContentType.objects.get(
+                app_label=self.kwargs['app_label'],
+                model=self.kwargs['model']
+            ).model_class()
+        return self._model_class
+
+    def get_serializer_class(self):
+        if self.kwargs.get("serializer_class", False):
+            return self.kwargs.get("serializer_class")
+        if not self._serializer_class:
+            model_class = self.get_model_class()
+            self._serializer_class = model_class.SearchProvider.serializer()
+        return self._serializer_class
+
+    def get_queryset(self):
+        model_class = self.get_model_class()
+        if self.kwargs.get("serializer_class", False):
+            serializer = self.kwargs["serializer_class"]()
+        else:
+            serializer = model_class.SearchProvider.serializer()()
+        field_repr = serializer.get_field_representation()
+        related_fields = serializer.get_related_fields()
+
+        # Get the queryset
+        if serializer.get_option('get_queryset'):
+            qs = serializer.get_option('get_queryset')()
+        else:
+            qs = model_class.objects.all()
+
+        # Pre-fetch related fields
+        qs = qs.select_related(*related_fields)
+
+        # filters the general_search
+        q_object = Q()
+        q_list = self.request.GET.getlist('_q')
+        for val in q_list:
+            q_object = reduce(
+                lambda x, y: x | y,
+                [
+                    Q(**{x + '__icontains': val})
+                    for x in serializer.get_general_query_fields()
+                ],
+            )
+
+        if q_object:
+            qs = qs.filter(q_object)
+
+        # Field filtering
+        for field in field_repr.keys():
+            filter_params = get_query_dict_value(self.request.GET, field)
+            if filter_params:
+                # If the field has a custom filter function, use it instead
+                if hasattr(serializer, 'filter_' + field):
+                    func = getattr(serializer, 'filter_' + field)
+                    qs = func(qs, get_query_dict_value(self.request.GET, field))
+                else:
+                    suffix = ""
+                    if field_repr[field].get('prep_function', False):
+                        filter_params = [
+                            field_repr[field]["prep_function"](param)
+                            for param in filter_params
+                        ]
+                    elif field_repr[field].get('filter_lookup_key', None):
+                        suffix = "__" + field_repr[field].get('filter_lookup_key')
+                    elif field_repr[field].get('foreign_key', False):
+                        suffix = "__uuid"
+                    filter_type = field_repr[field]['filter']
+                    qs = FILTERS[filter_type](
+                        qs,
+                        field + suffix,
+                        filter_params
+                    )
+
+        # Extra filter
+        extra_filters = serializer.get_option('extra_filters')
+
+        # Apply extra filters
+        if extra_filters:
+            for k in extra_filters.keys():
+                if self.request.GET.getlist(k):
+                    func = getattr(serializer, 'filter_' + k)
+                    qs = func(qs, get_query_dict_value(self.request.GET, k))
+
+        ordering_params = self.request.GET.getlist('_order')
+        if ordering_params:
+            # Here we add an annotation to make sure when we order, the value is
+            # empty
+            first_field = ordering_params[0]
+            clean_field_name = first_field[
+                1:] if first_field[0] == '-' else first_field
+            try:
+                condition_blank = Q(**{clean_field_name + "__exact": ""})
+                annotation = {"val_is_empty": Count(Case(
+                    When(condition_blank, then=1), output_field=CharField(),
+                ))}
+                qs = qs.annotate(**annotation)
+                ordering_params = ["val_is_empty"] + ordering_params
+            except (ValidationError, ValueError):
+                # This is added as number an dates all have sensible defaults
+                pass
+            parsed_ordering_params = [
+                parse_ordering(x) for x in ordering_params
+            ]
+            qs = qs.order_by(*parsed_ordering_params)
+        else:
+            default_order_by = serializer.get_option('default_order_by')
+            if default_order_by:
+                qs = qs.order_by(default_order_by)
+
+        return qs
 
 
 class SortAPIView(APIView):

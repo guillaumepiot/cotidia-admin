@@ -12,6 +12,7 @@
         {% else %}
             <link rel="stylesheet" href="{% static "css/admin.min.css" %}">
         {% endif %}
+        <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>
         {% block header_scripts %}{% endblock header_scripts %}
     </head>
     <body class="menu--sidebar {% block body_class %}{% endblock %}">
@@ -26,13 +27,10 @@
             <script src="{% static "js/admin.js" %}"></script>
             <script src="{% static "js/sixteen.form.js" %}"></script>
             <script src="{% static "js/sixteen.tabs.js" %}"></script>
-            <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-            <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/brands.js" integrity="sha384-G/XjSSGjG98ANkPn82CYar6ZFqo7iCeZwVZIbNWhAmvCF2l+9b5S21K4udM7TGNu" crossorigin="anonymous"></script>
-            <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
             {% include "admin/partials/js-include.html" %}
         {% endblock footer_scripts %}
         <noscript id="deferred-styles">
-            <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
         </noscript>
         <script>
             var loadDeferredStyles = function() {

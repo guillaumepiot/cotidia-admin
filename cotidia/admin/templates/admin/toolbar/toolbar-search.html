@@ -1,0 +1,44 @@
+{% load i18n %}{% if ADMIN_GLOBAL_SEARCH %}
+<div class="toolbar__item toolbar__item--right toolbar-search">
+    <form action="{% url 'generic-admin:search' %}" method="get" data-typeahead-endpoint="{% url 'generic-api:search-lookup' %}">
+        <div class="form__group form__group--boxed">
+            <div class="form__control form__control--input form__control--input-addon">
+                <input class="form__text" type="text" name="q"" placeholder="Search">
+                <div class="input-addon input-addon--prefix">
+                    <span class="fa fa-search"></span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% comment %}
+
+Here is the HTML required to create a typeahead switcher style form. The form
+needs to have a `data-typeahead-endpoint` attribute for the JS to pick it up,
+but the React component is mounted at the form's parent (hence wrapping in an
+unnecessary div).
+
+if there is a placeholder on the first `input` inside the form, that will be
+used as the React UI Select component's plaxceholder.
+
+The URL referenced in `data-typeahead-endpoint` must take a GET parameter `q`
+and return a list of dicts based on whatever `q` contains whish have a `value`
+and a `label` attibute. The `value` attribute is the URL to redirect the user
+to upon selecting that item, and the `value`s attribute is the label to show
+in the dropdown for that item.
+
+<div>
+    <form action="{% url 'generic-admin:search' %}" method="get" data-typeahead-endpoint="{% url 'generic-admin:lookup' %}">
+        <div class="form__group">
+            <div class="form__control form__control--input form__control--input-addon">
+                <input class="form__text" type="text" name="q"">
+                <div class="input-addon input-addon--prefix">
+                    <span class="fa fa-search"></span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endcomment %}
+{% endif %}

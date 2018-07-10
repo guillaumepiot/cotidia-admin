@@ -15,9 +15,9 @@ export const switchMode = (mode) => ({
   payload: { mode },
 })
 
-export const filterColumn = (column) => ({
-  type: types.FILTER_COLUMN,
-  payload: { column },
+export const configureFilter = (filter) => ({
+  type: types.CONFIGURE_FILTER,
+  payload: { filter },
 })
 
 export const clearFilter = (filter) => ({
@@ -56,6 +56,10 @@ export const setFilterValue = (filter, value) => ({
   payload: { filter, value },
 })
 
+export const refreshCurrentPage = () => ({
+  type: types.GET_RESULTS_PAGE,
+  payload: { page: 'current' },
+})
 export const getPreviousPage = () => ({
   type: types.GET_RESULTS_PAGE,
   payload: { page: 'previous' },
@@ -74,12 +78,32 @@ export const toggleSelectAllResults = () => ({
   type: types.TOGGLE_SELECT_ALL_RESULTS,
 })
 
+export const performSearch = () => ({ type: types.PERFORM_SEARCH })
+
 export const performBatchAction = (action) => ({
   type: types.PERFORM_BATCH_ACTION,
   payload: { action },
 })
 
-export const handleSearchDashboardMessage = (message) => ({
-  type: types.HANDLE_SEARCH_DASHBOARD_MESSAGE,
+export const performGlobalAction = (action) => ({
+  type: types.PERFORM_GLOBAL_ACTION,
+  payload: { action },
+})
+
+export const handleDynamicListMessage = (message) => ({
+  type: types.HANDLE_DYNAMIC_LIST_MESSAGE,
   payload: { message },
+})
+
+export const editField = (item, column, value) => ({
+  type: types.EDIT_FIELD,
+  payload: { item, column, value },
+})
+
+export const toggleSidebar = () => ({ type: types.TOGGLE_SIDEBAR })
+export const showSidebar = (show) => ({ type: types.SHOW_SIDEBAR, payload: { show } })
+
+export const moveColumn = (from, to) => ({
+  type: types.MOVE_COLUMN,
+  payload: { from, to },
 })

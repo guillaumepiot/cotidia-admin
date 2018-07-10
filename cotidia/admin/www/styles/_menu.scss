@@ -1,6 +1,29 @@
+// .menu {
+//     background-color: $menu-background-color;
+//     @media screen and (min-width: $menu-breakpoint) {
+//         position: absolute;
+//         width: 100%;
+//         min-height: 100%;
+//     }
+// }
+
 /*
- * Specific styles to create a sidebar menu
+ * Old code, needs refactoring
  */
+
+$menu_sidebar_width: $menu-width;
+$menu_subnav_min_width: 180px;
+
+$menu_background_color: #00213E;
+$menu_background_color_mobile: #00213E;
+$menu_home_background_color: #00213E;
+$menu_link_color: #fff;
+$menu_link_background_color: transparent;
+$menu_link_background_color_hover: lighten(#00213E, 12%);
+$menu_link_background_color_hover_mobile: transparent;
+$menu_link_background_color_active: lighten(#00213E, 6%);
+$menu_link_background_color_active_mobile: lighten(#00213E, 6%);
+$menu_background_color_section: desaturate(lighten($menu_background_color, 30%), 30%);
 
 body.menu--sidebar {
 
@@ -63,14 +86,6 @@ body.menu--sidebar {
         .menu__item--sidebar-expand{
             display: none;
         }
-        .content {
-            margin-left: $menu_sidebar_width;
-            padding-top: $toolbar_height;
-        }
-        .form--action-fixed-bottom,
-        .form__actions {
-            left: $menu_sidebar_width;
-        }
     }
     @media screen and (max-width: $menu_mobile_breakpoint) {
         .menu {
@@ -103,16 +118,7 @@ body.menu--sidebar {
                 align-items: center;
             }
         }
-        .content{
-            padding-top: $toolbar_height * 2;
-        }
-    }
-    .messages {
-        margin-top: 0;
-    }
-    .content .alert {
-        margin-bottom: 0;
-        border-radius: 0;
+
     }
     .menu-item__link {
         display: flex;
@@ -196,17 +202,6 @@ body.menu--sidebar-collapse {
             .menu-item__link-icon {
                 display: block;
             }
-        }
-        .toolbar {
-            left: $toolbar_height;
-            width: calc(100% - #{$toolbar_height});
-        }
-        .content {
-            margin-left: $toolbar_height;
-        }
-        .form__actions {
-            width: 100%;
-            left: $toolbar_height;
         }
     }
 }

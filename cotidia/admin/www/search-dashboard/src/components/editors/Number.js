@@ -1,0 +1,31 @@
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
+import { TextInput } from '@cotidia/react-ui'
+
+export default class Number extends Component {
+  static propTypes = {
+    name: PropTypes.string.isRequired,
+    value: PropTypes.any,
+    updateValue: PropTypes.func.isRequired,
+  }
+
+  updateValue = ({ [this.props.name]: value }) => this.props.updateValue(value)
+
+  render () {
+    const {
+      name,
+      value,
+    } = this.props
+
+    return (
+      <TextInput
+        name={name}
+        type='number'
+        updateValue={this.updateValue}
+        updateValueOnBlur={false}
+        value={value}
+      />
+    )
+  }
+}

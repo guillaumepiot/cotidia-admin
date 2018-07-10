@@ -1,34 +1,28 @@
 import React from 'react'
 import moment from 'moment'
 
-export const getItemValue = (item, accessor) => {
-  const parts = accessor.split('__')
+import { generateURL } from './api'
+import { uuid4 } from './'
 
-  let value = item
-  let part
-
-  // Go through each part of the accessor and 'recurse' into the data structure:
-  // If item = { a: { b: { c: 'hi' } } } and accessor is a__b__c it'll return `'hi'`
-
-  // eslint-disable-next-line no-cond-assign
-  while (part = parts.shift()) {
-    value = value?.[part]
-  }
-
-  return value
-}
+import FileUpload from '../components/elements/FileUpload'
+import { Icon } from '../components/elements/global'
 
 export const getValueFormatter = (config) => {
   let globalListHandling = config.listHandling
 
   const formatters = {
     verbatim: (value) => (value == null) ? '' : String(value),
-    date: (value) => moment(value).format(config.dateFormat),
-    datetime: (value) => moment(value).format(config.datetimeFormat),
+    currency: (value, _, __, currency) => value && value.toLocaleString('en', { style: 'currency', currency }),
+    date: (value) => value && moment(value).format(config.dateFormat),
+    datetime: (value) => value && moment(value).format(config.datetimeFormat),
     boolean: (value) => (
-      value ? <span className='fa fa-check' /> : <span className='fa fa-times' />
+      value ? <Icon icon='check' /> : <Icon icon='times' />
     ),
     link: (value, type) => {
+      if (! value) {
+        return null
+      }
+
       let link = value
 
       if (type === 'mailto') {
@@ -39,45 +33,96 @@ export const getValueFormatter = (config) => {
 
       return <a href={link} onClick={(e) => e.stopPropagation()}>{value}</a>
     },
-    raw: (value) => <span dangerouslySetInnerHTML={{ __html: value }} />,
-    label: (value, type) => (
+    raw: (value) => ({ __html: value }),
+    label: (value, type) => value && (
       <span className={`label ${type && `label--${type}`}`}>{value}</span>
+    ),
+    file: (value, item, accessor, endpoint, extraData) => (
+      <FileUpload
+        endpoint={generateURL(endpoint, item)}
+        extraData={extraData}
+        id={uuid4()}
+        value={value || ''}
+      />
     ),
   }
 
+  /**
+   * Yikes this code could really do with a huge refactor to make it less disgusting. The main issue
+   * is that it is made to make the implementing devloper's job as easy as possible, so should
+   * handle arrays of things like strings, objects with a __html for raw HTML and even React
+   * elements (e.g. file uploader widgets). And of course, strings and the other two are treated
+   * quite diffrerently.
+   * Anyway, it's all quite disgusting, and I hate the multiple-array-iteration, along with cloning
+   * React elements, etc., but it's the best I can come up with at the moment.
+   */
   return (item, accessor, format, listHandling = globalListHandling) => {
-    const value = getItemValue(item, accessor)
-
-    // If the format config is a function in its own right, just defer to it, passing the whole item,
-    // the field name (accessor) and the value we think that field has.
-    if (typeof format === 'function') {
-      return format(item, accessor, value)
+    // If we don't have an item there's not a lot we can do here. Bail.
+    if (! item) {
+      return null
     }
 
-    // Otherwise, use the formatter as it was passed in, defaulting to verbatim for a formatter that's not recognised.
+    // Get initial raw value from item.
+    let value = item[accessor]
 
-    format = (typeof format === 'string') ? format : 'verbatim'
+    // Construct initial args to pass into formatter.
+    let extraArgs = []
 
-    // Parse the actual name and any formatter agruments out of the compound name as given.
-    const [ actualFormat, ...args ] = format.split(':')
+    // If formatter is not a function, try to resolve one.
+    if (! (typeof format === 'function')) {
+      let actualFormat
 
-    // Get actual formatter function from formatter name.
-    const formatter = formatters[actualFormat] || formatters.verbatim
+      // Parse the actual name and any formatter agruments out of the compound name as given.
+      if (typeof format === 'string') {
+        format = format.split(':')
+      }
 
-    // Finally call the formatter on value, or, if the value is an array, on each element within the
-    // array and then join all the results by a comma.
+      if (! Array.isArray(format)) {
+        format = []
+      }
+
+      // Separate format descriptor from its config.
+      [ actualFormat, ...extraArgs ] = format
+
+      // Get actual formatter function from formatter name.
+      format = formatters[actualFormat] || formatters.verbatim
+    }
+
+    const formatValue = (value) => {
+      value = format(value, item, accessor, ...extraArgs)
+
+      // If value signals that its raw HTML, just wrap it in a React span and dangerouslySetInnerHTML.
+      if (value?.__html) {
+        return <span dangerouslySetInnerHTML={value} />
+      }
+
+      // Otherwise just return it as-is.
+      return value
+    }
+
+    // Use formatter to get actual value(s) from data.
     if (Array.isArray(value)) {
-      const values = value.map((value) => formatter(value, ...args))
+      const values = value.map(formatValue)
 
       if (listHandling.style === 'string') {
-        return values.join(listHandling.value)
+        return values.reduce((acc, value, index) => {
+          if (React.isValidElement(value)) {
+            acc.push(React.cloneElement(value, { key: index }))
+          } else {
+            acc.push(value)
+          }
+
+          acc.push(listHandling.value)
+
+          return acc
+        }, []).slice(0, -1)
       } else if (listHandling.style === 'element') {
-        return values.map((value) => (
-          <listHandling.value {...listHandling.props}>{value}</listHandling.value>
+        return values.map((value, index) => (
+          <listHandling.value key={index} {...listHandling.props}>{value}</listHandling.value>
         ))
       }
     } else {
-      return formatter(value, ...args)
+      return formatValue(value)
     }
   }
 }

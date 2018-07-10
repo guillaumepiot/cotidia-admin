@@ -1,67 +1,95 @@
 import json
 
 from django import template
+from django.core.serializers.json import DjangoJSONEncoder
 from django.urls import NoReverseMatch
 from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
-from cotidia.admin.utils import get_model_structure
-
 register = template.Library()
 
 
-@register.simple_tag(takes_context=True)
+@register.inclusion_tag(
+    'admin/partials/search_dashboard_config.html', takes_context=False
+)
 def render_search_dashboard_config(
-    context,
     app_label,
     model_name,
-    url_type,
-    api_token,
-    default_columns=[],
-    default_filters=[],
-    default_order=[],
-    batch_actions=[],
-    endpoint=None
+    auth_token,
+    serializer_class=None,
+    endpoint=None,
+    default_colunms=None,
+    default_order=None,
+    default_filters=None,
+    batch_actions=None,
 ):
-    model_class = ContentType.objects.get(
+    context = {}
+
+    # Get model class and its corresponding serializer class.
+    model = ContentType.objects.get(
         app_label=app_label,
         model=model_name
     ).model_class()
-    if endpoint is None:
-        endpoint = reverse(
-            'generic-api:object-list',
-            kwargs={
 
-                "app_label": app_label,
-                "model": model_name
-            }
-        )
+    if not serializer_class:
+        serializer_class = model.SearchProvider.serializer()
 
-    model_name = model_class._meta.model_name
-    if app_label and model_name and url_type:
-        # To future maintainers: sorry
-        # This gets the url template by doing a reverse lookup on a url that fits convention
-        # It passes a trash ID and then string replaces it with a template tag for js
-        # TODO find a better way of doing this
-        try:
-            url_name = "{}-admin:{}-{}".format(app_label, model_name, url_type)
-            detail_endpoint = reverse(
-                url_name,
-                kwargs={"pk": 9999})
-            detail_endpoint = detail_endpoint.replace("9999", ":id")
-        except NoReverseMatch:
-            detail_endpoint = None
+    # Get an instance of the serializer rather than just the class itself.
+    serializer = serializer_class()
+
+    # Calculate API endpoint
+    if not endpoint:
+        endpoint = serializer.get_endpoint()
+
+    # Calculate `default_columns`
+    if not default_colunms:
+        default_colunms = serializer.get_default_columns()
+
+    # Calculate default_oder_by
+    if not default_order:
+        default_order = serializer.get_option('default_order_by')
+
+    context['verbose_name'] = model._meta.verbose_name
+    context['verbose_name_plural'] = model._meta.verbose_name_plural
+
+    context['default_columns'] = default_colunms
+    context['default_order'] = default_order
+    context['default_filters'] = default_filters
+
+    context['endpoint'] = endpoint
+    context['auth_token'] = auth_token
+    context['title'] = serializer.get_option('title', default=model._meta.verbose_name_plural.title())
+    context['columns'] = serializer.get_field_representation()
+    context['detail_url'] = serializer.get_detail_url()
+
+    # Get some config values
+    context['primary_color'] = serializer.get_option('primary_color')
+    context['date_format'] = serializer.get_option('date_format')
+    context['datetime_format'] = serializer.get_option('datetime_format')
+    context['columns_configurable'] = serializer.get_option(
+        'columns_configurable'
+    )
+
+    # Stuff passed straight from the serializer.
+    context['list_handling'] = serializer.get_option('list_handling')
+    context['extra_filters'] = serializer.get_option('extra_filters')
+    context['toolbar_filters'] = serializer.get_option('toolbar_filters')
+    context['sidebar_filters'] = serializer.get_option('sidebar_filters')
+    context['global_actions'] = serializer.get_option('global_actions')
+    context['categorise_by'] = serializer.get_option('categorise_by')
+    context['list_fields'] = serializer.get_option('list_fields')
+    context['sidebar_starts_shown'] = serializer.get_option('sidebar_starts_shown')
+
+    # Batch actions can be overridden by the caller, so allow for that.
+    if batch_actions:
+        context['batch_actions'] = batch_actions
     else:
-        detail_endpoint = None
+        context['batch_actions'] = serializer.get_option('batch_actions')
 
-    return mark_safe(json.dumps(get_model_structure(
-        model_class,
-        endpoint=endpoint,
-        detail_endpoint=detail_endpoint,
-        token=api_token,
-        default_columns=default_columns,
-        default_filters=default_filters,
-        default_order=default_order,
-        batch_actions=batch_actions
-    )))
+    return context
+
+
+@register.filter(name='json')
+def json_dumps(data):
+    return json.dumps(data, cls=DjangoJSONEncoder)

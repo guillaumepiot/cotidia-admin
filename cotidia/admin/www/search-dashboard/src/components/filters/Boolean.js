@@ -9,14 +9,10 @@ export default class Boolean extends Component {
     data: PropTypes.shape({
       value: PropTypes.boolean,
     }).isRequired,
-    filter: PropTypes.string.isRequired,
-    setFilterValue: PropTypes.func.isRequired,
     updateField: PropTypes.func.isRequired,
   }
 
   updateValueFactory = (value) => () => this.props.updateField('value', value)
-
-  setFilterValue = (e) => this.props.setFilterValue(this.props.filter, this.state.value)
 
   render () {
     return (

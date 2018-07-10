@@ -1,0 +1,24 @@
+<div class="layout__content content content--sidebar">
+    {{> @content-head }}
+    {{> @content-toolbar-action }}
+    <div class="content__body">
+        <div class="content__list">
+            {{> @table--sticky-action }}
+        </div>
+         {{> @content-sidebar }}
+    </div>
+    {{> @content-foot }}
+</div>
+<script>
+    var toggleSidebarBtns = document.querySelectorAll('.toggle-sidebar')
+    var content = document.querySelector('.content')
+    toggleSidebarBtns.forEach(function(elm) {
+        elm.addEventListener('click', function() {
+            if (content.classList.contains('content--sidebar')) {
+                content.classList.remove('content--sidebar')
+            } else {
+                content.classList.add('content--sidebar')
+            }
+        })
+    })
+</script>

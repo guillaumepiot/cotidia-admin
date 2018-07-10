@@ -1,4 +1,4 @@
-# Cotidia Admin Search Dashboard
+# Cotidia Admin Frontend
 
 ## Dev
 
@@ -17,5 +17,5 @@ or
 
 `yarn run build`
 
-Will automatically create `search-dashboard.js` in the Python package's Django app's `static/js`
+Will automatically create `admin.js` in the Python package's Django app's `static/js`
 directory.

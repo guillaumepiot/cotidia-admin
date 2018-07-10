@@ -225,12 +225,10 @@ def get_serializer_default_columns(serializer):
 
 def get_serializer_list_fields(serializer):
     fields = None
-
     try:
         fields = serializer.SearchProvider.list_fields
     except AttributeError:
         pass
-
     return fields
 
 
@@ -241,62 +239,6 @@ def get_serializer_list_mode(serializer):
         pass
 
     return 'table'
-
-
-def get_model_structure(
-    model,
-    endpoint=None,
-    detail_endpoint=None,
-    token=None,
-    default_columns=None,
-    default_filters=None,
-    default_order=None,
-    batch_actions=[]
-):
-    serializer = get_model_serializer_class(model)()
-    structure = {
-        "columns": get_fields_from_serializer(serializer),
-        "defaultColumns": get_serializer_default_columns(serializer),
-        "listFields": get_serializer_list_fields(serializer),
-        "mode": get_serializer_list_mode(serializer)
-    }
-    # If the serializer has batch actions we use them, otherwise there are no
-    # batch actions
-
-    if batch_actions == []:
-        try:
-            batch_actions = serializer.SearchProvider.batch_actions
-        except AttributeError:
-            pass
-
-    for batch_action in batch_actions:
-        if not batch_action.get('endpoint'):
-            url = reverse(
-                'generic-api:batch-action',
-                kwargs={
-                    'app_label': model._meta.app_label,
-                    'model_name': model._meta.model_name,
-                    'action': batch_action['action']
-                }
-            )
-            batch_action['endpoint'] = url
-
-    structure["batchActions"] = batch_actions
-
-    if endpoint is not None:
-        structure['endpoint'] = endpoint
-    if detail_endpoint is not None:
-        structure['detailURL'] = detail_endpoint
-    if token is not None:
-        structure['authToken'] = token
-    if default_columns:
-        structure['defaultColumns'] = default_columns
-    if default_filters:
-        structure['defaultFilters'] = default_filters
-    if default_order:
-        structure['defaultOrderBy'] = default_order[0]
-
-    return structure
 
 
 def get_item_url(model, obj):

@@ -1,10 +1,16 @@
 import * as types from './types'
 
 const initialState = {
+  title: null,
   endpoint: null,
   detailURL: null,
   columns: {}, // Config for all columns
-  batchActions: [], // Config for all batch acitons
+  batchActions: [], // Config for all batch actions
+  globalActions: [], // Config for all global actions
+
+  extraFilters: {},
+  toolbarFilters: [],
+  sidebarFilters: [],
 
   defaultColumns: [], // Actual default columns as specifed by config
   visibleColumns: [], // Current visible columns
@@ -16,6 +22,8 @@ const initialState = {
   orderColumn: null,
   orderAscending: true,
 
+  categoriseBy: null,
+
   filters: {},
 
   searchTerm: null,
@@ -26,15 +34,24 @@ const initialState = {
 
   pagination: {
     count: 0,
+    current: null,
     next: null,
     previous: null,
   },
 
   selected: [],
+
+  showSidebar: true,
 }
 
 export default (state = initialState, { type, payload } = {}) => {
   switch (type) {
+    case types.SET_TITLE:
+      return {
+        ...state,
+        title: payload,
+      }
+
     case types.SET_ENDPOINT:
       return {
         ...state,
@@ -53,6 +70,30 @@ export default (state = initialState, { type, payload } = {}) => {
         batchActions: payload,
       }
 
+    case types.SET_GLOBAL_ACTIONS:
+      return {
+        ...state,
+        globalActions: payload,
+      }
+
+    case types.SET_EXTRA_FILTERS:
+      return {
+        ...state,
+        extraFilters: payload,
+      }
+
+    case types.SET_TOOLBAR_FILTERS:
+      return {
+        ...state,
+        toolbarFilters: payload,
+      }
+
+    case types.SET_SIDEBAR_FILTERS:
+      return {
+        ...state,
+        sidebarFilters: payload,
+      }
+
     case types.SET_COLUMN_CONFIG:
       return {
         ...state,
@@ -64,6 +105,7 @@ export default (state = initialState, { type, payload } = {}) => {
         filters: payload.defaultFilters,
         listFields: payload.listFields,
         mode: payload.mode,
+        categoriseBy: payload.categoriseBy,
       }
 
     case types.SET_SEARCH_TERM:
@@ -126,6 +168,7 @@ export default (state = initialState, { type, payload } = {}) => {
           selected: [],
           pagination: {
             count: payload.result.count,
+            current: payload.url,
             next: payload.result.next,
             previous: payload.result.previous,
           },
@@ -180,14 +223,6 @@ export default (state = initialState, { type, payload } = {}) => {
       }
     }
 
-    // case types.SET_COLUMNS:
-    //   return {
-    //     ...state,
-    //     visibleColumns: payload.columns,
-    //     orderColumn: payload.columns[0],
-    //     orderAscending: true,
-    //   }
-
     case types.RESET_COLUMNS:
       return {
         ...state,
@@ -217,6 +252,8 @@ export default (state = initialState, { type, payload } = {}) => {
         ...state,
         searchTerm: null,
         filters: {},
+        orderColumn: null,
+        orderAscending: true,
       }
 
     case types.TOGGLE_RESULT_SELECTED:
@@ -234,6 +271,30 @@ export default (state = initialState, { type, payload } = {}) => {
           ? []
           : state.results.map((item) => item.uuid),
       }
+
+    case types.TOGGLE_SIDEBAR:
+      return {
+        ...state,
+        showSidebar: ! state.showSidebar,
+      }
+
+    case types.SHOW_SIDEBAR:
+      return {
+        ...state,
+        showSidebar: payload.show,
+      }
+
+    case types.MOVE_COLUMN: {
+      const visibleColumns = [ ...state.visibleColumns ]
+
+      // Swap the elements using splice magic.
+      visibleColumns.splice(payload.to, 0, ...visibleColumns.splice(payload.from, 1))
+
+      return {
+        ...state,
+        visibleColumns,
+      }
+    }
 
     default:
       return state

@@ -24,7 +24,7 @@ module.exports = function webpackBootstrap (env) {
     ],
     output: {
       path: path.resolve(__dirname, '..', '..', 'static', 'js'),
-      filename: 'search-dashboard.js',
+      filename: 'admin.js',
     },
     plugins: plugins,
     module: {

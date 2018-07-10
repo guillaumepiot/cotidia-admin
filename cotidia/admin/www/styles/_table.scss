@@ -1,7 +1,151 @@
-.table{
-    white-space: nowrap;
-    // margin: $vertical_padding $horizontal_padding 0;
-    // width: calc(100% - #{$horizontal_padding * 2});
+.table {
+    border: none;
+    th, td {
+        position: relative;
+
+        &.table-cell {
+            &--checkbox {
+                padding-right: 0;
+            }
+            &--category {
+                background-color: $toolbar-background-color;
+                color: $grey--dark;
+                cursor: default;
+                &:hover {
+                    background-color: $toolbar-background-color;
+                    color: $grey--dark;
+                }
+            }
+            &--category-highlight {
+                background-color: $cyan;
+                color: #fff;
+                cursor: default;
+                &:hover {
+                    background-color: $cyan;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    &--sticky {
+        thead {
+            th, td {
+                position: -webkit-sticky; // for safari
+                position: sticky;
+                top: 0;
+                left: 0;
+                z-index: 3;
+
+                &:first-child {
+                    z-index: 4;
+                }
+
+                &::after {
+                    content: "";
+                    display: block;
+                    height: 1px;
+                    width: 100%;
+                    background-color: $table-row-border-color;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                }
+            }
+
+            th:hover {
+                .table-header__item {
+                    opacity: 1;
+                }
+            }
+        }
+
+        tfoot {
+            th, td {
+                position: -webkit-sticky; // for safari
+                position: sticky;
+                bottom: 0;
+                left: 0;
+                z-index: 3;
+
+                &:first-child {
+                    z-index: 4;
+                }
+
+                &::after {
+                    content: "";
+                    display: block;
+                    height: 1px;
+                    width: 100%;
+                    background-color: $table-row-border-color;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                }
+            }
+        }
+
+        th, td {
+            &.nowrap {
+                white-space: nowrap;
+            }
+
+            &:first-child {
+                position: -webkit-sticky; // for safari
+                position: sticky;
+                left: 0px;
+                width: 200px;
+                z-index: 2;
+                box-shadow: inset -1px 0px $grey--light;
+            }
+
+            &.table-cell {
+                &--category {
+                    &:first-child {
+                        box-shadow: none;
+                    }
+                }
+                &--category-highlight {
+                    &:first-child {
+                        box-shadow: none;
+                    }
+                }
+            }
+        }
+    }
+
+    &--action {
+        thead {
+            th, td {
+                &:first-child, &:nth-child(2) {
+                    z-index: 4;
+                }
+            }
+        }
+
+        tfoot {
+            th, td {
+                &:first-child, &:nth-child(2) {
+                    z-index: 4;
+                }
+            }
+        }
+
+        th, td {
+            &:first-child, &:nth-child(2) {
+                position: -webkit-sticky; // for safari
+                position: sticky;
+                left: 0px;
+                z-index: 2;
+                box-shadow: none;
+            }
+            &:nth-child(2) {
+                left: 2.2rem;
+                width: 200px;
+                box-shadow: inset -1px 0px $grey--light;
+            }
+        }
+    }
 
     &--admin-mobile-view{
         @media screen and (max-width: $mobile-width) {
@@ -17,93 +161,128 @@
             }
         }
     }
+}
 
-    &--loading {
+.table-header {
+    &__item {
+        color: $grey;
+        cursor: pointer;
+        opacity: 0;
         position: relative;
-        &:after {
-            content: "";
-            display: block;
-            position: absolute;
-            top: $vertical_padding * 2;
-            left: calc(50% - 1rem);
-            height: 2rem;
-            width: 2rem;
+        transition: opacity $animation-speed--fast ease;
 
-            border-radius: 100%;
-            border: 2px solid $grey;
-            border-bottom-color: transparent;
-
-            animation: rotate 1s 0s linear infinite;
-            z-index: 2;
+        &:hover {
+            color: $grey--dark;
         }
-        &:before {
-            content: "";
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #fff;
-            opacity: 0.5;
-            z-index: 1;
+
+        &--active {
+            opacity: 1;
+        }
+
+        .btn.btn--small {
+            line-height: 1rem !important;
+        }
+
+        &:not(:only-child) {
+            margin-left: 0.5rem;
+        }
+    }
+}
+
+.dragging-table-header {
+    background-color: $table-header-background-color;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    line-height: 2rem;
+    text-align: left;
+    z-index: 5;
+}
+
+
+.table-cell-editable {
+    display: flex;
+    justify-content: space-between;
+    min-width: 170px;
+    margin-top: -0.5rem;
+    margin-bottom: -0.5rem;
+    margin-left: -1rem;
+    margin-right: -1rem;
+
+    &:hover {
+        .table-cell-editable__action--edit {
+            opacity: 1;
         }
     }
 
-    &-header {
-        padding-right: $horizontal_padding * 3 !important;
-        position: relative;
+    &__value {
+        padding-left: 1rem;
+        flex: 1;
+    }
 
-        &--clickable {
+    &__action {
+        width: 32px;
+        background-color: transparent;
+        border-width: 0;
+        &:hover {
             cursor: pointer;
         }
 
-        &__name {
-        }
+        &--edit {
+            color: $grey;
+            opacity: 0;
 
-        &__sort {
-            visibility: hidden;
-
-            &--active {
-                visibility: visible;
+            &:hover {
+                color: $grey--dark;
             }
         }
+        &--save {
+            color: $background_color--create;
+            background-color: #fff;
 
-        &__actions {
-            visibility: hidden;
-            position: absolute;
-            top: $vertical_padding / 2;
-            right: $horizontal_padding / 2;
-
-            &--active {
-                visibility: visible;
+            &:hover {
+                color: #fff;
+                background-color: $background_color--create;
             }
         }
+        &--cancel {
+            color: $background_color--delete;
+            background-color: #fff;
 
-        &:hover {
-            .table-header {
-                &__sort,
-                &__actions {
-                    visibility: visible;
+            &:hover {
+                color: #fff;
+                background-color: $background_color--delete;
+            }
+        }
+    }
+
+    .form__group {
+        margin: 0;
+        background-color: #fff;
+        min-height: 40px;
+
+        .form__control {
+            border-bottom: 0;
+            padding-bottom: 0px;
+            // position: relative;
+            // top: 1px;
+
+            input, select {
+                padding: 0.5rem 1rem;
+            }
+
+            &--input, &--select, &--textarea {
+                &::after {
+                    top: 18px;
                 }
             }
+
+            .control-select__options {
+                z-index: 5;
+            }
         }
-    }
 
-    // Done as a descendent selector as it needs to override sixteen's own `.table tr`
-    .table__row {
-        &--active {
-            // :hover standard rule in sixteen is `darken(#fff, 2%)`, so let's just double that
-            background-color: darken(#fff, 4%);
+        .form__help {
+            display: none;
         }
-    }
-
-    &__category-header {
-        background-color: darken(#fff, 8%);
-        cursor: auto;
-    }
-
-    .action-column {
-        width: 1px;
     }
 }

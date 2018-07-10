@@ -4,32 +4,22 @@
     {{verbose_name}}
 {% endblock title %}
 
-{% block body_class %}
-    {% if template_type == "centered" %}content-centered{% endif %}
-{% endblock body_class %}
-
-{% block content_title %}{{verbose_name_plural}}{% endblock content_title %}
-
-{% block content_actions %}
-    <a href="{% get_admin_url app_label model_name 'add' %}" class="btn btn--create btn--small">
-        <span class="fa fa-plus"></span>
-        {% blocktrans with verbose_name as verbose_name %}
-            Add {{verbose_name}}
-        {% endblocktrans %}
-    </a>
-{% endblock content_actions %}
-
-{% block page_content %}
-{% include 'admin/generic/utils/head-filter.html' %}
-<div id="search-dashboard"></div>
-{% endblock page_content %}
+{% block layout_content %}
+    <div id="dynamic-list"></div>
+{% endblock layout_content %}
 
 {% block footer_scripts %}
-{{block.super}}
-<script>
-    data = {% render_search_dashboard_config app_label model_name url_type request.user.token.key default_columns default_filters default_order %};
-    if (ReactDOM) {
-        ReactDOM.render(React.createElement(window.SearchDashboard, data), document.getElementById('search-dashboard'))
-    }
-</script>
+    {{block.super}}
+    <script>
+        // <![CDATA[
+            var dynamicListData = {% render_search_dashboard_config app_label model_name request.user.token.key serializer_class=serializer_class endpoint=endpoint default_colunms=default_colunms default_order=default_order default_filters=default_filters %}
+
+            if (window.ReactDOM && window.React && window.DynamicList) {
+                ReactDOM.render(
+                    React.createElement(DynamicList, dynamicListData),
+                    document.getElementById('dynamic-list')
+                )
+            }
+        // ]]>
+    </script>
 {% endblock footer_scripts %}

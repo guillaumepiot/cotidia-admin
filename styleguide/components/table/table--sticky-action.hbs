@@ -1,0 +1,72 @@
+<table class="table table--clickable table--sticky table--action">
+    <thead>
+        <tr>
+            <th class="table-cell--checkbox">
+                <input type="checkbox">
+            </th>
+            <th class="nowrap">
+                <span class="table-header__name">Job number</span>
+                <span class="table-header__item">
+                    <span class="fa fa-long-arrow-alt-down"></span>
+                </span>
+                <span class="table-header__item tooltip tooltip--bottom-center" data-tooltip="Filter">
+                    <span class="fa fa-filter"></span>
+                </span>
+                <span class="table-header__item">
+                    <span class="fa fa-bars"></span>
+                </span>
+            </th>
+            <th class="nowrap">
+                <span class="table-header__name">Status</span>
+                <span class="table-header__item table-header__item--active">
+                    <span class="fa fa-long-arrow-alt-down"></span>
+                </span>
+                <span class="table-header__item table-header__item--active">
+                    <span class="fa fa-filter"></span>
+                </span>
+                <span class="table-header__item">
+                    <span class="fa fa-bars"></span>
+                </span>
+            </th>
+            <th class="nowrap">Contact</th>
+            <th class="nowrap">Staff cost</th>
+            <th class="nowrap">Expenses</th>
+            <th class="nowrap">Total cost</th>
+            <th class="nowrap">Budget</th>
+            <th class="nowrap">Profit margin</th>
+            <th class="nowrap">Date created</th>
+            <th class="text-right nowrap"><span class="sr-only">Actions</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{> @table--category }}
+        {{> @table--row-action }}
+        {{> @table--row-action }}
+        {{> @table--row-action }}
+        {{> @table--row-action }}
+        {{> @table--row-action }}
+        {{> @table--category }}
+        {{> @table--row-action }}
+        {{> @table--row-action }}
+        {{> @table--row-action }}
+        {{> @table--row-action }}
+        {{> @table--row-action }}
+        {{> @table--row-action }}
+    </tbody>
+    <tfoot>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>Grand total</th>
+            <th>1,000</th>
+            <th>500</th>
+            <th>1500</th>
+            <th>2000</th>
+            <th>25%</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </tfoot>
+</table>
+

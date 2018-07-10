@@ -13,8 +13,6 @@ export default class Choice extends Component {
     data: PropTypes.shape({
       value: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
-    filter: PropTypes.string.isRequired,
-    setFilterValue: PropTypes.func.isRequired,
     updateField: PropTypes.func.isRequired,
   }
 
@@ -29,8 +27,6 @@ export default class Choice extends Component {
       this.props.updateField('value', [ value ])
     }
   }
-
-  setFilterValue = (e) => this.props.setFilterValue(this.props.filter, this.state.value)
 
   render () {
     const { config, data } = this.props

@@ -1,8 +1,8 @@
 {% load static %}
 {% if ADMIN_DEBUG %}
-    <script src="http://localhost:3000/search-dashboard.js"></script>
+    <script src="http://localhost:3000/admin.js"></script>
 {% else %}
-    <script src="{% static "js/search-dashboard.js" %}"></script>
+    <script src="{% static "js/admin.js" %}"></script>
 {% endif %}
 <script>
     // <![CDATA[
@@ -11,9 +11,14 @@
                 var endpoint = typeahead.dataset.typeaheadEndpoint
                 var placeholder
                 var minchars = typeahead.dataset.typeaheadMinchars ? parseInt(typeahead.dataset.typeaheadMinchars) : 1
+                var extraGroupClasses = null
 
                 if (typeahead.querySelector('[placeholder]')) {
                     placeholder = typeahead.querySelector('[placeholder]').getAttribute('placeholder')
+                }
+
+                if (typeahead.querySelector('.form__group')) {
+                    extraGroupClasses = Array.prototype.slice.call(typeahead.querySelector('.form__group').classList)
                 }
 
                 ReactDOM.render(
@@ -23,6 +28,7 @@
                             apiEndpoint: endpoint,
                             placeholder: placeholder,
                             minchars: minchars,
+                            extraGroupClasses: extraGroupClasses,
                         }
                     ),
                     typeahead.parentElement
@@ -31,4 +37,3 @@
         }
     // ]]>
 </script>
-

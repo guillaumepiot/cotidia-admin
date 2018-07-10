@@ -1,4 +1,4 @@
-export const NETWORK_ERROR = 'search-dashboard/bootstrap/NETWORK_ERROR'
+export const NETWORK_ERROR = 'dynamic-list/bootstrap/NETWORK_ERROR'
 
-export const BOOTSTRAP = 'search-dashboard/bootstrap/BOOTSTRAP'
-export const BOOTSTRAPPED = 'search-dashboard/bootstrap/BOOTSTRAPPED'
+export const BOOTSTRAP = 'dynamic-list/bootstrap/BOOTSTRAP'
+export const BOOTSTRAPPED = 'dynamic-list/bootstrap/BOOTSTRAPPED'

@@ -6,15 +6,28 @@ import * as searchActions from '../search/actions'
 import * as searchTypes from '../search/types'
 
 export function * bootstrap ({ payload: config }) {
+  yield put({ type: searchTypes.SET_TITLE, payload: config.title })
   yield put({ type: searchTypes.SET_ENDPOINT, payload: config.endpoint })
   yield put({ type: searchTypes.SET_DETAIL_URL, payload: config.detailURL })
-  yield put({ type: searchTypes.SET_BATCH_ACTIONS, payload: config.batchActions })
+  yield put({ type: searchTypes.SET_BATCH_ACTIONS, payload: config.batchActions || [] })
+  yield put({ type: searchTypes.SET_GLOBAL_ACTIONS, payload: config.globalActions || [] })
+  yield put({ type: searchTypes.SET_EXTRA_FILTERS, payload: config.extraFilters || {} })
+  yield put({ type: searchTypes.SET_TOOLBAR_FILTERS, payload: config.toolbarFilters || [] })
+  yield put({ type: searchTypes.SET_SIDEBAR_FILTERS, payload: config.sidebarFilters || [] })
 
-  yield put({ type: configTypes.SET_CONFIG, payload: config.config })
+  const { sidebarStartsShown = false, ...configRest } = config.config
+
+  yield put({ type: searchTypes.SHOW_SIDEBAR, payload: { show: sidebarStartsShown } })
+  yield put({
+    type: configTypes.SET_CONFIG,
+    payload: {
+      ...configRest,
+      ignoreStoredConfig: config.ignoreStoredConfig || false,
+    },
+  })
 
   let defaultOrderColumn = config.defaultColumns[0]
   let defaultOrderAscending = true
-  let mode = 'table'
 
   if (config.defaultOrderBy) {
     if (config.defaultOrderBy[0] === '-') {
@@ -23,10 +36,6 @@ export function * bootstrap ({ payload: config }) {
     } else {
       defaultOrderColumn = config.defaultOrderBy
     }
-  }
-
-  if (config.mode) {
-    mode = config.mode
   }
 
   yield put({
@@ -38,13 +47,14 @@ export function * bootstrap ({ payload: config }) {
       listFields: config.listFields,
       defaultOrderColumn,
       defaultOrderAscending,
-      mode,
+      mode: config.mode || 'table',
+      categoriseBy: config.categoriseBy || null,
     },
   })
 
   // If the config doesn't say to override any stored config, retrieve it from localStorage and
   // apply it on top of the setup we just did.
-  if (config.overrideStoredConfig !== true) {
+  if (config.ignoreStoredConfig !== true) {
     try {
       const storedConfig = JSON.parse(localStorage.getItem(config.endpoint))
 
