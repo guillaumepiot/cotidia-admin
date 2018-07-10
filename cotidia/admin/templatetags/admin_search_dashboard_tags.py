@@ -17,7 +17,7 @@ def render_search_dashboard_config(
     app_label,
     model_name,
     auth_token,
-    serializer_class=None,
+    serializer=None,
     endpoint=None,
     default_colunms=None,
     default_order=None,
@@ -32,11 +32,14 @@ def render_search_dashboard_config(
         model=model_name
     ).model_class()
 
-    if not serializer_class:
-        serializer_class = model.SearchProvider.serializer()
+    if not serializer:
+        # Double call here because `serializer()` gets the serializer class,
+        # not an instance of it. So, we call `serializer()` to get the class
+        # and then call *that* to instantiate it.
 
-    # Get an instance of the serializer rather than just the class itself.
-    serializer = serializer_class()
+        # TODO: Refactor this so that the method is `get_serializer_class` or
+        #       something like that.
+        serializer = model.SearchProvider.serializer()()
 
     # Calculate API endpoint
     if not endpoint:

@@ -140,6 +140,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
 
 class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
     group_by = False
+    model = None
 
     def get_template_names(self):
         template = 'admin/{app}/{model}/dynamic-list.html'.format(
@@ -155,7 +156,7 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # TODO: This check shouldn't be in `get-context_data` but I don't know
+        # TODO: This check shouldn't be in `get_context_data` but I don't know
         #       Django well enough to know where it *should* be, so can someone
         #       fix this?
         try:
@@ -169,8 +170,12 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
             context['app_label'] = self.model._meta.app_label
             context['model_name'] = self.model._meta.model_name
 
+            # Even though the serailizer is passed into the view as
+            # `serializer_class` and is indeed a class when it's passed in, by
+            # this time this code is running, it's an instance of the
+            # serializer, so we'll call it `serializer` in the context.
             if self.kwargs.get('serializer_class'):
-                context['serializer_class'] = self.kwargs['serializer_class']
+                context['serializer'] = self.kwargs['serializer_class']
 
             if self.kwargs.get('endpoint'):
                 context['endpoint'] = self.kwargs['endpoint']
