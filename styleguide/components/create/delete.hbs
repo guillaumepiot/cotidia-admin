@@ -1,0 +1,31 @@
+<div class="content__head">
+    <div class="content__title">
+        <a href="/admin/team/member/">Team</a>
+        &nbsp;<svg class="svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg><!-- <span class="fa fa-angle-right"></span> -->
+
+        <a href="/admin/team/member/1">John Doe</a>
+        &nbsp;<svg class="svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg><!-- <span class="fa fa-angle-right"></span> -->
+
+        Confirm Delete
+    </div>
+</div>
+
+<div class="content__delete">
+    <fieldset>
+        <legend>
+            Are you sure to delete the following member?
+        </legend>
+        <div class="form__row">
+            <p>
+                John Doe
+            </p>
+        </div>
+        <div class="form__row">
+            <p class="text-italic">The operation is not reversible.</p>
+        </div>
+    </fieldset>
+
+    <form method="post" action="">
+        {{> @content-footer-action }}
+    </form>
+</div>
