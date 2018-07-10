@@ -38,7 +38,8 @@ export const getActiveFilters = createSelector(
       .map(([key, value]) => key)
 )
 
-export const allResultsSelected = (state) => (state.search.selected.length === state.search.results.length)
+export const allResultsSelected = (state) => (state.search.selected.length > 0) && (state.search.selected.length === state.search.results.length)
+export const anyResultsSelected = (state) => state.search.selected.length > 0
 
 const getFiltersArray = (state, filters) => {
   if (! filters) {
