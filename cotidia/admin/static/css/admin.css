@@ -2682,7 +2682,10 @@ textarea {
 
 body.content-centered .content {
   max-width: 1024px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  padding: 0 1rem; }
+body.content-padded .content {
+  padding: 0 1rem; }
 
 @media screen and (min-width: 1024px) {
   .layout__menu {
@@ -3078,8 +3081,6 @@ body.menu--sidebar .menu__sub-nav {
     margin: 0 1rem 0 0; }
 .content__actions .btn, .content__actions .form__control input[type="file"], .form__control .content__actions input[type="file"] {
   margin-left: 0.5rem; }
-.content__detail, .content form {
-  margin: 0 1rem; }
 .content--sidebar .content__list {
   width: calc(100% - 16rem); }
 .content--sidebar .content__sidebar {
