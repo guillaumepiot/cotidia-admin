@@ -24,7 +24,10 @@ def render_search_dashboard_config(
     default_filters=None,
     batch_actions=None,
 ):
-    context = {}
+    context = {
+        'app_label': app_label,
+        'model_name': model_name,
+    }
 
     # Get model class and its corresponding serializer class.
     model = ContentType.objects.get(

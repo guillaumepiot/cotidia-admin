@@ -1,0 +1,45 @@
+{% load admin_renderer_tags %}
+<style type="text/css">
+    body {
+        font-family: sans-serif;
+        font-size: 6pt;
+        margin: 0;
+        padding: 0;
+    }
+    table {
+        width: 100%;
+    }
+    table tr th {
+        text-align: left;
+        background-color: #eee;
+    }
+    table tr th, table tr td {
+        /*white-space: nowrap;*/
+        padding: 2px 4px;
+        border-bottom: 1px solid #eee;
+    }
+</style>
+<style type="text/css" media="print">
+@media print {
+    @page {
+        size: A4 landscape;
+        margin: 0mm;
+    }
+}
+</style>
+<table>
+    <thead>
+        <tr>
+            {% for k in keys %}
+                <th>{{k}}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    {% for d in data %}
+        <tr>
+            {% for k in keys %}
+                <td>{{d|get_dict_value:k|flatten_item}}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>

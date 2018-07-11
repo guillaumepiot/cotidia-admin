@@ -175,8 +175,14 @@ class AdminModelSerializer(serializers.ModelSerializer):
 
     def get_default_columns(self):
         return self.get_option('default_columns', default=[
-            self.get_option('display_field', default='id')
+            self.get_display_field()
         ])
+
+    def get_display_field(self):
+        if self.get_option('display_field') is not None:
+            return self.get_option('display_field')
+        else:
+            return 'id'
 
 
 class SortSerializer(serializers.Serializer):

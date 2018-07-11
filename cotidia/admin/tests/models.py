@@ -64,3 +64,12 @@ class ExampleModelTwo(BaseModel):
         null=True, blank=True,
         on_delete=models.SET_NULL
     )
+
+
+class AutoSerializerModel(BaseModel):
+    pass
+
+
+class DeclaredSerializerModel(BaseModel):
+    class SearchProvider:
+        admin_serializer = 'cotidia.admin.tests.serializers.DeclaredModelSerializer'

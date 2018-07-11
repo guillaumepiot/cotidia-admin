@@ -10,7 +10,7 @@ from django.views.generic import (
 )
 from django.contrib import messages
 from django.urls import reverse
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.contenttypes.models import ContentType
 from django.views.generic.base import TemplateView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -19,7 +19,8 @@ from django.db.models.deletion import ProtectedError
 from cotidia.admin.mixins import StaffPermissionRequiredMixin
 from cotidia.admin.views.mixin import ContextMixin, ChildMixin
 from cotidia.admin.forms import ActionForm
-from cotidia.admin.utils import search_objects
+from cotidia.admin.utils import search_objects, get_queryset
+from cotidia.admin.renderers import render_to_csv, render_to_pdf
 
 
 class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
@@ -195,6 +196,7 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
             context['default_filters'] = filters
 
         return context
+
 
 class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):
     template_type = "centered"  # Options: fluid, centered
@@ -540,3 +542,37 @@ class AdminGenericSearchView(StaffPermissionRequiredMixin, TemplateView):
             context['next'] = self.request.GET['next']
 
         return context
+
+
+class AdminGenericExportView(StaffPermissionRequiredMixin, View):
+    """Export serialized data to a file."""
+
+    def get(self, *args, **kwargs):
+        model = kwargs['model']
+        app_label = kwargs['app_label']
+        serializer_class = kwargs.get('serializer_class', None)
+        fmt = kwargs['format']
+
+        model_class = ContentType.objects.get(
+            app_label=app_label,
+            model=model
+        ).model_class()
+
+        if not serializer_class:
+            serializer_class = model_class.get_admin_serializer()
+
+        qs = get_queryset(
+            model_class,
+            serializer_class=serializer_class,
+            filter_args=self.request.GET
+        )
+
+        data = serializer_class(qs, many=True).data
+
+        if fmt == 'csv':
+            return render_to_csv(data)
+        elif fmt == 'pdf':
+            return render_to_pdf(data)
+
+        response = HttpResponse("No format to render.")
+        return response

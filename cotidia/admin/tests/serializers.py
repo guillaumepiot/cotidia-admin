@@ -1,7 +1,10 @@
 from cotidia.admin.serializers import AdminModelSerializer
 
-from cotidia.admin.tests.models import ExampleModelOne
-from cotidia.admin.tests.models import ExampleModelTwo
+from cotidia.admin.tests.models import (
+    ExampleModelOne,
+    ExampleModelTwo,
+    DeclaredSerializerModel
+)
 
 
 class ExampleModelTwoSerializer(AdminModelSerializer):
@@ -26,6 +29,12 @@ class ExampleModelOneSerializer(AdminModelSerializer):
             "uuid",
             "duration_field",
         ]
-    
+
     class SearchProvider:
         display_field = "char_field"
+
+
+class DeclaredModelSerializer(AdminModelSerializer):
+
+    class Meta:
+        model = DeclaredSerializerModel

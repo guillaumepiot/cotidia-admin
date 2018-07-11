@@ -3,7 +3,8 @@ from django.urls import path
 from cotidia.admin.views.generic import (
     AdminOrderableView,
     AdminGenericListView,
-    AdminGenericSearchView
+    AdminGenericSearchView,
+    AdminGenericExportView
 )
 
 app_name = "cotidia.admin"
@@ -23,5 +24,21 @@ urlpatterns = [
         'search',
         AdminGenericSearchView.as_view(),
         name='search'
-    )
+    ),
+    path(
+        'export/<str:app_label>/<str:model>/csv',
+        AdminGenericExportView.as_view(),
+        {
+            'format': 'csv',
+        },
+        name='export-csv'
+    ),
+    path(
+        'export/<str:app_label>/<str:model>/pdf',
+        AdminGenericExportView.as_view(),
+        {
+            'format': 'pdf',
+        },
+        name='export-pdf'
+    ),
 ]

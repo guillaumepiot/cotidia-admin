@@ -9,13 +9,15 @@ from django.db.models.fields import (
     TextField,
 )
 from django.apps import apps
-from django.db.models import Q
+from django.db.models import Q, F, Count, Case, When
 from django.urls import reverse
+from django.core.exceptions import ValidationError
 
 from rest_framework import fields, serializers
 
 from cotidia.admin.conf import settings
 from cotidia.admin.serializers import AdminModelSerializer
+from cotidia.admin.filters import FILTERS
 
 MAX_SUBSERIALIZER_DEPTH = settings.ADMIN_MAX_SUBSERIALIZER_DEPTH
 
@@ -276,3 +278,121 @@ def search_objects(query):
             })
 
     return results
+
+
+def get_queryset(model_class, serializer_class, filter_args=None):
+    serializer = serializer_class()
+
+    field_repr = serializer.get_field_representation()
+    related_fields = serializer.get_related_fields()
+
+    # Get the queryset
+    if serializer.get_option('get_queryset'):
+        qs = serializer.get_option('get_queryset')()
+    else:
+        qs = model_class.objects.all()
+
+    # Pre-fetch related fields
+    qs = qs.select_related(*related_fields)
+
+    # filters the general_search
+    q_object = Q()
+    q_list = filter_args.getlist('_q')
+    for val in q_list:
+        q_object = reduce(
+            lambda x, y: x | y,
+            [
+                Q(**{x + '__icontains': val})
+                for x in serializer.get_general_query_fields()
+            ],
+        )
+
+    if q_object:
+        qs = qs.filter(q_object)
+
+    # Field filtering
+    for field in field_repr.keys():
+        filter_params = get_query_dict_value(filter_args, field)
+        if filter_params:
+            # If the field has a custom filter function, use it instead
+            if hasattr(serializer, 'filter_' + field):
+                func = getattr(serializer, 'filter_' + field)
+                qs = func(qs, get_query_dict_value(filter_args, field))
+            else:
+                suffix = ""
+                if field_repr[field].get('prep_function', False):
+                    filter_params = [
+                        field_repr[field]["prep_function"](param)
+                        for param in filter_params
+                    ]
+                elif field_repr[field].get('filter_lookup_key', None):
+                    suffix = "__" + field_repr[field].get('filter_lookup_key')
+                elif field_repr[field].get('foreign_key', False):
+                    suffix = "__uuid"
+                filter_type = field_repr[field]['filter']
+                qs = FILTERS[filter_type](
+                    qs,
+                    field + suffix,
+                    filter_params
+                )
+
+    # Extra filter
+    extra_filters = serializer.get_option('extra_filters')
+
+    # Apply extra filters
+    if extra_filters:
+        for k in extra_filters.keys():
+            if filter_args.getlist(k):
+                func = getattr(serializer, 'filter_' + k)
+                qs = func(qs, get_query_dict_value(self.request.GET, k))
+
+    ordering_params = filter_args.getlist('_order')
+    if ordering_params:
+        # Here we add an annotation to make sure when we order, the value is
+        # empty
+        first_field = ordering_params[0]
+        clean_field_name = first_field[
+            1:] if first_field[0] == '-' else first_field
+        try:
+            condition_blank = Q(**{clean_field_name + "__exact": ""})
+            annotation = {"val_is_empty": Count(Case(
+                When(condition_blank, then=1), output_field=CharField(),
+            ))}
+            qs = qs.annotate(**annotation)
+            ordering_params = ["val_is_empty"] + ordering_params
+        except (ValidationError, ValueError):
+            # This is added as number an dates all have sensible defaults
+            pass
+        parsed_ordering_params = [
+            parse_ordering(x) for x in ordering_params
+        ]
+        qs = qs.order_by(*parsed_ordering_params)
+    else:
+        default_order_by = serializer.get_option('default_order_by')
+        if default_order_by:
+            qs = qs.order_by(default_order_by)
+
+    return qs
+
+
+def get_sub_serializer(serializer, field):
+    fields = field.split("__")
+    sub_serializer = serializer()
+    for f in fields:
+        sub_serializer = sub_serializer.fields[f].child
+
+    return sub_serializer
+
+
+def get_query_dict_value(d, k):
+    v = d.get(k)
+    if isinstance(v, list):
+        v = d.getlist(k)
+    return v
+
+
+def parse_ordering(order_val):
+    if order_val[0] == "-":
+        return F(order_val[1:]).desc(nulls_last=True)
+    else:
+        return F(order_val).asc(nulls_last=True)

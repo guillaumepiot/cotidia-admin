@@ -1,9 +1,3 @@
-import re
-from decimal import Decimal
-import datetime
-
-from functools import reduce
-
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, UpdateAPIView
 from rest_framework import status, permissions
@@ -11,16 +5,14 @@ from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
 from rest_framework.pagination import LimitOffsetPagination
 
-from django.db.models import Q, F, Count, Case, When, CharField
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
+from django.http import Http404
 from django.apps import apps
 
 from cotidia.admin.utils import (
-    get_fields_from_model,
-    get_model_serializer_class,
     search_objects,
-    get_field_representation
+    get_queryset
 )
 from cotidia.admin.serializers import (
     SortSerializer,
@@ -29,150 +21,6 @@ from cotidia.admin.serializers import (
 
 
 PAGE_SIZE = 50
-number_pattern = r"(\-?[0-9]+(?:\.[0-9]+)?)"
-date_pattern = r"([0-9]{4}-[0-9]{2}-[0-9]{2})"
-api_patterns = {
-    "equal": r"^%s$",
-    "lte": r"^:%s$",
-    "gte": r"^%s:$",
-    "range": r"^%s:%s$"
-}
-
-
-def filter_lte(field, val):
-    return Q(**{field + "__lte": val})
-
-
-def filter_gte(field, val):
-    return Q(**{field + "__gte": val})
-
-
-def filter_equal(field, val):
-    return Q(**{field: val})
-
-
-def filter_range(field, min_val, max_val):
-    return filter_gte(field, min_val) & filter_lte(field, max_val)
-
-
-def filter_comparable(field_regex, data_type):
-    """Create a function that filters a value that matches the parameter regex."""
-    def temp(field, val):
-        match = re.match(api_patterns['equal'] % field_regex, val)
-        if match:
-            return filter_equal(field, data_type(match.group(1)))
-        match = re.match(api_patterns['lte'] % field_regex, val)
-        if match:
-            return filter_lte(field, data_type(match.group(1)))
-        match = re.match(api_patterns['gte'] % field_regex, val)
-        if match:
-            return filter_gte(field, data_type(match.group(1)))
-        match = re.match(api_patterns['range'] % (field_regex, field_regex), val)
-        if match:
-            return filter_range(field, data_type(match.group(1)), data_type(match.group(2)))
-        raise ParseError(
-            detail="The following value could not be parsed: %s" % val)
-    return temp
-
-filter_number = filter_comparable(number_pattern, Decimal)
-filter_date = filter_comparable(
-    date_pattern,
-    lambda x: datetime.datetime.strptime(x, "%Y-%m-%d").date()
-)
-
-
-def contains_filter(query_set, field, values):
-    """Check if a field contains a value."""
-    return field_filter(
-        lambda x, y: Q(**{x + "__icontains": y}), query_set, field, values)
-
-
-def exact_match_filter(query_set, field, values):
-    """Check if a field exactly matches a value."""
-    return field_filter(lambda x, y: Q(**{x: y}), query_set, field, values)
-
-
-def boolean_filter(queryset, field, values):
-    return field_filter(
-        lambda x, y: Q(**{x: y == "true"}),
-        queryset,
-        field,
-        values
-    )
-
-
-def number_filter(query_set, field, values):
-    """Check if a number fits a constraints."""
-    return field_filter(filter_number, query_set, field, values)
-
-
-def field_filter(filter_fn, query_set, field, values):
-    """
-    Filter the fields with a given function
-
-    The function must return a Q-object
-    """
-
-    # Each value is "OR"ed against eachother if it is a list.
-    if isinstance(values, list):
-        q_object = filter_fn(field, values.pop())
-        for value in values:
-            q_object |= filter_fn(field, value)
-    else:
-        q_object = filter_fn(field, values)
-
-    return query_set.filter(q_object)
-
-
-def date_filter(query_set, field, values):
-    return field_filter(filter_date, query_set, field, values)
-
-
-def filter_general_query(serializer, values, queryset, query_fields, suffix="__icontains"):
-    q_object = Q()
-
-    for val in values:
-        # Turns all values in the field_set columns into Q objects and ORs them
-        # together with the queryset for previous values
-        q_object = reduce(
-            lambda x, y: x | y,
-            map(lambda x: Q(**{x + suffix: val}), query_fields),
-            q_object
-        )
-
-    return queryset.filter(q_object)
-
-
-def parse_ordering(order_val):
-    if order_val[0] == "-":
-        return F(order_val[1:]).desc(nulls_last=True)
-    else:
-        return F(order_val).asc(nulls_last=True)
-
-
-FILTERS = {
-    "text": contains_filter,
-    "choice": exact_match_filter,
-    "boolean": boolean_filter,
-    "number": number_filter,
-    "date": date_filter
-}
-
-
-def get_sub_serializer(serializer, field):
-    fields = field.split("__")
-    sub_serializer = serializer()
-    for f in fields:
-        sub_serializer = sub_serializer.fields[f].child
-
-    return sub_serializer
-
-
-def get_query_dict_value(d, k):
-    v = d.get(k)
-    if isinstance(v, list):
-        v = d.getlist(k)
-    return v
 
 
 class AdminOrderableAPIView(APIView):
@@ -257,98 +105,16 @@ class AdminSearchDashboardAPIView(ListAPIView):
 
     def get_queryset(self):
         model_class = self.get_model_class()
-        if self.kwargs.get("serializer_class", False):
-            serializer = self.kwargs["serializer_class"]()
-        else:
-            serializer = model_class.SearchProvider.serializer()()
-        field_repr = serializer.get_field_representation()
-        related_fields = serializer.get_related_fields()
+        serializer_class = self.kwargs.get("serializer_class", None)
 
-        # Get the queryset
-        if serializer.get_option('get_queryset'):
-            qs = serializer.get_option('get_queryset')()
-        else:
-            qs = model_class.objects.all()
+        if not serializer_class:
+            serializer_class = model_class.SearchProvider.serializer()
 
-        # Pre-fetch related fields
-        qs = qs.select_related(*related_fields)
-
-        # filters the general_search
-        q_object = Q()
-        q_list = self.request.GET.getlist('_q')
-        for val in q_list:
-            q_object = reduce(
-                lambda x, y: x | y,
-                [
-                    Q(**{x + '__icontains': val})
-                    for x in serializer.get_general_query_fields()
-                ],
-            )
-
-        if q_object:
-            qs = qs.filter(q_object)
-
-        # Field filtering
-        for field in field_repr.keys():
-            filter_params = get_query_dict_value(self.request.GET, field)
-            if filter_params:
-                # If the field has a custom filter function, use it instead
-                if hasattr(serializer, 'filter_' + field):
-                    func = getattr(serializer, 'filter_' + field)
-                    qs = func(qs, get_query_dict_value(self.request.GET, field))
-                else:
-                    suffix = ""
-                    if field_repr[field].get('prep_function', False):
-                        filter_params = [
-                            field_repr[field]["prep_function"](param)
-                            for param in filter_params
-                        ]
-                    elif field_repr[field].get('filter_lookup_key', None):
-                        suffix = "__" + field_repr[field].get('filter_lookup_key')
-                    elif field_repr[field].get('foreign_key', False):
-                        suffix = "__uuid"
-                    filter_type = field_repr[field]['filter']
-                    qs = FILTERS[filter_type](
-                        qs,
-                        field + suffix,
-                        filter_params
-                    )
-
-        # Extra filter
-        extra_filters = serializer.get_option('extra_filters')
-
-        # Apply extra filters
-        if extra_filters:
-            for k in extra_filters.keys():
-                if self.request.GET.getlist(k):
-                    func = getattr(serializer, 'filter_' + k)
-                    qs = func(qs, get_query_dict_value(self.request.GET, k))
-
-        ordering_params = self.request.GET.getlist('_order')
-        if ordering_params:
-            # Here we add an annotation to make sure when we order, the value is
-            # empty
-            first_field = ordering_params[0]
-            clean_field_name = first_field[
-                1:] if first_field[0] == '-' else first_field
-            try:
-                condition_blank = Q(**{clean_field_name + "__exact": ""})
-                annotation = {"val_is_empty": Count(Case(
-                    When(condition_blank, then=1), output_field=CharField(),
-                ))}
-                qs = qs.annotate(**annotation)
-                ordering_params = ["val_is_empty"] + ordering_params
-            except (ValidationError, ValueError):
-                # This is added as number an dates all have sensible defaults
-                pass
-            parsed_ordering_params = [
-                parse_ordering(x) for x in ordering_params
-            ]
-            qs = qs.order_by(*parsed_ordering_params)
-        else:
-            default_order_by = serializer.get_option('default_order_by')
-            if default_order_by:
-                qs = qs.order_by(default_order_by)
+        qs = get_queryset(
+            model_class,
+            serializer_class=serializer_class,
+            filter_args=self.request.GET
+        )
 
         return qs
 
@@ -370,7 +136,7 @@ class SortAPIView(APIView):
                 try:
                     obj = model_class.objects.get(uuid=uuid)
                 except model_class.DoesNotExist:
-                    raise NotFound(
+                    raise Http404(
                         detail="Could not find a file matching the following uuid %s" % uuid
                     )
                 except ValidationError:
