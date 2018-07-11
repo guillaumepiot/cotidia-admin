@@ -1,23 +1,10 @@
-body {
-    &.content-centered {
-        .content__body, .content__foot, .content__head {
-            max-width: $laptop-width;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-    }
-    &.content-padded {
-        .content__body {
-            padding: 0 1rem;
-        }
-    }
-}
+$toolbar-height: 4rem; // Toolbar height
 
 .layout {
     &__menu {
         @media screen and (min-width: $menu-breakpoint) {
             width: $menu-width;
-            min-height: 100%;
+            min-height: 100vh;
             position: fixed;
             z-index: 3;
         }
@@ -28,7 +15,7 @@ body {
             top: 0;
             left: $menu-width;
             height: $toolbar-height;
-            width: calc(100% - #{$menu-width});
+            width: calc(100vw - #{$menu-width});
             z-index: 2;
         }
     }
@@ -37,14 +24,19 @@ body {
             position: fixed;
             top: $toolbar-height;
             left: $menu-width;
-            width: calc(100% - #{$menu-width});
-            height: calc(100% - #{$toolbar-height});
+            width: calc(100vw - #{$menu-width});
+            height: calc(100vh - #{$toolbar-height});
             overflow: scroll;
             z-index: 1;
-
-            &.content--sticky .content__body {
-                height: calc(100vh - 11.5rem - #{$toolbar-height});
-            }
         }
+    }
+}
+
+.layout-panel {
+    display: flex;
+    flex-direction: column;
+
+    &__item {
+        flex: 1;
     }
 }
