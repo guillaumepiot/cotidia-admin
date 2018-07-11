@@ -139,9 +139,24 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
         return self.build_success_url()
 
 
-class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
+class AdminGenericListView(StaffPermissionRequiredMixin, ContextMixin, TemplateView):
     group_by = False
     model = None
+    template_type = "fluid"
+
+    def get_model(self, *args, **kwargs):
+        try:
+            return ContentType.objects.get(
+                app_label=kwargs['app_label'],
+                model=kwargs['model']
+            ).model_class()
+        except ContentType.DoesNotExist:
+            raise Exception(
+                "Model with app label {} and model name {} does not exist.".format(
+                    kwargs['app_label'],
+                    kwargs['model']
+                )
+            )
 
     def get_template_names(self):
         template = 'admin/{app}/{model}/dynamic-list.html'.format(
@@ -154,46 +169,36 @@ class AdminGenericListView(StaffPermissionRequiredMixin, TemplateView):
             'admin/generic/page/dynamic-list.html',
         ]
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, *args, **kwargs):
+        self.model = self.get_model(*args, **kwargs)
+
         context = super().get_context_data(**kwargs)
+        context['app_label'] = self.model._meta.app_label
+        context['model_name'] = self.model._meta.model_name
 
-        # TODO: This check shouldn't be in `get_context_data` but I don't know
-        #       Django well enough to know where it *should* be, so can someone
-        #       fix this?
-        try:
-            self.model = ContentType.objects.get(
-                app_label=kwargs['app_label'],
-                model=kwargs['model']
-            ).model_class()
-        except ContentType.DoesNotExist:
-            raise Http404()
-        else:
-            context['app_label'] = self.model._meta.app_label
-            context['model_name'] = self.model._meta.model_name
+        # Even though the serailizer is passed into the view as
+        # `serializer_class` and is indeed a class when it's passed in, by
+        # this time this code is running, it's an instance of the
+        # serializer, so we'll call it `serializer` in the context.
+        if self.kwargs.get('serializer_class'):
+            context['serializer'] = self.kwargs['serializer_class']
 
-            # Even though the serailizer is passed into the view as
-            # `serializer_class` and is indeed a class when it's passed in, by
-            # this time this code is running, it's an instance of the
-            # serializer, so we'll call it `serializer` in the context.
-            if self.kwargs.get('serializer_class'):
-                context['serializer'] = self.kwargs['serializer_class']
+        if self.kwargs.get('endpoint'):
+            context['endpoint'] = self.kwargs['endpoint']
 
-            if self.kwargs.get('endpoint'):
-                context['endpoint'] = self.kwargs['endpoint']
+        if self.request.GET.get('_column'):
+            context['default_colunms'] = self.request.GET.getlist('_column')
 
-            if self.request.GET.get('_column'):
-                context['default_colunms'] = self.request.GET.getlist('_column')
+        if self.request.GET.get('_order'):
+            context['default_order_by'] = self.request.GET.getlist('_order')
 
-            if self.request.GET.get('_order'):
-                context['default_order_by'] = self.request.GET.getlist('_order')
+        # Generate list of all filters from GET parameters.
+        filters = {}
+        for key in self.request.GET:
+            if key[0] != '_':
+                filters[key] = self.request.GET.getlist(key)
 
-            # Generate list of all filters from GET parameters.
-            filters = {}
-            for key in self.request.GET:
-                if key[0] != '_':
-                    filters[key] = self.request.GET.getlist(key)
-
-            context['default_filters'] = filters
+        context['default_filters'] = filters
 
         return context
 
