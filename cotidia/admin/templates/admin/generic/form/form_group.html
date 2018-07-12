@@ -1,4 +1,4 @@
-{% load admin_form_tags %}<div class="form__group{% if field.errors %} form__group--error{% endif %}{% if field.field.required %} form__group--required{% endif %}">
+{% load admin_form_tags %}<div class="form__group{% if field.errors %} form__group--error{% endif %}{% if field.field.required %} form__group--required{% endif %} {{form_classes}}">
     {% block form_group_content %}
     {% if field|is_checkbox %}
     <div class="form__control{% if field|is_select %} form__control--select{% endif %}">

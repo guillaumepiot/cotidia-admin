@@ -8,9 +8,9 @@ $menu-background-color: #48484c;
 
 $toolbar-height: 4rem;
 $toolbar-background-color: #f5f7fb;
-$toolbar-border-color: #e8eaec;
+$toolbar-border-color: #e8eaec; // Or $input_border_color
 $toolbar-form-border-color: #d5d9dc;
-// $toolbar_text_color: $grey--dark;
+$toolbar_text_color: $grey--dark;
 $toolbar_profile_avatar_background_color: #2d3546;
 $toolbar_profile_avatar_text_color: #fff;
 $toolbar_profile_avatar_arrow_color: #2d3546;

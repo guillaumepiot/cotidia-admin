@@ -35,24 +35,26 @@ export default class Header extends Component {
 
     return (
       <div className='content__head'>
-        <div className='content__title'>{title}</div>
-        <div className='content__actions'>
-          {mode === 'table' && columnsConfigurable && (
-            <button className='btn btn--outline btn--small' onClick={this.manageColumns} title='Manage column' type='button'>
-              <Icon icon='columns' />
-            </button>
-          )}
+        <div className='content__inner content-head'>
+          <div className='content-head__title'>{title}</div>
+          <div className='content-head__actions'>
+            {mode === 'table' && columnsConfigurable && (
+              <button className='btn btn--outline btn--small' onClick={this.manageColumns} title='Manage column' type='button'>
+                <Icon icon='columns' />
+              </button>
+            )}
 
-          {hasListConfig && (
-            <>
-              <button className={`btn btn--small ${mode === 'table' ? '' : 'btn--outline'}`} onClick={this.displayTable}>
-                <Icon icon='table' />
-              </button>
-              <button className={`btn btn--small ${mode === 'list' ? '' : 'btn--outline'}`} onClick={this.displayList}>
-                <Icon icon='bars' />
-              </button>
-            </>
-          )}
+            {hasListConfig && (
+              <>
+                <button className={`btn btn--small ${mode === 'table' ? '' : 'btn--outline'}`} onClick={this.displayTable}>
+                  <Icon icon='table' />
+                </button>
+                <button className={`btn btn--small ${mode === 'list' ? '' : 'btn--outline'}`} onClick={this.displayList}>
+                  <Icon icon='bars' />
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </div>
     )

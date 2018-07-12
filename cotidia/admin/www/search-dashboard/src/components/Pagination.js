@@ -14,7 +14,7 @@ export default class Pagination extends Component {
 
   render () {
     return (
-      <div className='content__pagination'>
+      <div className='content-foot__left'>
         <button
           className='btn btn--link'
           disabled={! this.props.previous}

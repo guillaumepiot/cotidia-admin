@@ -17,10 +17,6 @@
     {% endif %}
 {% endblock title %}
 
-{% block body_class %}
-    {% if template_type == "centered" %}content-centered{% endif %}
-{% endblock body_class %}
-
 {% block content_title %}
     <a href="{% get_admin_url app_label model_name 'list' %}">{{verbose_name_plural}}</a>
     &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
@@ -45,28 +41,37 @@
 
 {% block page_content %}
 <form action="" method="post" class="form form--animate" enctype="multipart/form-data">
-    {% csrf_token %}
-
-    {% with fieldset_template_name="admin/generic/form/fieldset_as_div.html" field_template_name="admin/generic/form/field_as_div.html" %}
-        {% for elm in form %}
-            {% if elm.is_fieldset %}
-                {% include fieldset_template_name with fieldset=elm %}
-            {% else %}
-                <div class="form__row">
-                    {% include field_template_name with field=elm %}
-                </div>
-            {% endif %}
-        {% endfor %}
-    {% endwith %}
+    <div class="content__body">
+        <div class="content__inner">
+        {% csrf_token %}
+        {% with fieldset_template_name="admin/generic/form/fieldset_as_div.html" field_template_name="admin/generic/form/field_as_div.html" %}
+            {% for elm in form %}
+                {% if elm.is_fieldset %}
+                    {% include fieldset_template_name with fieldset=elm %}
+                {% else %}
+                    <div class="form__row">
+                        {% include field_template_name with field=elm %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endwith %}
+        </div>
+    </div>
     {% block form_actions %}
-    <div class="form__actions">
-        <div class="form__actions-inner">
-            <button type="submit" class="btn btn--primary">
-                {% trans "Save" %}
-            </button>
-            <a href="{% if next %}{{next}}{% else %}{% get_admin_url app_label model_name 'list' %}{% endif %}" class="btn btn--cancel pull-right">
-                {% trans "Cancel" %}
-            </a>
+    <div class="content__foot">
+        <div class="content__inner content-foot">
+            <div class="content-foot__left">
+                <div class="content__foot-left">
+                    <button type="submit" class="btn btn--primary">
+                        {% trans "Save" %}
+                    </button>
+                </div>
+            </div>
+            <div class="content-foot__right">
+                <a href="{% if next %}{{next}}{% else %}{% get_admin_url app_label model_name 'list' %}{% endif %}" class="btn btn--cancel pull-right">
+                    {% trans "Cancel" %}
+                </a>
+            </div>
         </div>
     </div>
     {% endblock form_actions %}

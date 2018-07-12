@@ -3,10 +3,6 @@
     {{verbose_name}}
 {% endblock title %}
 
-{% block body_class %}
-    {% if template_type == "centered" %}content-centered{% endif %}
-{% endblock body_class %}
-
 {% block content_title %}{{verbose_name_plural}}{% endblock content_title %}
 {% block content_actions %}
     {% if add_view %}
@@ -19,9 +15,23 @@
     {% endif %}
 {% endblock content_actions %}
 
+{% block content_class %}content--sticky{% endblock content_class %}
+
 {% block page_content %}
-<div class="content__list">
-    {% include 'admin/generic/utils/head-filter.html' %}
-    {% include 'admin/generic/list/list.html' %}
+{% include 'admin/generic/utils/head-filter.html' %}
+<div class="content__body">
+    <div class="content__inner">
+        <div class="content__list">
+            {% include 'admin/generic/list/list.html' %}
+        </div>
+    </div>
+</div>
+<div class="content__foot">
+    <div class="content__inner content-foot">
+        <div class="content-foot__left">
+            {% include 'admin/generic/pagination.html' %}
+        </div>
+        <div class="content-foot__right"></div>
+    </div>
 </div>
 {% endblock page_content %}

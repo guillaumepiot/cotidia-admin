@@ -36,15 +36,16 @@
                 }
             }
 
-            .form__help {
+            .form__label, .form__help {
                 display: none;
             }
         }
     }
+}
 
-    fieldset {
-        &:last-child {
-            margin-bottom: 1rem;
-        }
-    }
+.fieldset-actions {
+    padding: 1rem;
+    border-top: 1px solid $input_border_color;
+    background-color: $toolbar-background-color;
+    clear: both;
 }

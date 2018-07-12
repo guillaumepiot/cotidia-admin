@@ -3,10 +3,6 @@
     {% trans "Delete" %} {{verbose_name}}
 {% endblock title %}
 
-{% block body_class %}
-    {% if template_type == "centered" %}content-centered{% endif %}
-{% endblock body_class %}
-
 {% block content_title %}
     <a href="{% get_admin_url app_label model_name 'list' %}">
         {{verbose_name_plural}}

@@ -1,4 +1,9 @@
 {% extends "admin/base.html" %}{% load i18n admin_menu_tags %}
+
+{% block body_class %}
+    {% if template_type == "centered" %}content--centered{% elif template_type == "padded" %}content--padded{% endif %}
+{% endblock body_class %}
+
 {% block content %}
 <div class="layout__menu">
     {% menu %}
@@ -6,38 +11,39 @@
 <div class="layout__toolbar">
     <div class="toolbar">
     {% block toolbar %}
-    <div class="toolbar__left">
-        {% block toolbar_left %}
-        {% endblock toolbar_left %}
-    </div>
-    <div class="toolbar__right">
-        {% block toolbar_right %}
-        {% include "admin/toolbar/toolbar-shortcuts.html" %}
-        {% include "admin/toolbar/toolbar-search.html" %}
-        {% include "admin/toolbar/toolbar-profile.html" %}
-        {% endblock toolbar_right %}
-    </div>
+        <div class="toolbar__left">
+            {% block toolbar_left %}
+            {% endblock toolbar_left %}
+        </div>
+        <div class="toolbar__right">
+            {% block toolbar_right %}
+            {% include "admin/toolbar/toolbar-shortcuts.html" %}
+            {% include "admin/toolbar/toolbar-search.html" %}
+            {% include "admin/toolbar/toolbar-profile.html" %}
+            {% endblock toolbar_right %}
+        </div>
     {% endblock toolbar %}
     </div>
 </div>
-<div class="layout__content">
-    {% block layout_content %}
-        <div class="content">
-            {% block messages %}
-                {% include "admin/generic/messages.html" %}
-            {% endblock messages %}
-            {% block content_head %}
-                <div class="content__head">
-                    <div class="content__title">
-                        {% block content_title %}{% endblock content_title %}
-                    </div>
-                    <div class="content__actions">
-                        {% block content_actions %}{% endblock content_actions %}
-                    </div>
+{% block layout_content %}
+<div class="layout__content content {% block content_class %}{% endblock content_class %}">
+
+    {% block messages %}
+        {% include "admin/generic/messages.html" %}
+    {% endblock messages %}
+    {% block content_head %}
+        <div class="content__head">
+            <div class="content__inner content-head">
+                <div class="content-head__title">
+                    {% block content_title %}{% endblock content_title %}
                 </div>
-            {% endblock content_head %}
-            {% block page_content %}{% endblock page_content %}
+                <div class="content-head__actions">
+                    {% block content_actions %}{% endblock content_actions %}
+                </div>
+            </div>
         </div>
-    {% endblock layout_content %}
+    {% endblock content_head %}
+    {% block page_content %}{% endblock page_content %}
 </div>
+{% endblock layout_content %}
 {% endblock content %}

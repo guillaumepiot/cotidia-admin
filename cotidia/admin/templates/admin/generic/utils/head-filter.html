@@ -1,9 +1,19 @@
 {% load i18n %}{% if filter %}
-<form action="" method="get" class="form form--animate head-bar head-bar--filter">
-    {% for field in filter.form %}
-        {% include "admin/generic/form/form_group.html" %}
-    {% endfor %}
-    <input type="submit" value="{% trans "Filter" %}" class="btn btn--primary btn--small text-uppercase">
-    <a href="{{request.path}}" class="btn btn--small" title="Reset filters"><span class="fa fa-refresh"></span></a>
+<form action="" method="get" class="form content__toolbar">
+    <div class="content__filter">
+        {% for field in filter.form %}
+        <div class="content-filter__item">
+            {% include "admin/generic/form/form_group.html" with form_classes="form__group--boxed" %}
+        </div>
+        {% endfor %}
+        <div class="content-filter__item">
+            <input type="submit" value="{% trans "Filter" %}" class="btn btn--primary btn--outline">
+        </div>
+        <div class="content-filter__item">
+            <a href="{{request.path}}" class="btn btn--outline" title="Reset filters">
+                <span class="fa fa-sync-alt"></span>
+            </a>
+        </div>
+    </div>
 </form>
 {% endif %}

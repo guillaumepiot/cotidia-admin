@@ -1,6 +1,11 @@
 .toolbar {
-    background-color: $toolbar-background-color;
+    background-color: $toolbar_background_color;
+    background-color: var(--toolbar_background_color, $toolbar_background_color);
     border-bottom: 1px solid $toolbar-border-color;
+    border-bottom-color: $toolbar_border_color;
+    border-bottom-color: var(--toolbar_border_color, $toolbar_border_color);
+    color: $toolbar_text_color;
+    color: var(--toolbar_text_color, $toolbar_text_color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -8,6 +13,11 @@
 
     @media screen and (min-width: $menu-breakpoint) {
         height: $toolbar-height;
+    }
+
+    a {
+        color: $toolbar_profile_avatar_background_color;
+        color: var(--toolbar_profile_avatar_background_color, $toolbar_profile_avatar_background_color);
     }
 
     &__left {

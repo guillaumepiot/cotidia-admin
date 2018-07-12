@@ -25,7 +25,7 @@ export default class GlobalActions extends Component {
     }
 
     return (
-      <div className='content__actions'>
+      <div className='content-foot__right'>
         {globalActions.map((action) => (
           <button
             className={`btn btn--outline btn--small ${action.classes || ''}`}

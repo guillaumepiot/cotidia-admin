@@ -107,13 +107,12 @@ export default class ToolBar extends Component {
 
           if (Component) {
             return (
-              <div className='form__row' key={filterProps.name}>
-                <Component
-                  {...filterProps}
-                  updateValue={this.updateFilterValueFactory(filter.name)}
-                  value={filters[filter.name]}
-                />
-              </div>
+              <Component
+                {...filterProps}
+                key={filterProps.name}
+                updateValue={this.updateFilterValueFactory(filter.name)}
+                value={filters[filter.name]}
+              />
             )
           }
         })}

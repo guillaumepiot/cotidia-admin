@@ -26,7 +26,7 @@ from cotidia.admin.renderers import render_to_csv, render_to_pdf
 class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
     columns = ()
     paginate_by = 25
-    template_type = "fluid"  # Options: fluid, centered
+    template_type = "padded"  # Options: fluid, padded, centered
     filterset = None
     # TODO
     # Option to show or not the detail view from the list

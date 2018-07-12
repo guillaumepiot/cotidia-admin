@@ -1,0 +1,13 @@
+.table {
+    tr {
+        th, td {
+            .fa-times {
+                color: $red;
+            }
+
+            .fa-check {
+                color: $green;
+            }
+        }
+    }
+}

@@ -117,6 +117,10 @@
     &--action {
         thead {
             th, td {
+                &:first-child {
+                    width: calc(52px - 1rem);
+                    padding-right: 0;
+                }
                 &:first-child, &:nth-child(2) {
                     z-index: 4;
                 }
@@ -132,6 +136,10 @@
         }
 
         th, td {
+            &:first-child {
+                width: calc(52px - 1rem);
+                padding-right: 0;
+            }
             &:first-child, &:nth-child(2) {
                 position: -webkit-sticky; // for safari
                 position: sticky;

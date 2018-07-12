@@ -50,11 +50,10 @@ export default class DynamicList extends Component {
 
     return (
       <>
-        <div className={`content ${(hasSidebar && showSidebar) ? 'content--sidebar' : ''}`}>
-          <Header />
-          <ToolBar />
-
-          <div className='content__body'>
+        <Header />
+        <ToolBar />
+        <div className={`content__body ${(hasSidebar && showSidebar) ? 'content__body--sidebar' : ''}`}>
+          <div className='content__inner'>
             <div className='content__list'>
               {hasListConfig && (searchMode === 'list') && (
                 <SearchResultsList />
@@ -64,11 +63,12 @@ export default class DynamicList extends Component {
                 <SearchResultsTable />
               )}
             </div>
-
             <FilterSidebar />
           </div>
+        </div>
 
-          <div className='content__foot'>
+        <div className='content__foot'>
+          <div className='content__inner content-foot'>
             <Pagination />
             <GlobalActions />
           </div>

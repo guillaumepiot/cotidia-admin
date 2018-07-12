@@ -1,14 +1,12 @@
 $content-head-height: 5rem;
-$content-toolbar-height: 3.5rem;
+$content-toolbar-height: 4.5rem;
 $content-foot-height: 3.5rem;
 
 .content {
     &--sticky {
         .content__body {
-            height: calc(100% - #{$content-head-height + $content-toolbar-height + $content-foot-height});
+            height: calc(100% - #{$content-head-height + $content-toolbar-height + $content-foot-height} - 1px);
             position: relative;
-            border-top: 1px solid $table-border-color;
-            border-bottom: 1px solid $table-border-color;
             overflow: hidden;
         }
     }
@@ -19,6 +17,11 @@ $content-foot-height: 3.5rem;
         justify-content: space-between;
         align-items: center;
         background-color: #fff;
+
+        .content__inner {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
     }
 
     &__toolbar {
@@ -26,33 +29,44 @@ $content-foot-height: 3.5rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0 1rem;
-        border-top: 1px solid $toolbar-border-color;
+        padding: 0rem 1rem;
+        border-top: 1px solid $table-border-color;
         background-color: $toolbar-background-color;
+
+        body.content--centered & {
+            max-width: calc(#{$laptop-width} - 2rem);
+            margin: auto;
+            border-left: 1px solid $table-border-color;
+            border-right: 1px solid $table-border-color;
+        }
+
+        body.content--padded & {
+            margin: 0 1rem;
+            border-left: 1px solid $table-border-color;
+            border-right: 1px solid $table-border-color;
+        }
+    }
+
+    &__body {
+        &--sidebar {
+            .content__list {
+                width: calc(100% - 16rem);
+            }
+            .content__sidebar {
+                transform: translate(0);
+            }
+        }
     }
 
     &__foot {
         background-color: $toolbar-background-color;
-        border-top: 1px solid $toolbar-border-color;
+        border-top: 1px solid $table-border-color;
 
         @media screen and (min-width: $menu-breakpoint) {
             bottom: 0;
             left: $menu-width;
             position: sticky;
             z-index: 2;
-        }
-    }
-    &__inner {
-        body.content--centered & {
-            max-width: $laptop-width;
-            margin: auto;
-            padding-left: 1rem;
-            padding-right: 1rem;
-        }
-
-        body.content--padded & {
-            padding-left: 1rem;
-            padding-right: 1rem;
         }
     }
 
@@ -63,6 +77,8 @@ $content-foot-height: 3.5rem;
         overflow-y: auto;
         position: absolute;
         transition: width $animation-speed ease;
+        border-top: 1px solid $table-border-color;
+        // border-bottom: 1px solid $table-border-color;
     }
 
     &__sidebar {
@@ -75,6 +91,7 @@ $content-foot-height: 3.5rem;
         transform: translate(16rem);
         transition: transform $animation-speed ease;
         background-color: #fff;
+        border-top: 1px solid $table-border-color;
         border-left: 1px solid $table-border-color;
 
         fieldset {
@@ -92,15 +109,6 @@ $content-foot-height: 3.5rem;
 
         .form__group {
             margin: 0 1rem 0 0;
-        }
-    }
-
-    &--sidebar {
-        .content__list {
-            width: calc(100% - 16rem);
-        }
-        .content__sidebar {
-            transform: translate(0);
         }
     }
 }
@@ -146,5 +154,48 @@ $content-foot-height: 3.5rem;
         .btn {
             margin-left: 0.5rem;
         }
+    }
+}
+
+body.content--centered {
+    .content__inner {
+        max-width: $laptop-width;
+        margin: auto;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .content__body {
+        .content__inner {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            max-width: calc(#{$laptop-width} - 2rem);
+            height: 100%;
+            padding: 0;
+        }
+    }
+    .content__list {
+        border-left: 1px solid $table-border-color;
+        border-right: 1px solid $table-border-color;
+    }
+}
+
+body.content--padded {
+    .content__inner {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .content__body {
+        .content__inner {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            max-width: calc(100% - 1rem);
+            height: 100%;
+        }
+    }
+    .content__list {
+        border-left: 1px solid $table-border-color;
+        border-right: 1px solid $table-border-color;
     }
 }

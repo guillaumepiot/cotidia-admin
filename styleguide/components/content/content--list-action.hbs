@@ -2,10 +2,12 @@
     {{> @content-head }}
     {{> @content-toolbar-action }}
     <div class="content__body">
-        <div class="content__list">
-            {{> @table--sticky-action }}
+        <div class="content__inner">
+            <div class="content__list">
+                {{> @table--sticky-action }}
+            </div>
+            {{> @content-sidebar }}
         </div>
-         {{> @content-sidebar }}
     </div>
     {{> @content-foot }}
 </div>

@@ -5,10 +5,6 @@
     {% endblocktrans %}
 {% endblock title %}
 
-{% block body_class %}
-    {% if template_type == "centered" %}content-centered{% endif %}
-{% endblock body_class %}
-
 {% block content_title %}
     <a href="{% get_admin_url app_label model_name 'list' %}">{{verbose_name_plural}}</a>
     &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
@@ -34,7 +30,8 @@
 {% endblock content_actions %}
 
 {% block page_content %}
-<div class="content__detail">
+<div class="content__body">
+    <div class="content__inner">
     {% for fieldset in fieldsets %}
         {% if fieldset.template_name %}
             {% include fieldset.template_name with object=object %}
@@ -60,19 +57,26 @@
         </fieldset>
         {% endif %}
     {% endfor %}
-    {% block form_actions %}
-    <div class="form__actions">
-        <div class="form__actions-inner">
-            <a href="{% get_admin_url app_label model_name 'update' object %}" class="btn btn--change">
-                {% blocktrans with object_name as object_name %}
-                    Edit
-                {% endblocktrans %}
-            </a>
+    </div>
+</div>
+{% block form_actions %}
+<div class="content__foot">
+    <div class="content__inner content-foot">
+        <div class="content-foot__left">
+            <div class="content__foot-left">
+                <a href="{% get_admin_url app_label model_name 'update' object %}" class="btn btn--change">
+                    {% blocktrans with object_name as object_name %}
+                        Edit
+                    {% endblocktrans %}
+                </a>
+            </div>
+        </div>
+        <div class="content-foot__right">
             <a href="{% if next %}{{next}}{% else %}{% get_admin_url app_label model_name 'list' %}{% endif %}" class="btn btn--cancel pull-right">
                 {% trans "Back" %}
             </a>
         </div>
     </div>
-    {% endblock form_actions %}
 </div>
+{% endblock form_actions %}
 {% endblock page_content %}
