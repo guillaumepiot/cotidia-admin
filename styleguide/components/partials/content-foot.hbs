@@ -1,13 +1,17 @@
 <div class="content__foot">
-    {{> @pagination }}
-    <div class="content__actions">
-        <button class="btn btn--outline  btn--small">
-            <span class="fa fa-file-alt"></span>
-            CSV
-        </button>
-        <button class="btn btn--outline  btn--small">
-            <span class="fa fa-file-pdf"></span>
-            PDF
-        </button>
+    <div class="content__inner content-foot">
+        <div class="content-foot__left">
+            {{> @pagination }}
+        </div>
+        <div class="content-foot__right">
+            <button class="btn btn--outline  btn--small">
+                <span class="fa fa-file-alt"></span>
+                CSV
+            </button>
+            <button class="btn btn--outline  btn--small">
+                <span class="fa fa-file-pdf"></span>
+                PDF
+            </button>
+        </div>
     </div>
 </div>

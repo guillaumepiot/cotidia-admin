@@ -1,0 +1,24 @@
+{{> @menu }}
+{{> @toolbar }}
+
+<div class="layout__content content">
+    <form action="" method="post" class="form form--animate" enctype="">
+        {{> @content-head-title}}
+        <div class="content__body">
+            <div class="content__inner">
+                <div class="content__delete">
+                    <p>Are you sure to delete the following member?</p>
+                    <div class="form__row">
+                        <p>
+                            John Doe
+                        </p>
+                    </div>
+                    <div class="form__row">
+                        <p class="text-italic">The operation is not reversible.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{> @content-footer-action}}
+    </form>
+</div>

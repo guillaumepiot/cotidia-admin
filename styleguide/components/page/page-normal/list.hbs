@@ -1,0 +1,51 @@
+{{> @menu }}
+{{> @toolbar }}
+
+<div class="layout__content content content--sticky">
+    {{> @content-head }}
+    {{> @content-toolbar-action }}
+    <div class="content__body">
+        <div class="content__inner">
+            <div class="content__list">
+                <table class="table table--clickable table--admin-mobile-view">
+                    <thead>
+                        <tr>
+                            <th class="nowrap">Job number</th>
+                            <th class="nowrap">Status</th>
+                            <th class="nowrap">Contact</th>
+                            <th class="nowrap">Staff cost</th>
+                            <th class="nowrap">Expenses</th>
+                            <th class="nowrap">Total cost</th>
+                            <th class="nowrap">Budget</th>
+                            <th class="nowrap">Profit margin</th>
+                            <th class="nowrap">Date created</th>
+                            <th class="text-right nowrap"><span class="sr-only">Actions</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{> @table--row }}
+                        {{> @table--row }}
+                        {{> @table--row }}
+                        {{> @table--row }}
+                        {{> @table--row }}
+                        {{> @table--row }}
+                        {{> @table--row }}
+                        {{> @table--row }}
+                        {{> @table--row }}
+                        {{> @table--row }}
+                        {{> @table--row }}
+                    </tbody>
+                </table>
+            </div>
+            <div class="content__sidebar">content__sidebar</div>
+        </div>
+    </div>
+    <div class="content__foot">
+        <div class="content__inner content-foot">
+            <div class="content-foot__left">
+                {{> @pagination }}
+            </div>
+            <div class="content-foot__right"></div>
+        </div>
+    </div>
+</div>
