@@ -33,6 +33,7 @@ $content-foot-height: 3.5rem;
 
     &__foot {
         background-color: $toolbar-background-color;
+        border-top: 1px solid $toolbar-border-color;
 
         @media screen and (min-width: $menu-breakpoint) {
             bottom: 0;
@@ -45,6 +46,8 @@ $content-foot-height: 3.5rem;
         body.content--centered & {
             max-width: $laptop-width;
             margin: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
         }
 
         body.content--padded & {
