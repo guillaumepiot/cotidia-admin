@@ -1,4 +1,5 @@
 import re
+import json
 import datetime
 
 from django import forms
@@ -422,6 +423,13 @@ class SelectMultipleLookup(forms.MultipleHiddenInput):
         self.config = config
 
     def get_context(self, name, value, attrs):
+        initial_data = []
+        for c in self.choices:
+            if c[0] in value:
+                initial_data.append({
+                    'value': c[0],
+                    'label': c[1]
+                })
         context = super().get_context(name, value, attrs)
         context['config'] = {
             'data-widget': 'multiple-select',
@@ -433,43 +441,7 @@ class SelectMultipleLookup(forms.MultipleHiddenInput):
                 }
             ),
             'data-typeahead-minchars': "3",
+            'data-initial': json.dumps(initial_data),
             'data-placeholder': self.config['placeholder'],
         }
         return context
-
-    # def render(self, name, value, attrs=None):
-    #     attrs = self.build_attrs(self.attrs, attrs)
-    #     attrs.update(
-    #         {
-    #             'data-widget': 'multiple-select',
-    #             'data-typeahead-endpoint': reverse(
-    #                 'generic-api:multiple-select-lookup',
-    #                 kwargs={
-    #                     'app_label': attrs['app_label'],
-    #                     'model_name': attrs['model_name']
-    #                 }
-    #             ),
-    #             'data-typeahead-minchars': "3",
-    #         }
-    #     )
-
-    #     html = super().render(name, value, attrs)
-    #     return html
-
-
-    # def value_from_datadict(self, data, files, name):
-    #     getter = data.get
-    #     if self.allow_multiple_selected:
-    #         try:
-    #             getter = data.getlist
-    #         except AttributeError:
-    #             pass
-    #     return getter(name)
-
-    # def format_value(self, value):
-    #     """Return selected values as a list."""
-    #     if value is None and self.allow_multiple_selected:
-    #         return []
-    #     if not isinstance(value, (tuple, list)):
-    #         value = [value]
-    #     return [str(v) if v is not None else '' for v in value]
