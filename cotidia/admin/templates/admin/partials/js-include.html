@@ -4,36 +4,4 @@
 {% else %}
     <script src="{% static "js/admin.js" %}"></script>
 {% endif %}
-<script>
-    // <![CDATA[
-        if (window.React && window.ReactDOM && window.TypeaheadSwitcher) {
-            document.querySelectorAll('[data-widget="typeahead-switcher"]').forEach(function (typeahead) {
-                var endpoint = typeahead.dataset.typeaheadEndpoint
-                var placeholder
-                var minchars = typeahead.dataset.typeaheadMinchars ? parseInt(typeahead.dataset.typeaheadMinchars) : 1
-                var extraGroupClasses = null
-
-                if (typeahead.querySelector('[placeholder]')) {
-                    placeholder = typeahead.querySelector('[placeholder]').getAttribute('placeholder')
-                }
-
-                if (typeahead.querySelector('.form__group')) {
-                    extraGroupClasses = Array.prototype.slice.call(typeahead.querySelector('.form__group').classList)
-                }
-
-                ReactDOM.render(
-                    React.createElement(
-                        window.TypeaheadSwitcher,
-                        {
-                            apiEndpoint: endpoint,
-                            placeholder: placeholder,
-                            minchars: minchars,
-                            extraGroupClasses: extraGroupClasses,
-                        }
-                    ),
-                    typeahead.parentElement
-                )
-            })
-        }
-    // ]]>
-</script>
+<script src="{% static "js/admin-bootstrap.js" %}"></script>

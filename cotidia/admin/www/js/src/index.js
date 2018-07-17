@@ -13,6 +13,7 @@ import DynamicList from './containers/DynamicList'
 import { FullScreen } from './components/elements/global'
 
 import TypeaheadSwitcher from './typeahead-switcher'
+import MultipleSelectWidget from './multiple-select-widget'
 
 export default function App (props) {
   const { authToken, ...config } = props
@@ -56,3 +57,4 @@ window.ReactDOM = ReactDOM
 window.DynamicList = App
 
 window.TypeaheadSwitcher = TypeaheadSwitcher
+window.MultipleSelectWidget = MultipleSelectWidget
