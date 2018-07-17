@@ -40,6 +40,9 @@
                 display: none;
             }
         }
+        .tag {
+            margin-top: 0.5rem;
+        }
     }
 }
 
@@ -48,4 +51,9 @@
     border-top: 1px solid $input_border_color;
     background-color: $toolbar-background-color;
     clear: both;
+}
+
+fieldset:last-child {
+    // Matches super select max option height to ensure all options are visible
+    margin-bottom: 300px;
 }

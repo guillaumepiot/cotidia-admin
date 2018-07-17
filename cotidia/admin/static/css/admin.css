@@ -3361,12 +3361,17 @@ body.content--padded .content__list {
     line-height: 1.5; }
 .form__group--boxed .form__label, .form__group--boxed .form__help {
   display: none; }
+.form__group .tag {
+  margin-top: 0.5rem; }
 
 .fieldset-actions {
   padding: 1rem;
   border-top: 1px solid #D0D5D7;
   background-color: #f5f7fb;
   clear: both; }
+
+fieldset:last-child {
+  margin-bottom: 300px; }
 
 .btn .svg-inline--fa, .form__control input[type="file"] .svg-inline--fa {
   vertical-align: -0.18em; }
