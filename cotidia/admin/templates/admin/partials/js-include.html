@@ -7,7 +7,7 @@
 <script>
     // <![CDATA[
         if (window.React && window.ReactDOM && window.TypeaheadSwitcher) {
-            document.querySelectorAll('[data-typeahead-endpoint]').forEach(function (typeahead) {
+            document.querySelectorAll('[data-widget="typeahead-switcher"]').forEach(function (typeahead) {
                 var endpoint = typeahead.dataset.typeaheadEndpoint
                 var placeholder
                 var minchars = typeahead.dataset.typeaheadMinchars ? parseInt(typeahead.dataset.typeaheadMinchars) : 1

@@ -1,3 +1,5 @@
+from functools import reduce
+
 from django.db.models.fields import (
     UUIDField,
     DateTimeField,
@@ -280,6 +282,31 @@ def search_objects(query):
     return results
 
 
+def get_object_options(app_label, model_name, query):
+
+    model = apps.get_model(app_label, model_name)
+    lookup_fields = model.LookupProvider.lookup_fields
+
+    q_objects = Q()
+
+    if query and lookup_fields:
+        for field in lookup_fields:
+            for q in query.split(" "):
+                filter_args = {}
+                lookup = "__icontains"
+                filter_args[field + lookup] = q
+                q_objects.add(Q(**filter_args), Q.OR)
+
+    results = []
+    for item in model.objects.filter(q_objects):
+        results.append({
+            "label": item.__str__(),
+            "value": item.id
+        })
+
+    return results
+
+
 def get_queryset(model_class, serializer_class, filter_args=None):
     serializer = serializer_class()
 
@@ -301,10 +328,7 @@ def get_queryset(model_class, serializer_class, filter_args=None):
     for val in q_list:
         q_object = reduce(
             lambda x, y: x | y,
-            [
-                Q(**{x + '__icontains': val})
-                for x in serializer.get_general_query_fields()
-            ],
+            [Q(**{x + '__icontains': val}) for x in serializer.get_general_query_fields()],
         )
 
     if q_object:

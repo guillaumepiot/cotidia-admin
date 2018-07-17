@@ -12,7 +12,8 @@ from django.apps import apps
 
 from cotidia.admin.utils import (
     search_objects,
-    get_queryset
+    get_queryset,
+    get_object_options
 )
 from cotidia.admin.serializers import (
     SortSerializer,
@@ -156,6 +157,20 @@ class AdminSearchLookupAPIView(ListAPIView):
     def get_queryset(self):
         query = self.request.GET.get("q")
         results = search_objects(query)
+        return results
+
+
+class AdminMultipleSelectAPIView(ListAPIView):
+    permission_classes = (permissions.IsAdminUser,)
+    serializer_class = AdminSearchLookupSerializer
+
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        results = get_object_options(
+            self.kwargs['app_label'],
+            self.kwargs['model_name'],
+            query
+        )
         return results
 
 

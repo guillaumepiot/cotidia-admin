@@ -5,7 +5,8 @@ from cotidia.admin.views.api import (
     SortAPIView,
     AdminSearchDashboardAPIView,
     AdminSearchLookupAPIView,
-    AdminBatchActionAPIView
+    AdminBatchActionAPIView,
+    AdminMultipleSelectAPIView
 )
 
 app_name = "cotidia.admin"
@@ -34,5 +35,10 @@ urlpatterns = [
         'search-lookup',
         AdminSearchLookupAPIView.as_view(),
         name='search-lookup'
+    ),
+    path(
+        'multiple-select-lookup/<str:app_label>/<str:model_name>/',
+        AdminMultipleSelectAPIView.as_view(),
+        name='multiple-select-lookup'
     )
 ]

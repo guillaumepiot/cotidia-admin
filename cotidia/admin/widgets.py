@@ -2,6 +2,7 @@ import re
 import datetime
 
 from django import forms
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.html import format_html
 from django.utils.dates import MONTHS
@@ -411,4 +412,26 @@ class GeolocateInput(forms.TextInput):
             'https://maps.google.com/maps/api/js?key={}'.format(getattr(settings, 'GOOGLE_MAP_API_KEY', '')),
             'js/geolocate.js',
         )
+
+
+class LookupSelectMultiple(forms.TextInput):
+
+    def render(self, name, value, attrs=None):
+        attrs = self.build_attrs(self.attrs, attrs)
+        attrs.update(
+            {
+                'data-widget': 'multiple-select',
+                'data-typeahead-endpoint': reverse(
+                    'generic-api:multiple-select-lookup',
+                    kwargs={
+                        'app_label': attrs['app_label'],
+                        'model_name': attrs['model_name']
+                    }
+                ),
+                'data-typeahead-minchars': "3",
+            }
+        )
+
+        html = super().render(name, value, attrs)
+        return html
 
