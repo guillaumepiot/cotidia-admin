@@ -3214,7 +3214,14 @@ body.content--padded .content__list {
       top: 0;
       left: 0; }
   .table--sticky th.nowrap, .table--sticky td.nowrap {
-    white-space: nowrap; }
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 280px; }
+    .table--sticky th.nowrap .table-cell-editable__value, .table--sticky td.nowrap .table-cell-editable__value {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 280px; }
   .table--sticky th:first-child, .table--sticky td:first-child {
     position: -webkit-sticky;
     position: sticky;

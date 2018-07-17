@@ -88,6 +88,15 @@
         th, td {
             &.nowrap {
                 white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 280px;
+
+                .table-cell-editable__value {
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    max-width: 280px;
+                }
             }
 
             &:first-child {
