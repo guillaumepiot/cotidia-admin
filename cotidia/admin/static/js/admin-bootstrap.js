@@ -43,7 +43,6 @@
       var config = {
         apiEndpoint: formGroup.dataset.typeaheadEndpoint,
         defaultOptions: initialData,
-        dropdownTakesSpace: true,
         placeholder: formGroup.dataset.placeholder,
         minchars: formGroup.dataset.typeaheadMinchars ? parseInt(formGroup.dataset.typeaheadMinchars) : 1,
         name: formGroup.querySelector('input[name]').getAttribute('name'),
