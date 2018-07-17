@@ -433,6 +433,7 @@ class SelectMultipleLookup(forms.MultipleHiddenInput):
                 }
             ),
             'data-typeahead-minchars': "3",
+            'data-placeholder': self.config['placeholder'],
         }
         return context
 
