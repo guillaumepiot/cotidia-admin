@@ -433,6 +433,7 @@ class SelectMultipleLookup(forms.MultipleHiddenInput):
         context = super().get_context(name, value, attrs)
         context['config'] = {
             'data-widget': 'multiple-select',
+            'data-name': name,
             'data-typeahead-endpoint': reverse(
                 'generic-api:multiple-select-lookup',
                 kwargs={

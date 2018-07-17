@@ -45,7 +45,7 @@
         defaultOptions: initialData,
         placeholder: formGroup.dataset.placeholder,
         minchars: formGroup.dataset.typeaheadMinchars ? parseInt(formGroup.dataset.typeaheadMinchars) : 1,
-        name: formGroup.querySelector('input[name]').getAttribute('name'),
+        name: formGroup.dataset.name,
         extraGroupClasses: Array.prototype.slice.call(formGroup.classList),
         initialValue: Array.prototype.map.call(
           formGroup.querySelectorAll('input[value]'),
