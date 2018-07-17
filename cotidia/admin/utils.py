@@ -346,9 +346,9 @@ def get_queryset(model_class, serializer_class, filter_args=None):
                 func = getattr(serializer, 'filter_' + k)
                 qs = func(qs, get_query_dict_value(filter_args, k))
 
-    raw_params = filter_args.getlist('_order')
+    raw_ordering_params = filter_args.getlist('_order')
     ordering_params = []
-    for param in raw_params:
+    for param in raw_ordering_params:
         desc = False
         key = param
         if param[0] == '-':
