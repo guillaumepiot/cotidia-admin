@@ -414,24 +414,61 @@ class GeolocateInput(forms.TextInput):
         )
 
 
-class LookupSelectMultiple(forms.TextInput):
+class SelectMultipleLookup(forms.MultipleHiddenInput):
+    template_name = 'admin/widgets/select_multiple_lookup.html'
 
-    def render(self, name, value, attrs=None):
-        attrs = self.build_attrs(self.attrs, attrs)
-        attrs.update(
-            {
-                'data-widget': 'multiple-select',
-                'data-typeahead-endpoint': reverse(
-                    'generic-api:multiple-select-lookup',
-                    kwargs={
-                        'app_label': attrs['app_label'],
-                        'model_name': attrs['model_name']
-                    }
-                ),
-                'data-typeahead-minchars': "3",
-            }
-        )
+    def __init__(self, config=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.config = config
 
-        html = super().render(name, value, attrs)
-        return html
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        context['config'] = {
+            'data-widget': 'multiple-select',
+            'data-typeahead-endpoint': reverse(
+                'generic-api:multiple-select-lookup',
+                kwargs={
+                    'app_label': self.config['app_label'],
+                    'model_name': self.config['model_name']
+                }
+            ),
+            'data-typeahead-minchars': "3",
+        }
+        return context
 
+    # def render(self, name, value, attrs=None):
+    #     attrs = self.build_attrs(self.attrs, attrs)
+    #     attrs.update(
+    #         {
+    #             'data-widget': 'multiple-select',
+    #             'data-typeahead-endpoint': reverse(
+    #                 'generic-api:multiple-select-lookup',
+    #                 kwargs={
+    #                     'app_label': attrs['app_label'],
+    #                     'model_name': attrs['model_name']
+    #                 }
+    #             ),
+    #             'data-typeahead-minchars': "3",
+    #         }
+    #     )
+
+    #     html = super().render(name, value, attrs)
+    #     return html
+
+
+    # def value_from_datadict(self, data, files, name):
+    #     getter = data.get
+    #     if self.allow_multiple_selected:
+    #         try:
+    #             getter = data.getlist
+    #         except AttributeError:
+    #             pass
+    #     return getter(name)
+
+    # def format_value(self, value):
+    #     """Return selected values as a list."""
+    #     if value is None and self.allow_multiple_selected:
+    #         return []
+    #     if not isinstance(value, (tuple, list)):
+    #         value = [value]
+    #     return [str(v) if v is not None else '' for v in value]

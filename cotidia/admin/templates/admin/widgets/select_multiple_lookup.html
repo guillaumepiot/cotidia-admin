@@ -1,0 +1,4 @@
+<div class="form__group" {% for k, v in config.items %}{{k}}="{{v}}" {% endfor %}>
+    {% include "django/forms/widgets/multiwidget.html" %}
+</div>
+
