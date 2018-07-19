@@ -1,0 +1,13 @@
+.messages {
+    position: fixed;
+    top: $toolbar-height / 2;
+    z-index: 3;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .alert {
+        max-width: $laptop-width;
+    }
+}

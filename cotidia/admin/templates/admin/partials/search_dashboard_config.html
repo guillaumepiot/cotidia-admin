@@ -59,6 +59,9 @@
             {% endif %}
         },
     {% endif %}
+    {% if list_fields %}
+        listFields: {{list_fields|json|safe}},
+    {% endif %}
 
     config: {
         {% if primary_color %}
@@ -69,9 +72,6 @@
         {% endif %}
         {% if list_handling %}
             listHandling: {{list_handling|json|safe}},
-        {% endif %}
-        {% if list_fields %}
-            listFields: {{list_fields|json|safe}},
         {% endif %}
         {% if date_format %}
             dateFormat: '{{date_format}}',

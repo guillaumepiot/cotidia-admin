@@ -124,12 +124,9 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
         if self.request.GET.get('next'):
             return self.request.GET['next']
 
-        url_name = "{}-admin:{}-list".format(
-            self.model._meta.app_label,
-            self.model._meta.model_name
-        )
+        context = self.get_context_data()
 
-        return reverse(url_name)
+        return context['list_url']
 
     def get_success_url(self, action):
         messages.success(
@@ -363,11 +360,9 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
             print(self.request.GET['next'])
             return self.request.GET['next']
 
-        url_name = "{}-admin:{}-list".format(
-            self.model._meta.app_label,
-            self.model._meta.model_name
-        )
-        return reverse(url_name)
+        context = self.get_context_data()
+
+        return context['list_url']
 
     def build_detail_url(self):
         url_name = "{}-admin:{}-detail".format(
@@ -404,12 +399,9 @@ class AdminDeleteView(StaffPermissionRequiredMixin, ContextMixin, DeleteView):
         if self.request.GET.get('next'):
             return self.request.GET['next']
 
-        url_name = "{}-admin:{}-list".format(
-            self.model._meta.app_label,
-            self.model._meta.model_name
-        )
+        context = self.get_context_data()
 
-        return reverse(url_name)
+        return context['list_url']
 
     def get_success_url(self):
         messages.success(

@@ -6,7 +6,7 @@
 {% endblock title %}
 
 {% block content_title %}
-    <a href="{% get_admin_url app_label model_name 'list' %}">{{verbose_name_plural}}</a>
+    <a href="{{list_url}}">{{verbose_name_plural}}</a>
     &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
     {% blocktrans with verbose_name as verbose_name %}
         {{object}}
@@ -14,7 +14,7 @@
 {% endblock content_title %}
 
 {% block content_actions %}
-    <a href="{% get_admin_url app_label model_name "delete" object %}" class="btn btn--delete btn--small">
+    <a href="{% get_admin_url app_label model_name "delete" object %}?next={{request.path}}" class="btn btn--delete btn--small">
         <span class="fa fa-times"></span>
         {% blocktrans with verbose_name as verbose_name %}
             Delete
@@ -72,7 +72,7 @@
             </div>
         </div>
         <div class="content-foot__right">
-            <a href="{% if next %}{{next}}{% else %}{% get_admin_url app_label model_name 'list' %}{% endif %}" class="btn btn--cancel pull-right">
+            <a href="{% if next %}{{next}}{% else %}{{list_url}}{% endif %}" class="btn btn--cancel pull-right">
                 {% trans "Back" %}
             </a>
         </div>

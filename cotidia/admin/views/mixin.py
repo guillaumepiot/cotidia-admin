@@ -2,6 +2,8 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 
+from cotidia.admin.templatetags.admin_list_tags import get_admin_url
+
 
 class ContextMixin:
     def get_context_data(self, **kwargs):
@@ -12,11 +14,23 @@ class ContextMixin:
         context["verbose_name"] = self.model._meta.verbose_name
         context["verbose_name_plural"] = self.model._meta.verbose_name_plural
         context["template_type"] = self.template_type
-        try:
-            self.model.SearchProvider
+
+        if hasattr(self.model, 'SearchProvider'):
             context["list_type"] = "dynamic"
-        except AttributeError:
+            context["list_url"] = reverse(
+                "generic-admin:list",
+                kwargs={
+                    "app_label": self.model._meta.app_label,
+                    "model": self.model._meta.model_name
+                }
+            )
+        else:
             context["list_type"] = "static"
+            context["list_url"] = get_admin_url(
+                self.model._meta.app_label,
+                self.model._meta.model_name,
+                'list'
+            )
 
         return context
 

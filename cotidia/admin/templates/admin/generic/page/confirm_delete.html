@@ -4,9 +4,7 @@
 {% endblock title %}
 
 {% block content_title %}
-    <a href="{% get_admin_url app_label model_name 'list' %}">
-        {{verbose_name_plural}}
-    </a>
+    <a href="{{list_url}}">{{verbose_name_plural}}</a>
     &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
     <a href="{% get_admin_url app_label model_name 'detail' object %}">
         {{object}}
@@ -16,32 +14,45 @@
 {% endblock content_title %}
 
 {% block page_content %}
-<div class="content__delete">
-    <fieldset>
-        <legend>{% blocktrans with verbose_name|lower as verbose_name %}
-            Are you sure to delete the following {{verbose_name}}?
-            {% endblocktrans %}
-        </legend>
-        <div class="form__row">
-            <p>
-                {{object}}
-            </p>
-        </div>
-        <div class="form__row">
-            <p class="text-italic">{% trans "The operation is not reversible." %}</p>
-        </div>
-    </fieldset>
+<div class="content__body">
+    <div class="content__inner">
+        <div class="content__delete">
+            <fieldset>
+                <legend>{% blocktrans with verbose_name|lower as verbose_name %}
+                    Are you sure to delete the following {{verbose_name}}?
+                    {% endblocktrans %}
+                </legend>
+                <div class="form__row">
+                    <p>
+                        {{object}}
+                    </p>
+                </div>
+                <div class="form__row">
+                    <p class="text-italic">{% trans "The operation is not reversible." %}</p>
+                </div>
+            </fieldset>
 
-    {% block form_actions %}
-    <form method="post" action="">
-        {% csrf_token %}
-        <button type="submit" class="btn btn--delete">
-            {% trans "Confirm Delete" %}
-        </button>
-        <a href="{% if next %}{{next}}{% else %}{% get_admin_url app_label model_name 'list' %}{% endif %}" class="btn btn--cancel pull-right">
-            {% trans "Cancel" %}
-        </a>
-    </form>
-    {% endblock form_actions %}
+
+        </div>
+    </div>
 </div>
+{% block form_actions %}
+<form method="post" action="">
+    {% csrf_token %}
+    <div class="content__foot">
+        <div class="content__inner content-foot">
+            <div class="content-foot__left">
+                <button type="submit" class="btn btn--delete">
+                    {% trans "Confirm Delete" %}
+                </button>
+            </div>
+            <div class="content-foot__right">
+                <a href="{% if next %}{{next}}{% else %}{{list_url}}{% endif %}" class="btn btn--cancel pull-right">
+                    {% trans "Cancel" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock form_actions %}
 {% endblock page_content %}

@@ -9,6 +9,10 @@ $content-foot-height: 3.5rem;
             position: relative;
             overflow: hidden;
         }
+        .content__foot {
+            background-color: $toolbar-background-color;
+            border-top: 1px solid $table-row-border-color;
+        }
     }
 
     &__head {
@@ -30,20 +34,20 @@ $content-foot-height: 3.5rem;
         justify-content: space-between;
         align-items: center;
         padding: 0rem 1rem;
-        border-top: 1px solid $table-border-color;
+        border-top: 1px solid $table-row-border-color;
         background-color: $toolbar-background-color;
 
         body.content--centered & {
             max-width: calc(#{$laptop-width} - 2rem);
             margin: auto;
-            border-left: 1px solid $table-border-color;
-            border-right: 1px solid $table-border-color;
+            border-left: 1px solid $table-row-border-color;
+            border-right: 1px solid $table-row-border-color;
         }
 
         body.content--padded & {
             margin: 0 1rem;
-            border-left: 1px solid $table-border-color;
-            border-right: 1px solid $table-border-color;
+            border-left: 1px solid $table-row-border-color;
+            border-right: 1px solid $table-row-border-color;
         }
     }
 
@@ -59,14 +63,17 @@ $content-foot-height: 3.5rem;
     }
 
     &__foot {
-        background-color: $toolbar-background-color;
-        border-top: 1px solid $table-border-color;
 
         @media screen and (min-width: $menu-breakpoint) {
             bottom: 0;
             left: $menu-width;
             position: sticky;
             z-index: 2;
+        }
+
+        &--sticky {
+            background-color: $toolbar-background-color;
+            border-top: 1px solid $table-row-border-color;
         }
     }
 
@@ -77,8 +84,7 @@ $content-foot-height: 3.5rem;
         overflow-y: auto;
         position: absolute;
         transition: width $animation-speed ease;
-        border-top: 1px solid $table-border-color;
-        // border-bottom: 1px solid $table-border-color;
+        border-top: 1px solid $table-row-border-color;
     }
 
     &__sidebar {
@@ -91,8 +97,8 @@ $content-foot-height: 3.5rem;
         transform: translate(16rem);
         transition: transform $animation-speed ease;
         background-color: #fff;
-        border-top: 1px solid $table-border-color;
-        border-left: 1px solid $table-border-color;
+        border-top: 1px solid $table-row-border-color;
+        border-left: 1px solid $table-row-border-color;
 
         fieldset {
             border-width: 0;
@@ -109,6 +115,12 @@ $content-foot-height: 3.5rem;
 
         .form__group {
             margin: 0 1rem 0 0;
+        }
+    }
+
+    &__actions {
+        .btn {
+            margin-left: 0.5rem;
         }
     }
 }
@@ -130,10 +142,18 @@ $content-foot-height: 3.5rem;
 
     &__left {
         justify-self: flex-start;
+
+        .btn {
+            margin-right: 0.5rem;
+        }
     }
 
     &__right {
         justify-self: flex-end;
+
+        .btn {
+            margin-left: 0.5rem;
+        }
     }
 }
 .content-head {
@@ -175,8 +195,8 @@ body.content--centered {
         }
     }
     .content__list {
-        border-left: 1px solid $table-border-color;
-        border-right: 1px solid $table-border-color;
+        border-left: 1px solid $table-row-border-color;
+        border-right: 1px solid $table-row-border-color;
     }
 }
 
@@ -190,12 +210,12 @@ body.content--padded {
             overflow: hidden;
             position: relative;
             width: 100%;
-            max-width: calc(100% - 1rem);
             height: 100%;
         }
     }
     .content__list {
-        border-left: 1px solid $table-border-color;
-        border-right: 1px solid $table-border-color;
+        border-left: 1px solid $table-row-border-color;
+        border-right: 1px solid $table-row-border-color;
+        width: calc(100% - 2rem);
     }
 }

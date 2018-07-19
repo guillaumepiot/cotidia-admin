@@ -425,7 +425,7 @@ class SelectMultipleLookup(forms.MultipleHiddenInput):
     def get_context(self, name, value, attrs):
         initial_data = []
         for c in self.choices:
-            if c[0] in value:
+            if value and c[0] in value:
                 initial_data.append({
                     'value': c[0],
                     'label': c[1]
