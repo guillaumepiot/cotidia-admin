@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import { MultipleSelect } from '@cotidia/react-ui'
+
 export default class Choice extends Component {
   static propTypes = {
     config: PropTypes.shape({
@@ -28,6 +30,12 @@ export default class Choice extends Component {
     }
   }
 
+  handleMultipleSelectUpdate = ({ filterValue }) => {
+    // Just get the `value` attribute of the value objects that are passed in,
+    // and send them up the chain.
+    return this.props.updateField('value', filterValue.map(({ value }) => value))
+  }
+
   render () {
     const { config, data } = this.props
 
@@ -35,22 +43,35 @@ export default class Choice extends Component {
       <div className='form__group'>
         <label className='form__label'>{config.label} is any of</label>
         <div className='form__control'>
-          <ul>
-            {config.options.map(({ label, value }) => (
-              <li key={value}>
-                <label>
-                  <input
-                    checked={Boolean(data.value && data.value.includes(value))}
-                    className='form__checkbox'
-                    onChange={this.toggleColumnFactory(value)}
-                    type='checkbox'
-                  />
+          {config.options.length < 15
+            ? (
+              <ul>
+                {config.options.map(({ label, value }) => (
+                  <li key={value}>
+                    <label>
+                      <input
+                        checked={Boolean(data.value && data.value.includes(value))}
+                        className='form__checkbox'
+                        onChange={this.toggleColumnFactory(value)}
+                        type='checkbox'
+                      />
 
-                  {label}
-                </label>
-              </li>
-            ))}
-          </ul>
+                      {label}
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <MultipleSelect
+                name='filterValue'
+                options={config.options}
+                updateValue={this.handleMultipleSelectUpdate}
+                values={data.value?.map(
+                  (value) => config.options.find((option) => option.value === value)
+                ) || []}
+              />
+            )
+          }
         </div>
       </div>
     )
