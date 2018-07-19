@@ -89,7 +89,7 @@ const listFields = PropTypes.shape({
   }),
 })
 
-export const appPropTypes = {
+export const dynamicListPropTypes = {
   authToken: PropTypes.string.isRequired,
   batchActions,
   columns: columns.isRequired,

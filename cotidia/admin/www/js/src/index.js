@@ -6,7 +6,7 @@ import configureStore from './redux/create'
 import { bootstrap } from './redux/modules/bootstrap/actions'
 
 import { messageHandlerFactory } from './utils'
-import { appPropTypes } from './utils/propTypes'
+import { dynamicListPropTypes } from './utils/propTypes'
 
 import DynamicList from './containers/DynamicList'
 
@@ -15,7 +15,7 @@ import { FullScreen } from './components/elements/global'
 import TypeaheadSwitcher from './typeahead-switcher'
 import MultipleSelectWidget from './multiple-select-widget'
 
-export default function App (props) {
+export default function DynamicListApp (props) {
   const { authToken, ...config } = props
 
   if (! authToken) {
@@ -41,9 +41,9 @@ export default function App (props) {
   )
 }
 
-App.propTypes = appPropTypes
+DynamicListApp.propTypes = dynamicListPropTypes
 
-App.defaultProps = {
+DynamicListApp.defaultProps = {
   batchActions: [],
   defaultColumns: [],
   defaultFilters: {},
@@ -54,7 +54,7 @@ App.defaultProps = {
 
 window.React = React
 window.ReactDOM = ReactDOM
-window.DynamicList = App
+window.DynamicList = DynamicListApp
 
 window.TypeaheadSwitcher = TypeaheadSwitcher
 window.MultipleSelectWidget = MultipleSelectWidget
