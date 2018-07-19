@@ -44,6 +44,7 @@ const column = PropTypes.shape({
   ]),
   filter: PropTypes.oneOf(['text', 'choice', 'boolean', 'number', 'date']),
   label: PropTypes.string.isRequired,
+  allowWrap: PropTypes.bool,
   options,
   orderable: PropTypes.bool,
   listHandling,

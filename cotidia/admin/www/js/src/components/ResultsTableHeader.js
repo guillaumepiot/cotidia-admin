@@ -26,7 +26,7 @@ const Header = SortableElement(({
   clearFilter,
   filterColumn,
 }) => (
-  <th className='nowrap' onClick={setOrderColumn}>
+  <th className={column.allowWrap !== true ? 'nowrap' : ''} onClick={setOrderColumn}>
     <span className='table-header__name'>
       {column.label}
     </span>
