@@ -40,12 +40,12 @@
         keyedData[initialData[i].value] = initialData[i].label
       }
 
+      var parent = formGroup.parentElement
+      var name = formGroup.dataset.name
+
       var config = {
         apiEndpoint: formGroup.dataset.typeaheadEndpoint,
         defaultOptions: initialData,
-        placeholder: formGroup.dataset.placeholder,
-        minchars: formGroup.dataset.typeaheadMinchars ? parseInt(formGroup.dataset.typeaheadMinchars) : 1,
-        name: formGroup.dataset.name,
         extraGroupClasses: Array.prototype.slice.call(formGroup.classList),
         initialValue: Array.prototype.map.call(
           formGroup.querySelectorAll('input[value]'),
@@ -53,6 +53,20 @@
             return { value: item.value, label: keyedData[item.value] || '' }
           }
         ),
+        minchars: formGroup.dataset.typeaheadMinchars ? parseInt(formGroup.dataset.typeaheadMinchars) : 1,
+        name: name,
+        onUpdate: function (value) {
+          var event = new CustomEvent('change', {
+            bubbles: true,
+            detail: {
+              name: name,
+              value: value,
+            }
+          })
+
+          parent.dispatchEvent(event)
+        },
+        placeholder: formGroup.dataset.placeholder,
       }
 
       ReactDOM.render(
@@ -60,7 +74,7 @@
           window.MultipleSelectWidget,
           config
         ),
-        formGroup.parentElement
+        parent
       )
     })
   }

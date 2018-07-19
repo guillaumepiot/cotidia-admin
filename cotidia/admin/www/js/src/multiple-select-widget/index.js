@@ -7,10 +7,11 @@ export default class MultipleSelectWidget extends Component {
   static propTypes = {
     apiEndpoint: PropTypes.string.isRequired,
     extraGroupClasses: PropTypes.arrayOf(PropTypes.string),
+    initialValue: PropTypes.arrayOf(PropTypes.any).isRequired,
     minchars: PropTypes.number,
     name: PropTypes.string.isRequired,
+    onUpdate: PropTypes.func.isRequired,
     placeholder: PropTypes.string,
-    initialValue: PropTypes.arrayOf(PropTypes.any).isRequired,
   }
 
   static defaultProps = {
@@ -47,7 +48,10 @@ export default class MultipleSelectWidget extends Component {
     }
   }
 
-  updateSelected = ({ q }) => this.setState({ value: q })
+  updateSelected = ({ q }) => {
+    this.setState({ value: q })
+    this.props.onUpdate(q)
+  }
 
   render () {
     return (
