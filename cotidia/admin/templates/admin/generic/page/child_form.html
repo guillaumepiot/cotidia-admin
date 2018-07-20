@@ -15,19 +15,23 @@
 {% endblock content_title %}
 
 {% block form_actions %}
-<div class="form__actions">
-    <div class="form__actions-inner">
-        <button type="submit" class="btn btn--primary">
-            {% trans "Save" %}
-        </button>
-        <a href="{% if next %}{{next}}{% else %}{% get_admin_url parent_app_label parent_model_name 'detail' parent %}{% endif %}" class="btn btn--cancel">
-            {% trans "Cancel" %}
-        </a>
-        {% if object %}
-        <a href="{% get_child_admin_url app_label model_name 'delete' parent object %}" class="btn btn--delete pull-right">
-            {% trans "Delete" %}
-        </a>
-        {% endif %}
+<div class="content__foot">
+    <div class="content__inner content-foot">
+        <div class="content-foot__left">
+            <button type="submit" class="btn btn--primary">
+                {% trans "Save" %}
+            </button>
+            <a href="{% if next %}{{next}}{% else %}{% get_admin_url parent_app_label parent_model_name 'detail' parent %}{% endif %}" class="btn btn--cancel">
+                {% trans "Cancel" %}
+            </a>
+        </div>
+        <div class="content-foot__right">
+            {% if object %}
+            <a href="{% get_child_admin_url app_label model_name 'delete' parent object %}" class="btn btn--delete pull-right">
+                {% trans "Delete" %}
+            </a>
+            {% endif %}
+        </div>
     </div>
 </div>
 {% endblock form_actions %}

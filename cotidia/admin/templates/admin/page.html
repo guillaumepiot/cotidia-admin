@@ -26,11 +26,10 @@
     </div>
 </div>
 {% block layout_content %}
+{% block messages %}
+    {% include "admin/generic/messages.html" %}
+{% endblock messages %}
 <div class="layout__content content {% block content_class %}{% endblock content_class %}">
-
-    {% block messages %}
-        {% include "admin/generic/messages.html" %}
-    {% endblock messages %}
     {% block content_head %}
         <div class="content__head">
             <div class="content__inner content-head">
