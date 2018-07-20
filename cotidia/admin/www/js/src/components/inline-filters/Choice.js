@@ -29,9 +29,9 @@ export default class Choice extends Component {
 
   render () {
     // Reconstruct the array of value objects from just our array of values.
-    const values = this.props.value.map(
+    const values = this.props.value?.map(
       (value) => this.props.options.find((option) => option.value === value)
-    )
+    ) || []
 
     return (
       <MultipleSelect

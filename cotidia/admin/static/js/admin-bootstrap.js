@@ -53,6 +53,7 @@
             return { value: item.value, label: keyedData[item.value] || '' }
           }
         ),
+        label: formGroup.dataset.label,
         minchars: formGroup.dataset.typeaheadMinchars ? parseInt(formGroup.dataset.typeaheadMinchars) : 1,
         name: name,
         onUpdate: function (value) {

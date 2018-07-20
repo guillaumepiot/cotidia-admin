@@ -8,9 +8,10 @@ export default class MultipleSelectWidget extends Component {
     apiEndpoint: PropTypes.string.isRequired,
     extraGroupClasses: PropTypes.arrayOf(PropTypes.string),
     initialValue: PropTypes.arrayOf(PropTypes.any).isRequired,
+    label: PropTypes.string,
     minchars: PropTypes.number,
     name: PropTypes.string.isRequired,
-    onUpdate: PropTypes.func.isRequired,
+    onUpdate: PropTypes.func,
     placeholder: PropTypes.string,
   }
 
@@ -50,7 +51,7 @@ export default class MultipleSelectWidget extends Component {
 
   updateSelected = ({ q }) => {
     this.setState({ value: q })
-    this.props.onUpdate(q)
+    this.props.onUpdate && this.props.onUpdate(q)
   }
 
   render () {
@@ -63,6 +64,7 @@ export default class MultipleSelectWidget extends Component {
         <MultipleSelect
           defaultOptions={this.props.defaultOptions}
           extraGroupClasses={this.props.extraGroupClasses}
+          label={this.props.label}
           name='q'
           minCharSearch={this.props.minchars}
           options={this.state.options}

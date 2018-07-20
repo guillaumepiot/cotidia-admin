@@ -423,16 +423,17 @@ class SelectMultipleLookup(forms.MultipleHiddenInput):
         self.config = config
 
     def get_context(self, name, value, attrs):
-        initial_data = []
-        for c in self.choices:
-            if value and c[0] in value:
-                initial_data.append({
-                    'value': c[0],
-                    'label': c[1]
-                })
+        initial_data = [
+            {
+                'value': c[0],
+                'label': c[1]
+            } for c in self.choices if value and c[0] in value
+        ]
+
         context = super().get_context(name, value, attrs)
         context['config'] = {
             'data-widget': 'multiple-select',
+            'data-label': self.config.get('label', False),
             'data-name': name,
             'data-typeahead-endpoint': reverse(
                 'generic-api:multiple-select-lookup',

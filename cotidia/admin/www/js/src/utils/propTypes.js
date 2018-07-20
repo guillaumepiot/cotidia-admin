@@ -21,6 +21,8 @@ const batchAction = PropTypes.shape({
   action: PropTypes.string.isRequired,
   endpoint: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  onSuccess: PropTypes.func,
+  onError: PropTypes.func,
   onComplete: PropTypes.func,
 })
 
@@ -42,11 +44,14 @@ const column = PropTypes.shape({
   ]),
   filter: PropTypes.oneOf(['text', 'choice', 'boolean', 'number', 'date']),
   label: PropTypes.string.isRequired,
+  allowWrap: PropTypes.bool,
+  maxWidth: PropTypes.number,
   options,
   orderable: PropTypes.bool,
   listHandling,
   editable: PropTypes.bool,
-  editURL: PropTypes.string,
+  editEndpoint: PropTypes.string,
+  afterEdit: PropTypes.func,
 })
 
 const columns = PropTypes.objectOf(column)
@@ -62,7 +67,7 @@ const config = PropTypes.shape({
 
 const extraFilter = PropTypes.shape({
   label: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['boolean', 'text', 'number', 'date', 'choice']),
+  filter: PropTypes.oneOf(['boolean', 'text', 'number', 'date', 'choice']),
   options,
 })
 
@@ -89,7 +94,7 @@ const listFields = PropTypes.shape({
   }),
 })
 
-export const appPropTypes = {
+export const dynamicListPropTypes = {
   authToken: PropTypes.string.isRequired,
   batchActions,
   columns: columns.isRequired,
