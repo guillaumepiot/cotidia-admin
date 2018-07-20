@@ -6,6 +6,22 @@ from cotidia.admin.templatetags.admin_list_tags import get_admin_url
 
 
 class ContextMixin:
+    def get_list_url(self):
+        if hasattr(self.model, 'SearchProvider'):
+            return reverse(
+                "generic-admin:list",
+                kwargs={
+                    "app_label": self.model._meta.app_label,
+                    "model": self.model._meta.model_name
+                }
+            )
+        else:
+            return get_admin_url(
+                self.model._meta.app_label,
+                self.model._meta.model_name,
+                'list'
+            )
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["app_label"] = self.model._meta.app_label
@@ -14,23 +30,12 @@ class ContextMixin:
         context["verbose_name"] = self.model._meta.verbose_name
         context["verbose_name_plural"] = self.model._meta.verbose_name_plural
         context["template_type"] = self.template_type
+        context["list_url"] = self.get_list_url()
 
         if hasattr(self.model, 'SearchProvider'):
             context["list_type"] = "dynamic"
-            context["list_url"] = reverse(
-                "generic-admin:list",
-                kwargs={
-                    "app_label": self.model._meta.app_label,
-                    "model": self.model._meta.model_name
-                }
-            )
         else:
             context["list_type"] = "static"
-            context["list_url"] = get_admin_url(
-                self.model._meta.app_label,
-                self.model._meta.model_name,
-                'list'
-            )
 
         return context
 
@@ -89,3 +94,19 @@ class ChildMixin:
             template,
             "admin/generic/page/child_form.html",
         ]
+
+    def get_list_url(self):
+        if hasattr(self.parent_model, 'SearchProvider'):
+            return reverse(
+                "generic-admin:list",
+                kwargs={
+                    "app_label": self.parent_model._meta.app_label,
+                    "model": self.parent_model._meta.model_name
+                }
+            )
+        else:
+            return get_admin_url(
+                self.parent_model._meta.app_label,
+                self.parent_model._meta.model_name,
+                'list'
+            )

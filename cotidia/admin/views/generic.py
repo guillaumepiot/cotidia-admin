@@ -21,6 +21,7 @@ from cotidia.admin.views.mixin import ContextMixin, ChildMixin
 from cotidia.admin.forms import ActionForm
 from cotidia.admin.utils import search_objects, get_queryset
 from cotidia.admin.renderers import render_to_csv, render_to_pdf
+from cotidia.admin.templatetags.admin_list_tags import get_admin_url
 
 
 class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
@@ -124,9 +125,20 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
         if self.request.GET.get('next'):
             return self.request.GET['next']
 
-        context = self.get_context_data()
-
-        return context['list_url']
+        if hasattr(self.model, 'SearchProvider'):
+            return reverse(
+                "generic-admin:list",
+                kwargs={
+                    "app_label": self.model._meta.app_label,
+                    "model": self.model._meta.model_name
+                }
+            )
+        else:
+            return get_admin_url(
+                self.model._meta.app_label,
+                self.model._meta.model_name,
+                'list'
+            )
 
     def get_success_url(self, action):
         messages.success(
@@ -360,9 +372,20 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
             print(self.request.GET['next'])
             return self.request.GET['next']
 
-        context = self.get_context_data()
-
-        return context['list_url']
+        if hasattr(self.model, 'SearchProvider'):
+            return reverse(
+                "generic-admin:list",
+                kwargs={
+                    "app_label": self.model._meta.app_label,
+                    "model": self.model._meta.model_name
+                }
+            )
+        else:
+            return get_admin_url(
+                self.model._meta.app_label,
+                self.model._meta.model_name,
+                'list'
+            )
 
     def build_detail_url(self):
         url_name = "{}-admin:{}-detail".format(
@@ -399,9 +422,20 @@ class AdminDeleteView(StaffPermissionRequiredMixin, ContextMixin, DeleteView):
         if self.request.GET.get('next'):
             return self.request.GET['next']
 
-        context = self.get_context_data()
-
-        return context['list_url']
+        if hasattr(self.model, 'SearchProvider'):
+            return reverse(
+                "generic-admin:list",
+                kwargs={
+                    "app_label": self.model._meta.app_label,
+                    "model": self.model._meta.model_name
+                }
+            )
+        else:
+            return get_admin_url(
+                self.model._meta.app_label,
+                self.model._meta.model_name,
+                'list'
+            )
 
     def get_success_url(self):
         messages.success(
