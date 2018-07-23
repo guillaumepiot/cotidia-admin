@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-app_name="tests-admin"
+app_name = 'tests-admin'
 
 urlpatterns = [
     path('model1/',

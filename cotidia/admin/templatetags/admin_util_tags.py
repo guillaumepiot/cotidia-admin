@@ -18,6 +18,7 @@ def get_attr(obj, column):
     if callable(attr):
         if attr.__class__.__name__ == 'ManyRelatedManager':
             return attr.all()
+
         return attr()
 
     return attr

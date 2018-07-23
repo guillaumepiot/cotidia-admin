@@ -2,7 +2,6 @@ from django.test import TestCase
 
 
 class UISettingsTests(TestCase):
-
     def test_authtoken(self):
         pass
 

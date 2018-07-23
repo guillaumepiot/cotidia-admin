@@ -4,7 +4,6 @@ from django.conf import settings
 
 
 class UserCheckMixin(object):
-
     def check_user(self, user):
         return True
 
@@ -14,14 +13,14 @@ class UserCheckMixin(object):
                 raise PermissionDenied
             else:
                 return redirect(settings.ACCOUNT_ADMIN_LOGIN_URL)
+
         return super().dispatch(request, *args, **kwargs)
 
-
 class StaffPermissionRequiredMixin(UserCheckMixin):
-
     def get_permission_required(self):
         if hasattr(self, "permission_required"):
             return self.permission_required
+
         return None
 
     def check_permissions(self, user):
@@ -36,6 +35,8 @@ class StaffPermissionRequiredMixin(UserCheckMixin):
 
     def check_user(self, user):
         """Check if the user has the relevant permissions."""
+
         if user.is_superuser:
             return True
+
         return user.is_staff and self.check_permissions(user)

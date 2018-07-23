@@ -5,18 +5,17 @@ from setuptools import find_packages, setup
 
 def package_files(dirs):
     paths = []
+
     for directory in dirs:
-        for (path, directories, filenames) in os.walk(directory):
-            # Only keep the last directory of the path
+        for path, directories, filenames in os.walk(directory):
             path = path.replace(directory, directory.split("/")[-1])
+
             for filename in filenames:
                 paths.append(os.path.join(path, filename))
+
     return paths
 
-template_files = package_files([
-    'cotidia/admin/templates',
-    'cotidia/admin/static'
-])
+template_files = package_files(["cotidia/admin/templates", "cotidia/admin/static"])
 
 setup(
     name="cotidia-admin",

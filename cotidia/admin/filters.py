@@ -7,23 +7,24 @@ from django.db.models import Q
 
 from rest_framework.exceptions import ParseError
 
+number_pattern = r'(\-?[0-9]+(?:\.[0-9]+)?)'
 
-number_pattern = r"(\-?[0-9]+(?:\.[0-9]+)?)"
-date_pattern = r"([0-9]{4}-[0-9]{2}-[0-9]{2})"
+date_pattern = r'([0-9]{4}-[0-9]{2}-[0-9]{2})'
+
 api_patterns = {
-    "equal": r"^%s$",
-    "lte": r"^:%s$",
-    "gte": r"^%s:$",
-    "range": r"^%s:%s$"
+    "equal": r'^%s$',
+    "lte": r'^:%s$',
+    "gte": r'^%s:$',
+    "range": r'^%s:%s$'
 }
 
 
 def filter_lte(field, val):
-    return Q(**{field + "__lte": val})
+    return Q(**{field + '__lte': val})
 
 
 def filter_gte(field, val):
-    return Q(**{field + "__gte": val})
+    return Q(**{field + '__gte': val})
 
 
 def filter_equal(field, val):
@@ -35,45 +36,67 @@ def filter_range(field, min_val, max_val):
 
 
 def filter_comparable(field_regex, data_type):
-    """Create a function that filters a value that matches the parameter regex."""
+    """Create a function that filters a value that matches a given regex."""
+
     def temp(field, val):
         match = re.match(api_patterns['equal'] % field_regex, val)
+
         if match:
             return filter_equal(field, data_type(match.group(1)))
+
         match = re.match(api_patterns['lte'] % field_regex, val)
+
         if match:
             return filter_lte(field, data_type(match.group(1)))
+
         match = re.match(api_patterns['gte'] % field_regex, val)
+
         if match:
             return filter_gte(field, data_type(match.group(1)))
-        match = re.match(api_patterns['range'] % (field_regex, field_regex), val)
+
+        match = re.match(api_patterns['range'] % field_regex, field_regex, val)
+
         if match:
-            return filter_range(field, data_type(match.group(1)), data_type(match.group(2)))
+            return filter_range(
+                field,
+                data_type(match.group(1)),
+                data_type(match.group(2))
+            )
+
         raise ParseError(
-            detail="The following value could not be parsed: %s" % val)
+            detail='The following value could not be parsed: %s' % val
+        )
+
     return temp
 
 filter_number = filter_comparable(number_pattern, Decimal)
+
 filter_date = filter_comparable(
     date_pattern,
-    lambda x: datetime.datetime.strptime(x, "%Y-%m-%d").date()
+    lambda x: datetime.datetime.strptime(x, '%Y-%m-%d').date()
 )
 
 
 def contains_filter(query_set, field, values):
     """Check if a field contains a value."""
+
     return field_filter(
-        lambda x, y: Q(**{x + "__icontains": y}), query_set, field, values)
+        lambda x, y: Q(**{x + "__icontains": y}),
+        query_set,
+        field,
+        values
+    )
 
 
 def exact_match_filter(query_set, field, values):
     """Check if a field exactly matches a value."""
+
     return field_filter(lambda x, y: Q(**{x: y}), query_set, field, values)
 
 
 def boolean_filter(queryset, field, values):
     return field_filter(
-        lambda x, y: Q(**{x: y == "true"}),
+        lambda x, y: Q(**{x: y == 'true'}),
         queryset,
         field,
         values
@@ -82,6 +105,7 @@ def boolean_filter(queryset, field, values):
 
 def number_filter(query_set, field, values):
     """Check if a number fits a constraints."""
+
     return field_filter(filter_number, query_set, field, values)
 
 
@@ -92,9 +116,10 @@ def field_filter(filter_fn, query_set, field, values):
     The function must return a Q-object
     """
 
-    # Each value is "OR"ed against eachother if it is a list.
+    # Each value is "OR"ed against each other if it is a list.
     if isinstance(values, list):
         q_object = filter_fn(field, values.pop())
+
         for value in values:
             q_object |= filter_fn(field, value)
     else:
@@ -107,7 +132,13 @@ def date_filter(query_set, field, values):
     return field_filter(filter_date, query_set, field, values)
 
 
-def filter_general_query(serializer, values, queryset, query_fields, suffix="__icontains"):
+def filter_general_query(
+    serializer,
+    values,
+    queryset,
+    query_fields,
+    suffix='__icontains'
+):
     q_object = Q()
 
     for val in values:

@@ -9,8 +9,8 @@ register = template.Library()
 def flatten_item(value):
     if value:
         return do_flatten_item(value)
-    return value
 
+    return value
 
 @register.filter
 def get_dict_value(d, k):

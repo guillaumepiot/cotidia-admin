@@ -5,11 +5,11 @@ register = template.Library()
 
 @register.inclusion_tag('admin/widgets/typeahead_search.html')
 def widget_typeahead_search(
-        form_action_url,
-        lookup_url,
-        placeholder,
-        extra_form_group_classes=None):
-
+    form_action_url,
+    lookup_url,
+    placeholder,
+    extra_form_group_classes=None
+):
     context = {
         'form_action_url': form_action_url,
         'lookup_url': lookup_url,
