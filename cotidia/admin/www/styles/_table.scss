@@ -178,7 +178,7 @@
         }
     }
 
-    th.table-header {
+    .table-header {
         &__item {
             color: $grey;
             cursor: pointer;
@@ -253,7 +253,7 @@
 
 .table-cell-editable {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     min-width: 170px;
     margin-top: -0.5rem;
     margin-bottom: -0.5rem;
@@ -294,6 +294,10 @@
             &:hover {
                 color: #fff;
                 background-color: $background_color--create;
+
+                .fa-check {
+                    color: #fff;
+                }
             }
         }
         &--cancel {
@@ -303,6 +307,10 @@
             &:hover {
                 color: #fff;
                 background-color: $background_color--delete;
+
+                .fa-times {
+                    color: #fff;
+                }
             }
         }
     }
@@ -310,13 +318,12 @@
     .form__group {
         margin: 0;
         background-color: #fff;
-        min-height: 40px;
+        min-height: 39px;
+        flex: 1;
 
         .form__control {
             border-bottom: 0;
             padding-bottom: 0px;
-            // position: relative;
-            // top: 1px;
 
             input, select {
                 padding: 0.5rem 1rem;

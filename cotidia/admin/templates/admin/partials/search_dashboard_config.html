@@ -8,6 +8,8 @@
                 {% for key, value in field_data.items %}
                     {% if key == "display" and value == "function" %}
                         display: {% include field_data.function_template %},
+                    {% elif key == "allow_wrap" %}
+                        allowWrap: {{value|json}}
                     {% elif key == "options" %}
                         options: [
                             {% for option in value %}
@@ -84,9 +86,6 @@
         {% endif %}
         {% if week_day_start or week_day_start == 0 %}
             weekDayStart: {{week_day_start}},
-        {% endif %}
-        {% if table_striped %}
-            tableStriped: true,
         {% endif %}
         {% if sidebar_starts_shown %}
             sidebarStartsShown: {{sidebar_starts_shown|json}},
