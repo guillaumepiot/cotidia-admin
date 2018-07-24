@@ -33,8 +33,9 @@
     document.removeEventListener('readystatechange', bootstrap)
 
     var contentFoot = document.querySelector('.content__foot')
-
-    new contentFootState(contentFoot)
+    if (contentFoot) {
+      new contentFootState(contentFoot)
+    }
   }
 
   if (documentReady()) {
