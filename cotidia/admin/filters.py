@@ -12,10 +12,10 @@ number_pattern = r'(\-?[0-9]+(?:\.[0-9]+)?)'
 date_pattern = r'([0-9]{4}-[0-9]{2}-[0-9]{2})'
 
 api_patterns = {
-    "equal": r'^%s$',
-    "lte": r'^:%s$',
-    "gte": r'^%s:$',
-    "range": r'^%s:%s$'
+    'equal': r'^%s$',
+    'lte': r'^:%s$',
+    'gte': r'^%s:$',
+    'range': r'^%s:%s$',
 }
 
 
@@ -54,7 +54,7 @@ def filter_comparable(field_regex, data_type):
         if match:
             return filter_gte(field, data_type(match.group(1)))
 
-        match = re.match(api_patterns['range'] % field_regex, field_regex, val)
+        match = re.match(api_patterns['range'] % (field_regex, field_regex), val)
 
         if match:
             return filter_range(

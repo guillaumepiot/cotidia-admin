@@ -292,7 +292,7 @@ class AdminSearchDashboardTests(APITestCase):
             ExampleModelOneFactory(float_field=i * 0.1, **valid_data)
 
         for i in range(10):
-            ExampleModelOneFactory(float_field=1 + i * 0.1, **invalid_data)
+            ExampleModelOneFactory(float_field=1.1 + i * 0.1, **invalid_data)
 
         response = self.client.get(self.url + '?float_field=:1')
 
@@ -411,7 +411,6 @@ class AdminSearchDashboardTests(APITestCase):
     def test_decimal_filters_lte(self):
         valid_data = {
             'integer_choice_field': 2,
-            'decimal_field': Decimal('10'),
             'boolean_field': True,
             'nullboolean_field': False,
             'char_field': 'demo',
@@ -422,7 +421,6 @@ class AdminSearchDashboardTests(APITestCase):
 
         invalid_data = {
             'integer_choice_field': 2,
-            'decimal_field': Decimal('10'),
             'boolean_field': True,
             'nullboolean_field': False,
             'char_field': 'demo',
@@ -435,7 +433,7 @@ class AdminSearchDashboardTests(APITestCase):
             ExampleModelOneFactory(decimal_field=i * 0.1, **valid_data)
 
         for i in range(10):
-            ExampleModelOneFactory(decimal_field=1 + i * 0.1, **invalid_data)
+            ExampleModelOneFactory(decimal_field=1.1 + i * 0.1, **invalid_data)
 
         response = self.client.get(self.url + '?decimal_field=:1')
 

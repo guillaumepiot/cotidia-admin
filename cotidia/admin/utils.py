@@ -373,16 +373,17 @@ def get_queryset(model_class, serializer_class, filter_args=None):
     raw_ordering_params = filter_args.getlist('_order')
     ordering_params = []
     for param in raw_ordering_params:
-        desc = False
-        key = param
-        if param[0] == '-':
-            desc = True
-            key = param[1:]
-        custom_ordering = [
-            ('-' + x) if desc else x
-            for x in field_repr[key].get('ordering_fields', [key])
-        ]
-        ordering_params += custom_ordering
+        if param:
+            desc = False
+            key = param
+            if param[0] == '-':
+                desc = True
+                key = param[1:]
+            custom_ordering = [
+                ('-' + x) if desc else x
+                for x in field_repr[key].get('ordering_fields', [key])
+            ]
+            ordering_params += custom_ordering
         
     if ordering_params:
         # Here we add an annotation to make sure when we order, the value is
