@@ -82,6 +82,9 @@
         {% if datetime_format %}
             datetimeFormat: '{{datetime_format}}',
         {% endif %}
+        {% if week_day_start or week_day_start == 0 %}
+            weekDayStart: {{week_day_start}},
+        {% endif %}
         {% if sidebar_starts_shown %}
             sidebarStartsShown: {{sidebar_starts_shown|json}},
         {% endif %}

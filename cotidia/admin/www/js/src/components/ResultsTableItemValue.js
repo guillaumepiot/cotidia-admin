@@ -66,6 +66,7 @@ export default class ResultsTableItemValue extends Component {
 
       if (editing) {
         const props = {
+          config: this.props.config,
           name: column.accessor,
           updateValue: this.handleUpdateValue,
           value: this.state.value,

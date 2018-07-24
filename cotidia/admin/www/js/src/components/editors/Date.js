@@ -5,6 +5,9 @@ import { DatePickerInput } from '@cotidia/react-ui'
 
 export default class Date extends Component {
   static propTypes = {
+    config: PropTypes.shape({
+      weekDayStart: PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6, 7]),
+    }),
     name: PropTypes.string.isRequired,
     value: PropTypes.any,
     updateValue: PropTypes.func.isRequired,
@@ -23,6 +26,7 @@ export default class Date extends Component {
         name={name}
         updateValue={this.updateValue}
         value={value}
+        weekDayStart={this.props.config.weekDayStart ?? 1}
       />
     )
   }

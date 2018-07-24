@@ -73,6 +73,7 @@ def render_search_dashboard_config(
     context['primary_color'] = serializer.get_option('primary_color')
     context['date_format'] = serializer.get_option('date_format')
     context['datetime_format'] = serializer.get_option('datetime_format')
+    context['week_day_start'] = serializer.get_option('week_day_start')
     context['columns_configurable'] = serializer.get_option(
         'columns_configurable'
     )
