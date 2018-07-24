@@ -91,6 +91,9 @@
         {% if sidebar_starts_shown %}
             sidebarStartsShown: {{sidebar_starts_shown|json}},
         {% endif %}
+        {% if table_striped %}
+            tableStriped: {{table_striped|json}},
+        {% endif %}
     },
     {% if batch_actions %}
         batchActions: {{batch_actions|safe}},
