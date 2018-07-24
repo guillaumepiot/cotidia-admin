@@ -17,6 +17,7 @@ $toolbar-height: 4rem; // Toolbar height
             height: $toolbar-height;
             width: calc(100vw - #{$menu-width});
             z-index: 2;
+            transition: left $animation-speed ease, width $animation-speed ease;
         }
     }
     &__content {
@@ -28,6 +29,7 @@ $toolbar-height: 4rem; // Toolbar height
             height: calc(100vh - #{$toolbar-height});
             overflow: scroll;
             z-index: 1;
+            transition: left $animation-speed ease, width $animation-speed ease;
         }
     }
 }
@@ -38,5 +40,21 @@ $toolbar-height: 4rem; // Toolbar height
 
     &__item {
         flex: 1;
+    }
+}
+
+body.menu--sidebar-collapse {
+    .layout__toolbar {
+        @media screen and (min-width: $menu-breakpoint) {
+            left: $toolbar_height;
+            width: calc(100vw - #{$toolbar_height});
+
+        }
+    }
+    .layout__content {
+        @media screen and (min-width: $menu-breakpoint) {
+            left: $toolbar_height;
+            width: calc(100vw - #{$toolbar_height});
+        }
     }
 }

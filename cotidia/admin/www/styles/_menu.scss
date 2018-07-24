@@ -43,7 +43,7 @@ body.menu--sidebar {
             height: 100%;
             z-index: 2;
             padding-bottom: $toolbar_height;
-            transition: width 0.3s ease;
+            transition: width $animation-speed ease;
 
             &__title{
                 display: none;
@@ -67,7 +67,6 @@ body.menu--sidebar {
             padding-top: 0.1em;
         }
         .menu-item--home {
-            @include font-size($font_size--emphasis);
             width: 100%;
             height: $toolbar_height;
             background-color: $menu_home_background_color;
@@ -150,7 +149,7 @@ body.menu--sidebar {
     .menu__sub-nav {
         position: static;
         max-height: 0;
-        transition: max-height 0.6s ease;
+        transition: max-height $animation-speed ease;
         background-color: $menu_link_background_color_active;
         background-color: var(--menu_link_background_color_active, $menu_link_background_color_active);
         display: block;
