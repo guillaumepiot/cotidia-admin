@@ -1773,6 +1773,8 @@ fieldset {
   background-color: #fff;
   border: 1px solid #D0D5D7;
   margin-bottom: 1rem; }
+  fieldset:last-child {
+    margin-bottom: 0; }
   fieldset legend {
     line-height: 1.414035em !important;
     font-size: 1.125rem !important;
@@ -2373,7 +2375,8 @@ textarea {
 .table {
   width: 100%;
   border-collapse: collapse;
-  border-spacing: 0; }
+  border-spacing: 0;
+  border: 1px solid #D0D5D7; }
   .table td.span-1, .table th.span-1 {
     width: 8.3333333333%; }
   .table td.span-2, .table th.span-2 {
@@ -2425,6 +2428,9 @@ textarea {
     background-color: #fff; }
     .table tr:hover td, .table tr:hover th, .table tr:active td, .table tr:active th, .table tr:focus td, .table tr:focus th {
       background-color: #f5f7fb; }
+    @media screen and (min-width: 768px) {
+      .table tr:last-child td {
+        border-bottom: none; } }
     .table tr th {
       background-color: #eef0f5;
       padding: 0.5rem 1rem;
@@ -2712,7 +2718,7 @@ body.menu--sidebar .menu__section {
   font-size: 0.9rem;
   padding: 0.5rem 1rem 0 1rem;
   color: var(--menu_background_color_section, #2070b7); }
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 1024px) {
   body.menu--sidebar .menu {
     width: 20rem;
     position: fixed;
@@ -2748,13 +2754,13 @@ body.menu--sidebar .menu__section {
     height: 4rem;
     background-color: #00213E;
     background-color: var(--menu_home_background_color, #00213E); } }
-  @media screen and (min-width: 1025px) and (min-width: 768px) {
+  @media screen and (min-width: 1024px) and (min-width: 768px) {
     body.menu--sidebar .menu-item--home {
       font-size: 1.25rem !important; } }
-  @media screen and (min-width: 1025px) and (min-width: 1024px) {
+  @media screen and (min-width: 1024px) and (min-width: 1024px) {
     body.menu--sidebar .menu-item--home {
       font-size: 1.333rem !important; } }
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 1024px) {
     body.menu--sidebar .menu-item--home .menu-item__link {
       height: 4rem; }
     body.menu--sidebar .menu-item--home .menu-item__link-icon {
@@ -2763,7 +2769,7 @@ body.menu--sidebar .menu__section {
     display: block; }
   body.menu--sidebar .menu__item--sidebar-expand {
     display: none; } }
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1023px) {
   body.menu--sidebar .menu {
     position: fixed;
     top: 0;
@@ -2776,13 +2782,13 @@ body.menu--sidebar .menu__section {
       line-height: 1.414035em !important;
       font-size: 1.125rem !important;
       color: #fff; } }
-    @media screen and (max-width: 1024px) and (min-width: 768px) {
+    @media screen and (max-width: 1023px) and (min-width: 768px) {
       body.menu--sidebar .menu__title {
         font-size: 1.25rem !important; } }
-    @media screen and (max-width: 1024px) and (min-width: 1024px) {
+    @media screen and (max-width: 1023px) and (min-width: 1024px) {
       body.menu--sidebar .menu__title {
         font-size: 1.333rem !important; } }
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1023px) {
   body.menu--sidebar .menu__item--open {
     width: 100%;
     display: flex; }
@@ -2825,7 +2831,7 @@ body.menu--sidebar .menu__sub-nav {
   display: block;
   overflow: hidden; }
 
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 1024px) {
   body.menu--sidebar-collapse .menu {
     width: 4rem; }
   body.menu--sidebar-collapse .menu-item__link {
@@ -2859,7 +2865,7 @@ body.menu--sidebar .menu__sub-nav {
     body.menu--sidebar-collapse .menu-item--home .menu-item__link-icon {
       display: block; } }
 
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 1024px) {
   body.menu--sidebar-hidden .menu {
     transition: none; } }
 
@@ -3220,7 +3226,6 @@ body.content--padded .content__list {
       left: 0; }
   .table--sticky th.nowrap, .table--sticky td.nowrap {
     white-space: nowrap;
-    overflow: hidden;
     text-overflow: ellipsis;
     max-width: 280px; }
     .table--sticky th.nowrap .table-cell-editable__value, .table--sticky td.nowrap .table-cell-editable__value {
