@@ -218,11 +218,26 @@ class AdminGenericListView(
 
         for key in self.request.GET:
             if key[0] != '_':
-                filters[key] = self.request.GET.getlist(key)
+                filters[key] = self.parse_filter_values(
+                    self.request.GET.getlist(key)
+                )
 
         context['default_filters'] = filters
 
         return context
+
+    def parse_filter_values(self, value):
+        formatted = []
+        for v in value:
+            formatted.append(self.format_filter_value(v))
+        return formatted[0] if len(formatted) == 1 else formatted
+
+    def format_filter_value(self, value):
+        if value == 'true':
+            value = True
+        elif value == 'false':
+            value = False
+        return value
 
 
 class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):

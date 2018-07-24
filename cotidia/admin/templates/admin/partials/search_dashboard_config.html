@@ -37,7 +37,7 @@
         defaultColumns: {{default_columns|safe}},
     {% endif %}
     {% if default_filters %}
-        defaultFilters: {{default_filters|safe}},
+        defaultFilters: {{default_filters|json|safe}},
     {% endif %}
     {% if extra_filters %}
         extraFilters: {{extra_filters|safe}},
