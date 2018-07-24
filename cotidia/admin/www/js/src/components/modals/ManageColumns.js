@@ -20,8 +20,8 @@ export default class ManageColumns extends Component {
   render () {
     const { columns, visibleColumns } = this.props
 
-    let orderedColumns = Object.entries(columns)
-    orderedColumns.sort(([_, a], [__, b]) => a.label.localeCompare(b.label))
+    const orderedColumns = Object.entries(columns)
+      .sort((a, b) => a[1].label.localeCompare(b[1].label))
 
     return (
       <div className='form__group'>
