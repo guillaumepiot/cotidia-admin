@@ -20,11 +20,14 @@ export default class ManageColumns extends Component {
   render () {
     const { columns, visibleColumns } = this.props
 
+    let orderedColumns = Object.entries(columns)
+    orderedColumns.sort(([_, a], [__, b]) => a.label.localeCompare(b.label))
+
     return (
       <div className='form__group'>
         <div className='form__control'>
           <ul>
-            {Object.entries(columns).map(([column, config]) => (
+            {orderedColumns.map(([column, config]) => (
               <li key={column}>
                 <label>
                   <input
