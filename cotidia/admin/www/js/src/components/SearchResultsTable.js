@@ -64,6 +64,10 @@ export default class SearchResultsTable extends Component {
       tableClassName.push('table--action')
     }
 
+    if (config.tableStriped) {
+      tableClassName.push('table--striped')
+    }
+
     return (
       <table className={tableClassName.join(' ')}>
         <ResultsTableHeader />
