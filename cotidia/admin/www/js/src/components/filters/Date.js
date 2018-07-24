@@ -8,6 +8,7 @@ import 'react-date-range/dist/theme/default.css' // theme css file
 import '../elements/dateRangeOverrides.css'
 
 import { DateRangePicker } from 'react-date-range'
+import defaultLocale from 'react-date-range/src/locale/en-GB'
 import { staticRanges } from '../elements/global'
 
 export default class Date extends Component {
@@ -23,6 +24,7 @@ export default class Date extends Component {
     }).isRequired,
     globalConfig: PropTypes.shape({
       primaryColor: PropTypes.string,
+      weekDayStart: PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6, 7]),
     }),
     updateField: PropTypes.func.isRequired,
   }
@@ -42,16 +44,25 @@ export default class Date extends Component {
       color: this.props.globalConfig.primaryColor,
     }
 
+    const locale = {
+      ...defaultLocale,
+      options: {
+        ...defaultLocale.options,
+        weekStartsOn: this.props.globalConfig?.weekDayStart ?? 1,
+      },
+    }
+
     return (
       <>
         <p>{this.props.config.label} is within the range:</p>
 
         <DateRangePicker
           dateDisplayFormat='YYYY-MM-DD'
-          staticRanges={staticRanges}
           months={2}
+          locale={locale}
           onChange={this.handleDateRangeSelect}
           ranges={[selectionRange]}
+          staticRanges={staticRanges}
         />
       </>
     )
