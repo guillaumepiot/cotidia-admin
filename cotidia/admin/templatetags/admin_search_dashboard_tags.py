@@ -87,10 +87,7 @@ def render_search_dashboard_config(
     context['list_fields'] = serializer.get_option('list_fields')
     context['sidebar_starts_shown'] = serializer.get_option('sidebar_starts_shown')
     context['ignore_stored_config'] = serializer.get_option('ignore_stored_config')
-
-    # Overide ignore_stored_config if we have default fiters, so they apply.
-    if default_filters:
-        context['ignore_stored_config'] = True
+    context['table_striped'] = serializer.get_option('table_striped')
 
     # Batch actions can be overridden by the caller, so allow for that.
     if batch_actions:
