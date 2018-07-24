@@ -62,6 +62,9 @@
     {% if list_fields %}
         listFields: {{list_fields|json|safe}},
     {% endif %}
+    {% if ignore_stored_config %}
+        ignoreStoredConfig: {{ignore_stored_config|json}},
+    {% endif %}
 
     config: {
         {% if primary_color %}
