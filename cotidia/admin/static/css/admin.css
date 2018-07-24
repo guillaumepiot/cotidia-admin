@@ -3412,6 +3412,13 @@ fieldset.table-view .table tr:last-child tr, fieldset.table-view .table tr:last-
 .table tr th .fa-check, .table tr td .fa-check {
   color: #00b100; }
 
+@keyframes disappear {
+  from {
+    top: 2rem;
+    opacity: 1; }
+  to {
+    top: -10px;
+    opacity: 0; } }
 .messages {
   position: fixed;
   top: 2rem;
@@ -3419,7 +3426,8 @@ fieldset.table-view .table tr:last-child tr, fieldset.table-view .table tr:last-
   width: 100%;
   display: flex;
   align-items: center;
-  flex-direction: column; }
+  flex-direction: column;
+  animation: disappear 0.4s ease 5s forwards; }
   .messages .alert {
     max-width: 1024px; }
 
