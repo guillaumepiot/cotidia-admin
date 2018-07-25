@@ -53,7 +53,7 @@ module.exports = function webpackBootstrap (env) {
       contentBase: path.resolve(__dirname, 'public'),
       inline: true,
       host: '0.0.0.0',
-      port: 3000,
+      port: 3300,
       historyApiFallback: true,
     },
   }
