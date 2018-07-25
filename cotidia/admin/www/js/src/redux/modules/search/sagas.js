@@ -310,15 +310,24 @@ function * editField ({ payload: { item, column, value } }) {
   let url = generateURL(columnConfig.editEndpoint, { uuid: item })
 
   try {
-    const { ok } = yield call(
+    const { ok, data } = yield call(
       fetchAuthenticated,
       'PATCH',
       url,
       { [column]: value }
     )
 
-    if (true || ok) {
-      yield put(refreshCurrentPage())
+    if (ok) {
+      if (data) {
+        // yield put ({ type: types.REFRESH_RESULT, uuid: data.uuid })
+        yield put({
+          type: types.UPDATE_RESULT,
+          payload: {
+            uuid: item,
+            data,
+          },
+        })
+      }
 
       if (columnConfig.afterEdit) {
         columnConfig.afterEdit(value)
