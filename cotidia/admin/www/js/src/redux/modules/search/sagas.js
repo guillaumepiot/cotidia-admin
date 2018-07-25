@@ -148,6 +148,26 @@ function * performSearch () {
   }
 }
 
+function * refreshResult ({ uuid }) {
+  const { search: { endpoint } } = yield select()
+
+  let url = generateURL(endpoint, { '?': { uuid } })
+
+  const { ok, data } = yield call(fetchAuthenticated, 'GET', url)
+
+  if (ok && data.results?.length) {
+    yield put({
+      type: types.UPDATE_RESULT,
+      payload: {
+        uuid,
+        // There should only be one result, but it'll still be an array. Either
+        // way, we only care about one result.
+        data: data.results[0],
+      },
+    })
+  }
+}
+
 function * getResultsPage ({ payload: { page } }) {
   const pagination = yield select((state) => state.search.pagination)
 
@@ -277,6 +297,8 @@ function * handleDynamicListMessage ({ payload: { message } }) {
   if (message.endpoint === endpoint) {
     if (message.action === 'refresh') {
       yield put({ type: types.PERFORM_SEARCH })
+    } else if (message.action === 'refreshResult') {
+      yield put({ type: types.REFRESH_RESULT, uuid: message.resultUUID })
     }
   }
 }
@@ -318,6 +340,8 @@ export default function * watcher () {
   yield takeEvery(types.SET_FILTER_VALUE, performSearch)
   yield takeEvery(types.CLEAR_FILTER, performSearch)
   yield takeEvery(types.CLEAR_FILTERS, performSearch)
+
+  yield takeEvery(types.REFRESH_RESULT, refreshResult)
 
   yield takeEvery(types.RESET_COLUMNS, removeSavedColumnConfig)
   yield takeEvery(

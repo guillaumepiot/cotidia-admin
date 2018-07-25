@@ -179,6 +179,14 @@ export default (state = initialState, { type, payload } = {}) => {
         return state
       }
 
+    case types.UPDATE_RESULT:
+      return {
+        ...state,
+        results: state.results.map((result) => (
+          result.uuid === payload.uuid ? payload.data : result
+        ))
+      }
+
     case types.TOGGLE_COLUMN: {
       const visibleColumns =
         state.visibleColumns.includes(payload.column)

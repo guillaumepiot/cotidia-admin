@@ -22,6 +22,8 @@ export const TOGGLE_ORDER_DIRECTION = 'dynamic-list/search/TOGGLE_ORDER_DIRECTIO
 
 export const PERFORM_SEARCH = 'dynamic-list/search/PERFORM_SEARCH'
 export const STORE_RESULTS = 'dynamic-list/search/STORE_RESULTS'
+export const REFRESH_RESULT = 'dynamic-list/search/REFRESH_RESULT'
+export const UPDATE_RESULT = 'dynamic-list/search/UPDATE_RESULT'
 
 export const MANAGE_COLUMNS = 'dynamic-list/search/MANAGE_COLUMNS'
 export const TOGGLE_COLUMN = 'dynamic-list/search/TOGGLE_COLUMN'
