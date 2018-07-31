@@ -2,11 +2,13 @@
 {% if actions %}
 <form action="" method="post">
     {% csrf_token %}
-    <div class="head-bar head-bar--actions">
-        {% for field in actions.form %}
-            {% include "admin/generic/form/form_group.html" %}
-        {% endfor %}
-        <input type="submit" value="{% trans "APPLY" %}" class="btn btn--primary btn--small">
+    <div class="content__toolbar">
+        <div class="content__filter">
+            {% for field in actions.form %}
+                {% include "admin/generic/form/form_group.html" with form_classes="form__group--boxed" %}
+            {% endfor %}
+            <input type="submit" value="{% trans "Apply" %}" class="btn btn--primary btn--outline">
+        </div>
     </div>
 {% endif %}
 <table class="table table--clickable table--admin-mobile-view">
@@ -14,6 +16,7 @@
         <tr>
             {% if actions %}
                 <th class="action-column">
+                    <input type="checkbox" id="toggleCheckboxes">
                     <button type="button" class="btn btn--transparent btn--small tooltip tooltip--top-left" onclick="toggleCheckboxes()" data-tooltip="Select All / None">
                         <span class="fa fa-check"></span>
                     </button>
@@ -95,16 +98,24 @@
 {% endif %}
 {% if actions %}
 <script>
-function toggleCheckboxes(toggleCheckbox){
-    var checkboxes = document.querySelectorAll("[name=action_items]")
-    var allChecked = Array.prototype.every.call(checkboxes, function(item){ return item.checked })
-    if (allChecked) {
-        checkboxes.forEach(function(item){ item.checked = false })
-        toggleCheckbox.checked = false
-    } else {
-        checkboxes.forEach(function(item){ item.checked = true })
-        toggleCheckbox.checked = true
-    }
+var toggleCheckboxesInput = document.getElementById('toggleCheckboxes')
+var checkboxes = document.querySelectorAll("[name=action_items]")
+
+if (toggleCheckboxesInput) {
+    toggleCheckboxesInput.addEventListener('change', function() {
+        toggleCheckboxes(this.checked)
+    })
+}
+function toggleCheckboxes(state){
+    checkboxes.forEach(function(item){ item.checked = state })
+    // var allChecked = Array.prototype.every.call(checkboxes, function(item){ return item.checked })
+    // if (allChecked) {
+    //     checkboxes.forEach(function(item){ item.checked = false })
+    //     toggleCheckbox.checked = false
+    // } else {
+    //     checkboxes.forEach(function(item){ item.checked = true })
+    //     toggleCheckbox.checked = true
+    // }
 }
 </script>
 {% endif %}
