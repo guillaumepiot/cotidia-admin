@@ -4,7 +4,11 @@
 {% endblock title %}
 
 {% block content_title %}
-    <a href="{{list_url}}">{{verbose_name_plural}}</a>
+    {% if list_url %}
+        <a href="{{list_url}}">{{verbose_name_plural}}</a>
+    {% else %}
+        <a href="{{http_referer}}">{% trans "back" %}</a>
+    {% endif %}
     &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
     <a href="{% get_admin_url app_label model_name 'detail' object %}">
         {{object}}
@@ -47,9 +51,15 @@
                 </button>
             </div>
             <div class="content-foot__right">
+                {% if list_url %}
                 <a href="{% if next %}{{next}}{% else %}{{list_url}}{% endif %}" class="btn btn--cancel pull-right">
                     {% trans "Cancel" %}
                 </a>
+                {% else %}
+                <a href="{% if next %}{{next}}{% else %}{{http_referer}}{% endif %}" class="btn btn--cancel pull-right">
+                    {% trans "Cancel" %}
+                </a>
+                {% endif %}
             </div>
         </div>
     </div>
