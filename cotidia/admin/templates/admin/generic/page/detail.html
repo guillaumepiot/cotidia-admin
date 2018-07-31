@@ -6,7 +6,11 @@
 {% endblock title %}
 
 {% block content_title %}
-    <a href="{{list_url}}">{{verbose_name_plural}}</a>
+    {% if list_url %}
+        <a href="{{list_url}}">{{verbose_name_plural}}</a>
+    {% else %}
+        <a href="{{http_referer}}">{% trans "back"%}</a>
+    {% endif %}
     &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
     {% blocktrans with verbose_name as verbose_name %}
         {{object}}
@@ -72,7 +76,7 @@
             </div>
         </div>
         <div class="content-foot__right">
-            <a href="{% if next %}{{next}}{% else %}{{list_url}}{% endif %}" class="btn btn--cancel pull-right">
+            <a href="{% if next %}{{next}}{% elif list_url %}{{list_url}}{% else %}{{http_referer}}{% endif %}" class="btn btn--cancel pull-right">
                 {% trans "Back" %}
             </a>
         </div>

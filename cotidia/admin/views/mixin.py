@@ -1,26 +1,30 @@
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
+from django.urls.exceptions import NoReverseMatch
 
 from cotidia.admin.templatetags.admin_list_tags import get_admin_url
 
 
 class ContextMixin:
     def get_list_url(self):
-        if hasattr(self.model, 'SearchProvider'):
-            return reverse(
-                "generic-admin:list",
-                kwargs={
-                    "app_label": self.model._meta.app_label,
-                    "model": self.model._meta.model_name
-                }
-            )
-        else:
-            return get_admin_url(
-                self.model._meta.app_label,
-                self.model._meta.model_name,
-                'list'
-            )
+        try:
+            if hasattr(self.model, 'SearchProvider'):
+                return reverse(
+                    "generic-admin:list",
+                    kwargs={
+                        "app_label": self.model._meta.app_label,
+                        "model": self.model._meta.model_name
+                    }
+                )
+            else:
+                return get_admin_url(
+                    self.model._meta.app_label,
+                    self.model._meta.model_name,
+                    'list'
+                )
+        except NoReverseMatch:
+            return None
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -30,6 +34,7 @@ class ContextMixin:
         context['object_name'] = self.model._meta.object_name
         context['verbose_name'] = self.model._meta.verbose_name
         context['verbose_name_plural'] = self.model._meta.verbose_name_plural
+        context['http_referer'] = self.request.META.get("HTTP_REFERER")
 
         context['template_type'] = self.template_type
 
