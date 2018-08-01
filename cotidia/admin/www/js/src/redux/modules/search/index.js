@@ -5,7 +5,7 @@ const initialState = {
   endpoint: null,
   detailURL: null,
 
-  columnsConfig: {}, // Config for all columns
+  columnConfiguration: {}, // Config for all columns
   batchActions: [], // Config for all batch actions
   globalActions: [], // Config for all global actions
 
