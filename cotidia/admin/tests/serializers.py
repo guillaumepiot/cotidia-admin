@@ -34,3 +34,57 @@ class ExampleModelOneSerializer(AdminModelSerializer):
 class DeclaredModelSerializer(AdminModelSerializer):
     class Meta:
         model = DeclaredSerializerModel
+
+
+class CustomSerializer(AdminModelSerializer):
+    class Meta:
+        model = ExampleModelTwo
+        exclude = ["uuid"]
+
+    class SearchProvider:
+        display_field = "number"
+
+
+class CustomColumnChildSerializer(AdminModelSerializer):
+
+    class Meta:
+        model = ExampleModelTwo
+
+    class SearchProvider:
+        display_field = "char_field"
+        columns = [
+            {
+                "label": "Number",
+                "columns": [
+                    'number',
+                ]
+            }
+        ]
+
+
+class CustomColumnSerializer(AdminModelSerializer):
+    other_model = CustomColumnChildSerializer()
+
+    class Meta:
+        model = ExampleModelOne
+        exclude = ["uuid", "duration_field"]
+
+    class SearchProvider:
+        display_field = "char_field"
+        columns = [
+            {
+                "label": "Other model",
+                "columns": [
+                    'other_model',
+                    'other_model__number',
+                    'other_model__name',
+                ]
+            },
+            {
+                "label": "Model one",
+                "columns": [
+                    'integer_field',
+                    'boolean_field',
+                ]
+            }
+        ]
