@@ -204,6 +204,7 @@ class AdminModelSerializer(serializers.ModelSerializer):
 
         if self.get_option('columns'):
             self._columns = self.get_option('columns')
+
             for column in self._columns:
                 self._available_columns.extend(column['columns'])
         else:
@@ -215,10 +216,12 @@ class AdminModelSerializer(serializers.ModelSerializer):
                         self._available_columns.append("{}__{}".format(field_name, key))
                 else:
                     self._available_columns.append(field_name)
-            self._columns = {
-                'label': 'default',
+
+            self._columns = [{
+                'label': 'Columns',
                 'columns': self._available_columns
-            }
+            }]
+
         return self._columns
 
 
