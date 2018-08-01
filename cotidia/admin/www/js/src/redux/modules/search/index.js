@@ -6,6 +6,7 @@ const initialState = {
   detailURL: null,
 
   columnConfiguration: {}, // Config for all columns
+  columns: [], // Available columns (as an array of labelled categories)
   batchActions: [], // Config for all batch actions
   globalActions: [], // Config for all global actions
 
@@ -100,6 +101,7 @@ export default (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         columnConfiguration: payload.columnConfiguration,
+        columns: payload.columns,
         defaultColumns: payload.defaultColumns,
         visibleColumns: payload.defaultColumns,
         orderColumn: payload.defaultOrderColumn,

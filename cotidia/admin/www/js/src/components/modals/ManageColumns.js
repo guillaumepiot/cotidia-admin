@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 export default class ManageColumns extends Component {
   static propTypes = {
     closeModal: PropTypes.func.isRequired,
-    // TODO: Change this to use columns when we have it coming in.
     columnConfiguration: PropTypes.object.isRequired,
+    columns: PropTypes.arrayOf(PropTypes.object).isRequired,
     resetColumns: PropTypes.func.isRequired,
     toggleColumn: PropTypes.func.isRequired,
     visibleColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -19,27 +19,31 @@ export default class ManageColumns extends Component {
   }
 
   render () {
-    const { columnConfiguration, visibleColumns } = this.props
-
-    const orderedColumns = Object.entries(columnConfiguration)
-      .sort((a, b) => a[1].label.localeCompare(b[1].label))
+    const { columnConfiguration, columns, visibleColumns } = this.props
 
     return (
       <div className='form__group'>
         <div className='form__control'>
           <ul>
-            {orderedColumns.map(([column, config]) => (
-              <li key={column}>
-                <label>
-                  <input
-                    checked={visibleColumns.includes(column)}
-                    className='form__checkbox'
-                    onChange={this.toggleColumnFactory(column)}
-                    type='checkbox'
-                  />
+            {columns.map(({ label, columns }) => (
+              <li key={label}>
+                <strong>{label}</strong>
+                <ul>
+                  {columns.map((column) => (
+                    <li key={column}>
+                      <label>
+                        <input
+                          checked={visibleColumns.includes(column)}
+                          className='form__checkbox'
+                          onChange={this.toggleColumnFactory(column)}
+                          type='checkbox'
+                        />
 
-                  {config.label}
-                </label>
+                        {columnConfiguration[column]?.label}
+                      </label>
+                    </li>
+                  ))}
+                </ul>
               </li>
             ))}
           </ul>

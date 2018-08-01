@@ -56,6 +56,13 @@ const columnConfigSingle = PropTypes.shape({
 
 const columnConfiguration = PropTypes.objectOf(columnConfigSingle)
 
+const columnCategory = PropTypes.shape({
+  label: PropTypes.string.isRequired,
+  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
+})
+
+const columns = PropTypes.arrayOf(columnCategory)
+
 const config = PropTypes.shape({
   columnsConfigurable: PropTypes.boolean,
   dateFormat: PropTypes.string,
@@ -99,6 +106,7 @@ export const dynamicListPropTypes = {
   authToken: PropTypes.string.isRequired,
   batchActions,
   columnConfiguration: columnConfiguration.isRequired,
+  columns: columns.isRequired,
   config,
   categoriseBy,
   defaultColumns: stringList,

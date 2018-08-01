@@ -42,6 +42,7 @@ export function * bootstrap ({ payload: config }) {
     type: searchTypes.SET_COLUMN_CONFIG,
     payload: {
       columnConfiguration: config.columnConfiguration,
+      columns: config.columns,
       defaultColumns: config.defaultColumns,
       defaultFilters: config.defaultFilters,
       listFields: config.listFields,

@@ -6,6 +6,7 @@ import ManageColumns from '../../components/modals/ManageColumns'
 
 const mapStateToProps = (state) => ({
   columnConfiguration: state.search.columnConfiguration,
+  columns: state.search.columns,
   visibleColumns: state.search.visibleColumns,
 })
 
