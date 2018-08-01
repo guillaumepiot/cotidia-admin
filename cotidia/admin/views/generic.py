@@ -208,7 +208,7 @@ class AdminGenericListView(
             context['endpoint'] = self.kwargs['endpoint']
 
         if self.request.GET.get('_column'):
-            context['default_colunms'] = self.request.GET.getlist('_column')
+            context['default_columns'] = self.request.GET.getlist('_column')
 
         if self.request.GET.get('_order'):
             context['default_order_by'] = self.request.GET.getlist('_order')

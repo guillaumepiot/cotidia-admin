@@ -2,33 +2,36 @@
 {
     endpoint: '{{endpoint}}',
     title: '{{title}}',
-    columns: {
-        {% for field_name, field_data in columns.items %}
-            {{field_name}}: {
-                {% for key, value in field_data.items %}
-                    {% if key == "display" and value == "function" %}
-                        display: {% include field_data.function_template %},
-                    {% elif key == "allow_wrap" %}
-                        allowWrap: {{value|json}}
-                    {% elif key == "options" %}
-                        options: [
-                            {% for option in value %}
-                                {
-                                    value: '{{option.value}}',
-                                    label: '{{option.label}}',
-                                },
-                            {% endfor %}
-                        ],
-                    {% elif key == "after_edit_function_template" %}
-                        afterEdit: {% include field_data.after_edit_function_template %},
-                    {% elif key == "function_template" or key == "foreign_key" %}
-                    {% else %}
-                        {{key}}: {{value|json|safe}},
-                    {% endif %}
-                {% endfor %}
-            },
+    fieldRepresentation: {
+        {% for field_name, field_data in field_representation.items %}
+            {% if field_data %}
+                {{field_name}}: {
+                    {% for key, value in field_data.items %}
+                        {% if key == "display" and value == "function" %}
+                            display: {% include field_data.function_template %},
+                        {% elif key == "allow_wrap" %}
+                            allowWrap: {{value|json}}
+                        {% elif key == "options" %}
+                            options: [
+                                {% for option in value %}
+                                    {
+                                        value: '{{option.value}}',
+                                        label: '{{option.label}}',
+                                    },
+                                {% endfor %}
+                            ],
+                        {% elif key == "after_edit_function_template" %}
+                            afterEdit: {% include field_data.after_edit_function_template %},
+                        {% elif key == "function_template" or key == "foreign_key" %}
+                        {% else %}
+                            {{key}}: {{value|json|safe}},
+                        {% endif %}
+                    {% endfor %}
+                },
+            {% endif %}
         {% endfor %}
     },
+    columns: {{columns|json|safe}},
     {% if auth_token %}
         authToken: '{{auth_token}}',
     {% endif %}

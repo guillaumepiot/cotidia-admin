@@ -66,12 +66,12 @@ class AdminModelSerializer(serializers.ModelSerializer):
 
     def get_endpoint(self):
         return reverse(
-                'generic-api:object-list',
-                kwargs={
-                    'app_label': self.Meta.model._meta.app_label,
-                    'model': self.Meta.model._meta.model_name
-                }
-            )
+            'generic-api:object-list',
+            kwargs={
+                'app_label': self.Meta.model._meta.app_label,
+                'model': self.Meta.model._meta.model_name
+            }
+        )
 
     def get_detail_url(self):
         if self.get_option('enable_detail_url', default=True):
@@ -95,11 +95,16 @@ class AdminModelSerializer(serializers.ModelSerializer):
                     # Create prototype URL from concrete one.
                     return fake_detail_url.replace('9999', ':id')
 
-    def get_field_representation(self):
+    def get_field_representation(self, label_prefix="", bypass_available_columns=False):
         if not hasattr(self, "_field_representation"):
-            repr = {}
+
+            self.get_columns()
+            field_representation = {}
 
             for field_name, field in self.fields.items():
+                print(bypass_available_columns, field_name, 'in', self._available_columns)
+                if not bypass_available_columns and field_name not in self._available_columns:
+                    continue
                 # Gets the most specific class of we support for the given field type if not it return None
                 field_type = next(
                     iter(
@@ -108,53 +113,60 @@ class AdminModelSerializer(serializers.ModelSerializer):
                     None
                 )
                 label = field_name.replace("__", " ").replace('_', ' ').title()
+                if label_prefix:
+                    label = label_prefix + " " + label
+
                 if isinstance(field, AdminModelSerializer):
-                    nested_repr = field.get_field_representation()
+                    nested_repr = field.get_field_representation(label_prefix=label, bypass_available_columns=True)
                     for key, value in nested_repr.items():
-                        repr["{}__{}".format(field_name, key)] = value
+                        sub_field_name = "{}__{}".format(field_name, key)
+                        if not bypass_available_columns and sub_field_name in self._available_columns:
+                            field_representation[sub_field_name] = value
                     default_field_repr = FIELD_MAPPING[AdminModelSerializer.__name__]()
                     default_field_repr["options"] = field.get_choices()
                     default_field_repr["label"] = label
-                    repr[field_name] = default_field_repr
+                    field_representation[field_name] = default_field_repr
                 elif isinstance(field, serializers.ListSerializer):
                     try:
                         default_field_ref = FIELD_MAPPING[field.__class__.__name__]()
                         default_field_ref["options"] = field.child.get_choices()
                         default_field_ref["label"] = label
-                    except AttributeError as error:
+                    except AttributeError:
                         default_field_ref = FIELD_MAPPING[field.child.__class__.__name__]()
                         default_field_ref["filter"] = None
                     default_field_ref["label"] = label
-                    repr[field_name] = default_field_ref
+                    field_representation[field_name] = default_field_ref
                 else:
                     if field_type is None:
                         print("Unsupported field {} of type {}".format(field_name,field))
                     else:
                         default_field_ref = FIELD_MAPPING[field_type.__name__]()
                         if hasattr(field, "choices"):
-                            choices = field.choices
                             default_field_ref["filter"] = 'choice'
                             default_field_ref["options"] = [
                                 {"value": value, "label": label} for value, label in field.choices.items()
                             ]
                         default_field_ref["label"] = label
-                        repr[field_name] = default_field_ref
+                        field_representation[field_name] = default_field_ref
 
             try:
                 override_repr = self.SearchProvider.field_representation
-                for key, default_field_repr in repr.items():
+                for key, default_field_repr in field_representation.items():
+                    if not bypass_available_columns and key not in self._available_columns:
+                        continue
                     try:
                         overrides = override_repr[key]
                         default_field_repr.update(overrides)
                     except (AttributeError, KeyError):
                         pass
-                    repr[key] = default_field_repr
+                    field_representation[key] = default_field_repr
                 for key, value in override_repr.items():
-                    if key not in repr.keys():
-                        repr[key] = value
+                    if not bypass_available_columns and key in self._available_columns:
+                        if key not in field_representation.keys():
+                            field_representation[key] = value
             except AttributeError:
                 pass
-            self._field_representation = repr
+            self._field_representation = field_representation
 
         return self._field_representation
 
@@ -183,6 +195,31 @@ class AdminModelSerializer(serializers.ModelSerializer):
             return self.get_option('display_field')
         else:
             return 'id'
+
+    def get_columns(self):
+        if hasattr(self, "_available_columns"):
+            return self._columns
+
+        self._available_columns = []
+
+        if self.get_option('columns'):
+            self._columns = self.get_option('columns')
+            for column in self._columns:
+                self._available_columns.extend(column['columns'])
+        else:
+            for field_name, field in self.fields.items():
+                if isinstance(field, AdminModelSerializer):
+                    field.get_columns()
+                    nested_columns = field._available_columns
+                    for key in nested_columns:
+                        self._available_columns.append("{}__{}".format(field_name, key))
+                else:
+                    self._available_columns.append(field_name)
+            self._columns = {
+                'label': 'default',
+                'columns': self._available_columns
+            }
+        return self._columns
 
 
 class SortSerializer(serializers.Serializer):

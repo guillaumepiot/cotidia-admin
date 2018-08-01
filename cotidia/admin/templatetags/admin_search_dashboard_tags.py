@@ -19,7 +19,7 @@ def render_search_dashboard_config(
     auth_token,
     serializer=None,
     endpoint=None,
-    default_colunms=None,
+    default_columns=None,
     default_order_by=None,
     default_filters=None,
     batch_actions=None,
@@ -49,8 +49,8 @@ def render_search_dashboard_config(
         endpoint = serializer.get_endpoint()
 
     # Calculate `default_columns`
-    if not default_colunms:
-        default_colunms = serializer.get_default_columns()
+    if not default_columns:
+        default_columns = serializer.get_default_columns()
 
     # Calculate default_oder_by
     if not default_order_by:
@@ -59,14 +59,15 @@ def render_search_dashboard_config(
     context['verbose_name'] = model._meta.verbose_name
     context['verbose_name_plural'] = model._meta.verbose_name_plural
 
-    context['default_columns'] = default_colunms
+    context['columns'] = serializer.get_columns()
+    context['default_columns'] = default_columns
     context['default_order_by'] = default_order_by
     context['default_filters'] = default_filters
 
     context['endpoint'] = endpoint
     context['auth_token'] = auth_token
     context['title'] = serializer.get_option('title', default=model._meta.verbose_name_plural.title())
-    context['columns'] = serializer.get_field_representation()
+    context['field_representation'] = serializer.get_field_representation()
     context['detail_url'] = serializer.get_detail_url()
 
     # Get some config values
