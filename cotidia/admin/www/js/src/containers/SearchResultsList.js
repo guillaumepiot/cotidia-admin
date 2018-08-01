@@ -6,7 +6,7 @@ import SearchResultsList from '../components/SearchResultsList'
 
 const mapStateToProps = (state) => ({
   batchActions: state.search.batchActions,
-  columns: state.search.columns,
+  columnConfiguration: state.search.columnConfiguration,
   config: state.config,
   detailURL: state.search.detailURL,
   listFields: state.search.listFields,

@@ -2,7 +2,7 @@
 {
     endpoint: '{{endpoint}}',
     title: '{{title}}',
-    fieldRepresentation: {
+    columnConfiguration: {
         {% for field_name, field_data in field_representation.items %}
             {% if field_data %}
                 {{field_name}}: {

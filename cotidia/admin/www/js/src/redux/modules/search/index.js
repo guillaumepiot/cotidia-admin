@@ -4,7 +4,8 @@ const initialState = {
   title: null,
   endpoint: null,
   detailURL: null,
-  columns: {}, // Config for all columns
+
+  columnsConfig: {}, // Config for all columns
   batchActions: [], // Config for all batch actions
   globalActions: [], // Config for all global actions
 
@@ -98,7 +99,7 @@ export default (state = initialState, { type, payload } = {}) => {
     case types.SET_COLUMN_CONFIG:
       return {
         ...state,
-        columns: payload.columns,
+        columnConfiguration: payload.columnConfiguration,
         defaultColumns: payload.defaultColumns,
         visibleColumns: payload.defaultColumns,
         orderColumn: payload.defaultOrderColumn,

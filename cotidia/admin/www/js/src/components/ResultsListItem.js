@@ -9,7 +9,7 @@ export default class ResultsListItem extends Component {
   static propTypes = {
     checked: PropTypes.bool.isRequired,
     checkItem: PropTypes.func.isRequired,
-    columns: PropTypes.object.isRequired,
+    columnConfiguration: PropTypes.object.isRequired,
     config: PropTypes.object,
     item: PropTypes.object.isRequired,
     listFields: PropTypes.shape({
@@ -41,8 +41,8 @@ export default class ResultsListItem extends Component {
 
   getColumnConfig = (columnName) => ({
     accessor: columnName,
-    display: this.props.columns?.[columnName]?.display,
-    listHandling: this.props.columns?.[columnName]?.listHandling,
+    display: this.props.columnConfiguration?.[columnName]?.display,
+    listHandling: this.props.columnConfiguration?.[columnName]?.listHandling,
   })
 
   render () {

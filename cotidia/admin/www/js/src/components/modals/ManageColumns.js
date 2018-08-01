@@ -4,7 +4,8 @@ import PropTypes from 'prop-types'
 export default class ManageColumns extends Component {
   static propTypes = {
     closeModal: PropTypes.func.isRequired,
-    columns: PropTypes.object.isRequired,
+    // TODO: Change this to use columns when we have it coming in.
+    columnConfiguration: PropTypes.object.isRequired,
     resetColumns: PropTypes.func.isRequired,
     toggleColumn: PropTypes.func.isRequired,
     visibleColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -18,9 +19,9 @@ export default class ManageColumns extends Component {
   }
 
   render () {
-    const { columns, visibleColumns } = this.props
+    const { columnConfiguration, visibleColumns } = this.props
 
-    const orderedColumns = Object.entries(columns)
+    const orderedColumns = Object.entries(columnConfiguration)
       .sort((a, b) => a[1].label.localeCompare(b[1].label))
 
     return (
@@ -43,7 +44,7 @@ export default class ManageColumns extends Component {
             ))}
           </ul>
         </div>
-        <button className='btn btn--delete' onClick={this.resetColumns} type='button'>Reset columns to default</button>
+        <button className='btn btn--delete' onClick={this.resetColumns} type='button'>Reset selected columns to default</button>
       </div>
     )
   }

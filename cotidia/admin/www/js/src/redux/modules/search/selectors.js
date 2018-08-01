@@ -7,12 +7,12 @@ const identity = _ => _
 // Create a cached selector as this gets used in a lot of subcomponents
 export const getVisibleColumnConfig = createSelector(
   (state) => state.search.visibleColumns,
-  (state) => state.search.columns,
-  (visibleColumns, columns) => visibleColumns.map(
+  (state) => state.search.columnConfiguration,
+  (visibleColumns, columnConfiguration) => visibleColumns.map(
     (column) => {
-      if (columns[column]) {
+      if (columnConfiguration[column]) {
         return {
-          ...columns[column],
+          ...columnConfiguration[column],
           id: column,
           accessor: column,
           type: 'data',
@@ -56,13 +56,15 @@ const getFiltersArray = (state, filters) => {
     }
 
     // If not, see if it's a colmn with that filter
-    if (state.search.columns.hasOwnProperty(filter)) {
-      if (state.search.columns[filter].filter) {
+    if (state.search.columnConfiguration.hasOwnProperty(filter)) {
+      const columnConfig = state.search.columnConfiguration[filter]
+
+      if (columnConfig.filter) {
         return {
-          filter: state.search.columns[filter].filter,
-          label: state.search.columns[filter].label,
+          filter: columnConfig.filter,
+          label: columnConfig.label,
           name: filter,
-          options: state.search.columns[filter].options,
+          options: columnConfig.options,
         }
       }
     }

@@ -5,7 +5,7 @@ import { resetColumns, toggleColumn } from '../../redux/modules/search/actions'
 import ManageColumns from '../../components/modals/ManageColumns'
 
 const mapStateToProps = (state) => ({
-  columns: state.search.columns,
+  columnConfiguration: state.search.columnConfiguration,
   visibleColumns: state.search.visibleColumns,
 })
 

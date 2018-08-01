@@ -12,12 +12,12 @@ import * as types from './types'
 import * as modalTypes from '../modal/types'
 
 export function * configureFilter ({ payload: { filter } }) {
-  const { columns, extraFilters, filters } = yield select((state) => state.search)
+  const { columnConfiguration, extraFilters, filters } = yield select((state) => state.search)
 
   let title = 'Filter'
 
-  if (columns[filter]) {
-    title = columns[filter].label
+  if (columnConfiguration[filter]) {
+    title = columnConfiguration[filter].label
   } else {
     title = extraFilters[filter].label
   }
@@ -304,7 +304,7 @@ function * handleDynamicListMessage ({ payload: { message } }) {
 }
 
 function * editField ({ payload: { item, column, value } }) {
-  const columnConfig = yield select((state) => state.search.columns[column])
+  const columnConfig = yield select((state) => state.search.columnConfiguration[column])
 
   // TODO: Get full item object and pass it in to generateURL so that we have richer formatting of the URL.
   let url = generateURL(columnConfig.editEndpoint, { uuid: item })

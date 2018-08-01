@@ -36,7 +36,7 @@ const categoriseBy = PropTypes.shape({
   ]),
 })
 
-const column = PropTypes.shape({
+const columnConfigSingle = PropTypes.shape({
   display: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.string,
@@ -54,7 +54,7 @@ const column = PropTypes.shape({
   afterEdit: PropTypes.func,
 })
 
-const columns = PropTypes.objectOf(column)
+const columnConfiguration = PropTypes.objectOf(columnConfigSingle)
 
 const config = PropTypes.shape({
   columnsConfigurable: PropTypes.boolean,
@@ -98,7 +98,7 @@ const listFields = PropTypes.shape({
 export const dynamicListPropTypes = {
   authToken: PropTypes.string.isRequired,
   batchActions,
-  columns: columns.isRequired,
+  columnConfiguration: columnConfiguration.isRequired,
   config,
   categoriseBy,
   defaultColumns: stringList,

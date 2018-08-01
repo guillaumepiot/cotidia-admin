@@ -41,7 +41,7 @@ export function * bootstrap ({ payload: config }) {
   yield put({
     type: searchTypes.SET_COLUMN_CONFIG,
     payload: {
-      columns: config.columns,
+      columnConfiguration: config.columnConfiguration,
       defaultColumns: config.defaultColumns,
       defaultFilters: config.defaultFilters,
       listFields: config.listFields,
