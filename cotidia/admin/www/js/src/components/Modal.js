@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
 import { Button } from '@cotidia/react-ui'
@@ -11,6 +12,23 @@ const initialState = {
   id: null,
   data: {},
   bork: false,
+}
+
+function ModalContainer ({ children }) {
+  const domNode = document.getElementById('modal-container')
+
+  if (domNode) {
+    return ReactDOM.createPortal(
+      children,
+      domNode
+    )
+  } else {
+    return children
+  }
+}
+
+ModalContainer.propTypes = {
+  children: PropTypes.node,
 }
 
 export default class Modal extends Component {
@@ -43,7 +61,7 @@ export default class Modal extends Component {
 
   state = initialState
 
-  componentWillMount () {
+  componentDidMount () {
     this.setState({
       id: `modal-${incrementingId++}`,
     })
@@ -117,56 +135,58 @@ export default class Modal extends Component {
     )
 
     return (
-      <div className={`dialog dialog--modal ${isOpen ? 'dialog--modal-open' : ''} ${size ? `dialog--${size}` : ''}`} onClick={this.handleDialogueClick}>
-        <div className='dialog__content'>
-          { (title || close) && (
-            <div className='dialog__header dialog-header dialog-section--padded'>
-              { title && (
-                <div className='dialog-header__title'>{ title }</div>
-              ) }
-              { close && (
-                <div className='dialog-header__action dialog-header__action--right'>
-                  <button className='dialog-header__action-btn close-dialog' type='button' onClick={handleClose}>
-                    <Icon icon='times' />
-                  </button>
-                </div>
-              ) }
+      <ModalContainer>
+        <div className={`dialog dialog--modal ${isOpen ? 'dialog--modal-open' : ''} ${size ? `dialog--${size}` : ''}`} onClick={this.handleDialogueClick}>
+          <div className='dialog__content'>
+            { (title || close) && (
+              <div className='dialog__header dialog-header dialog-section--padded'>
+                { title && (
+                  <div className='dialog-header__title'>{ title }</div>
+                ) }
+                { close && (
+                  <div className='dialog-header__action dialog-header__action--right'>
+                    <button className='dialog-header__action-btn close-dialog' type='button' onClick={handleClose}>
+                      <Icon icon='times' />
+                    </button>
+                  </div>
+                ) }
+              </div>
+            ) }
+            <div className='dialog__body dialog-section--padded'>
+              { bork ? (
+                <p>Something has gone horribly wrong!</p>
+              ) : (form ? (
+                <form id={id} onSubmit={this.submitModal}>
+                  { component }
+                </form>
+              ) : component) }
             </div>
-          ) }
-          <div className='dialog__body dialog-section--padded'>
-            { bork ? (
-              <p>Something has gone horribly wrong!</p>
-            ) : (form ? (
-              <form id={id} onSubmit={this.submitModal}>
-                { component }
-              </form>
-            ) : component) }
+            { form && (
+              <div className='dialog__footer dialog-footer dialog-section--padded dialog-footer--reverse'>
+                { submitButton && (
+                  <div className='dialog-footer__actions'>
+                    <Button buttonOnly form={id} type='submit' status='primary' loading={this.props.loading}>
+                      { submitButton }
+                    </Button>
+                  </div>
+                ) }
+                { cancelButton && (
+                  <div className='dialog-footer__actions'>
+                    <Button buttonOnly status='cancel' className='close-dialog' onClick={handleClose}>
+                      { cancelButton }
+                    </Button>
+                  </div>
+                ) }
+                { otherButtons && (
+                  <div className='dialog-footer__actions'>
+                    { otherButtons }
+                  </div>
+                ) }
+              </div>
+            ) }
           </div>
-          { form && (
-            <div className='dialog__footer dialog-footer dialog-section--padded dialog-footer--reverse'>
-              { submitButton && (
-                <div className='dialog-footer__actions'>
-                  <Button buttonOnly form={id} type='submit' status='primary' loading={this.props.loading}>
-                    { submitButton }
-                  </Button>
-                </div>
-              ) }
-              { cancelButton && (
-                <div className='dialog-footer__actions'>
-                  <Button buttonOnly status='cancel' className='close-dialog' onClick={handleClose}>
-                    { cancelButton }
-                  </Button>
-                </div>
-              ) }
-              { otherButtons && (
-                <div className='dialog-footer__actions'>
-                  { otherButtons }
-                </div>
-              ) }
-            </div>
-          ) }
         </div>
-      </div>
+      </ModalContainer>
     )
   }
 }
