@@ -2,6 +2,7 @@
 <div class="messages">
     {% for message in messages %}
     <div class="alert alert--{{message.tags}}">
+        <a href="#hide-message" class="hide-message pull-right"><span class="fa fa-times"></span></a>
         <div class="message">{{ message|safe }}</div>
     </div>
     {% endfor %}

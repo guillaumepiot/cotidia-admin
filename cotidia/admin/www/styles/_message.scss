@@ -1,25 +1,35 @@
-@keyframes disappear {
-    from {
-        top: 2rem;
-        opacity: 1;
-    }
-    to {
-        top: -10px;
-        opacity: 0;
-    }
-}
+// @keyframes disappear {
+//     from {
+//         height: auto;
+//         opacity: 1;
+//     }
+//     to {
+//         height: 0;
+//         opacity: 0;
+//     }
+// }
 
 .messages {
-    position: fixed;
-    top: 2rem;
-    z-index: 3;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    animation: disappear $animation-speed ease 5s forwards;
+    // position: fixed;
+    // top: 2rem;
+    // z-index: 3;
+    // width: 100%;
+    // display: flex;
+    // align-items: center;
+    // flex-direction: column;
+    // animation: disappear $animation-speed ease 5s forwards;
 
     .alert {
-        max-width: $laptop-width;
+        // max-width: $laptop-width;
+        margin-bottom: 0;
+    }
+
+
+}
+
+.alert {
+    &--hide {
+        // animation: disappear $animation-speed ease 0s forwards;
+        display: none;
     }
 }

@@ -384,7 +384,7 @@ def get_queryset(model_class, serializer_class, filter_args=None):
                 for x in field_repr[key].get('ordering_fields', [key])
             ]
             ordering_params += custom_ordering
-        
+
     if ordering_params:
         # Here we add an annotation to make sure when we order, the value is
         # empty
