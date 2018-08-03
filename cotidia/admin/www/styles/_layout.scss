@@ -9,27 +9,33 @@ $toolbar-height: 4rem; // Toolbar height
             z-index: 3;
         }
     }
-    &__toolbar {
+    &__main {
         @media screen and (min-width: $menu-breakpoint) {
+            display: flex;
+            flex-direction: column;
             position: fixed;
             top: 0;
             left: $menu-width;
-            height: $toolbar-height;
             width: calc(100vw - #{$menu-width});
-            z-index: 2;
+            height: 100vh;
             transition: left $animation-speed ease, width $animation-speed ease;
+        }
+    }
+    &__toolbar {
+        @media screen and (min-width: $menu-breakpoint) {
+            position: relative;
+            height: $toolbar-height;
+            z-index: 2;
         }
     }
     &__content {
         @media screen and (min-width: $menu-breakpoint) {
-            position: fixed;
-            top: $toolbar-height;
-            left: $menu-width;
-            width: calc(100vw - #{$menu-width});
-            height: calc(100vh - #{$toolbar-height});
-            overflow: scroll;
+            flex: 1;
+            overflow-y: scroll;
+            position: relative;
             z-index: 1;
-            transition: left $animation-speed ease, width $animation-speed ease;
+            display: flex;
+            flex-direction: column;
         }
     }
 }
@@ -44,17 +50,11 @@ $toolbar-height: 4rem; // Toolbar height
 }
 
 body.menu--sidebar-collapse {
-    .layout__toolbar {
+    .layout__main {
         @media screen and (min-width: $menu-breakpoint) {
             left: $toolbar_height;
             width: calc(100vw - #{$toolbar_height});
 
-        }
-    }
-    .layout__content {
-        @media screen and (min-width: $menu-breakpoint) {
-            left: $toolbar_height;
-            width: calc(100vw - #{$toolbar_height});
         }
     }
 }

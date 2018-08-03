@@ -13,6 +13,8 @@
             {% else %}
                 {% include "admin/generic/detail/value.html" %}
             {% endif %}
+        {% else %}
+            <span class="text-italic text-grey--medium">No value set.</span>
         {% endif %}
     </div>
 </div>

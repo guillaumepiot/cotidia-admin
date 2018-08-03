@@ -3,6 +3,8 @@ $content-toolbar-height: 4.5rem;
 $content-foot-height: 3.5rem;
 
 .content {
+    background-color: $content-background-color;
+
     &--sticky {
         .content__body {
             height: calc(100% - #{$content-head-height + $content-toolbar-height + $content-foot-height} - 1px);
@@ -16,10 +18,6 @@ $content-foot-height: 3.5rem;
     }
 
     &__head {
-        height: $content-head-height;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
         background-color: #fff;
 
         .content__inner {
@@ -66,7 +64,6 @@ $content-foot-height: 3.5rem;
 
         @media screen and (min-width: $menu-breakpoint) {
             bottom: 0;
-            left: $menu-width;
             position: sticky;
             z-index: 2;
         }
@@ -74,6 +71,7 @@ $content-foot-height: 3.5rem;
         &--sticky {
             background-color: $toolbar-background-color;
             border-top: 1px solid $table-row-border-color;
+            bottom: -1px;
         }
     }
 
@@ -159,7 +157,7 @@ $content-foot-height: 3.5rem;
 .content-head {
     align-items: center;
     display: flex;
-    height: $content-foot-height;
+    height: $content-head-height;
     justify-content: space-between;
     width: 100%;
 
