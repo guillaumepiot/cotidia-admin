@@ -3038,18 +3038,8 @@ body.menu--sidebar .menu__sub-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0rem 1rem;
     border-top: 1px solid #D0D5D7;
     background-color: #f5f7fb; }
-    body.content--centered .content__toolbar {
-      max-width: calc(1024px - 2rem);
-      margin: auto;
-      border-left: 1px solid #D0D5D7;
-      border-right: 1px solid #D0D5D7; }
-    body.content--padded .content__toolbar {
-      margin: 0 1rem;
-      border-left: 1px solid #D0D5D7;
-      border-right: 1px solid #D0D5D7; }
   .content__body--sidebar .content__list {
     width: calc(100% - 16rem); }
   .content__body--sidebar .content__sidebar {
@@ -3138,6 +3128,7 @@ body.menu--sidebar .menu__sub-nav {
 
 body.content--centered .content__inner {
   max-width: 1024px;
+  width: 100%;
   margin: auto;
   padding-left: 1rem;
   padding-right: 1rem; }

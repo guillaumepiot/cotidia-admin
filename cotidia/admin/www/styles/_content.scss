@@ -31,22 +31,8 @@ $content-foot-height: 3.5rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0rem 1rem;
         border-top: 1px solid $table-row-border-color;
         background-color: $toolbar-background-color;
-
-        body.content--centered & {
-            max-width: calc(#{$laptop-width} - 2rem);
-            margin: auto;
-            border-left: 1px solid $table-row-border-color;
-            border-right: 1px solid $table-row-border-color;
-        }
-
-        body.content--padded & {
-            margin: 0 1rem;
-            border-left: 1px solid $table-row-border-color;
-            border-right: 1px solid $table-row-border-color;
-        }
     }
 
     &__body {
@@ -178,6 +164,7 @@ $content-foot-height: 3.5rem;
 body.content--centered {
     .content__inner {
         max-width: $laptop-width;
+        width: 100%;
         margin: auto;
         padding-left: 1rem;
         padding-right: 1rem;
