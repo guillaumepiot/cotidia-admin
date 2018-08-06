@@ -11,7 +11,10 @@ def get_attr(obj, column):
     if callable(column):
         return column(obj)
 
-    attr = getattr(obj, column)
+    if obj:
+        attr = getattr(obj, column)
+    else:
+        attr = None
 
     # If the object attribute is a method, call it
 
