@@ -13,7 +13,24 @@
 {{{ yield }}}
 
 <script type="text/javascript" src="{{ path '/js/menu.js' }}"></script>
+<script type="text/javascript" src="{{ path '/js/content.js' }}"></script>
 <script type="text/javascript" src="{{ path '/js/sixteen.form.js' }}"></script>
 <script type="text/javascript" src="{{ path '/js/sixteen.tabs.js' }}"></script>
+<script type="text/javascript" src="{{ path '/js/sixteen.messages.js' }}"></script>
+<script>
+    var toggleSidebarBtns = document.querySelectorAll('.toggle-sidebar')
+    var content = document.querySelector('.content__body')
+    if (toggleSidebarBtns && content) {
+        toggleSidebarBtns.forEach(function(elm) {
+            elm.addEventListener('click', function() {
+                if (content.classList.contains('content__body--sidebar')) {
+                    content.classList.remove('content__body--sidebar')
+                } else {
+                    content.classList.add('content__body--sidebar')
+                }
+            })
+        })
+    }
+</script>
 </body>
 </html>

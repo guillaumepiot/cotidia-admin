@@ -3029,7 +3029,8 @@ body.menu--sidebar .menu__sub-nav {
     background-color: #f5f7fb;
     border-top: 1px solid #D0D5D7; }
   .content__head {
-    background-color: #fff; }
+    background-color: #fff;
+    border-bottom: 1px solid #e8eaec; }
     .content__head .content__inner {
       padding-left: 1rem;
       padding-right: 1rem; }
@@ -3038,12 +3039,13 @@ body.menu--sidebar .menu__sub-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid #D0D5D7;
-    background-color: #f5f7fb; }
+    padding: 0 1rem; }
   .content__body--sidebar .content__list {
     width: calc(100% - 16rem); }
   .content__body--sidebar .content__sidebar {
     transform: translate(0); }
+  .content__body fieldset {
+    margin: 2rem 0; }
   @media screen and (min-width: 1024px) {
     .content__foot {
       bottom: 0;
@@ -3138,6 +3140,11 @@ body.content--centered .content__body .content__inner {
   width: 100%;
   max-width: calc(1024px - 2rem);
   height: 100%;
+  padding: 0; }
+body.content--centered .content__toolbar {
+  max-width: calc(1024px - 2rem);
+  width: 100%;
+  margin: auto;
   padding: 0; }
 body.content--centered .content__list {
   border-left: 1px solid #D0D5D7;
@@ -3390,10 +3397,8 @@ body.content--padded .content__list {
   background-color: #f5f7fb;
   clear: both; }
 
-fieldset {
-  margin: 2rem 0; }
-  fieldset.table-view .table tr:last-child tr, fieldset.table-view .table tr:last-child td {
-    border-bottom: none; }
+fieldset.table-view .table tr:last-child tr, fieldset.table-view .table tr:last-child td {
+  border-bottom: none; }
 
 .btn .svg-inline--fa, .form__control input[type="file"] .svg-inline--fa {
   vertical-align: -0.18em; }

@@ -19,6 +19,7 @@ $content-foot-height: 3.5rem;
 
     &__head {
         background-color: #fff;
+        border-bottom: 1px solid $toolbar_border_color;
 
         .content__inner {
             padding-left: 1rem;
@@ -31,8 +32,8 @@ $content-foot-height: 3.5rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-top: 1px solid $table-row-border-color;
-        background-color: $toolbar-background-color;
+        // background-color: $toolbar-background-color;
+        padding: 0 1rem;
     }
 
     &__body {
@@ -43,6 +44,10 @@ $content-foot-height: 3.5rem;
             .content__sidebar {
                 transform: translate(0);
             }
+        }
+
+        fieldset {
+           margin: 2rem 0;
         }
     }
 
@@ -178,6 +183,12 @@ body.content--centered {
             height: 100%;
             padding: 0;
         }
+    }
+    .content__toolbar {
+        max-width: calc(#{$laptop-width} - 2rem);
+        width: 100%;
+        margin: auto;
+        padding: 0;
     }
     .content__list {
         border-left: 1px solid $table-row-border-color;
