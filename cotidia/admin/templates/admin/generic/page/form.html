@@ -66,15 +66,19 @@
         <div class="content__inner content-foot">
             <div class="content-foot__left">
                 <div class="content__foot-left">
+                    {% block form_actions_left %}
                     <button type="submit" class="btn btn--primary">
                         {% trans "Save" %}
                     </button>
+                    {% endblock form_actions_left %}
                 </div>
             </div>
             <div class="content-foot__right">
+                {% block form_actions_right %}
                 <a href="{% if next %}{{next}}{% elif list_url %}{{list_url}}{% else %}{{http_referer}}{% endif %}" class="btn btn--cancel pull-right">
                     {% trans "Cancel" %}
                 </a>
+                {% endblock form_actions_right %}
             </div>
         </div>
     </div>
