@@ -1,12 +1,18 @@
 import csv
 import json
-
-from weasyprint import HTML
+import logging
 
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 
 from rest_framework.renderers import JSONRenderer
+
+logger = logging.getLogger(__name__)
+
+try:
+    from weasyprint import HTML
+except ModuleNotFoundError:
+    HTML = None
 
 
 def flatten_item(item):
@@ -16,6 +22,7 @@ def flatten_item(item):
         return ", ".join([flatten_item(i) for i in item])
 
     return item
+
 
 def render_to_csv(data, filename="export"):
     response = HttpResponse(content_type='text/csv')
@@ -41,6 +48,10 @@ def render_to_csv(data, filename="export"):
 
 
 def render_to_pdf(data, template="admin/export/pdf.html", filename="export"):
+
+    if HTML is None:
+        raise Exception('Weasyprint module not installed!')
+
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="{}.pdf"'.format(filename)
 
