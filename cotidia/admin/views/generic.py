@@ -372,8 +372,6 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
         context = super().get_context_data(**kwargs)
 
         if self.request.GET.get('next'):
-            print(self.request.GET['next'])
-
             context['next'] = self.request.GET['next']
 
         return context

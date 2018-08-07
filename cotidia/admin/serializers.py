@@ -34,7 +34,6 @@ class AdminModelSerializer(serializers.ModelSerializer):
                     serializer = self.fields[key]
                     display_field = serializer.SearchProvider.display_field
                     for subkey, subvalue in repr[key].items():
-                        # print(subkey, subvalue)
                         key_name = "{}__{}".format(key, subkey)
                         if key_name not in repr.keys():
                             repr.update({key_name: subvalue})
