@@ -122,9 +122,13 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
         action_name = getattr(action_func, 'action_name', action)
 
         for object_id in action_items:
-            item = self.get_queryset().get(pk=object_id)
+            try:
+                item = self.get_queryset().get(pk=object_id)
+            except self.model.DoesNotExist:
+                item = None
 
-            action_func(item)
+            if item:
+                action_func(item)
 
         return HttpResponseRedirect(self.get_success_url(action_name))
 
