@@ -1,5 +1,6 @@
 .table {
     border: none;
+
     > thead, > tbody, > tfoot {
         > tr {
             > th, > td {
@@ -93,7 +94,7 @@
             }
         }
 
-        > thead, > tbody, > tfoot {
+        > tbody {
             > tr {
                 > th, > td {
                     &.nowrap {
@@ -112,7 +113,6 @@
                         position: -webkit-sticky; // for safari
                         position: sticky;
                         left: 0px;
-                        // width: 200px;
                         z-index: 2;
                         box-shadow: inset -1px 0px $grey--light;
                     }
@@ -232,31 +232,35 @@
         }
     }
 
-    td.table-column {
-        &--separator {
-            background-color: $table-row-border-color;
+    > thead, > tbody, > tfoot {
+        > tr {
+            > td.table-column {
+                &--separator {
+                    background-color: $table-row-border-color;
 
-            &:hover {
-                background-color: $table-row-border-color;
+                    &:hover {
+                        background-color: $table-row-border-color;
+                    }
+                }
             }
-        }
-    }
 
-    th.table-footer {
-        &--separator {
-            background-color: $table-row-border-color;
+            > th.table-footer {
+                &--separator {
+                    background-color: $table-row-border-color;
 
-            &:hover {
-                background-color: $table-row-border-color;
+                    &:hover {
+                        background-color: $table-row-border-color;
+                    }
+                }
             }
-        }
-    }
 
-    tr:hover, tr:nth-child(even) {
-        th.table-header--separator,
-        td.table-column--separator,
-        th.table-footer--separator{
-            background-color: $table-row-border-color;
+            &:hover, &:nth-child(even) {
+                > th.table-header--separator,
+                > td.table-column--separator,
+                > th.table-footer--separator{
+                    background-color: $table-row-border-color;
+                }
+            }
         }
     }
 }
