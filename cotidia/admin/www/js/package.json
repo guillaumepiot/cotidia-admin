@@ -14,7 +14,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@babel/polyfill": "^7.0.0-beta.55",
-    "@cotidia/react-ui": "^1.2.1",
+    "@cotidia/react-ui": "^2.0.0",
     "immutable": "^3.8.2",
     "lodash.isequal": "^4.5.0",
     "moment": "^2.22.2",
