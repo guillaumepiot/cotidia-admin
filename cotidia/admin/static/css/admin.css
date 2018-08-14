@@ -3026,6 +3026,12 @@ body.menu--sidebar .menu__sub-nav {
     height: calc(100% - 13rem - 1px);
     position: relative;
     overflow: hidden; }
+  .content--sticky .content__list {
+    height: 100%;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+    position: absolute; }
   .content--sticky .content__foot {
     background-color: #f5f7fb;
     border-top: 1px solid #D0D5D7; }
@@ -3057,11 +3063,6 @@ body.menu--sidebar .menu__sub-nav {
     border-top: 1px solid #D0D5D7;
     bottom: -1px; }
   .content__list {
-    height: 100%;
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: auto;
-    position: absolute;
     transition: width 0.4s ease;
     border-top: 1px solid #D0D5D7; }
   .content__sidebar {
