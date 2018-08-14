@@ -23,6 +23,7 @@ export default class Date extends Component {
 
     return (
       <DatePickerInput
+        dropdownAnchor='right'
         name={name}
         updateValue={this.updateValue}
         value={value}
