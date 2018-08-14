@@ -1,5 +1,6 @@
 from .generic import (
     AdminListView,
+    AdminGenericListView,
     AdminDetailView,
     AdminCreateView,
     AdminUpdateView,
@@ -12,6 +13,7 @@ from .generic import (
 
 __all__ = [
     "AdminListView",
+    "AdminGenericListView",
     "AdminDetailView",
     "AdminCreateView",
     "AdminUpdateView",
