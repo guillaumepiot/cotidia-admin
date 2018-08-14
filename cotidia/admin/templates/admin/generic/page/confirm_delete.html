@@ -35,8 +35,6 @@
                     <p class="text-italic">{% trans "The operation is not reversible." %}</p>
                 </div>
             </fieldset>
-
-
         </div>
     </div>
 </div>
@@ -51,15 +49,9 @@
                 </button>
             </div>
             <div class="content-foot__right">
-                {% if list_url %}
-                <a href="{% if next %}{{next}}{% else %}{{list_url}}{% endif %}" class="btn btn--cancel pull-right">
+                <a href="{% if next %}{{next}}{% elif list_url %}{{list_url}}{% else %}{{http_referer}}{% endif %}" class="btn btn--cancel pull-right">
                     {% trans "Cancel" %}
                 </a>
-                {% else %}
-                <a href="{% if next %}{{next}}{% else %}{{http_referer}}{% endif %}" class="btn btn--cancel pull-right">
-                    {% trans "Cancel" %}
-                </a>
-                {% endif %}
             </div>
         </div>
     </div>

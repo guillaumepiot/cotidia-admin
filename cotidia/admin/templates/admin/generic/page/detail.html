@@ -68,17 +68,21 @@
     <div class="content__inner content-foot">
         <div class="content-foot__left">
             <div class="content__foot-left">
+                {% block form_actions_left %}
                 <a href="{% get_admin_url app_label model_name 'update' object %}" class="btn btn--change">
                     {% blocktrans with object_name as object_name %}
                         Edit
                     {% endblocktrans %}
                 </a>
+                {% endblock form_actions_left %}
             </div>
         </div>
         <div class="content-foot__right">
+            {% block form_actions_right %}
             <a href="{% if next %}{{next}}{% elif list_url %}{{list_url}}{% else %}{{http_referer}}{% endif %}" class="btn btn--cancel pull-right">
                 {% trans "Back" %}
             </a>
+            {% endblock form_actions_right %}
         </div>
     </div>
 </div>

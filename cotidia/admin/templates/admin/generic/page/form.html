@@ -20,10 +20,8 @@
 {% block content_title %}
     {% if list_url %}
         <a href="{{list_url}}">{{verbose_name_plural}}</a>
-    {% else %}
-        <a href="{{http_referer}}">{% trans "back" %}</a>
+        &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
     {% endif %}
-    &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
     {% if object %}
         <a href="{% get_admin_url app_label model_name 'detail' object %}">{{object}}</a>
         &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
