@@ -19,15 +19,12 @@
 
 {% block content_title %}
     {% if list_url %}
-        <a href="{{list_url}}">{{verbose_name_plural}}</a>
-        &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
+    <a href="{{list_url}}" class="btn btn--link tooltip tooltip--bottom-center back-to-list" data-tooltip="Back to list">
+        <span class="fa fa-list"></span>
+    </a>
     {% endif %}
     {% if object %}
-        <a href="{% get_admin_url app_label model_name 'detail' object %}">{{object}}</a>
-        &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
-        {% blocktrans with verbose_name as verbose_name %}
-            Edit {{verbose_name}}
-        {% endblocktrans %}
+        {{object}}
     {% else %}
         {% blocktrans with verbose_name as verbose_name %}
             Add {{verbose_name}}
@@ -73,9 +70,15 @@
             </div>
             <div class="content-foot__right">
                 {% block form_actions_right %}
-                <a href="{% if next %}{{next}}{% elif list_url %}{{list_url}}{% else %}{{http_referer}}{% endif %}" class="btn btn--cancel pull-right">
-                    {% trans "Cancel" %}
-                </a>
+                {% if object %}
+                    <a href="{% if next %}{{next}}{% else %}{% get_admin_url app_label model_name 'detail' object %}{% endif %}" class="btn btn--cancel pull-right">
+                        {% trans "Cancel" %}
+                    </a>
+                {% else %}
+                    <a href="{% if next %}{{next}}{% elif list_url %}{{list_url}}{% else %}{{http_referer}}{% endif %}" class="btn btn--cancel pull-right">
+                        {% trans "Cancel" %}
+                    </a>
+                {% endif %}
                 {% endblock form_actions_right %}
             </div>
         </div>

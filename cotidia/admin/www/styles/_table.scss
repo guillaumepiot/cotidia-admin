@@ -59,6 +59,11 @@
                     }
                 }
 
+                > th {
+                    padding-top: 1rem;
+                    padding-bottom: 1rem;
+                }
+
                 > th:hover {
                     .table-header__item {
                         opacity: 1;
