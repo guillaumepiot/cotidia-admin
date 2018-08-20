@@ -89,6 +89,7 @@ $content-foot-height: 3.5rem;
         background-color: #fff;
         border-top: 1px solid $table-row-border-color;
         border-left: 1px solid $table-row-border-color;
+        user-select: none;
 
         fieldset {
             border-width: 0;
