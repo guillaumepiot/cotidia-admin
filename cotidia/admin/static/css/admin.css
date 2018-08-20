@@ -562,12 +562,13 @@ hr {
   cursor: pointer;
   display: inline-block;
   position: relative;
+  box-sizing: border-box;
   outline: none;
   vertical-align: middle;
   background-color: #666;
   border: 2px solid #666;
   color: #fff;
-  padding: 0.5rem 1rem;
+  padding: calc(0.5rem - 1px) 1rem;
   font-family: "Roboto", Helvetica, sans-serif;
   font-style: normal;
   text-align: center;
@@ -1225,16 +1226,11 @@ hr {
         background-color: rgba(0, 0, 0, 0.35);
         z-index: -1;
         pointer-events: none; }
-    .dialog--modal .dialog__content {
-      border-radius: 2px;
-      position: relative;
-      border: 1px solid #D0D5D7;
-      background-color: #fff; }
-      @media screen and (max-width: 767px) {
-        .dialog--modal .dialog__content {
-          display: flex;
-          flex-direction: column;
-          max-height: calc(100% - 1.33rem); } }
+    @media screen and (max-width: 767px) {
+      .dialog--modal .dialog__content {
+        display: flex;
+        flex-direction: column;
+        max-height: calc(100% - 1.33rem); } }
     @media screen and (max-width: 767px) {
       .dialog--modal .dialog__body {
         overflow-y: auto; } }
@@ -1254,7 +1250,8 @@ hr {
     border: 1px solid #D0D5D7;
     border-radius: 2px;
     width: calc(100% - 1rem);
-    max-width: 540px; }
+    max-width: 540px;
+    position: relative; }
     .dialog__content:first-child {
       margin-top: 0.67rem; }
     .dialog__content:last-child {
@@ -1608,12 +1605,13 @@ hr {
       cursor: pointer;
       display: inline-block;
       position: relative;
+      box-sizing: border-box;
       outline: none;
       vertical-align: middle;
       background-color: #666;
       border: 2px solid #666;
       color: #fff;
-      padding: 0.5rem 1rem;
+      padding: calc(0.5rem - 1px) 1rem;
       font-family: "Roboto", Helvetica, sans-serif;
       font-style: normal;
       text-align: center;
@@ -2428,19 +2426,24 @@ textarea {
           content: attr(data-header); } }
   .table tr {
     background-color: #fff; }
-    .table tr:hover, .table tr:active, .table tr:focus {
-      background-color: #f4f7f7; }
+    .table tr:hover td, .table tr:hover th, .table tr:active td, .table tr:active th, .table tr:focus td, .table tr:focus th {
+      background-color: #f5f7fb; }
     @media screen and (min-width: 768px) {
       .table tr:last-child td {
         border-bottom: none; } }
     .table tr th {
-      background-color: #E5EBED;
-      padding: 0.7142857143rem 1rem;
-      font-weight: 700;
+      background-color: #eef0f5;
+      padding: 0.5rem 1rem;
+      font-weight: 500;
       text-align: left; }
     .table tr td {
-      padding: 0.7142857143rem 1rem;
-      border-bottom: 1px solid #D0D5D7; }
+      padding: 0.5rem 1rem;
+      border-bottom: 1px solid #D0D5D7;
+      background-color: #ffffff; }
+  .table thead th {
+    padding: 1rem 1rem; }
+  .table tfoot th {
+    padding: 1rem 1rem; }
 
 /*
  * Tag label with close button
@@ -3302,7 +3305,7 @@ body.content--padded .content__list {
     background-color: #D0D5D7; }
 
 .dragging-table-header {
-  background-color: #E5EBED;
+  background-color: #eef0f5;
   padding: 0.5rem 1rem;
   font-weight: 500;
   line-height: 2rem;
@@ -3372,7 +3375,7 @@ body.content--padded .content__list {
   border-bottom: 1px solid #D0D5D7;
   font-weight: 500;
   padding-bottom: calc(1rem - 1px);
-  background-color: #E5EBED; }
+  background-color: #eef0f5; }
 .form__group--boxed .form__control {
   background-color: #fff;
   padding-top: 0.5rem;
