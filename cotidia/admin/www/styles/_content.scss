@@ -11,6 +11,13 @@ $content-foot-height: 3.5rem;
             position: relative;
             overflow: hidden;
         }
+        .content__list {
+            height: 100%;
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: auto;
+            position: absolute;
+        }
         .content__foot {
             background-color: $toolbar-background-color;
             border-top: 1px solid $table-row-border-color;
@@ -68,11 +75,6 @@ $content-foot-height: 3.5rem;
     }
 
     &__list {
-        height: 100%;
-        width: 100%;
-        overflow-x: auto;
-        overflow-y: auto;
-        position: absolute;
         transition: width $animation-speed ease;
         border-top: 1px solid $table-row-border-color;
     }
@@ -93,6 +95,7 @@ $content-foot-height: 3.5rem;
 
         fieldset {
             border-width: 0;
+            margin: 0;
         }
 
         .toggle-sidebar {
@@ -122,6 +125,33 @@ $content-foot-height: 3.5rem;
     }
 }
 
+.content-head {
+    align-items: center;
+    display: flex;
+    height: $content-head-height;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+
+    &__title {
+        @include font_size($font_size--emphasis);
+        justify-self: flex-start;
+    }
+
+    &__actions {
+        justify-self: flex-end;
+
+        .btn {
+            margin-left: 0.5rem;
+        }
+    }
+
+    .back-to-list {
+        position: relative;
+        top: -1px;
+    }
+}
+
 .content-foot {
     align-items: center;
     display: flex;
@@ -147,26 +177,6 @@ $content-foot-height: 3.5rem;
         }
     }
 }
-.content-head {
-    align-items: center;
-    display: flex;
-    height: $content-head-height;
-    justify-content: space-between;
-    width: 100%;
-
-    &__title {
-        @include font_size($font_size--medium);
-        justify-self: flex-start;
-    }
-
-    &__actions {
-        justify-self: flex-end;
-
-        .btn {
-            margin-left: 0.5rem;
-        }
-    }
-}
 
 body.content--centered {
     .content__inner {
@@ -181,20 +191,31 @@ body.content--centered {
             overflow: hidden;
             position: relative;
             width: 100%;
-            max-width: calc(#{$laptop-width} - 2rem);
+            // max-width: calc(#{$laptop-width} - 2rem);
             height: 100%;
-            padding: 0;
+            // padding-left: 1rem;
+            // padding-right: 1rem;
         }
     }
     .content__toolbar {
-        max-width: calc(#{$laptop-width} - 2rem);
+        max-width: calc(#{$laptop-width});
         width: 100%;
         margin: auto;
-        padding: 0;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
     .content__list {
         border-left: 1px solid $table-row-border-color;
         border-right: 1px solid $table-row-border-color;
+        width: calc(100% - 2rem);
+    }
+    .content__body--sidebar .content__list {
+        width: calc(100% - 16rem - 1rem);
+    }
+    .content__sidebar {
+        border-right: 1px solid $table-row-border-color;
+        width: calc(16rem - 1rem);
+        right: 1rem;
     }
 }
 

@@ -7,30 +7,22 @@
 
 {% block content_title %}
     {% if list_url %}
-        <a href="{{list_url}}">{{verbose_name_plural}}</a>
-    {% else %}
-        <a href="{{http_referer}}">{% trans "back"%}</a>
+    <a href="{{list_url}}" class="btn btn--link tooltip tooltip--bottom-center back-to-list" data-tooltip="Back to list">
+        <span class="fa fa-list"></span>
+    </a>
     {% endif %}
-    &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
     {% blocktrans with verbose_name as verbose_name %}
         {{object}}
     {% endblocktrans %}
 {% endblock content_title %}
 
 {% block content_actions %}
-    <a href="{% get_admin_url app_label model_name "delete" object %}" class="btn btn--delete btn--small">
-        <span class="fa fa-times"></span>
-        {% blocktrans with verbose_name as verbose_name %}
-            Delete
-        {% endblocktrans %}
-    </a>
-
-    <a href="{% get_admin_url app_label model_name 'update' object %}" class="btn btn--change btn--small">
-        <span class="fa fa-pen"></span>
-        {% blocktrans with verbose_name as verbose_name %}
-            Edit
-        {% endblocktrans %}
-    </a>
+<a href="{% get_admin_url app_label model_name 'update' object %}" class="btn btn--link tooltip tooltip--bottom-center" data-tooltip="Edit">
+    <span class="fa fa-pen"></span>
+</a>
+<a href="{% get_admin_url app_label model_name "delete" object %}" class="btn btn--link tooltip tooltip--bottom-center" data-tooltip="Delete">
+    <span class="fa fa-trash"></span>
+</a>
 {% endblock content_actions %}
 
 {% block page_content %}
@@ -68,17 +60,21 @@
     <div class="content__inner content-foot">
         <div class="content-foot__left">
             <div class="content__foot-left">
+                {% block form_actions_left %}
                 <a href="{% get_admin_url app_label model_name 'update' object %}" class="btn btn--change">
                     {% blocktrans with object_name as object_name %}
                         Edit
                     {% endblocktrans %}
                 </a>
+                {% endblock form_actions_left %}
             </div>
         </div>
         <div class="content-foot__right">
+            {% block form_actions_right %}
             <a href="{% if next %}{{next}}{% elif list_url %}{{list_url}}{% else %}{{http_referer}}{% endif %}" class="btn btn--cancel pull-right">
                 {% trans "Back" %}
             </a>
+            {% endblock form_actions_right %}
         </div>
     </div>
 </div>

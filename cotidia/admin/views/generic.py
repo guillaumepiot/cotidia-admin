@@ -106,6 +106,10 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
         return context
 
     def get_template_names(self):
+
+        if self.template_name is not None:
+            return [self.template_name]
+
         template = 'admin/{app}/{model}/list.html'.format(
             app=self.model._meta.app_label,
             model=self.model._meta.model_name
@@ -186,6 +190,10 @@ class AdminGenericListView(
             )
 
     def get_template_names(self):
+
+        if self.template_name is not None:
+            return [self.template_name]
+
         template = 'admin/{app}/{model}/dynamic-list.html'.format(
             app=self.model._meta.app_label,
             model=self.model._meta.model_name
@@ -287,6 +295,10 @@ class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):
         return context
 
     def get_template_names(self):
+
+        if self.template_name is not None:
+            return [self.template_name]
+
         template = 'admin/{app}/{model}/detail.html'.format(
             app=self.model._meta.app_label,
             model=self.model._meta.model_name
@@ -316,6 +328,10 @@ class AdminCreateView(StaffPermissionRequiredMixin, ContextMixin, CreateView):
         return context
 
     def get_template_names(self):
+
+        if self.template_name is not None:
+            return [self.template_name]
+
         template = 'admin/{app}/{model}/form.html'.format(
             app=self.model._meta.app_label,
             model=self.model._meta.model_name
@@ -381,6 +397,10 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
         return context
 
     def get_template_names(self):
+
+        if self.template_name is not None:
+            return [self.template_name]
+
         template = 'admin/{app}/{model}/form.html'.format(
             app=self.model._meta.app_label,
             model=self.model._meta.model_name
@@ -483,6 +503,10 @@ class AdminDeleteView(StaffPermissionRequiredMixin, ContextMixin, DeleteView):
         return context
 
     def get_template_names(self):
+
+        if self.template_name is not None:
+            return [self.template_name]
+
         template = 'admin/{app}/{model}/confirm_delete.html'.format(
             app=self.model._meta.app_label,
             model=self.model._meta.model_name
@@ -522,6 +546,10 @@ class AdminChildUpdateView(ChildMixin, AdminUpdateView):
 
 class AdminChildDeleteView(ChildMixin, AdminDeleteView):
     def get_template_names(self):
+
+        if self.template_name is not None:
+            return [self.template_name]
+
         template = 'admin/{app}/{model}/child_confirm_delete.html'.format(
             app=self.model._meta.app_label,
             model=self.model._meta.model_name

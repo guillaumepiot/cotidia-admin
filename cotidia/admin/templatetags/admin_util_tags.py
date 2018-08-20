@@ -11,10 +11,13 @@ def get_attr(obj, column):
     if callable(column):
         return column(obj)
 
+    attr = None
+
     if obj:
-        attr = getattr(obj, column)
-    else:
-        attr = None
+        attrs = column.split('.')
+        attr = getattr(obj, attrs.pop(0))
+        for a in attrs:
+            attr = getattr(attr, a)
 
     # If the object attribute is a method, call it
 

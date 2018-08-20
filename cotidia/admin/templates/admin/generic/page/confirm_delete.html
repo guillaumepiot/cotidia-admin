@@ -5,16 +5,11 @@
 
 {% block content_title %}
     {% if list_url %}
-        <a href="{{list_url}}">{{verbose_name_plural}}</a>
-    {% else %}
-        <a href="{{http_referer}}">{% trans "back" %}</a>
-    {% endif %}
-    &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
-    <a href="{% get_admin_url app_label model_name 'detail' object %}">
-        {{object}}
+    <a href="{{list_url}}" class="btn btn--link tooltip tooltip--bottom-center back-to-list" data-tooltip="Back to list">
+        <span class="fa fa-list"></span>
     </a>
-    &nbsp;<span class="fa fa-angle-right"></span>&nbsp;
-    {% trans "Confirm delete" %}
+    {% endif %}
+    {{object}}
 {% endblock content_title %}
 
 {% block page_content %}
@@ -35,8 +30,6 @@
                     <p class="text-italic">{% trans "The operation is not reversible." %}</p>
                 </div>
             </fieldset>
-
-
         </div>
     </div>
 </div>
@@ -51,15 +44,9 @@
                 </button>
             </div>
             <div class="content-foot__right">
-                {% if list_url %}
-                <a href="{% if next %}{{next}}{% else %}{{list_url}}{% endif %}" class="btn btn--cancel pull-right">
+                <a href="{% if next %}{{next}}{% else %}{% get_admin_url app_label model_name 'detail' object %}{% endif %}" class="btn btn--cancel pull-right">
                     {% trans "Cancel" %}
                 </a>
-                {% else %}
-                <a href="{% if next %}{{next}}{% else %}{{http_referer}}{% endif %}" class="btn btn--cancel pull-right">
-                    {% trans "Cancel" %}
-                </a>
-                {% endif %}
             </div>
         </div>
     </div>

@@ -11,12 +11,17 @@ register = template.Library()
 
 @register.simple_tag(takes_context=True)
 def render_column(context, column):
-    column_header, column_attr = column
+
+    if len(column) == 3:
+        column_header, column_attr, column_alias = column
+    elif len(column) == 2:
+        column_header, column_attr = column
+        column_alias = column_attr
 
     app_label = context["app_label"]
     model_name = context["model_name"]
     template = 'admin/{}/{}/columns/{}.html'.format(
-        app_label, model_name, column_attr
+        app_label, model_name, column_alias
     )
 
     try:

@@ -104,6 +104,10 @@ class ChildMixin:
         return super().form_valid(form)
 
     def get_template_names(self):
+
+        if self.template_name is not None:
+            return [self.template_name]
+
         template = 'admin/{app}/{model}/child_form.html'.format(
             app=self.model._meta.app_label,
             model=self.model._meta.model_name
