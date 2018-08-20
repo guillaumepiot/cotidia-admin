@@ -3046,6 +3046,7 @@ body.menu--sidebar .menu__sub-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
     padding: 0 1rem;
     z-index: 5; }
   .content__body--sidebar .content__list {
@@ -3397,7 +3398,6 @@ body.content--padded .content__list {
 
 .form__legend {
   padding: 1rem 1rem;
-  margin-bottom: 0.5rem;
   border-bottom: 1px solid #D0D5D7;
   font-weight: 500;
   padding-bottom: calc(1rem - 1px);

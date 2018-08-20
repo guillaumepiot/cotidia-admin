@@ -39,7 +39,7 @@ $content-foot-height: 3.5rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        // background-color: $toolbar-background-color;
+        position: relative;
         padding: 0 1rem;
         z-index: 5;
     }
