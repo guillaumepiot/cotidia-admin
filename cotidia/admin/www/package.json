@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "font-awesome": "^4.7.0",
-    "sixteen": "^0.3.21"
+    "sixteen": "^0.4.1"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
