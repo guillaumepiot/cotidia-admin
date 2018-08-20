@@ -3254,24 +3254,30 @@ body.content--padded .content__list {
   .table--sticky > tbody > tr > th.table-cell--category-highlight:first-child, .table--sticky > tbody > tr > td.table-cell--category-highlight:first-child {
     box-shadow: none; }
   .table--action > thead > tr > th:first-child, .table--action > thead > tr > td:first-child {
-    width: calc(52px - 1rem);
-    padding-right: 0; }
+    width: 3.2rem; }
   .table--action > thead > tr > th:first-child, .table--action > thead > tr > th:nth-child(2), .table--action > thead > tr > td:first-child, .table--action > thead > tr > td:nth-child(2) {
     z-index: 4; }
-  .table--action > tfoot > tr > th:first-child, .table--action > tfoot > tr > th:nth-child(2), .table--action > tfoot > tr > td:first-child, .table--action > tfoot > tr > td:nth-child(2) {
-    z-index: 4; }
-  .table--action > thead > tr > th:first-child, .table--action > thead > tr > td:first-child, .table--action > tbody > tr > th:first-child, .table--action > tbody > tr > td:first-child, .table--action > tfoot > tr > th:first-child, .table--action > tfoot > tr > td:first-child {
-    width: calc(52px - 1rem);
-    padding-right: 0; }
-  .table--action > thead > tr > th:first-child, .table--action > thead > tr > th:nth-child(2), .table--action > thead > tr > td:first-child, .table--action > thead > tr > td:nth-child(2), .table--action > tbody > tr > th:first-child, .table--action > tbody > tr > th:nth-child(2), .table--action > tbody > tr > td:first-child, .table--action > tbody > tr > td:nth-child(2), .table--action > tfoot > tr > th:first-child, .table--action > tfoot > tr > th:nth-child(2), .table--action > tfoot > tr > td:first-child, .table--action > tfoot > tr > td:nth-child(2) {
+  .table--action > thead > tr > th:nth-child(2), .table--action > thead > tr > td:nth-child(2) {
+    left: 3.2rem;
+    box-shadow: inset -1px 0px #D0D5D7; }
+  .table--action > tbody > tr > th:first-child, .table--action > tbody > tr > td:first-child {
+    width: 3.2rem; }
+  .table--action > tbody > tr > th:first-child, .table--action > tbody > tr > th:nth-child(2), .table--action > tbody > tr > td:first-child, .table--action > tbody > tr > td:nth-child(2) {
     position: -webkit-sticky;
     position: sticky;
     left: 0px;
     z-index: 2;
     box-shadow: none; }
-  .table--action > thead > tr > th:nth-child(2), .table--action > thead > tr > td:nth-child(2), .table--action > tbody > tr > th:nth-child(2), .table--action > tbody > tr > td:nth-child(2), .table--action > tfoot > tr > th:nth-child(2), .table--action > tfoot > tr > td:nth-child(2) {
-    left: 2.2rem;
+  .table--action > tbody > tr > th:nth-child(2), .table--action > tbody > tr > td:nth-child(2) {
+    left: 3.2rem;
     width: 200px;
+    box-shadow: inset -1px 0px #D0D5D7; }
+  .table--action > tfoot > tr > th:first-child, .table--action > tfoot > tr > td:first-child {
+    width: 3.2rem; }
+  .table--action > tfoot > tr > th:first-child, .table--action > tfoot > tr > th:nth-child(2), .table--action > tfoot > tr > td:first-child, .table--action > tfoot > tr > td:nth-child(2) {
+    z-index: 4; }
+  .table--action > tfoot > tr > th:nth-child(2), .table--action > tfoot > tr > td:nth-child(2) {
+    left: 3.2rem;
     box-shadow: inset -1px 0px #D0D5D7; }
   @media screen and (max-width: 767px) {
     .table--admin-mobile-view > thead > tr > th, .table--admin-mobile-view > tbody > tr > td {
