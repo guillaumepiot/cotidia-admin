@@ -124,10 +124,7 @@ class AdminSearchDashboardAPIView(ListAPIView):
     def get_queryset(self):
         model_class = self.get_model_class()
 
-        serializer_class = self.kwargs.get('serializer_class', None)
-
-        if not serializer_class:
-            serializer_class = model_class.SearchProvider.serializer()
+        serializer_class = self.get_serializer_class()
 
         qs = get_queryset(
             model_class,
