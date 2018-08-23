@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 
 import { getValueFormatter } from '../utils/resultItems'
 
-import EditBoolean from './editors/Boolean'
-import EditChoice from './editors/Choice'
-import EditDate from './editors/Date'
-import EditText from './editors/Text'
-import EditNumber from './editors/Number'
+import EditBoolean from './fields/editors/Boolean'
+import EditChoice from './fields/editors/Choice'
+import EditDate from './fields/editors/Date'
+import EditText from './fields/editors/Text'
+import EditNumber from './fields/editors/Number'
 
 import { Icon } from './elements/global'
 
