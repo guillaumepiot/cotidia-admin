@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 
 import { Icon } from './elements/global'
 
-import * as inlineFilters from './inline-filters'
+import * as SIDEBAR_FILTERS from './fields/sidebar-filters'
 
 export default class FilterSidebar extends Component {
   static propTypes = {
     filters: PropTypes.object,
     hasSidebarFilters: PropTypes.bool.isRequired,
     setFilterValue: PropTypes.func.isRequired,
-    sidebarFilters: PropTypes.array,
+    inlineFilters: PropTypes.array,
     showSidebar: PropTypes.func.isRequired,
   }
 
@@ -22,7 +22,7 @@ export default class FilterSidebar extends Component {
     const {
       filters,
       hasSidebarFilters,
-      sidebarFilters,
+      inlineFilters,
     } = this.props
 
     if (! hasSidebarFilters) {
@@ -41,21 +41,21 @@ export default class FilterSidebar extends Component {
               </button>
             </div>
 
-            {sidebarFilters && sidebarFilters.map((filter) => {
+            {inlineFilters && inlineFilters.map((filter) => {
               const { filter: type, ...filterProps } = filter
 
               let Component
 
               if (type === 'boolean') {
-                Component = inlineFilters.Boolean
+                Component = SIDEBAR_FILTERS.Boolean
               } else if (type === 'text') {
-                Component = inlineFilters.Text
+                Component = SIDEBAR_FILTERS.Text
               } else if (type === 'number') {
-                Component = inlineFilters.Number
+                Component = SIDEBAR_FILTERS.Number
               } else if (type === 'date') {
-                Component = inlineFilters.Date
+                Component = SIDEBAR_FILTERS.Date
               } else if (type === 'choice') {
-                Component = inlineFilters.Choice
+                Component = SIDEBAR_FILTERS.Choice
               }
 
               if (Component) {

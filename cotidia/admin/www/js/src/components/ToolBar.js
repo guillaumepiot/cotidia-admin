@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { debounce } from '../utils'
 
-import * as inlineFilters from './inline-filters'
+import * as TOOLBAR_FILTERS from './fields/sidebar-filters'
 
 import { TextInput } from '@cotidia/react-ui'
 
@@ -94,15 +94,15 @@ export default class ToolBar extends Component {
           let Component
 
           if (type === 'boolean') {
-            Component = inlineFilters.Boolean
+            Component = TOOLBAR_FILTERS.Boolean
           } else if (type === 'text') {
-            Component = inlineFilters.Text
+            Component = TOOLBAR_FILTERS.Text
           } else if (type === 'number') {
-            Component = inlineFilters.Number
+            Component = TOOLBAR_FILTERS.Number
           } else if (type === 'date') {
-            Component = inlineFilters.Date
+            Component = TOOLBAR_FILTERS.Date
           } else if (type === 'choice') {
-            Component = inlineFilters.Choice
+            Component = TOOLBAR_FILTERS.Choice
           }
 
           if (Component) {

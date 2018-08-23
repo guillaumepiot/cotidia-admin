@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { getValueFormatter } from '../../utils/resultItems'
+import { getValueFormatter } from '../../../utils/resultItems'
 
 class Date extends Component {
   static propTypes = {
@@ -41,7 +41,7 @@ class Date extends Component {
 
 import { connect } from 'react-redux'
 
-import { configureFilter } from '../../redux/modules/search/actions'
+import { configureFilter } from '../../../redux/modules/search/actions'
 
 const mapStateToProps = (state) => ({
   config: state.config,
