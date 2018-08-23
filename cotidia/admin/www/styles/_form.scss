@@ -6,43 +6,6 @@
         padding-bottom: calc(1rem - 1px);
         background-color: $table-header-background-color;
     }
-
-    &__group {
-        &--boxed {
-            .form__control {
-                background-color: #fff;
-                padding-top: 0.5rem;
-                padding-bottom: 0.5rem;
-                padding-left: 1rem;
-                padding-right: 1rem;
-                border: 1px solid $toolbar-form-border-color;
-                border-radius: $border-radius;
-
-                &--input, &--select, &--textarea {
-
-                    input, select {
-                        padding-right: 1rem;
-                    }
-
-                    &::after {
-                        top: calc(1.25rem - 2px);
-                        right: 1rem;
-                    }
-                }
-
-                .control-select__options {
-                    line-height: 1.5;
-                }
-            }
-
-            .form__label, .form__help {
-                display: none;
-            }
-        }
-        .tag {
-            margin-top: 0.5rem;
-        }
-    }
 }
 
 .fieldset-actions {
