@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { debounce } from '../utils'
 
-import * as TOOLBAR_FILTERS from './fields/sidebar-filters'
+import * as TOOLBAR_FILTERS from './fields/toolbar-filters'
 
 import { TextInput } from '@cotidia/react-ui'
 
