@@ -5,11 +5,11 @@ import moment from 'moment'
 
 import 'react-date-range/dist/styles.css' // main style file
 import 'react-date-range/dist/theme/default.css' // theme css file
-import '../elements/dateRangeOverrides.css'
+import '../../elements/dateRangeOverrides.css'
 
 import { DateRangePicker } from 'react-date-range'
 import defaultLocale from 'react-date-range/src/locale/en-GB'
-import { staticRanges } from '../elements/global'
+import { staticRanges } from '../../elements/global'
 
 export default class Date extends Component {
   static propTypes = {

@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Text from '../filters/Text'
-import Choice from '../filters/Choice'
-import Boolean from '../filters/Boolean'
-import Number from '../filters/Number'
-import Date from '../filters/Date'
+import * as MODAL_FILTERS from '../fields/modal-filters'
 
 export default class Filter extends Component {
   static propTypes = {
@@ -18,28 +14,28 @@ export default class Filter extends Component {
   render () {
     const { config: { filter } } = this.props
 
-    let Component = Text
+    let Component
 
     switch (filter) {
       case 'choice':
-        Component = Choice
+        Component = MODAL_FILTERS.Choice
         break
 
       case 'boolean':
-        Component = Boolean
+        Component = MODAL_FILTERS.Boolean
         break
 
       case 'number':
-        Component = Number
+        Component = MODAL_FILTERS.Number
         break
 
       case 'date':
-        Component = Date
+        Component = MODAL_FILTERS.Date
         break
 
       case 'text':
       default:
-        Component = Text
+        Component = MODAL_FILTERS.Text
     }
 
     return (
