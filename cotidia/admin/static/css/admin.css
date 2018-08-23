@@ -14,9 +14,6 @@
  * Dialog
  */
 /**
- * Form
- */
-/**
  * Breakpoints
  */
 /**
@@ -1492,6 +1489,50 @@ hr {
     .form__group--inline .form__control input[type="time"],
     .form__group--inline .form__control input[type="url"] {
       width: auto; }
+  .form__group--boxed .form__control {
+    background-color: #fff;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border: 1px solid #D0D5D7;
+    border-radius: 2px;
+    box-sizing: padding-box; }
+    .form__group--boxed .form__control--input input, .form__group--boxed .form__control--input select, .form__group--boxed .form__control--select input, .form__group--boxed .form__control--select select, .form__group--boxed .form__control--textarea input, .form__group--boxed .form__control--textarea select {
+      padding-right: 1rem; }
+    .form__group--boxed .form__control--input::after, .form__group--boxed .form__control--select::after, .form__group--boxed .form__control--textarea::after {
+      top: calc(1.25rem - 2px);
+      right: 1rem; }
+    .form__group--boxed .form__control--input:hover, .form__group--boxed .form__control--select:hover, .form__group--boxed .form__control--textarea:hover {
+      border-width: 1px;
+      padding-bottom: 0.5rem; }
+    .form__group--boxed .form__control--input.control-select--focus, .form__group--boxed .form__control--select.control-select--focus, .form__group--boxed .form__control--textarea.control-select--focus {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0; }
+    .form__group--boxed .form__control .control-select__options {
+      line-height: 1.5;
+      width: calc(100% + 2px);
+      left: -1px;
+      margin-top: -1px; }
+    .form__group--boxed .form__control input[type="text"]::placeholder,
+    .form__group--boxed .form__control textarea::placeholder {
+      color: #aaafb1; }
+  .form__group--boxed.form__group--active .form__label {
+    display: none; }
+  .form__group--boxed.form__group--inactive .form__label {
+    display: block; }
+  .form__group--boxed .form__label, .form__group--boxed .form__help {
+    display: none; }
+  .form__group--boxed .form__label {
+    position: absolute;
+    left: 1rem;
+    top: calc(0.5rem + 1px);
+    transform: translateY(0); }
+  .form__group--boxed .control-select__clear-button {
+    top: calc(0.5rem + 2px);
+    right: calc(10px + 0.75rem + 0.5rem); }
+  .form__group .tag {
+    margin-top: 0.5rem; }
 .form__control {
   min-height: 1.5em;
   padding-bottom: 1px;
@@ -1567,7 +1608,7 @@ hr {
     border-bottom: 1px solid #D0D5D7;
     display: flex; }
     .form__control--input:hover, .form__control--select:hover, .form__control--textarea:hover {
-      border-color: #7f878a;
+      border-color: #555A5D;
       border-width: 2px;
       padding-bottom: 0px; }
   .form__control--select {
@@ -1765,6 +1806,19 @@ hr {
   font-weight: 700;
   padding: 0.5rem 1rem;
   text-align: left; }
+.control-select__clear-button {
+  border: none;
+  border-radius: 1em;
+  background-color: #D0D5D7;
+  cursor: pointer;
+  font-size: 1em;
+  opacity: 0.6;
+  position: absolute;
+  top: 1px;
+  right: calc(10px + 0.75rem);
+  height: 1.25em;
+  width: 1.25em;
+  padding: 0 0 2px 0; }
 
 @media screen and (max-width: 767px) {
   [type=submit], button {
