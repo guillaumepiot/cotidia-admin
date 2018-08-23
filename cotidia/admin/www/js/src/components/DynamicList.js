@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { FullScreen, Icon } from './elements/global'
+import { FullScreen } from './elements/global'
 import Modal from '../containers/Modal'
 
 import Header from '../containers/Header'
