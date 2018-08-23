@@ -10,7 +10,7 @@ export default class FilterSidebar extends Component {
     filters: PropTypes.object,
     hasSidebarFilters: PropTypes.bool.isRequired,
     setFilterValue: PropTypes.func.isRequired,
-    inlineFilters: PropTypes.array,
+    sidebarFilters: PropTypes.array,
     showSidebar: PropTypes.func.isRequired,
   }
 
@@ -22,7 +22,7 @@ export default class FilterSidebar extends Component {
     const {
       filters,
       hasSidebarFilters,
-      inlineFilters,
+      sidebarFilters,
     } = this.props
 
     if (! hasSidebarFilters) {
@@ -41,7 +41,7 @@ export default class FilterSidebar extends Component {
               </button>
             </div>
 
-            {inlineFilters && inlineFilters.map((filter) => {
+            {sidebarFilters && sidebarFilters.map((filter) => {
               const { filter: type, ...filterProps } = filter
 
               let Component
