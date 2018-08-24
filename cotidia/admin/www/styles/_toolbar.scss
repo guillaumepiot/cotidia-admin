@@ -43,6 +43,10 @@
     &__item {
         .form__group {
             margin: 0;
+
+            .form__help {
+                display: none;
+            }
         }
     }
 

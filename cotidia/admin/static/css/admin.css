@@ -2974,6 +2974,8 @@ body.menu--sidebar .menu__sub-nav {
       margin-left: 1rem; }
   .toolbar__item .form__group {
     margin: 0; }
+    .toolbar__item .form__group .form__help {
+      display: none; }
 
 .toolbar-profile {
   position: relative;
@@ -3144,7 +3146,9 @@ body.menu--sidebar .menu__sub-nav {
     display: flex;
     align-items: center; }
     .content__filter .form__group {
-      margin: 0 1rem 0 0; }
+      margin: 0; }
+      .content__filter .form__group .form__help {
+        display: none; }
   .content__actions .btn, .content__actions .form__control input[type="file"], .form__control .content__actions input[type="file"] {
     margin-left: 0.5rem; }
 
@@ -3231,7 +3235,8 @@ body.content--padded .content__body .content__inner {
   height: 100%; }
 body.content--padded .content__list {
   border-left: 1px solid #D0D5D7;
-  border-right: 1px solid #D0D5D7;
+  border-right: 1px solid #D0D5D7; }
+body.content--padded .content--sticky .content__list {
   width: calc(100% - 2rem); }
 
 .table {
