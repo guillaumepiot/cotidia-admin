@@ -379,11 +379,13 @@ def get_queryset(model_class, serializer_class, filter_args=None):
             if param[0] == '-':
                 desc = True
                 key = param[1:]
-            custom_ordering = [
-                ('-' + x) if desc else x
-                for x in field_repr[key].get('ordering_fields', [key])
-            ]
-            ordering_params += custom_ordering
+
+            # Append custom ordering
+            if field_repr.get(key):
+                ordering_params += [
+                    ('-' + x) if desc else x
+                    for x in field_repr[key].get('ordering_fields', [key])
+                ]
 
     if ordering_params:
         # Here we add an annotation to make sure when we order, the value is
