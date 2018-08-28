@@ -126,6 +126,14 @@ function * performSearch () {
 
   const { search: data } = yield select()
 
+  // Now we have the search data, quickly just fire off the filter change event.
+  const filterChangeEvent = new CustomEvent(
+    'DynamicList:filterChange',
+    { bubbles: true, detail: data.filters }
+  )
+
+  document.dispatchEvent(filterChangeEvent)
+
   const queryString = getSearchQueryString(data)
 
   let url = generateURL(data.endpoint, { '?': queryString })
