@@ -20,7 +20,12 @@ export default class TypeaheadSwitcher extends Component {
     options: [],
   }
 
+  searchID = null
+
   searchOptions = async (q) => {
+    const searchID = Math.random()
+    this.searchID = searchID
+
     const params = new URLSearchParams()
 
     params.set('q', q)
@@ -37,7 +42,9 @@ export default class TypeaheadSwitcher extends Component {
       if (res.ok) {
         const data = await res.json()
 
-        this.setState({ options: data })
+        if (this.searchID === searchID) {
+          this.setState({ options: data })
+        }
       }
     } catch {
       // pass
