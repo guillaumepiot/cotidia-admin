@@ -58,15 +58,16 @@ export const setFilterValue = (filter, value) => ({
 
 export const refreshCurrentPage = () => ({
   type: types.GET_RESULTS_PAGE,
-  payload: { page: 'current' },
+  payload: { page: null },
 })
-export const getPreviousPage = () => ({
+
+export const gotoPage = (page) => ({
   type: types.GET_RESULTS_PAGE,
-  payload: { page: 'previous' },
+  payload: { page },
 })
-export const getNextPage = () => ({
-  type: types.GET_RESULTS_PAGE,
-  payload: { page: 'next' },
+export const setPerPage = (perPage) => ({
+  type: types.SET_PER_PAGE,
+  payload: { perPage },
 })
 
 export const toggleResultSelected = (item) => ({

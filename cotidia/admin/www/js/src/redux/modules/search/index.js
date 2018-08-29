@@ -35,11 +35,13 @@ const initialState = {
   loading: false,
   searchID: null,
 
+  perPage: 50,
+
   pagination: {
-    count: 0,
-    current: null,
-    next: null,
-    previous: null,
+    totalResultsCount: 0,
+    pageResultCount: 0,
+    pageCount: 0,
+    page: null,
   },
 
   selected: [],
@@ -138,6 +140,12 @@ export default (state = initialState, { type, payload } = {}) => {
         orderAscending: ! state.orderAscending,
       }
 
+    case types.SET_PER_PAGE:
+      return {
+        ...state,
+        perPage: payload.perPage,
+      }
+
     case types.SEARCH_START:
       return {
         ...state,
@@ -172,17 +180,17 @@ export default (state = initialState, { type, payload } = {}) => {
           }, []),
           selected: [],
           pagination: {
-            count: payload.result.count,
-            current: payload.url,
-            next: payload.result.next,
-            previous: payload.result.previous,
+            totalResultsCount: payload.result.total_result_count,
+            pageResultCount: payload.result.page_result_count,
+            pageCount: payload.result.page_count,
+            page: payload.result.current_page,
           },
         }
       } else {
         return state
       }
 
-    case types.UPDATE_RESULT:
+    case types.UPDATE_SINGLE_RESULT:
       return {
         ...state,
         results: state.results.map((result) => (
@@ -224,6 +232,10 @@ export default (state = initialState, { type, payload } = {}) => {
 
       if (payload.mode) {
         newState.mode = payload.mode
+      }
+
+      if (payload.perPage) {
+        newState.perPage = payload.perPage
       }
 
       if (payload.filters) {
