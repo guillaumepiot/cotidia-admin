@@ -37,6 +37,7 @@ export default class Choice extends Component {
       <div className='form__group form__group--boxed'>
         <MultipleSelect
           controlOnly
+          displaySelections={false}
           name={this.props.name}
           label={this.props.label}
           options={this.props.options}
