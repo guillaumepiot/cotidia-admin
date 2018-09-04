@@ -1,18 +1,23 @@
 <div class="content__toolbar">
-    <div class="content__filter">
-        <div class="form__group form__group--boxed">
-            <div class="form__control form__control--input form__control--input-addon">
-                <input type="text" name="q" value="" placeholder="Search">
-                <div class="input-addon input-addon--prefix">
-                    <span class="fa fa-search"></span>
+    <div class="content__filter content-filter form--animate">
+        <div class="content-filter__item">
+            <div class="form__group form__group--boxed">
+                <label for="search" class="form__label">Search 123</label>
+                <div class="form__control form__control--input form__control--input-addon">
+                    <input type="text" name="q" value="" placeholder="Search">
+                    <div class="input-addon input-addon--suffix">
+                        <span class="fa fa-search"></span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="form__group">
-            <label for="check">
-                <input type="checkbox" name="check">
-                Exclude Z jobs
-            </label>
+        <div class="content-filter__item">
+            <div class="form__group">
+                <label for="check">
+                    <input type="checkbox" name="check">
+                    Exclude Z jobs
+                </label>
+            </div>
         </div>
     </div>
     <div class="content__actions">
