@@ -188,7 +188,7 @@ export default class ToolBar extends Component {
 
     return (
       <div className='content__toolbar'>
-        <div className='content__filter content-filter'>
+        <div className='content__filter content-filter form--animate'>
           {anyResultsSelected ? this.renderBatchActionToolbar() : this.renderSearchToolbar()}
         </div>
 
