@@ -76,8 +76,10 @@ export default class ToolBar extends Component {
       <>
         <div className='content-filter__item'>
           <div className='form__group form__group--boxed'>
+            <label htmlFor='search' className='form__label'>Search</label>
             <TextInput
               controlOnly
+              id='search'
               label='Search'
               name='searchTerm'
               placeholder='Search'
