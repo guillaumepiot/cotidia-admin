@@ -2,6 +2,7 @@ import re
 import datetime
 
 from decimal import Decimal
+from functools import reduce
 
 from django.db.models import Q
 
@@ -117,13 +118,11 @@ def field_filter(filter_fn, query_set, field, values):
     """
 
     # Each value is "OR"ed against each other if it is a list.
-    if isinstance(values, list):
-        q_object = filter_fn(field, values.pop())
-
-        for value in values:
-            q_object |= filter_fn(field, value)
-    else:
-        q_object = filter_fn(field, values)
+    q_object = reduce(
+        lambda x,y: x|y,
+        [filter_fn(field, value) for value in values],
+        Q(),
+    )
 
     return query_set.filter(q_object)
 

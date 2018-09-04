@@ -1,9 +1,11 @@
+from collections import OrderedDict
+
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, UpdateAPIView
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
-from rest_framework.pagination import LimitOffsetPagination
+from rest_framework.pagination import PageNumberPagination
 
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
@@ -45,8 +47,21 @@ class AdminOrderableAPIView(APIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class GenericAdminPaginationStyle(LimitOffsetPagination):
-    default_limit = PAGE_SIZE
+class GenericAdminPaginationStyle(PageNumberPagination):
+    page_size = PAGE_SIZE
+    page_size_query_param = '_per_page'
+    page_query_param = '_page'
+
+    def get_paginated_response(self, data):
+        return Response(OrderedDict([
+            ('total_result_count', self.page.paginator.count),
+            ('current_page', self.page.number),
+            ('page_result_count', len(data)),
+            ('page_count', self.page.paginator.num_pages),
+            ('next', self.get_next_link()),
+            ('previous', self.get_previous_link()),
+            ('results', data),
+        ]))
 
 
 class AdminSearchDashboardUpdateView(UpdateAPIView):

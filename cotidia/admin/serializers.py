@@ -177,10 +177,10 @@ class AdminModelSerializer(serializers.ModelSerializer):
     def get_general_query_fields(self):
         return self.get_option(
             'general_query_fields',
-            default=self.get_option(
+            default=[self.get_option(
                 'display_field',
                 default=['id']
-            )
+            )]
         )
 
     def get_default_columns(self):
