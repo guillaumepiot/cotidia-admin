@@ -425,9 +425,7 @@ def get_sub_serializer(serializer, field):
 
 
 def get_query_dict_value(d, k):
-    v = d.get(k)
-    if isinstance(v, list):
-        v = d.getlist(k)
+    v = d.getlist(k)
     return v
 
 

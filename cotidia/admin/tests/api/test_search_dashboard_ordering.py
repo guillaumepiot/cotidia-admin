@@ -24,7 +24,7 @@ class AdminSearchDashboardTests(APITestCase):
     def test_ordering_empty(self):
         response = self.client.get(self.url, {'_order': ""})
 
-        self.assertEqual(response.data['count'], 0)
+        self.assertEqual(response.data['total_result_count'], 0)
         self.assertEqual(response.data['next'], None)
         self.assertEqual(response.data['previous'], None)
         self.assertEqual(response.data['results'], [])
@@ -38,7 +38,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url, {'_order': 'integer_field'})
 
-        self.assertEqual(response.data['count'], 5)
+        self.assertEqual(response.data['total_result_count'], 5)
         self.assertEqual(response.data['results'][0]['integer_field'], 1)
         self.assertEqual(response.data['results'][1]['integer_field'], 2)
         self.assertEqual(response.data['results'][2]['integer_field'], 3)
@@ -55,7 +55,7 @@ class AdminSearchDashboardTests(APITestCase):
         response = self.client.get(self.url, {'_order': '-integer_field'})
 
 
-        self.assertEqual(response.data['count'], 5)
+        self.assertEqual(response.data['total_result_count'], 5)
         self.assertEqual(response.data['results'][0]['integer_field'], 5)
         self.assertEqual(response.data['results'][1]['integer_field'], 4)
         self.assertEqual(response.data['results'][2]['integer_field'], 3)
@@ -71,7 +71,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url, {'_order': 'float_field'})
 
-        self.assertEqual(response.data['count'], 5)
+        self.assertEqual(response.data['total_result_count'], 5)
 
         self.assertEqual(response.data['results'][0]['float_field'], 1.1)
         self.assertEqual(response.data['results'][1]['float_field'], 1.2)
@@ -88,7 +88,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url, {'_order': '-float_field'})
 
-        self.assertEqual(response.data['count'], 5)
+        self.assertEqual(response.data['total_result_count'], 5)
 
         self.assertEqual(response.data['results'][4]['float_field'], 1.1)
         self.assertEqual(response.data['results'][3]['float_field'], 1.2)
@@ -105,7 +105,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url, {'_order': 'decimal_field'})
 
-        self.assertEqual(response.data['count'], 5)
+        self.assertEqual(response.data['total_result_count'], 5)
 
         self.assertEqual(response.data['results'][0]['decimal_field'], "1.10")
         self.assertEqual(response.data['results'][1]['decimal_field'], "1.20")
@@ -122,7 +122,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url, {'_order': '-decimal_field'})
 
-        self.assertEqual(response.data['count'], 5)
+        self.assertEqual(response.data['total_result_count'], 5)
 
         self.assertEqual(response.data['results'][4]['decimal_field'], "1.10")
         self.assertEqual(response.data['results'][3]['decimal_field'], "1.20")

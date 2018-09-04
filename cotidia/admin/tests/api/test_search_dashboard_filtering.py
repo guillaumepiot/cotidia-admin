@@ -29,7 +29,7 @@ class AdminSearchDashboardTests(APITestCase):
     def test_getting_data_empty(self):
         response = self.client.get(self.url, {})
 
-        self.assertEqual(response.data['count'], 0)
+        self.assertEqual(response.data['total_result_count'], 0)
         self.assertEqual(response.data['next'], None)
         self.assertEqual(response.data['previous'], None)
         self.assertEqual(response.data['results'], [])
@@ -56,7 +56,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url, {})
 
-        self.assertEqual(response.data['count'], 1)
+        self.assertEqual(response.data['total_result_count'], 1)
         self.assertEqual(response.data['next'], None)
         self.assertEqual(response.data['previous'], None)
 
@@ -109,7 +109,7 @@ class AdminSearchDashboardTests(APITestCase):
             self.url + '?integer_field=1'
         )
 
-        self.assertEqual(response.data['count'], 1)
+        self.assertEqual(response.data['total_result_count'], 1)
         self.assertEqual(response.data['results'][0]['integer_field'], 1)
 
     def test_integer_filters_lte(self):
@@ -145,7 +145,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url + '?integer_field=:10')
 
-        self.assertEqual(response.data['count'], 10)
+        self.assertEqual(response.data['total_result_count'], 10)
 
         for result in response.data['results']:
             self.assertTrue(result['integer_field'] <= 10)
@@ -183,7 +183,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url + '?integer_field=10:')
 
-        self.assertEqual(response.data['count'], 10)
+        self.assertEqual(response.data['total_result_count'], 10)
 
         for result in response.data['results']:
             self.assertTrue(result['integer_field'] >= 10)
@@ -224,7 +224,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url + '?integer_field=10:20')
 
-        self.assertEqual(response.data['count'], 10)
+        self.assertEqual(response.data['total_result_count'], 10)
 
         for result in response.data['results']:
             self.assertTrue(result['integer_field'] >= 10)
@@ -262,7 +262,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url + '?integer_field=1')
 
-        self.assertEqual(response.data['count'], 1)
+        self.assertEqual(response.data['total_result_count'], 1)
         self.assertEqual(response.data['results'][0]['integer_field'], 1)
 
     def test_float_filters_lte(self):
@@ -296,7 +296,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url + '?float_field=:1')
 
-        self.assertEqual(response.data['count'], 10)
+        self.assertEqual(response.data['total_result_count'], 10)
 
         for result in response.data['results']:
             self.assertTrue(result['float_field'] <= 10)
@@ -332,7 +332,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url + '?float_field=1:')
 
-        self.assertEqual(response.data['count'], 10)
+        self.assertEqual(response.data['total_result_count'], 10)
 
         for result in response.data['results']:
             self.assertTrue(result['float_field'] >= 1)
@@ -371,7 +371,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url + '?float_field=1:1.9')
 
-        self.assertEqual(response.data['count'], 10)
+        self.assertEqual(response.data['total_result_count'], 10)
 
         for result in response.data['results']:
             self.assertTrue(result['float_field'] >= 1)
@@ -405,7 +405,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url + '?integer_field=1')
 
-        self.assertEqual(response.data['count'], 1)
+        self.assertEqual(response.data['total_result_count'], 1)
         self.assertEqual(response.data['results'][0]['integer_field'], 1)
 
     def test_decimal_filters_lte(self):
@@ -437,7 +437,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url + '?decimal_field=:1')
 
-        self.assertEqual(response.data['count'], 10)
+        self.assertEqual(response.data['total_result_count'], 10)
 
         for result in response.data['results']:
             self.assertTrue(Decimal(result['decimal_field']) <= 1)
@@ -471,7 +471,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url + '?decimal_field=1:')
 
-        self.assertEqual(response.data['count'], 10)
+        self.assertEqual(response.data['total_result_count'], 10)
 
         for result in response.data['results']:
             self.assertTrue(Decimal(result['decimal_field']) >= 1)
@@ -508,7 +508,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url + '?decimal_field=1:1.9')
 
-        self.assertEqual(response.data['count'], 10)
+        self.assertEqual(response.data['total_result_count'], 10)
 
         for result in response.data['results']:
             self.assertTrue(Decimal(result['decimal_field']) >= Decimal(1))
@@ -520,7 +520,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url + '?boolean_field=true')
 
-        self.assertEqual(response.data['count'], 1)
+        self.assertEqual(response.data['total_result_count'], 1)
         self.assertTrue(response.data['results'][0]['boolean_field'])
 
     def test_boolean_filter_false(self):
@@ -529,7 +529,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url + '?boolean_field=false')
 
-        self.assertEqual(response.data['count'], 1)
+        self.assertEqual(response.data['total_result_count'], 1)
         self.assertFalse(response.data['results'][0]['boolean_field'])
 
     def test_nullboolean_filter_true(self):
@@ -539,7 +539,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url + '?nullboolean_field=true')
 
-        self.assertEqual(response.data['count'], 1)
+        self.assertEqual(response.data['total_result_count'], 1)
         self.assertTrue(response.data['results'][0]['nullboolean_field'])
 
     def test_nullboolean_filter_false(self):
@@ -549,7 +549,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url + '?nullboolean_field=false')
 
-        self.assertEqual(response.data['count'], 1)
+        self.assertEqual(response.data['total_result_count'], 1)
         self.assertFalse(response.data['results'][0]['nullboolean_field'])
 
     def test_char_field_filter(self):
@@ -560,7 +560,25 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url + '?char_field=hoor')
 
-        self.assertEqual(response.data['count'], 3)
+        self.assertEqual(response.data['total_result_count'], 3)
+
+    def test_char_field_multiple_variables(self):
+        ExampleModelOneFactory(char_field='Hooray', boolean_field=True)
+        ExampleModelOneFactory(char_field='hoor', boolean_field=True)
+        ExampleModelOneFactory(char_field='hank', boolean_field=True)
+        ExampleModelOneFactory(char_field='rank', boolean_field=True)
+        ExampleModelOneFactory(char_field='Stuff', boolean_field=True)
+
+        response = self.client.get(self.url + '?char_field=hoor&char_field=ank')
+
+        self.assertEqual(response.data['total_result_count'], 4)
+        for result in response.data['results']:
+            # Checks all results either contain hoor or ank
+            # Lower is used so the check is case insensitive
+            self.assertTrue(
+                "hoor" in result["char_field"].lower() or
+                "ank" in result["char_field"].lower()
+            )
 
     def test_text_field_filter(self):
         ExampleModelOneFactory(text_field='hooray', boolean_field=True)
@@ -570,7 +588,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url + '?text_field=hoor')
 
-        self.assertEqual(response.data['count'], 3)
+        self.assertEqual(response.data['total_result_count'], 3)
 
     def test_slug_field_filter(self):
         ExampleModelOneFactory(slug_field='Hooray', boolean_field=True)
@@ -580,7 +598,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url + '?slug_field=hoor')
 
-        self.assertEqual(response.data['count'], 3)
+        self.assertEqual(response.data['total_result_count'], 3)
 
     def test_foreign_key_field_filtering(self):
         em2 = ExampleModelTwoFactory()
@@ -590,7 +608,7 @@ class AdminSearchDashboardTests(APITestCase):
 
         response = self.client.get(self.url + '?other_model=' + str(em2.uuid))
 
-        self.assertEqual(response.data['count'], 1)
+        self.assertEqual(response.data['total_result_count'], 1)
 
     def test_many_to_many_field_filtering(self):
         em2 = ExampleModelTwoFactory(name='Test Item')
@@ -608,8 +626,9 @@ class AdminSearchDashboardTests(APITestCase):
             self.url + '?many_to_many_field=' + str(em2.uuid)
         )
 
-        self.assertEqual(response.data['count'], 1)
+        self.assertEqual(response.data['total_result_count'], 1)
         self.assertEqual(
             response.data['results'][0]['many_to_many_field'],
             ['Test Item']
         )
+    

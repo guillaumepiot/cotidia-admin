@@ -29,6 +29,7 @@ class ExampleModelOneSerializer(AdminModelSerializer):
 
     class SearchProvider:
         display_field = "char_field"
+        general_query_fields = ["char_field", "text_field", "slug_field"]
 
 
 class DeclaredModelSerializer(AdminModelSerializer):
