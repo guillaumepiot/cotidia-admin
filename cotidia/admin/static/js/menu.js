@@ -30,12 +30,18 @@
     for (i = 0; i < menus.length; i++) {
       var menu = menus[i]
       menuOpenButton = menu.querySelector('.menu__item--open a')
-      menuOpenButton.addEventListener('touchend', showMenu.bind(null, menu))
-      menuOpenButton.addEventListener('click', showMenu.bind(null, menu))
+
+      if (menuOpenButton) {
+        menuOpenButton.addEventListener('touchend', showMenu.bind(null, menu))
+        menuOpenButton.addEventListener('click', showMenu.bind(null, menu))
+      }
 
       menuCloseButton = menu.querySelector('.menu__item--close a')
-      menuCloseButton.addEventListener('touchend', hideMenu.bind(null, menu))
-      menuCloseButton.addEventListener('click', hideMenu.bind(null, menu))
+
+      if (menuCloseButton) {
+        menuCloseButton.addEventListener('touchend', hideMenu.bind(null, menu))
+        menuCloseButton.addEventListener('click', hideMenu.bind(null, menu))
+      }
     }
     var collapseSidebarBtn = document.querySelector('.menu__item--sidebar-collapse')
     if (collapseSidebarBtn) {
