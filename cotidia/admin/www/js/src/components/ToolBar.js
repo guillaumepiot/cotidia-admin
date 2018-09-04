@@ -113,10 +113,9 @@ export default class ToolBar extends Component {
 
           if (Component) {
             return (
-              <div className='content-filter__item'>
+              <div className='content-filter__item' key={filterProps.name}>
                 <Component
                   {...filterProps}
-                  key={filterProps.name}
                   updateValue={this.updateFilterValueFactory(filter.name)}
                   value={filters[filter.name]}
                 />
