@@ -56,6 +56,8 @@ export default class FilterSidebar extends Component {
                 Component = SIDEBAR_FILTERS.Date
               } else if (type === 'choice') {
                 Component = SIDEBAR_FILTERS.Choice
+              } else if (type === 'choice-single') {
+                Component = SIDEBAR_FILTERS.ChoiceSingle
               }
 
               if (Component) {

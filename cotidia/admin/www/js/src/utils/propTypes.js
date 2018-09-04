@@ -15,6 +15,8 @@ const listHandling = PropTypes.shape({
   props: PropTypes.object,
 })
 
+const filter = PropTypes.oneOf(['text', 'choice', 'choice-single', 'boolean', 'number', 'date'])
+
 // ---
 
 const batchAction = PropTypes.shape({
@@ -42,7 +44,7 @@ const columnConfigSingle = PropTypes.shape({
     PropTypes.string,
     PropTypes.array,
   ]),
-  filter: PropTypes.oneOf(['text', 'choice', 'boolean', 'number', 'date']),
+  filter,
   label: PropTypes.string.isRequired,
   allowWrap: PropTypes.bool,
   maxWidth: PropTypes.number,
@@ -75,7 +77,7 @@ const config = PropTypes.shape({
 
 const extraFilter = PropTypes.shape({
   label: PropTypes.string.isRequired,
-  filter: PropTypes.oneOf(['boolean', 'text', 'number', 'date', 'choice']),
+  filter,
   options,
 })
 

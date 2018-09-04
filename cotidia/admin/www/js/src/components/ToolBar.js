@@ -107,6 +107,8 @@ export default class ToolBar extends Component {
             Component = TOOLBAR_FILTERS.Date
           } else if (type === 'choice') {
             Component = TOOLBAR_FILTERS.Choice
+          } else if (type === 'choice-single') {
+            Component = TOOLBAR_FILTERS.ChoiceSingle
           }
 
           if (Component) {

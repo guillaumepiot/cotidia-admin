@@ -21,6 +21,10 @@ export default class Filter extends Component {
         Component = MODAL_FILTERS.Choice
         break
 
+      case 'choice-single':
+        Component = MODAL_FILTERS.ChoiceSingle
+        break
+
       case 'boolean':
         Component = MODAL_FILTERS.Boolean
         break

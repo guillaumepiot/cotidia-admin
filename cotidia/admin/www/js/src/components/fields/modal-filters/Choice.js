@@ -18,7 +18,7 @@ export default class Choice extends Component {
     updateField: PropTypes.func.isRequired,
   }
 
-  toggleColumnFactory = (value) => (e) => {
+  toggleItemFactory = (value) => (e) => {
     if (this.props.data.value) {
       if (this.props.data.value.includes(value)) {
         this.props.updateField('value', this.props.data.value.filter((item) => item !== value))
@@ -52,7 +52,7 @@ export default class Choice extends Component {
                       <input
                         checked={Boolean(data.value && data.value.includes(value))}
                         className='form__checkbox'
-                        onChange={this.toggleColumnFactory(value)}
+                        onChange={this.toggleItemFactory(value)}
                         type='checkbox'
                       />
 
