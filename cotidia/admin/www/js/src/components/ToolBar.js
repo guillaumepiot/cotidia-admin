@@ -74,18 +74,20 @@ export default class ToolBar extends Component {
 
     return (
       <>
-        <div className='form__group form__group--boxed'>
-          <TextInput
-            controlOnly
-            label='Search'
-            name='searchTerm'
-            placeholder='Search'
-            prefix={<Icon icon='search' />}
-            type='text'
-            updateValue={this.updateSearchTerm}
-            updateValueOnBlur={false}
-            value={searchTerm}
-          />
+        <div className='content-filter__item'>
+          <div className='form__group form__group--boxed'>
+            <TextInput
+              controlOnly
+              label='Search'
+              name='searchTerm'
+              placeholder='Search'
+              prefix={<Icon icon='search' />}
+              type='text'
+              updateValue={this.updateSearchTerm}
+              updateValueOnBlur={false}
+              value={searchTerm}
+            />
+          </div>
         </div>
 
         {toolbarFilters && toolbarFilters.map((filter) => {
@@ -107,12 +109,14 @@ export default class ToolBar extends Component {
 
           if (Component) {
             return (
-              <Component
-                {...filterProps}
-                key={filterProps.name}
-                updateValue={this.updateFilterValueFactory(filter.name)}
-                value={filters[filter.name]}
-              />
+              <div className='content-filter__item'>
+                <Component
+                  {...filterProps}
+                  key={filterProps.name}
+                  updateValue={this.updateFilterValueFactory(filter.name)}
+                  value={filters[filter.name]}
+                />
+              </div>
             )
           }
         })}
@@ -182,7 +186,7 @@ export default class ToolBar extends Component {
 
     return (
       <div className='content__toolbar'>
-        <div className='content__filter'>
+        <div className='content__filter content-filter'>
           {anyResultsSelected ? this.renderBatchActionToolbar() : this.renderSearchToolbar()}
         </div>
 
