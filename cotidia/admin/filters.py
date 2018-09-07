@@ -5,6 +5,8 @@ from decimal import Decimal
 from functools import reduce
 
 from django.db.models import Q
+from django.core.exceptions import FieldError
+from django.conf import settings
 
 from rest_framework.exceptions import ParseError
 
@@ -110,7 +112,7 @@ def number_filter(query_set, field, values):
     return field_filter(filter_number, query_set, field, values)
 
 
-def field_filter(filter_fn, query_set, field, values):
+def field_filter(filter_fn, queryset, field, values):
     """
     Filter the fields with a given function
 
@@ -119,12 +121,17 @@ def field_filter(filter_fn, query_set, field, values):
 
     # Each value is "OR"ed against each other if it is a list.
     q_object = reduce(
-        lambda x,y: x|y,
+        lambda x, y: x | y,
         [filter_fn(field, value) for value in values],
         Q(),
     )
 
-    return query_set.filter(q_object)
+    try:
+        return queryset.filter(q_object)
+    except FieldError:
+        if settings.DEBUG:
+            raise
+        return queryset
 
 
 def date_filter(query_set, field, values):

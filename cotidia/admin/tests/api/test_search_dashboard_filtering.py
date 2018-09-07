@@ -2,6 +2,8 @@ from decimal import Decimal
 from datetime import datetime
 
 from django.urls import reverse
+from django.test import override_settings
+from django.core.exceptions import FieldError
 
 from rest_framework.test import APITestCase
 
@@ -631,4 +633,23 @@ class AdminSearchDashboardTests(APITestCase):
             response.data['results'][0]['many_to_many_field'],
             ['Test Item']
         )
-    
+
+    @override_settings(DEBUG=True)
+    def test_invalid_filter_key_debug(self):
+        """An invalid filter key should be ignored."""
+
+        with self.assertRaises(FieldError):
+            self.client.get(
+                self.url + '?unfilterable_property=1'
+            )
+
+    @override_settings(DEBUG=False)
+    def test_invalid_filter_key(self):
+        """An invalid filter key should be ignored."""
+        response = self.client.get(
+            self.url + '?unfilterable_property=1'
+        )
+        self.assertEqual(
+            response.status_code,
+            200
+        )

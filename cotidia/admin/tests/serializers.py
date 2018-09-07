@@ -1,3 +1,5 @@
+from rest_framework import serializers
+
 from cotidia.admin.serializers import AdminModelSerializer
 
 from cotidia.admin.tests.models import (
@@ -21,6 +23,7 @@ class ExampleModelOneSerializer(AdminModelSerializer):
     other_model = ExampleModelTwoSerializer()
 
     many_to_many_field = ExampleModelTwoSerializer(many=True)
+    unfilterable_property = serializers.CharField()
 
     class Meta:
         model = ExampleModelOne

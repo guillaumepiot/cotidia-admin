@@ -49,10 +49,17 @@ class ExampleModelOne(BaseModel):
         blank=True
     )
 
+    class Meta:
+        ordering = ('integer_field',)
+
     class SearchProvider:
         def serializer():
             from cotidia.admin.tests.serializers import ExampleModelOneSerializer
             return ExampleModelOneSerializer
+
+    @property
+    def unfilterable_property(self):
+        return "unfilterable"
 
 
 class ExampleModelTwo(BaseModel):
@@ -64,6 +71,9 @@ class ExampleModelTwo(BaseModel):
         null=True, blank=True,
         on_delete=models.SET_NULL
     )
+
+    class Meta:
+        ordering = ('number',)
 
 
 class AutoSerializerModel(BaseModel):
