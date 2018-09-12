@@ -1596,6 +1596,9 @@ hr {
     .form__control textarea::placeholder,
     .form__control select::placeholder {
       color: #aaafb1; }
+  .form__control input[type="date"],
+  .form__control input[type="time"] {
+    width: auto; }
   .form__control select {
     border-radius: 0;
     padding-right: 1.5rem;
