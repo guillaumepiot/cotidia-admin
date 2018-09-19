@@ -12,6 +12,7 @@ import DynamicList from './containers/DynamicList'
 
 import { FullScreen } from './components/elements/global'
 
+import AlgoliaSwitcher from './algolia-switcher'
 import TypeaheadSwitcher from './typeahead-switcher'
 import MultipleSelectWidget from './multiple-select-widget'
 
@@ -56,5 +57,6 @@ window.React = React
 window.ReactDOM = ReactDOM
 window.DynamicList = DynamicListApp
 
+window.AlgoliaSwitcher = AlgoliaSwitcher
 window.TypeaheadSwitcher = TypeaheadSwitcher
 window.MultipleSelectWidget = MultipleSelectWidget
