@@ -149,7 +149,7 @@ export default class AlgoliaSwitcher extends Component {
     return (
       <Select
         extraGroupClasses={this.props.extraGroupClasses}
-        getFilteredOptions={() => options}
+        getFilteredOptions={() => this.state.options}
         minCharSearch={this.props.minchars}
         name='q'
         placeholder={this.props.placeholder}
