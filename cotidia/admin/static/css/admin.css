@@ -1530,8 +1530,8 @@ hr {
     top: calc(0.5rem + 1px);
     transform: translateY(0); }
   .form__group--boxed .control-select__clear-button {
-    top: calc(0.5rem + 2px);
-    right: calc(10px + 0.75rem + 0.5rem); }
+    top: auto;
+    right: 1.25rem; }
   .form__group .tag {
     margin-top: 0.5rem; }
 .form__control {
@@ -1596,6 +1596,9 @@ hr {
     .form__control textarea::placeholder,
     .form__control select::placeholder {
       color: #aaafb1; }
+  .form__control input[type="date"],
+  .form__control input[type="time"] {
+    width: auto; }
   .form__control select {
     border-radius: 0;
     padding-right: 1.5rem;
@@ -1810,13 +1813,12 @@ hr {
 .control-select__clear-button {
   border: none;
   border-radius: 1em;
-  background-color: #D0D5D7;
   cursor: pointer;
   font-size: 1em;
   opacity: 0.6;
   position: absolute;
-  top: 1px;
-  right: calc(10px + 0.75rem);
+  top: 2px;
+  right: 1.25rem;
   height: 1.25em;
   width: 1.25em;
   padding: 0 0 2px 0; }
