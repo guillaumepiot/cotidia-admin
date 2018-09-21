@@ -778,9 +778,9 @@
   dependencies:
     arrify "^1.0.1"
 
-"@cotidia/react-ui@^2.1.4":
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/@cotidia/react-ui/-/react-ui-2.1.4.tgz#b5719508d764c4d0fc18fdb12175fc57a0e7b2b3"
+"@cotidia/react-ui@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@cotidia/react-ui/-/react-ui-2.3.0.tgz#05f6aa6e543cc78c9d66e293c770c359147c33ed"
   dependencies:
     classnames "^2.2.6"
     moment "^2.22.2"

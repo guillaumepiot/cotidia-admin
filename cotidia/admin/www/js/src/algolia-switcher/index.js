@@ -20,6 +20,7 @@ export default class AlgoliaSwitcher extends Component {
     algoliaIndexes: PropTypes.arrayOf(PropTypes.string).isRequired,
     algoliaAPIKey: PropTypes.string.isRequired,
     algoliaAppId: PropTypes.string.isRequired,
+    algoliaFilters: PropTypes.arrayOf(PropTypes.string),
     extraGroupClasses: PropTypes.arrayOf(PropTypes.string),
     minchars: PropTypes.number,
     placeholder: PropTypes.string,
@@ -66,72 +67,79 @@ export default class AlgoliaSwitcher extends Component {
     })
 
     // Now fire off the suggestion lookup.
-    const queries = this.props.algoliaIndexes.map((index) => ({
-      indexName: index,
-      query: q,
-    }))
 
-    this.algolia.search(queries, (err, content) => {
-      // If this is for an old search, just return immediately - we have nothing to do here.
-      if (searchId !== this.searchId) {
-        return
-      }
+    return new Promise((resolve, reject) => {
+      const queries = this.props.algoliaIndexes.map((index) => ({
+        indexName: index,
+        query: q,
+        params: this.props.algoliaFilters && {
+          filters: this.props.algoliaFilters.join(' OR '),
+        },
+      }))
 
-      // As soon as something comes back, regardless of result, say we're no longer searching.
-      this.setState({ searching: false })
+      this.algolia.search(queries, (err, content) => {
+        // If this is for an old search, just return immediately - we have nothing to do here.
+        if (searchId !== this.searchId) {
+          return
+        }
 
-      if (err) {
-        console.error(err)
-        return
-      }
+        // As soon as something comes back, regardless of result, say we're no longer searching.
+        this.setState({ searching: false })
 
-      let options = []
+        if (err) {
+          console.error(err)
+          return reject(err)
+        }
 
-      for (const index of content.results) {
-        options = options.concat(index.hits.map((item) => {
-          let richLabel
+        let options = []
 
-          const match = Object.entries(item._highlightResult).find(
-            ([, result]) => result.matchLevel !== 'none'
-          )
+        for (const index of content.results) {
+          options = options.concat(index.hits.map((item) => {
+            let richLabel
 
-          if (match) {
-            if (match[0] === 'label') {
-              richLabel = <span dangerouslySetInnerHTML={{ __html: match[1].value }} />
-            } else {
-              richLabel = (
-                <span>
-                  { item.label }
+            const match = Object.entries(item._highlightResult).find(
+              ([, result]) => result.matchLevel !== 'none'
+            )
 
-                  <span className='control-select__option--highlight-reason' style={{ float: 'right' }}>
-                    <span className='label' style={{ marginRight: '1rem', backgroundColor: '#e0e0e0', color: 'inherit' }}>
-                      { humaniseSnakeCase(match[0]) }
+            if (match) {
+              if (match[0] === 'label') {
+                richLabel = <span dangerouslySetInnerHTML={{ __html: match[1].value }} />
+              } else {
+                richLabel = (
+                  <span>
+                    { item.label }
+
+                    <span className='control-select__option--highlight-reason' style={{ float: 'right' }}>
+                      <span className='label' style={{ marginRight: '1rem', backgroundColor: '#e0e0e0', color: 'inherit' }}>
+                        { humaniseSnakeCase(match[0]) }
+                      </span>
+
+                      <span dangerouslySetInnerHTML={{ __html: match[1].value }} />
                     </span>
-
-                    <span dangerouslySetInnerHTML={{ __html: match[1].value }} />
                   </span>
-                </span>
-              )
+                )
+              }
             }
-          }
 
-          return {
-            value: item.value,
-            label: item.label,
-            url: item.url,
-            richLabel: (
-              <>
-                <span className='label' style={{ backgroundColor: '#eee', color: 'inherit', marginRight: '1rem' }}>
-                  {humaniseSnakeCase(item.field)}
-                </span>
-                {richLabel}
-              </>
-            ),
-          }
-        }))
-      }
+            return {
+              value: item.value,
+              label: item.label,
+              url: item.url,
+              richLabel: (
+                <>
+                  <span className='label' style={{ backgroundColor: '#eee', color: 'inherit', marginRight: '1rem' }}>
+                    {humaniseSnakeCase(item.field)}
+                  </span>
+                  {richLabel}
+                </>
+              ),
+            }
+          }))
+        }
 
-      this.setState({ options })
+        this.setState({ options })
+        resolve()
+      })
     })
   }
 
@@ -149,7 +157,6 @@ export default class AlgoliaSwitcher extends Component {
     return (
       <Select
         extraGroupClasses={this.props.extraGroupClasses}
-        getFilteredOptions={() => this.state.options}
         minCharSearch={this.props.minchars}
         name='q'
         placeholder={this.props.placeholder}
