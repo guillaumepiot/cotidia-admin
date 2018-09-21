@@ -72,8 +72,8 @@ export default class AlgoliaSwitcher extends Component {
       const queries = this.props.algoliaIndexes.map((index) => ({
         indexName: index,
         query: q,
-        params: this.props.algoliaFilters && {
-          filters: this.props.algoliaFilters.join(' OR '),
+        params: {
+          filters: this.props.algoliaFilters && this.props.algoliaFilters.join(' OR '),
         },
       }))
 
@@ -97,13 +97,30 @@ export default class AlgoliaSwitcher extends Component {
           options = options.concat(index.hits.map((item) => {
             let richLabel
 
-            const match = Object.entries(item._highlightResult).find(
-              ([, result]) => result.matchLevel !== 'none'
-            )
+            let matchField
+            let matchValue
 
-            if (match) {
-              if (match[0] === 'label') {
-                richLabel = <span dangerouslySetInnerHTML={{ __html: match[1].value }} />
+            for (const [field, result] of Object.entries(item._highlightResult)) {
+              if (Array.isArray(result)) {
+                const innerMatch = result.find((result) => result.matchLevel !== 'none')
+
+                if (innerMatch) {
+                  matchField = field
+                  matchValue = innerMatch.value
+                  break
+                }
+              } else {
+                if (result.matchLevel !== 'none') {
+                  matchField = field
+                  matchValue = result.value
+                  break
+                }
+              }
+            }
+
+            if (matchField && matchValue) {
+              if (matchField === 'label') {
+                richLabel = <span dangerouslySetInnerHTML={{ __html: matchValue }} />
               } else {
                 richLabel = (
                   <span>
@@ -111,10 +128,10 @@ export default class AlgoliaSwitcher extends Component {
 
                     <span className='control-select__option--highlight-reason' style={{ float: 'right' }}>
                       <span className='label' style={{ marginRight: '1rem', backgroundColor: '#e0e0e0', color: 'inherit' }}>
-                        { humaniseSnakeCase(match[0]) }
+                        { humaniseSnakeCase(matchField) }
                       </span>
 
-                      <span dangerouslySetInnerHTML={{ __html: match[1].value }} />
+                      <span dangerouslySetInnerHTML={{ __html: matchValue }} />
                     </span>
                   </span>
                 )
