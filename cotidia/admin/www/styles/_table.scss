@@ -201,10 +201,6 @@
 
     &--admin-mobile-view{
         @media screen and (max-width: $mobile-width) {
-            > thead > tr > th, > tbody > tr > td{
-                display: none;
-            }
-
             > thead > tr > th:first-child,
             > tbody > tr > td:first-child,
             .action-column + th:nth-child(2),
