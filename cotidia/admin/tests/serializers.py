@@ -1,6 +1,8 @@
-from rest_framework import serializers
+from cotidia.admin.serializers import (
+    AdminModelSerializer, BaseDynamicListSerializer
+)
 
-from cotidia.admin.serializers import AdminModelSerializer
+from rest_framework import serializers
 
 from cotidia.admin.tests.models import (
     ExampleModelOne,
@@ -33,6 +35,32 @@ class ExampleModelOneSerializer(AdminModelSerializer):
     class SearchProvider:
         display_field = "char_field"
         general_query_fields = ["char_field", "text_field", "slug_field"]
+
+
+class DynamicListModelTwoSerializer(BaseDynamicListSerializer):
+    class Meta:
+        model = ExampleModelTwo
+
+        exclude = ["uuid", "other_model"]
+
+    class SearchProvider:
+        display_field = "name"
+        filters = '__all__'
+
+
+class DynamicListModelOneSerializer(BaseDynamicListSerializer):
+    other_model = DynamicListModelTwoSerializer()
+
+    many_to_many_field = DynamicListModelTwoSerializer(many=True)
+    class Meta:
+        model = ExampleModelOne
+        exclude = ["uuid", "duration_field"]
+
+    class SearchProvider:
+        display_field = "char_field"
+        general_query_fields = ["char_field", "text_field", "slug_field"]
+        filters = '__all__'
+
 
 
 class DeclaredModelSerializer(AdminModelSerializer):

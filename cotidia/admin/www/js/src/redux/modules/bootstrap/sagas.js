@@ -11,7 +11,7 @@ export function * bootstrap ({ payload: config }) {
   yield put({ type: searchTypes.SET_DETAIL_URL, payload: config.detailURL })
   yield put({ type: searchTypes.SET_BATCH_ACTIONS, payload: config.batchActions || [] })
   yield put({ type: searchTypes.SET_GLOBAL_ACTIONS, payload: config.globalActions || [] })
-  yield put({ type: searchTypes.SET_EXTRA_FILTERS, payload: config.extraFilters || {} })
+  yield put({ type: searchTypes.SET_FILTER_CONFIGURATION, payload: config.filterConfiguration || {} })
   yield put({ type: searchTypes.SET_TOOLBAR_FILTERS, payload: config.toolbarFilters || [] })
   yield put({ type: searchTypes.SET_SIDEBAR_FILTERS, payload: config.sidebarFilters || [] })
 

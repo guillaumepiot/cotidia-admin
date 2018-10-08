@@ -10,7 +10,7 @@ const initialState = {
   batchActions: [], // Config for all batch actions
   globalActions: [], // Config for all global actions
 
-  extraFilters: {},
+  filterConfiguration: {},
   toolbarFilters: [],
   sidebarFilters: [],
 
@@ -81,10 +81,10 @@ export default (state = initialState, { type, payload } = {}) => {
         globalActions: payload,
       }
 
-    case types.SET_EXTRA_FILTERS:
+    case types.SET_FILTER_CONFIGURATION:
       return {
         ...state,
-        extraFilters: payload,
+        filterConfiguration: payload,
       }
 
     case types.SET_TOOLBAR_FILTERS:

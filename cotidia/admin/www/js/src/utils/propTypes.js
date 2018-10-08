@@ -15,8 +15,6 @@ const listHandling = PropTypes.shape({
   props: PropTypes.object,
 })
 
-const filter = PropTypes.oneOf(['text', 'choice', 'choice-single', 'boolean', 'number', 'date'])
-
 // ---
 
 const batchAction = PropTypes.shape({
@@ -44,7 +42,7 @@ const columnConfigSingle = PropTypes.shape({
     PropTypes.string,
     PropTypes.array,
   ]),
-  filter,
+  filter: PropTypes.string,
   label: PropTypes.string.isRequired,
   allowWrap: PropTypes.bool,
   maxWidth: PropTypes.number,
@@ -75,13 +73,22 @@ const config = PropTypes.shape({
   weekDayStart: PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6, 7]),
 })
 
-const extraFilter = PropTypes.shape({
+const filterType = PropTypes.oneOf([
+  'text',
+  'choice',
+  'choice-single',
+  'boolean',
+  'number',
+  'date',
+])
+
+const filterConfigSingle = PropTypes.shape({
   label: PropTypes.string.isRequired,
-  filter,
+  filter: filterType,
   options,
 })
 
-const extraFilters = PropTypes.objectOf(extraFilter)
+const filterConfiguration = PropTypes.objectOf(filterConfigSingle)
 
 const globalAction = PropTypes.shape({
   action: PropTypes.string.isRequired,
@@ -116,7 +123,7 @@ export const dynamicListPropTypes = {
   defaultOrderBy: PropTypes.string,
   detailURL: PropTypes.string,
   endpoint: PropTypes.string.isRequired,
-  extraFilters,
+  filterConfiguration,
   globalActions,
   ignoreStoredConfig: PropTypes.bool,
   listFields,

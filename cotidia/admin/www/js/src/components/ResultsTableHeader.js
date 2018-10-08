@@ -115,20 +115,20 @@ export default class ResultsTableHeader extends Component {
     batchActions: [],
   }
 
-  configureFilterFactory = (column) => (e) => {
+  configureFilterFactory = (filter) => (e) => {
     // Because this event will be a button inside a component that it also looking for a click
     // event, we should stop the propagation of the event so both aren't handled.
     e.stopPropagation()
 
-    this.props.configureFilter(column)
+    this.props.configureFilter(filter)
   }
 
-  clearFilterFactory = (column) => (e) => {
+  clearFilterFactory = (filter) => (e) => {
     // Because this event will be a button inside a component that it also looking for a click
     // event, we should stop the propagation of the event so both aren't handled.
     e.stopPropagation()
 
-    this.props.clearFilter(column)
+    this.props.clearFilter(filter)
   }
 
   setOrderColumnFactory = (column) => (e) => {
@@ -183,7 +183,7 @@ export default class ResultsTableHeader extends Component {
             if (column.type === 'data') {
               const orderable = categoriseBy == null && column.orderable !== false
               const isOrderColumn = orderColumn === column.id
-              const isFiltered = filters.includes(column.id)
+              const isFiltered = filters.includes(column.filters)
 
               return (
                 <Header
@@ -195,8 +195,8 @@ export default class ResultsTableHeader extends Component {
                   orderAscending={orderAscending}
                   orderable={orderable}
                   setOrderColumn={orderable ? this.setOrderColumnFactory(column.id) : null}
-                  clearFilter={this.clearFilterFactory(column.id)}
-                  filterColumn={this.configureFilterFactory(column.id)}
+                  clearFilter={this.clearFilterFactory(column.filter)}
+                  filterColumn={this.configureFilterFactory(column.filter)}
                 />
               )
             } else if (column.type === 'separator') {

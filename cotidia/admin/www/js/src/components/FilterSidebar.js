@@ -62,7 +62,7 @@ export default class FilterSidebar extends Component {
 
               if (Component) {
                 return (
-                  <div className='form__row' key={filterProps.name}>
+                  <div className='form__row' key={filter.name}>
                     <Component
                       {...filterProps}
                       updateValue={this.updateFilterValueFactory(filter.name)}
