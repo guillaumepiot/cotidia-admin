@@ -1,0 +1,119 @@
+{% load admin_search_dashboard_tags %}
+{
+    endpoint: '{{endpoint}}',
+    title: '{{title}}',
+    columnConfiguration: {
+        {% for field_name, field_data in field_representation.items %}
+            {% if field_data %}
+                {{field_name}}: {
+                    {% for key, value in field_data.items %}
+                        {% if key == "display" and value == "function" %}
+                            display: {% include field_data.function_template %},
+                        {% elif key == "allow_wrap" %}
+                            allowWrap: {{value|json}}
+                        {% elif key == "options" %}
+                            options: [
+                                {% for option in value %}
+                                    {
+                                        value: '{{option.value}}',
+                                        label: '{{option.label}}',
+                                    },
+                                {% endfor %}
+                            ],
+                        {% elif key == "after_edit_function_template" %}
+                            afterEdit: {% include field_data.after_edit_function_template %},
+                        {% elif key == "function_template" or key == "foreign_key" %}
+                        {% else %}
+                            {{key}}: {{value|json|safe}},
+                        {% endif %}
+                    {% endfor %}
+                },
+            {% endif %}
+        {% endfor %}
+    },
+    filterConfiguration: {{filters|json|safe}},
+    columns: {{columns|json|safe}},
+    {% if auth_token %}
+        authToken: '{{auth_token}}',
+    {% endif %}
+    {% if detail_url %}
+        detailURL: '{{detail_url}}',
+    {% endif %}
+    {% if default_columns %}
+        defaultColumns: {{default_columns|safe}},
+    {% endif %}
+    {% if default_filters %}
+        defaultFilters: {{default_filters|json|safe}},
+    {% endif %}
+    {% if extra_filters %}
+        extraFilters: {{extra_filters|safe}},
+    {% endif %}
+    {% if toolbar_filters %}
+        toolbarFilters: {{toolbar_filters|safe}},
+    {% endif %}
+    {% if sidebar_filters %}
+        sidebarFilters: {{sidebar_filters|safe}},
+    {% endif %}
+    {% if default_order_by %}
+        defaultOrderBy: '{{default_order_by}}',
+    {% endif %}
+    {% if categorise_by %}
+        categoriseBy: {
+            column: '{{categorise_by.column}}',
+            {% if categorise_by.display %}
+                display: '{{categorise_by.display}}',
+            {% endif %}
+        },
+    {% endif %}
+    {% if list_fields %}
+        listFields: {{list_fields|json|safe}},
+    {% endif %}
+    {% if ignore_stored_config %}
+        ignoreStoredConfig: {{ignore_stored_config|json}},
+    {% endif %}
+
+    config: {
+        {% if primary_color %}
+            primaryColour: '{{primary_color}}',
+        {% endif %}
+        {% if columns_configurable == False %}
+            columnsConfigurable: false,
+        {% endif %}
+        {% if list_handling %}
+            listHandling: {{list_handling|json|safe}},
+        {% endif %}
+        {% if date_format %}
+            dateFormat: '{{date_format}}',
+        {% endif %}
+        {% if datetime_format %}
+            datetimeFormat: '{{datetime_format}}',
+        {% endif %}
+        {% if week_day_start or week_day_start == 0 %}
+            weekDayStart: {{week_day_start}},
+        {% endif %}
+        {% if sidebar_starts_shown %}
+            sidebarStartsShown: {{sidebar_starts_shown|json}},
+        {% endif %}
+        {% if table_striped %}
+            tableStriped: {{table_striped|json}},
+        {% endif %}
+    },
+    {% if batch_actions %}
+        batchActions: {{batch_actions|safe}},
+    {% endif %}
+    {% if global_actions %}
+        globalActions: [
+            {% for action in global_actions %}
+                {
+                    {% for key, value in action.items %}
+                        {% if key == "function_template" %}
+                            func: {% include value %},
+                        {% else %}
+                            {{key}}: {{value|json|safe}},
+                        {% endif %}
+                    {% endfor %}
+                },
+            {% endfor %}
+        ],
+    {% endif %}
+}

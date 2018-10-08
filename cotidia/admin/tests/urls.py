@@ -6,6 +6,8 @@ from cotidia.admin.tests.views import (
         TestAdminPageView,
         stub_view
         )
+from cotidia.admin.tests.serializers import DynamicListModelOneSerializer
+from cotidia.admin.views.api import DynamicListAPIView
 
 generic_admin_urls = ([
             re_path(r'home/$', TestAdminPageView.as_view(), name="test_view"),
@@ -26,5 +28,16 @@ urlpatterns = [
         r'api/admin/',
         include("cotidia.admin.urls.api", namespace="generic-api")
         ),
+
+    path(
+        r'api/admin/dynamic-list',
+        DynamicListAPIView.as_view(),
+        {
+            'model': 'examplemodelone',
+            'app_label': 'tests',
+            'serializer_class': DynamicListModelOneSerializer,
+        },
+        name='dynamic-admin-api-page'
+    )
 
 ]

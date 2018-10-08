@@ -1,0 +1,29 @@
+{% extends "admin/page.html" %}{% load admin_search_dashboard_tags i18n admin_toolbar_tags admin_list_tags %}
+{% load staticfiles %}
+{% block title %}
+    {{verbose_name_plural}}
+{% endblock title %}
+
+{% block layout_content %}
+    {% block messages %}
+        {% include "admin/generic/messages.html" %}
+    {% endblock messages %}
+    <div class="layout__content content content--sticky" id="dynamic-list"></div>
+    <div id="modal-container"></div>
+{% endblock layout_content %}
+
+{% block footer_scripts %}
+    {{block.super}}
+    <script>
+        // <![CDATA[
+            var dynamicListData = {% render_dynamic_list_config app_label model_name request.user.token.key serializer=serializer endpoint=endpoint default_columns=default_columns default_order_by=default_order_by default_filters=default_filters %}
+
+            if (window.ReactDOM && window.React && window.DynamicList) {
+                ReactDOM.render(
+                    React.createElement(DynamicList, dynamicListData),
+                    document.getElementById('dynamic-list')
+                )
+            }
+        // ]]>
+    </script>
+{% endblock footer_scripts %}

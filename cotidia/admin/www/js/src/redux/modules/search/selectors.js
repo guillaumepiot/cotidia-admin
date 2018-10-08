@@ -34,8 +34,8 @@ export const getActiveFilters = createSelector(
   (state) => state.search.filters,
   (filters) =>
     Object.entries(filters)
-      .filter(([key, value]) => getFilterValue(value) != null)
-      .map(([key, value]) => key)
+      .filter(([, value]) => getFilterValue(value) != null)
+      .map(([key]) => key)
 )
 
 export const allResultsSelected = (state) => (state.search.selected.length > 0) && (state.search.selected.length === state.search.results.length)
@@ -47,25 +47,10 @@ const getFiltersArray = (state, filters) => {
   }
 
   return filters.map((filter) => {
-    // First see if the filter is present in the "extraFilters" object.
-    if (state.search.extraFilters.hasOwnProperty(filter)) {
+    if (state.search.filterConfiguration.hasOwnProperty(filter)) {
       return {
-        ...state.search.extraFilters[filter],
+        ...state.search.filterConfiguration[filter],
         name: filter,
-      }
-    }
-
-    // If not, see if it's a colmn with that filter
-    if (state.search.columnConfiguration.hasOwnProperty(filter)) {
-      const columnConfig = state.search.columnConfiguration[filter]
-
-      if (columnConfig.filter) {
-        return {
-          filter: columnConfig.filter,
-          label: columnConfig.label,
-          name: filter,
-          options: columnConfig.options,
-        }
       }
     }
   }).filter(identity)

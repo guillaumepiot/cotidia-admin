@@ -1,5 +1,4 @@
 import { call, put, select, take, takeEvery } from 'redux-saga/effects'
-import { delay } from 'redux-saga'
 import isEqual from 'lodash.isequal'
 
 import { uuid4 } from '../../../utils'
@@ -7,20 +6,13 @@ import { generateURL, fetchAuthenticated } from '../../../utils/api'
 
 import { showModal } from '../modal/sagas'
 
-import { refreshCurrentPage } from './actions'
 import * as types from './types'
 import * as modalTypes from '../modal/types'
 
 export function * configureFilter ({ payload: { filter } }) {
-  const { columnConfiguration, extraFilters, filters } = yield select((state) => state.search)
+  const { filterConfiguration, filters } = yield select((state) => state.search)
 
-  let title = 'Filter'
-
-  if (columnConfiguration[filter]) {
-    title = columnConfiguration[filter].label
-  } else {
-    title = extraFilters[filter].label
-  }
+  let title = filterConfiguration[filter].label
 
   const { submittedData } = yield call(showModal, {
     component: 'Filter',
@@ -101,10 +93,14 @@ function getSearchQueryString (data, page = null) {
   const queryString = {}
 
   for (const [key, value] of Object.entries(data.filters)) {
-    const val = getFilterValue(value)
+    if (data.filterConfiguration.hasOwnProperty(key)) {
+      const queryParameter = data.filterConfiguration[key].queryParameter || key
 
-    if (val != null) {
-      queryString[key] = val
+      const val = getFilterValue(value)
+
+      if (val != null) {
+        queryString[queryParameter] = val
+      }
     }
   }
 
