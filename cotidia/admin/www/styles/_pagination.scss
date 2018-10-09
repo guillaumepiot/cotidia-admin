@@ -11,9 +11,10 @@ $link-size: 1.75rem;
         display: flex;
         justify-content: center;
         margin-bottom: 0.25rem;
+        text-align: center;
 
         @media screen and (min-width: $tablet-width) {
-            margin: 0 1rem;
+            margin: 0 0.5rem;
 
             &:first-child {
                 margin-left: 0;
@@ -22,6 +23,10 @@ $link-size: 1.75rem;
             &:last-child {
                 margin-right: 0;
             }
+        }
+
+        @media screen and (min-width: $laptop-width) {
+            margin: 0 1rem;
         }
     }
 
@@ -35,6 +40,7 @@ $link-size: 1.75rem;
         display: inline-flex;
         height: $link-size;
         justify-content: center;
+        min-width: $link-size;
         padding: 0;
         text-align: center;
         transition:
