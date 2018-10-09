@@ -65,6 +65,12 @@ $link-size: 1.75rem;
 }
 
 .result-count-form {
+    .form__group {
+        align-items: center;
+        display: flex;
+        margin-bottom: 0;
+    }
+
     &__label {
         margin-right: 0.5rem;
     }
