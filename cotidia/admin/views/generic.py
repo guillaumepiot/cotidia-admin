@@ -188,7 +188,9 @@ class DynamicListView(
 
     def get_template_names(self):
 
-        if self.template_name is not None:
+        if self.kwargs.get('template_name') is not None:
+            return [self.kwargs.get('template_name')]
+        elif self.template_name is not None:
             return [self.template_name]
 
         template = 'admin/{app}/{model}/dynamic-list-view.html'.format(
