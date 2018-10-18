@@ -1,70 +1,55 @@
-<menu class="layout__menu menu">Menu{{!-- <header class="menu__item menu__item--open menu-item">
-        <a class="menu-item__link" href="#"><span class="fa fa-bars"></span></a>
-        <span class="menu__title">Native Finance</span>
+<menu class="layout__menu menu">
+    {{!-- Header --}}
+    <header class="menu__header menu-header">
+        <img src="https://app.manwithacam.org/img/mwac_logo_white_400.png" class="menu-header__logo" alt="Man With A Cam">
+        <a class="menu-item__link" href="#">
+            <i class="fas fa-tachometer-alt"></i>
+        </a>
     </header>
+
+    {{!-- Container --}}
     <ul class="menu__container">
-        <li class="menu__item menu__item--close menu-item"><a class="menu-item__link" href="#"><span class="fa fa-close"></span></a></li>
-        <li class="menu__item menu-item menu-item--home"><a class="menu-item__link" href="/admin/"><span class="menu-item__link-icon"><span class="fa fa-home"></span></span> <span class="menu-item__link-text"><img alt="Native Finance Logo" class="navbar__logo" src="http://via.placeholder.com/200x100" width="100"></span></a></li>
+        <li class="menu__item menu__item--close menu-item">
+            <a class="menu-item__link" href="#">
+                <i class="fa fa-close"></i>
+            </a>
+        </li>
+
         <li class="menu__item menu-item">
-            <form action="/admin/generic/search" method="get">
-                <div class="form__group form__group--inactive">
-                    <div class="form__control form__control--input-addon">
-                        <input name="query" placeholder="Search" type="text" value="">
-                        <div class="input-addon input-addon--suffix"><span class="fa fa-search"></span></div>
-                    </div>
-                </div>
-            </form>
+            <a class="menu-item__link" href="" title="MetaData">
+                <span class="menu-item__link-icon">
+                    <i class="fa fa-users"></i>
+                </span>
+                <span class="menu-item__link-text">MetaData</span>
+            </a>
         </li>
+
         <li class="menu__item menu-item">
-            <div class="form__group form__group--inactive">
-                <div class="form__control form__control--select">
-                    <select id="id_shortcuts" name="shortcuts">
-                        <option value="">Quick links</option>
-                        <option value="/admin/item/add">+ Add Item</option>
-                        <option value="/admin/property/add">+ Add Property</option>
-                    </select>
-                </div>
-            </div>
+            <a class="menu-item__link" href="" title="MetaData">
+                <span class="menu-item__link-icon">
+                    <i class="fa fa-file"></i>
+                </span>
+                <span class="menu-item__link-text">Pages</span>
+            </a>
         </li>
-        <div class="menu__section">Borrower</div>
-        <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/application/" title="Applications"><span class="menu-item__link-icon"><span class="fa fa-list"></span></span> <span class="menu-item__link-text">Applications</span></a></li>
-        <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/invest/" title="Loans"><span class="menu-item__link-icon"><span class="fa fa-gbp"></span></span> <span class="menu-item__link-text">Loans</span></a></li>
-        <li class="menu__item menu__item--sub-nav menu-item"><a class="menu-item__link menu-item__link--drop-arrow" href="#" title="Categories"><span class="menu-item__link-icon"><span class="fa fa-cog"></span></span> <span class="menu-item__link-text">Categories</span></a>
-            <ul class="menu__sub-nav">
-                <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/invest/asset-type/" title="Asset Types"><span class="menu-item__link-icon"><span class="fa fa-cog"></span></span> <span class="menu-item__link-text">Asset Types</span></a></li>
-                <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/invest/loan-type/" title="Loan Types"><span class="menu-item__link-icon"><span class="fa fa-cog"></span></span> <span class="menu-item__link-text">Loan Types</span></a></li>
-                <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/invest/security-type/" title="Security Types"><span class="menu-item__link-icon"><span class="fa fa-cog"></span></span> <span class="menu-item__link-text">Security Types</span></a></li>
-            </ul>
-        </li>
-        <div class="menu__section">Lender</div>
-        <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/lender/" title="Lender"><span class="menu-item__link-icon"><span class="fa fa-list"></span></span> <span class="menu-item__link-text">Lender</span></a></li>
-        <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/generic/list/lender/product" title="Products"><span class="menu-item__link-icon"><span class="fa fa-users"></span></span> <span class="menu-item__link-text">Products</span></a></li>
-        <div class="menu__section">Content Management</div>
-        <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/cms/" title="Pages"><span class="menu-item__link-icon"><span class="fa fa-file-text-o"></span></span> <span class="menu-item__link-text">Pages</span></a></li>
-        <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/file/" title="Files"><span class="menu-item__link-icon"><span class="fa fa-file"></span></span> <span class="menu-item__link-text">Files</span></a></li>
-        <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/team/member/" title="Members"><span class="menu-item__link-icon"><span class="fa fa-users"></span></span> <span class="menu-item__link-text">Members</span></a></li>
-        <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/team/department/" title="Departments"><span class="menu-item__link-icon"><span class="fa fa-building"></span></span> <span class="menu-item__link-text">Departments</span></a></li>
-        <div class="menu__section">Team</div>
-        <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/team/member/" title="Members"><span class="menu-item__link-icon"><span class="fa fa-users"></span></span> <span class="menu-item__link-text">Members</span></a></li>
-        <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/team/department/" title="Departments"><span class="menu-item__link-icon"><span class="fa fa-building"></span></span> <span class="menu-item__link-text">Departments</span></a></li>
-        <div class="menu__section">Mail</div>
-        <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/mail/" title="Notices"><span class="menu-item__link-icon"><span class="fa fa-envelope"></span></span> <span class="menu-item__link-text">Notices</span></a></li>
-        <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/mail/logs/" title="Logs"><span class="menu-item__link-icon"><span class="fa fa-file-text-o"></span></span> <span class="menu-item__link-text">Logs</span></a></li>
-        <div class="menu__section">Account</div>
-        <li class="menu__item menu__item--sub-nav menu-item menu-item--right"><a class="menu-item__link menu-item__link--drop-arrow" href="#" title="Settings"><span class="menu-item__link-icon"><span class="fa fa-wrench"></span></span> <span class="menu-item__link-text">Settings</span></a>
-            <ul class="menu__sub-nav">
-                <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/account/user/" title="Users"><span class="menu-item__link-text">Users</span></a></li>
-                <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/account/role/" title="Roles"><span class="menu-item__link-text">Roles</span></a></li>
-            </ul>
-        </li>
-        <li class="menu__item menu__item--sub-nav menu-item menu-item--right"><a class="menu-item__link menu-item__link--drop-arrow" href="#" title="Anthony Porter"><span class="menu-item__link-icon"><span class="fa fa-user"></span></span> <span class="menu-item__link-text">Anthony Porter</span></a>
-            <ul class="menu__sub-nav">
-                <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/account/profile/edit/" title="Profile"><span class="menu-item__link-icon"><span class="fa fa-id-card"></span></span> <span class="menu-item__link-text">Profile</span></a></li>
-                <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/account/password/change/" title="Change password"><span class="menu-item__link-icon"><span class="fa fa-key"></span></span> <span class="menu-item__link-text">Change password</span></a></li>
-                <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/account/logout/" title="Logout"><span class="menu-item__link-icon"><span class="fa fa-sign-out"></span></span> <span class="menu-item__link-text">Logout</span></a></li>
-            </ul>
-        </li>
-        <li class="menu__item menu-item"><a class="menu-item__link" href="/admin/team/member/" title="MetaDatas"><span class="menu-item__link-icon"><span class="fa fa-users"></span></span> <span class="menu-item__link-text">MetaDatas</span></a></li>
-        <li class="menu__item menu__item--sidebar-expand"><a class="menu-item__link" href="#"><span class="menu-item__link-icon"><span class="fa fa-chevron-right"></span></span></a></li>
-        <li class="menu__item menu__item--sidebar-collapse"><a class="menu-item__link" href="#"><span class="menu-item__link-icon"><span class="fa fa-chevron-left"></span></span> <span class="menu-item__link-text">Compact</span></a></li>
-    </ul> --}}</menu>
+    </ul>
+
+    {{!-- Footer --}}
+    <footer class="menu__footer menu-footer">
+        <div class="menu-footer__text">
+            Powered by <a href="">Cotidia</a>
+        </div>
+        <ul class="menu-footer__list">
+            <li class="menu__item menu__item--sidebar-expand">
+                <a class="menu-item__link" href="#">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+            <li class="menu__item menu__item--sidebar-collapse">
+                <a class="menu-item__link" href="#">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            </li>
+        </ul>
+    </footer>
+</menu>
