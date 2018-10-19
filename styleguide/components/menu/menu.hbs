@@ -2,7 +2,7 @@
     {{!-- Header --}}
     <header class="menu__header menu-header">
         <img src="{{{ adminLogo }}}" class="menu-header__logo" alt="{{ adminTitle }}">
-        <a class="menu-item__link" href="#" title="Dashboard">
+        <a class="menu-item__link" href="#" title="Dashboard" aria-label="Dashboard">
             <i class="fas fa-tachometer-alt"></i>
         </a>
     </header>
@@ -10,64 +10,52 @@
     {{!-- Container --}}
     <ul class="menu__container">
         <li class="menu__item menu__item--close menu-item">
-            <a class="menu-item__link" href="#" title="Close">
+            <a class="menu-item__link" href="#" title="Close" aria-label="close">
                 <i class="fa fa-close"></i>
             </a>
         </li>
 
-        <li>
-            <div class="menu__category  menu-category menu-category--open">
-                <button type="button" class="menu-category__toggle">
-                    <span class="menu-category__title">
-                        Title
-                    </span>
-                    <span class="menu-category__subtitle">
-                        Subtitle
-                    </span>
-                </button>
-                <ul class="menu-category__list">
-                    {{#each links}}
-                        <li class="menu__item menu-item">
-                            <a class="menu-item__link" href="{{ link }}" title="{{ text }}">
-                                <span class="menu-item__link-icon">
-                                    <i class="fa fa-{{ icon }}"></i>
-                                </span>
-                                <span class="menu-item__link-text">{{ text }}</span>
-                            </a>
-                        </li>
-                    {{/each}}
-                </ul>
-            </div>
-            <div></div>
-        </li>
-
-        <li>
-            <div class="menu__category  menu-category">
-                <button type="button" class="menu-category__toggle">
-                    <span class="menu-category__title">
-                        Title
-                    </span>
-                    <span class="menu-category__subtitle">
-                        Subtitle, subtitle, subtitle
-                    </span>
-                </button>
-                <ul class="menu-category__list">
-                    {{#each links}}
-                        <li class="menu__item menu-item">
-                            <a class="menu-item__link" href="{{ link }}" title="{{ text }}">
-                                <span class="menu-item__link-icon">
-                                    <i class="fa fa-{{ icon }}"></i>
-                                </span>
-                                <span class="menu-item__link-text">{{ text }}</span>
-                            </a>
-                        </li>
-                    {{/each}}
-                </ul>
+        {{#each categories}}
+            <li>
+                <div class="
+                    menu__category
+                    menu-category
+                    {{#if open}}
+                        menu-category--open
+                    {{/if}}
+                    ">
+                    <button type="button" class="menu-category__toggle" title="{{ title }}" aria-label="{{ title }}">
+                        <span class="menu-category__summary-icon">
+                            <i class="{{ icon }}"></i>
+                        </span>
+                        <span class="menu-category__close-icon">
+                            <i class="fa fa-angle-down"></i>
+                        </span>
+                        <span class="menu-category__title">
+                            {{ title }}
+                        </span>
+                        <span class="menu-category__subtitle">
+                            {{ subtitle }}
+                        </span>
+                    </button>
+                    <ul class="menu-category__list">
+                        {{#each links}}
+                            <li class="menu__item menu-item">
+                                <a class="menu-item__link" href="{{ link }}" title="{{ text }}">
+                                    <span class="menu-item__link-icon">
+                                        <i class="{{ icon }}"></i>
+                                    </span>
+                                    <span class="menu-item__link-text">{{ text }}</span>
+                                </a>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
                 <div></div>
-            </div>
-        </li>
+            </li>
+        {{/each}}
 
-        {{!-- {{#each links}}
+        {{#each links}}
             <li class="menu__item menu-item">
                 <a class="menu-item__link" href="{{ link }}" title="{{ text }}">
                     <span class="menu-item__link-icon">
@@ -76,7 +64,7 @@
                     <span class="menu-item__link-text">{{ text }}</span>
                 </a>
             </li>
-        {{/each}} --}}
+        {{/each}}
     </ul>
 
     {{!-- Footer --}}

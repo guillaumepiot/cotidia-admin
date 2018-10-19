@@ -71,13 +71,21 @@ body {
         .menu-item {
             float: none;
 
+            &:hover {
+                background: none;
+            }
+
             &__link {
                 align-items: center;
                 display: flex;
                 justify-content: flex-start;
                 padding: 0.75rem 1rem;
+                transition:
+                    background $animation-speed--fast ease,
+                    color $animation-speed--fast ease;
 
                 &:hover {
+                    background: rgba(255, 255, 255, 0.1);
                     color: $menu_link_color_hover;
                 }
             }
@@ -91,33 +99,6 @@ body {
                 width: 1rem;
             }
         }
-
-
-        // .menu-item__link--drop-arrow:after {
-        //     margin-top: -3px;
-        //     position: absolute;
-        //     right: $horizontal_padding;
-        //     top: 50%;
-        // }
-
-        // .menu__item--sub-nav {
-        //     &:hover {
-        //         .menu__sub-nav {
-        //             display: block;
-        //             max-height: 500px;
-        //         }
-        //     }
-        // }
-
-        // .menu__sub-nav {
-        //     background-color: $menu_link_background_color_active;
-        //     background-color: var(--menu_link_background_color_active, $menu_link_background_color_active);
-        //     display: block;
-        //     max-height: 0;
-        //     overflow: hidden;
-        //     position: static;
-        //     transition: max-height $animation-speed ease;
-        // }
     }
 
     // Collapse
@@ -150,6 +131,21 @@ body {
 
             .menu {
                 width: $toolbar_height;
+            }
+
+            .menu-category {
+                &__title,
+                &__subtitle {
+                    display: none;
+                }
+
+                &__toggle {
+                    text-align: center;
+                }
+
+                &__close-icon {
+                    display: none;
+                }
             }
 
             .menu-item {
@@ -225,14 +221,22 @@ body {
                 &__container {
                     padding-top: $menu_header_height !important;
                 }
+
+                &__item {
+                    &--sidebar-collapse {
+                        display: block;
+                    }
+
+                    &--sidebar-expand {
+                        display: none;
+                    }
+                }
             }
 
-            .menu__item {
-                &--sidebar-collapse {
-                    display: block;
-                }
+            .menu-category {
+                min-height: 4rem;
 
-                &--sidebar-expand {
+                &__summary-icon {
                     display: none;
                 }
             }
@@ -241,7 +245,7 @@ body {
         .menu-header,
         .menu-footer {
             .menu-item__link {
-                padding: 0;
+                padding: 0.5rem;
 
                 &:hover {
                     background: transparent;
@@ -254,11 +258,17 @@ body {
 .menu-category {
     display: block;
     border-bottom: 1px solid $menu_border_color;
-    min-height: 4rem;
+    transition: background $animation-speed ease;
 
-    &--open {
+    &:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    &--open,
+    &--open:hover {
         background: rgba(0, 0, 0, 0.1);
     }
+
 
     &__toggle {
         background: none;
@@ -276,9 +286,9 @@ body {
     &__title,
     &__subtitle {
         display: block;
+        overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        overflow: hidden;
     }
 
     &__subtitle {
@@ -296,8 +306,26 @@ body {
         }
     }
 
+    &__close-icon {
+        float: right;
+        opacity: 0;
+        transform: rotate(0deg);
+        transition:
+            opacity $animation-speed--slow ease,
+            transform $animation-speed ease;
+
+        .menu-category--open > .menu-category__toggle:hover & {
+            opacity: 1;
+        }
+
+        .menu-category--open & {
+            transform: rotate(180deg);
+        }
+    }
+
     &__list {
         max-height: 0px;
+        font-size: 90%;
         overflow: hidden;
         padding-left: 0;
         transition: max-height 0.75s ease;

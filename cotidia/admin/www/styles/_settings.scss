@@ -26,9 +26,12 @@ $laptop-width: 1024px;
 $tablet-width: 768px;
 $mobile-width: 767px;
 
-
-
 // $grey--dark: #111315 !default;
 // $grey--medium: #555A5D !default;
 // $grey--light: #D0D5D7 !default;
 // $grey--lighter: #E5EBED !default;
+
+// Animations
+$animation-speed: 0.4s;
+$animation-speed--fast: 0.2s;
+$animation-speed--slow: 0.8s;
