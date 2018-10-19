@@ -70,6 +70,7 @@ body {
     &.menu--sidebar {
         .menu-item {
             float: none;
+            font-size: 90%;
 
             &:hover {
                 background: none;
@@ -325,7 +326,6 @@ body {
 
     &__list {
         max-height: 0px;
-        font-size: 90%;
         overflow: hidden;
         padding-left: 0;
         transition: max-height 0.75s ease;

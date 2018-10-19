@@ -59,7 +59,6 @@ context:
           text: Contacts
           icon: "fa fa-address-book"
 
-
   links:
     - link: /link-one
       text: Home
