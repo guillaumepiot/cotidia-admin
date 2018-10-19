@@ -1,0 +1,20 @@
+context:
+  adminTitle: Man With A Cam
+  adminLogo: https://app.manwithacam.org/img/mwac_logo_white_400.png
+
+  links:
+    - link: /link-one
+      text: Home
+      icon: home
+
+    - link: /link-two
+      text: About
+      icon: handshake
+
+    - link: /link-three
+      text: Blog
+      icon: rss
+
+    - link: /link-four
+      text: Contact
+      icon: phone

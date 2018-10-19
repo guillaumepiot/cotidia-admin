@@ -1,8 +1,8 @@
 <menu class="layout__menu menu">
     {{!-- Header --}}
     <header class="menu__header menu-header">
-        <img src="https://app.manwithacam.org/img/mwac_logo_white_400.png" class="menu-header__logo" alt="Man With A Cam">
-        <a class="menu-item__link" href="#">
+        <img src="{{{ adminLogo }}}" class="menu-header__logo" alt="{{ adminTitle }}">
+        <a class="menu-item__link" href="#" title="Dashboard">
             <i class="fas fa-tachometer-alt"></i>
         </a>
     </header>
@@ -10,43 +10,88 @@
     {{!-- Container --}}
     <ul class="menu__container">
         <li class="menu__item menu__item--close menu-item">
-            <a class="menu-item__link" href="#">
+            <a class="menu-item__link" href="#" title="Close">
                 <i class="fa fa-close"></i>
             </a>
         </li>
 
-        <li class="menu__item menu-item">
-            <a class="menu-item__link" href="" title="MetaData">
-                <span class="menu-item__link-icon">
-                    <i class="fa fa-users"></i>
-                </span>
-                <span class="menu-item__link-text">MetaData</span>
-            </a>
+        <li>
+            <div class="menu__category  menu-category menu-category--open">
+                <button type="button" class="menu-category__toggle">
+                    <span class="menu-category__title">
+                        Title
+                    </span>
+                    <span class="menu-category__subtitle">
+                        Subtitle
+                    </span>
+                </button>
+                <ul class="menu-category__list">
+                    {{#each links}}
+                        <li class="menu__item menu-item">
+                            <a class="menu-item__link" href="{{ link }}" title="{{ text }}">
+                                <span class="menu-item__link-icon">
+                                    <i class="fa fa-{{ icon }}"></i>
+                                </span>
+                                <span class="menu-item__link-text">{{ text }}</span>
+                            </a>
+                        </li>
+                    {{/each}}
+                </ul>
+            </div>
+            <div></div>
         </li>
 
-        <li class="menu__item menu-item">
-            <a class="menu-item__link" href="" title="MetaData">
-                <span class="menu-item__link-icon">
-                    <i class="fa fa-file"></i>
-                </span>
-                <span class="menu-item__link-text">Pages</span>
-            </a>
+        <li>
+            <div class="menu__category  menu-category">
+                <button type="button" class="menu-category__toggle">
+                    <span class="menu-category__title">
+                        Title
+                    </span>
+                    <span class="menu-category__subtitle">
+                        Subtitle, subtitle, subtitle
+                    </span>
+                </button>
+                <ul class="menu-category__list">
+                    {{#each links}}
+                        <li class="menu__item menu-item">
+                            <a class="menu-item__link" href="{{ link }}" title="{{ text }}">
+                                <span class="menu-item__link-icon">
+                                    <i class="fa fa-{{ icon }}"></i>
+                                </span>
+                                <span class="menu-item__link-text">{{ text }}</span>
+                            </a>
+                        </li>
+                    {{/each}}
+                </ul>
+                <div></div>
+            </div>
         </li>
+
+        {{!-- {{#each links}}
+            <li class="menu__item menu-item">
+                <a class="menu-item__link" href="{{ link }}" title="{{ text }}">
+                    <span class="menu-item__link-icon">
+                        <i class="fa fa-{{ icon }}"></i>
+                    </span>
+                    <span class="menu-item__link-text">{{ text }}</span>
+                </a>
+            </li>
+        {{/each}} --}}
     </ul>
 
     {{!-- Footer --}}
     <footer class="menu__footer menu-footer">
         <div class="menu-footer__text">
-            Powered by <a href="">Cotidia</a>
+            Powered by <a href="https://cotidia.com/" target="_blank" title="Go to cotidia.com">Cotidia</a>
         </div>
         <ul class="menu-footer__list">
             <li class="menu__item menu__item--sidebar-expand">
-                <a class="menu-item__link" href="#">
+                <a class="menu-item__link" href="#" title="Expand menu">
                     <i class="fa fa-angle-right"></i>
                 </a>
             </li>
             <li class="menu__item menu__item--sidebar-collapse">
-                <a class="menu-item__link" href="#">
+                <a class="menu-item__link" href="#" title="Collapse menu">
                     <i class="fa fa-angle-left"></i>
                 </a>
             </li>
