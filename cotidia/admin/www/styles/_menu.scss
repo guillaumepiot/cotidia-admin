@@ -183,6 +183,7 @@ body {
                     display: none;
                     width: $toolbar_height;
                 }
+
                 &--sidebar-expand {
                     display: block;
                     width: $toolbar_height;
@@ -233,6 +234,7 @@ body {
                     &--sidebar-expand {
                         display: none;
                     }
+
                 }
             }
 
@@ -253,12 +255,20 @@ body {
                 }
             }
         }
+
+        .menu__item {
+            &--close {
+                float: right !important;
+                padding: $menu_padding / 2;
+                z-index: 1;
+            }
+        }
     }
 }
 
 .menu-category {
-    display: block;
     border-bottom: 1px solid $menu_border_color;
+    display: block;
     min-height: 4rem;
     transition: background $animation-speed ease;
 
@@ -271,7 +281,6 @@ body {
         background: rgba(0, 0, 0, 0.1);
     }
 
-
     &__toggle {
         background: none;
         border: none;
@@ -283,6 +292,14 @@ body {
         padding: ($menu_padding * 0.667) $menu_padding;
         text-align: left;
         width: 100%;
+
+        // Button is smaller than li element.
+        // Trying to target the parnet to take styling on buttons's hover
+        //  &:hover & {
+        //     // background: rgba(0, 0, 0, 0.2);
+        //     background: #f00 !important;
+        //     content: 'd';
+        // }
     }
 
     &__title,
