@@ -15,6 +15,7 @@ $menu_link_background_color_hover_mobile: transparent;
 $menu_link_background_color_active: lighten(#00213E, 6%);
 $menu_link_background_color_active_mobile: lighten(#00213E, 6%);
 $menu_background_color_section: desaturate(lighten($menu_background_color, 30%), 30%);
+$menu_padding: 1rem;
 
 // New //
 .menu-header,
@@ -23,8 +24,11 @@ $menu_background_color_section: desaturate(lighten($menu_background_color, 30%),
     color: #fff;
     display: flex;
     justify-content: space-between;
-    padding: 1rem;
-    width: $menu_sidebar_width;
+    padding: $menu_padding;
+
+    @media screen and (min-width: $laptop-width) {
+        width: $menu_sidebar_width;
+    }
 }
 
 .menu-header {
@@ -67,38 +71,36 @@ $menu_background_color_section: desaturate(lighten($menu_background_color, 30%),
 
 
 body {
-    &.menu--sidebar {
-        .menu-item {
-            float: none;
-            font-size: 90%;
+    .menu-item {
+        float: none;
+        font-size: 90%;
+
+        &:hover {
+            background: none;
+        }
+
+        &__link {
+            align-items: center;
+            display: flex;
+            justify-content: flex-start;
+            padding: ($menu_padding * 0.75) $menu_padding;
+            transition:
+                background $animation-speed--fast ease,
+                color $animation-speed--fast ease;
 
             &:hover {
-                background: none;
+                background: rgba(255, 255, 255, 0.1);
+                color: $menu_link_color_hover;
             }
+        }
 
-            &__link {
-                align-items: center;
-                display: flex;
-                justify-content: flex-start;
-                padding: 0.75rem 1rem;
-                transition:
-                    background $animation-speed--fast ease,
-                    color $animation-speed--fast ease;
-
-                &:hover {
-                    background: rgba(255, 255, 255, 0.1);
-                    color: $menu_link_color_hover;
-                }
-            }
-
-            &__link-icon {
-                align-items: center;
-                display: flex;
-                height: 1rem;
-                justify-content: center;
-                margin-right: $horizontal_padding;
-                width: 1rem;
-            }
+        &__link-icon {
+            align-items: center;
+            display: flex;
+            height: 1rem;
+            justify-content: center;
+            margin-right: $horizontal_padding;
+            width: 1rem;
         }
     }
 
@@ -235,8 +237,6 @@ body {
             }
 
             .menu-category {
-                min-height: 4rem;
-
                 &__summary-icon {
                     display: none;
                 }
@@ -246,7 +246,7 @@ body {
         .menu-header,
         .menu-footer {
             .menu-item__link {
-                padding: 0.5rem;
+                padding: $menu_padding / 2;
 
                 &:hover {
                     background: transparent;
@@ -259,6 +259,7 @@ body {
 .menu-category {
     display: block;
     border-bottom: 1px solid $menu_border_color;
+    min-height: 4rem;
     transition: background $animation-speed ease;
 
     &:hover {
@@ -279,7 +280,7 @@ body {
         cursor: pointer;
         font: inherit;
         outline: none; // TODO
-        padding: 0.667rem 1rem;
+        padding: ($menu_padding * 0.667) $menu_padding;
         text-align: left;
         width: 100%;
     }
@@ -297,13 +298,21 @@ body {
 
         color: $grey;
         opacity: 1;
-        transition: opacity 0.25s ease 0.5s;
         position: absolute;
-        width: calc(100% - (1rem * 2));
+        transition: opacity 0.25s ease 0.5s;
+        width: calc(100% - ($menu_padding * 2));
 
         .menu-category--open & {
             opacity: 0;
             transition: none;
+        }
+    }
+
+    &__summary-icon {
+        display: none;
+
+        @media screen and (min-width: $laptop-width) {
+            display: block;
         }
     }
 
