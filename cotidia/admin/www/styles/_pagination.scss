@@ -1,38 +1,77 @@
-.pagination{
-    // &__link{
-    //     display: block;
-    //     float: left;
-    //     border: 1px solid lighten($grey--medium, 10%);
-    //     padding: 0 1rem;
-    //     @include font_size($font_size--small);
-    //     text-transform: uppercase;
-    //     &--current{
+$link-size: 1.75rem;
 
-    //     }
-    //     &--previous{
-    //         border-right: none;
-    //         border-top-left-radius: $border-radius;
-    //         border-bottom-left-radius: $border-radius;
-    //         background-color: $grey--light;
-    //         color: $font_color;
-    //         &:hover{
-    //             background-color: darken($grey--light, 10%);
-    //         }
-    //     }
-    //     &--next{
-    //         border-left: none;
-    //         border-top-right-radius: $border-radius;
-    //         border-bottom-right-radius: $border-radius;
-    //         background-color: $grey--light;
-    //         color: $font_color;
-    //         &:hover{
-    //             background-color: darken($grey--light, 10%);
-    //         }
-    //     }
-    // }
-    // &:after{
-    //     content: "";
-    //     display: block;
-    //     clear: both;
-    // }
+.pagination {
+    @media screen and (min-width: $tablet-width) {
+        align-items: center;
+        display: flex;
+    }
+
+    &__subsection {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 0.25rem;
+        text-align: center;
+
+        @media screen and (min-width: $tablet-width) {
+            margin: 0 0.5rem;
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+        @media screen and (min-width: $laptop-width) {
+            margin: 0 1rem;
+        }
+    }
+
+    &__link {
+        align-content: center;
+        background-color: transparent;
+        border: 1px solid $grey--light;
+        border-radius: 50%;
+        color: $grey;
+        cursor: pointer;
+        display: inline-flex;
+        height: $link-size;
+        justify-content: center;
+        min-width: $link-size;
+        padding: 0;
+        text-align: center;
+        transition:
+            background-color 0.3s ease,
+            color 0.3s ease;
+        width: $link-size;
+
+        &--prev {
+            margin-right: 1rem;
+        }
+
+        &--next {
+            margin-left: 1rem;
+        }
+
+        &:hover {
+            background-color: $grey;
+            border-color: $grey;
+            color: #fff;
+        }
+    }
+}
+
+.result-count-form {
+    .form__group {
+        align-items: center;
+        display: flex;
+        margin-bottom: 0;
+    }
+
+    &__label {
+        margin-right: 0.5rem;
+    }
 }
