@@ -34,43 +34,55 @@ export default class Pagination extends Component {
 
     return (
       <div className='content-foot__left' style={{ display: 'flex', alignItems: 'center' }}>
-        <div>
-          <button
-            className='btn btn--link'
-            disabled={page === 1}
-            onClick={this.gotoPreviousPage}
-            type='button'
-          >
-            <Icon icon='chevron-left' />
-          </button>
+        <div className='pagination'>
+          <div className='pagination__subsection'>
+            <button
+              aria-label='Previous'
+              className='pagination__link pagination__link--prev'
+              disabled={page === 1}
+              onClick={this.gotoPreviousPage}
+              title='Previous'
+              type='button'
+            >
+              <Icon icon='chevron-left' />
+            </button>
 
-          Page {page} of {pageCount}
+            Page {page} of {pageCount}
 
-          <button
-            className='btn btn--link'
-            disabled={page === pageCount}
-            onClick={this.gotoNextPage}
-            type='button'
-          >
-            <Icon icon='chevron-right' />
-          </button>
-        </div>
+            <button
+              aria-label='Next'
+              className='pagination__link pagination__link--next'
+              disabled={page === pageCount}
+              onClick={this.gotoNextPage}
+              title='Next'
+              type='button'
+            >
+              <Icon icon='chevron-right' />
+            </button>
+          </div>
 
-        <div style={{ marginLeft: '2rem' }}>
-          Showing {pageResultCount} of {totalResultsCount} results
-        </div>
+          <div className='pagination__subsection hidden-mobile'>
+            Showing {pageResultCount} of {totalResultsCount} results
+          </div>
 
-        <div style={{ marginLeft: '2rem' }}>
-          Results per page:
-          {' '}
-          <select value={perPage} onChange={this.setPerPage}>
-            <option value={25}>25</option>
-            <option value={50}>50</option>
-            <option value={75}>75</option>
-            <option value={100}>100</option>
-            <option value={150}>150</option>
-            <option value={200}>200</option>
-          </select>
+          <div className='pagination__subsection result-count-form hidden-mobile'>
+            <div className='form__group form__group--boxed form__group--boxed'>
+              <label className='result-count-form__label' htmlFor='results-per-page'>
+                Results per page:
+              </label>
+              {' '}
+              <div className='form__control form__control--select'>
+                <select className='form__select' value={perPage} onChange={this.setPerPage}>
+                  <option value={25}>25</option>
+                  <option value={50}>50</option>
+                  <option value={75}>75</option>
+                  <option value={100}>100</option>
+                  <option value={150}>150</option>
+                  <option value={200}>200</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     )
