@@ -12,7 +12,7 @@ export default class Choice extends Component {
       value: PropTypes.string.isRequired,
     })).isRequired,
     updateValue: PropTypes.func.isRequired,
-    value: PropTypes.array,
+    value: PropTypes.arrayOf(PropTypes.string),
   }
 
   static defaultProps = {
