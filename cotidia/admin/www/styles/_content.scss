@@ -104,8 +104,7 @@ $content-foot-height: 3.5rem;
     }
 
     &__filter {
-        display: flex;
-        align-items: center;
+        flex: 1;
 
         // No need pushing when we have a button after
         .form__group {
@@ -125,8 +124,15 @@ $content-foot-height: 3.5rem;
 }
 
 .content-filter {
+    display: flex;
+    align-items: center;
+
     &__item {
         margin-right: 0.5rem;
+
+        &--wide {
+            flex: 1;
+        }
     }
 }
 
