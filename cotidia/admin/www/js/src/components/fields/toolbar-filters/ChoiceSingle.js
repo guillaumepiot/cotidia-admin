@@ -28,6 +28,7 @@ export default class ChoiceSingle extends Component {
           controlOnly
           label={this.props.label}
           name={this.props.name}
+          placeholder={this.props.label}
           options={this.props.options}
           updateValue={this.updateValue}
           value={this.props.value}

@@ -41,6 +41,7 @@ export default class Choice extends Component {
           name={this.props.name}
           label={this.props.label}
           options={this.props.options}
+          placeholder={this.props.label}
           updateValue={this.updateValue}
           values={values}
         />
