@@ -379,6 +379,7 @@ export default class ToolBar extends Component {
   render () {
     const {
       anyResultsSelected,
+      filterSuggest,
       filters,
       hasSidebar,
     } = this.props
@@ -402,7 +403,7 @@ export default class ToolBar extends Component {
             )}
           </div>
         </div>
-        {(Object.values(filters).length > 0) && (
+        {filterSuggest && (Object.values(filters).length > 0) && (
           <div className='content__filters'>
             {Object.entries(filters).map(([filter, value]) => {
               if (Array.isArray(value)) {
