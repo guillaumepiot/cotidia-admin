@@ -239,10 +239,6 @@ class AdminModelSerializer(serializers.ModelSerializer):
 
         return self._columns
 
-    def get_filter_search_configuration(self):
-        return self.get_option('filter_search_configuration')
-
-
 class SortSerializer(serializers.Serializer):
     data = serializers.ListField(
         child=serializers.UUIDField()
