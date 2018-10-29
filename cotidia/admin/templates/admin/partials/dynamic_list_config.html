@@ -57,6 +57,9 @@
     {% if default_order_by %}
         defaultOrderBy: '{{default_order_by}}',
     {% endif %}
+    {% if filter_search_configuration %}
+        filterSearchConfiguration: {{filter_search_configuration|safe}},
+    {% endif %}
     {% if categorise_by %}
         categoriseBy: {
             column: '{{categorise_by.column}}',
