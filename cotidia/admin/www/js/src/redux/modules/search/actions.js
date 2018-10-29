@@ -56,6 +56,11 @@ export const setFilterValue = (filter, value) => ({
   payload: { filter, value },
 })
 
+export const removeFilterValue = (filter, value) => ({
+  type: types.REMOVE_FILTER_VALUE,
+  payload: { filter, value },
+})
+
 export const refreshCurrentPage = () => ({
   type: types.GET_RESULTS_PAGE,
   payload: { page: null },

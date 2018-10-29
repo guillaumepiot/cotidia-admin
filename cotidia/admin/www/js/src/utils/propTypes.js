@@ -2,12 +2,12 @@ import PropTypes from 'prop-types'
 
 const stringList = PropTypes.arrayOf(PropTypes.string)
 
-const option = PropTypes.shape({
+export const option = PropTypes.shape({
   label: PropTypes.string.isRequired,
   value: PropTypes.any.isRequired,
 })
 
-const options = PropTypes.arrayOf(option)
+export const options = PropTypes.arrayOf(option)
 
 const listHandling = PropTypes.shape({
   style: PropTypes.oneOf(['string', 'element']).isRequired,
@@ -88,7 +88,26 @@ const filterConfigSingle = PropTypes.shape({
   options,
 })
 
-const filterConfiguration = PropTypes.objectOf(filterConfigSingle)
+export const filterConfiguration = PropTypes.objectOf(filterConfigSingle)
+
+const requiredIf = (field, value, propType) => (props, prop, component) => {
+  if (props[field] === value) {
+    return PropTypes.checkPropTypes({ [prop]: propType.isRequired }, props, 'prop', component)
+  }
+
+  return PropTypes.checkPropTypes({ [prop]: propType }, props, 'prop', component)
+}
+
+const filterSuggestConfiguration = PropTypes.shape({
+  algoliaConfig: requiredIf('mode', 'algolia', PropTypes.shape({
+    appId: PropTypes.string.isRequired,
+    apiKey: PropTypes.string.isRequired,
+    indexes: PropTypes.arrayOf(PropTypes.string).isRequired,
+    filters: PropTypes.arrayOf(PropTypes.string),
+  })),
+  endpoint: requiredIf('mode', 'api', PropTypes.string),
+  mode: PropTypes.oneOf(['algolia', 'api']).isRequired,
+})
 
 const globalAction = PropTypes.shape({
   action: PropTypes.string.isRequired,
@@ -124,6 +143,7 @@ export const dynamicListPropTypes = {
   detailURL: PropTypes.string,
   endpoint: PropTypes.string.isRequired,
   filterConfiguration,
+  filterSuggestConfiguration,
   globalActions,
   ignoreStoredConfig: PropTypes.bool,
   listFields,

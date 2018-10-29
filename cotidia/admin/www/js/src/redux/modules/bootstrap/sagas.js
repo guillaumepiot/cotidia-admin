@@ -14,6 +14,7 @@ export function * bootstrap ({ payload: config }) {
   yield put({ type: searchTypes.SET_FILTER_CONFIGURATION, payload: config.filterConfiguration || {} })
   yield put({ type: searchTypes.SET_TOOLBAR_FILTERS, payload: config.toolbarFilters || [] })
   yield put({ type: searchTypes.SET_SIDEBAR_FILTERS, payload: config.sidebarFilters || [] })
+  yield put({ type: searchTypes.SET_FILTER_SUGGEST_CONFIGURATION, payload: config.filterSuggestConfiguration })
 
   const { sidebarStartsShown = false, ...configRest } = config.config
 
