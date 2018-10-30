@@ -239,7 +239,6 @@ class AdminModelSerializer(serializers.ModelSerializer):
 
         return self._columns
 
-
 class SortSerializer(serializers.Serializer):
     data = serializers.ListField(
         child=serializers.UUIDField()

@@ -23,6 +23,7 @@ export default class Text extends Component {
         name={this.props.name}
         label={this.props.label}
         updateValue={this.updateValue}
+        updateValueOnEnter
         value={this.props.value}
       />
     )

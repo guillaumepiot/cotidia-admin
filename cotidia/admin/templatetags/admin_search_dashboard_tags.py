@@ -55,7 +55,7 @@ def render_search_dashboard_config(
     # Calculate default_oder_by
     if not default_order_by:
         default_order_by = serializer.get_option('default_order_by')
-    
+
     field_representation = serializer.get_field_representation()
     column_representation = {}
     filter_representation = {}
@@ -70,7 +70,7 @@ def render_search_dashboard_config(
                 filter_representation[name]["options"] = field["options"]
                 query_param = (filter_representation.get("queryParameter") or name)
                 filter_representation[name]["queryParameter"] = query_param
-    
+
     extra_filters = serializer.get_option('extra_filters')
     if extra_filters:
         for name, field in serializer.get_option('extra_filters').items():
@@ -202,6 +202,7 @@ def render_dynamic_list_config(
     context['list_fields'] = serializer.get_option('list_fields')
     context['sidebar_starts_shown'] = serializer.get_option('sidebar_starts_shown')
     context['ignore_stored_config'] = serializer.get_option('ignore_stored_config')
+    context['filter_suggest_configuration'] = serializer.get_option('filter_suggest_configuration')
 
     # Batch actions can be overridden by the caller, so allow for that.
     if batch_actions:

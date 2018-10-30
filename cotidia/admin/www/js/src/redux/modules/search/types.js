@@ -7,6 +7,7 @@ export const SET_GLOBAL_ACTIONS = 'dynamic-list/search/SET_GLOBAL_ACTIONS'
 export const SET_FILTER_CONFIGURATION = 'dynamic-list/search/SET_FILTER_CONFIGURATION'
 export const SET_TOOLBAR_FILTERS = 'dynamic-list/search/SET_TOOLBAR_FILTERS'
 export const SET_SIDEBAR_FILTERS = 'dynamic-list/search/SET_SIDEBAR_FILTERS'
+export const SET_FILTER_SUGGEST_CONFIGURATION = 'dynamic-list/search/SET_FILTER_SUGGEST_CONFIGURATION'
 export const SET_COLUMN_CONFIG = 'dynamic-list/search/SET_COLUMN_CONFIG'
 
 export const LOAD_STORED_CONFIG = 'dynamic-list/search/LOAD_STORED_CONFIG'
@@ -31,6 +32,7 @@ export const TOGGLE_COLUMN = 'dynamic-list/search/TOGGLE_COLUMN'
 export const RESET_COLUMNS = 'dynamic-list/search/RESET_COLUMNS'
 
 export const SET_FILTER_VALUE = 'dynamic-list/search/SET_FILTER_VALUE'
+export const REMOVE_FILTER_VALUE = 'dynamic-list/search/REMOVE_FILTER_VALUE'
 
 export const GET_RESULTS_PAGE = 'dynamic-list/search/GET_RESULTS_PAGE'
 

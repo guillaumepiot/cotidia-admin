@@ -13,6 +13,7 @@ const initialState = {
   filterConfiguration: {},
   toolbarFilters: [],
   sidebarFilters: [],
+  filterSuggestConfiguration: {},
 
   defaultColumns: [], // Actual default columns as specifed by config
   visibleColumns: [], // Current visible columns
@@ -47,6 +48,49 @@ const initialState = {
   selected: [],
 
   showSidebar: true,
+}
+
+const tidyFilters = (filters, state) => {
+  const newFilters = {}
+
+  for (let [filter, value] of Object.entries(filters)) {
+    // If the value is the equivalent of "unset", skip it.
+    if (value == null) {
+      continue
+    }
+
+    // If it's an empty array, skip it.
+    if (Array.isArray(value) && value.length === 0) {
+      continue
+    }
+
+    if (state.filterConfiguration) {
+      // If the filter doesn't exist, skip it.
+      if (! state.filterConfiguration.hasOwnProperty(filter)) {
+        continue
+      }
+
+      // If it's a text filter, the empty string is equivalent to unset, so skip it.
+      if (state.filterConfiguration[filter].filter === 'text' && value === '') {
+        continue
+      }
+
+      // If it's a boolean filter, false is equivalent to unset, so skip it.
+      if (state.filterConfiguration[filter].filter === 'boolean' && value !== true) {
+        continue
+      }
+
+      // If it's an array of choice values, ensure they are distinct.
+      if (state.filterConfiguration[filter].filter === 'choice' && Array.isArray(value)) {
+        value = Array.from(new Set(value))
+      }
+    }
+
+    // Otherwise, add it to the new object.
+    newFilters[filter] = value
+  }
+
+  return newFilters
 }
 
 export default (state = initialState, { type, payload } = {}) => {
@@ -99,6 +143,12 @@ export default (state = initialState, { type, payload } = {}) => {
         sidebarFilters: payload,
       }
 
+    case types.SET_FILTER_SUGGEST_CONFIGURATION:
+      return {
+        ...state,
+        filterSuggestConfiguration: payload,
+      }
+
     case types.SET_COLUMN_CONFIG:
       return {
         ...state,
@@ -108,8 +158,8 @@ export default (state = initialState, { type, payload } = {}) => {
         visibleColumns: payload.defaultColumns,
         orderColumn: payload.defaultOrderColumn,
         orderAscending: payload.defaultOrderAscending,
-        initialFilters: payload.defaultFilters,
-        filters: payload.defaultFilters,
+        initialFilters: tidyFilters(payload.defaultFilters, payload),
+        filters: tidyFilters(payload.defaultFilters, payload),
         listFields: payload.listFields,
         mode: payload.mode,
         categoriseBy: payload.categoriseBy,
@@ -239,7 +289,7 @@ export default (state = initialState, { type, payload } = {}) => {
       }
 
       if (payload.filters) {
-        newState.filters = payload.filters
+        newState.filters = tidyFilters(payload.filters, state)
       }
 
       return {
@@ -257,19 +307,39 @@ export default (state = initialState, { type, payload } = {}) => {
     case types.SET_FILTER_VALUE:
       return {
         ...state,
-        filters: {
+        filters: tidyFilters({
           ...state.filters,
           [payload.filter]: payload.value,
-        },
+        }, state),
       }
+
+    case types.REMOVE_FILTER_VALUE: {
+      let newFilterValue = null
+
+      // If the value is an array, remove this item from it.
+      if (Array.isArray(state.filters[payload.filter])) {
+        newFilterValue = state.filters[payload.filter].filter(
+          (value) => value !== payload.value
+        )
+      }
+
+      // If the value wasn't an array, or was an array but woudl now have no items, null it out.
+      return {
+        ...state,
+        filters: tidyFilters({
+          ...state.filters,
+          [payload.filter]: newFilterValue,
+        }, state),
+      }
+    }
 
     case types.CLEAR_FILTER:
       return {
         ...state,
-        filters: {
+        filters: tidyFilters({
           ...state.filters,
           [payload.filter]: null,
-        },
+        }, state),
       }
 
     case types.CLEAR_FILTERS:
