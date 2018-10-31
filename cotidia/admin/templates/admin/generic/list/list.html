@@ -3,11 +3,15 @@
 <form action="" method="post">
     {% csrf_token %}
     <div class="content__toolbar">
-        <div class="content__filter">
+        <div class="content__filter content-filter">
+            <div class="content-filter__item">
             {% for field in actions.form %}
                 {% include "admin/generic/form/form_group.html" with form_classes="form__group--boxed" %}
             {% endfor %}
-            <input type="submit" value="{% trans "Apply" %}" class="btn btn--primary btn--outline">
+            </div>
+            <div class="content-filter__item">
+                <input type="submit" value="{% trans "Apply" %}" class="btn btn--primary btn--outline">
+            </div>
         </div>
     </div>
 {% endif %}

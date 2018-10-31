@@ -1,9 +1,13 @@
-{% load i18n %}{% if filter %}
+{% load i18n admin_form_tags %}{% if filter %}
 <form action="" method="get" class="form content__toolbar">
     <div class="content__filter">
         {% for field in filter.form %}
         <div class="content-filter__item">
+            {% if not field|is_checkbox %}
             {% include "admin/generic/form/form_group.html" with form_classes="form__group--boxed" %}
+            {% else %}
+            {% include "admin/generic/form/form_group.html" %}
+            {% endif %}
         </div>
         {% endfor %}
         <div class="content-filter__item">
