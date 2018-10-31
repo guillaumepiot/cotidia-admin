@@ -18,8 +18,7 @@ export const getValueFormatter = (config) => {
     boolean: (value) => (
       value ? <Icon icon='check' /> : <Icon icon='times' />
     ),
-    // TODO: does this need refactoring to (value, [item], [accessor], type), see currency?
-    link: (value, type) => {
+    link: (value, _, __, type) => {
       if (! value) {
         return null
       }
@@ -35,8 +34,7 @@ export const getValueFormatter = (config) => {
       return <a href={link} onClick={(e) => e.stopPropagation()}>{value}</a>
     },
     raw: (value) => ({ __html: value }),
-    // TODO: does this need refactoring to (value, [item], [accessor], type), see currency?
-    label: (value, type) => value && (
+    label: (value, _, __, type) => value && (
       <span className={`label ${type && `label--${type}`}`}>{value}</span>
     ),
     file: (value, item, _, endpoint, extraData) => (
