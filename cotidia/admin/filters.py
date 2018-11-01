@@ -296,8 +296,8 @@ class ComparableFilter(BaseFilter):
         return Q()
 
 class DateTimeFilter(ComparableFilter):
-    field_regex = r'(\-?[0-9]+(?:\.[0-9]+)?)'
-    data_type = lambda x: datetime.datetime.strptime(x, '%Y-%m-%d').date()
+    field_regex = r'([0-9]{4}-[0-9]{2}-[0-9]{2})'
+    data_type = lambda self, x: datetime.datetime.strptime(x, '%Y-%m-%d').date()
     type="date"
 
 
