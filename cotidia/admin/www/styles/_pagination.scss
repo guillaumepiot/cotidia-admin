@@ -50,6 +50,10 @@ $link-size: 1.75rem;
 
         &--prev {
             margin-right: 1rem;
+
+            .pagination__icon {
+                margin-left: -1px;
+            }
         }
 
         &--next {
