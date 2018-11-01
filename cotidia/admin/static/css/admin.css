@@ -1517,20 +1517,22 @@ hr {
     .form__group--boxed .form__control input[type="text"]::placeholder,
     .form__group--boxed .form__control textarea::placeholder {
       color: #aaafb1; }
+  .form__group--boxed.form__group--error .form__control {
+    border: 1px solid #d50000; }
   .form__group--boxed.form__group--active .form__label {
     display: none; }
   .form__group--boxed.form__group--inactive .form__label {
     display: block; }
-  .form__group--boxed .form__label, .form__group--boxed .form__help {
-    display: none; }
   .form__group--boxed .form__label {
+    display: none;
     position: absolute;
     left: 1rem;
     top: calc(0.5rem + 1px);
     transform: translateY(0); }
   .form__group--boxed .control-select__clear-button {
-    top: calc(0.5rem + 2px);
-    right: calc(10px + 0.75rem + 0.5rem); }
+    top: auto;
+    padding-top: 2px;
+    right: 1.55rem; }
   .form__group .tag {
     margin-top: 0.5rem; }
 .form__control {
@@ -1595,6 +1597,9 @@ hr {
     .form__control textarea::placeholder,
     .form__control select::placeholder {
       color: #aaafb1; }
+  .form__control input[type="date"],
+  .form__control input[type="time"] {
+    width: auto; }
   .form__control select {
     border-radius: 0;
     padding-right: 1.5rem;
@@ -1809,13 +1814,12 @@ hr {
 .control-select__clear-button {
   border: none;
   border-radius: 1em;
-  background-color: #D0D5D7;
   cursor: pointer;
   font-size: 1em;
   opacity: 0.6;
   position: absolute;
-  top: 1px;
-  right: calc(10px + 0.75rem);
+  top: 2px;
+  right: 1.25rem;
   height: 1.25em;
   width: 1.25em;
   padding: 0 0 2px 0; }
@@ -2511,16 +2515,25 @@ textarea {
   margin-right: 0.5em;
   padding-right: 0; }
   .tag__clear {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: none;
     border-top-right-radius: 2px;
     border-bottom-right-radius: 2px;
-    display: inline-block;
-    width: 1.5em;
-    background-color: rgba(0, 0, 0, 0.3);
     color: #fff;
-    text-align: center;
-    margin-left: 0.5em; }
+    display: inline-block;
+    margin-left: 0.5em;
+    min-width: 1.5em;
+    text-align: center; }
     .tag__clear:hover {
       background-color: rgba(0, 0, 0, 0.5); }
+  .tag__category {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.25);
+    display: inline-block;
+    margin-left: -0.5em;
+    margin-right: 0.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em; }
 
 @media screen and (min-width: 768px) {
   .tabs__nav {
