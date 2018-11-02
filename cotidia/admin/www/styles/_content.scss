@@ -1,6 +1,7 @@
 $content-head-height: 5rem;
 $content-toolbar-height: 4.5rem;
 $content-foot-height: 3.5rem;
+$content-padding: 1rem;
 
 .content {
     background-color: $content-background-color;
@@ -11,6 +12,7 @@ $content-foot-height: 3.5rem;
             position: relative;
             overflow: hidden;
         }
+
         .content__list {
             height: 100%;
             width: 100%;
@@ -18,6 +20,7 @@ $content-foot-height: 3.5rem;
             overflow-y: auto;
             position: absolute;
         }
+
         .content__foot {
             background-color: $toolbar-background-color;
             border-top: 1px solid $table-row-border-color;
@@ -29,8 +32,8 @@ $content-foot-height: 3.5rem;
         border-bottom: 1px solid $toolbar_border_color;
 
         .content__inner {
-            padding-left: 1rem;
-            padding-right: 1rem;
+            padding-left: $content-padding;
+            padding-right: $content-padding;
         }
     }
 
@@ -40,7 +43,7 @@ $content-foot-height: 3.5rem;
         justify-content: space-between;
         align-items: center;
         position: relative;
-        padding: 0 1rem;
+        padding: 0 $content-padding;
         z-index: 5;
     }
 
@@ -49,6 +52,7 @@ $content-foot-height: 3.5rem;
             .content__list {
                 width: calc(100% - 16rem);
             }
+
             .content__sidebar {
                 transform: translate(0);
             }
@@ -92,6 +96,7 @@ $content-foot-height: 3.5rem;
         border-top: 1px solid $table-row-border-color;
         border-left: 1px solid $table-row-border-color;
         user-select: none;
+        z-index: 4; // To bring sidebar above table head
 
         fieldset {
             border-width: 0;
@@ -169,8 +174,8 @@ $content-foot-height: 3.5rem;
     height: $content-foot-height;
     justify-content: space-between;
     width: 100%;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: $content-padding;
+    padding-right: $content-padding;
 
     &__left {
         justify-self: flex-start;
@@ -194,47 +199,55 @@ body.content--centered {
         max-width: $laptop-width;
         width: 100%;
         margin: auto;
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding-left: $content-padding;
+        padding-right: $content-padding;
     }
+
     .content__body {
         .content__inner {
             overflow: hidden;
             position: relative;
             width: 100%;
-            // max-width: calc(#{$laptop-width} - 2rem);
             height: 100%;
-            // padding-left: 1rem;
-            // padding-right: 1rem;
         }
     }
+
     .content__toolbar {
         max-width: calc(#{$laptop-width});
         width: 100%;
         margin: auto;
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding-left: $content-padding;
+        padding-right: $content-padding;
     }
+
     .content__list {
         border-left: 1px solid $table-row-border-color;
         border-right: 1px solid $table-row-border-color;
-        width: calc(100% - 2rem);
+        width: calc(100% - (#{$content-padding} * 2));
     }
+
     .content__body--sidebar .content__list {
-        width: calc(100% - 16rem - 1rem);
+        // full width - sidebar width - padding + Avoid double border
+        width: calc(100% - 16rem - #{$content-padding} + 1px);
     }
+
     .content__sidebar {
         border-right: 1px solid $table-row-border-color;
-        width: calc(16rem - 1rem);
-        right: 1rem;
+        right: $content-padding;
+        width: calc(16rem - #{$content-padding});
     }
 }
 
 body.content--padded {
     .content__inner {
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding-left: $content-padding;
+        padding-right: $content-padding;
     }
+
+    .content--sticky .content__list {
+        width: calc(100% - (#{$content-padding} * 2));
+    }
+
     .content__body {
         .content__inner {
             overflow: hidden;
@@ -242,12 +255,22 @@ body.content--padded {
             width: 100%;
             height: 100%;
         }
+
+        &--sidebar {
+            .content__list {
+                // full width - sidebar width - padding + Avoid double border
+                width: calc(100% - 16rem - (#{$content-padding} * 2) + 1px);
+            }
+
+            .content__sidebar {
+                right: $content-padding;
+                border-right: 1px solid $table-row-border-color;
+            }
+        }
     }
+
     .content__list {
         border-left: 1px solid $table-row-border-color;
         border-right: 1px solid $table-row-border-color;
-    }
-    .content--sticky .content__list {
-        width: calc(100% - 2rem);
     }
 }
