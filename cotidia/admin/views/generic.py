@@ -279,6 +279,9 @@ class AdminGenericListView(
 
     def get_template_names(self):
 
+        if self.kwargs.get('template_name'):
+            return [self.kwargs['template_name']]
+
         if self.template_name is not None:
             return [self.template_name]
 
