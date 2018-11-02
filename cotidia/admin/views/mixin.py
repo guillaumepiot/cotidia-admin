@@ -36,7 +36,10 @@ class ContextMixin:
         context['verbose_name_plural'] = self.model._meta.verbose_name_plural
         context['http_referer'] = self.request.META.get("HTTP_REFERER")
 
-        context['template_type'] = self.template_type
+        if kwargs.get('template_type'):
+            context['template_type'] = kwargs['template_type']
+        else:
+            context['template_type'] = self.template_type
 
         context["list_url"] = self.get_list_url()
 
