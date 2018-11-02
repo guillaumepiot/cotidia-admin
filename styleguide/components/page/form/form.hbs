@@ -1,0 +1,115 @@
+<form action="" method="post" class="form form--animate" enctype="">
+    {{> @content-head-title}}
+    <div class="content__body">
+        <div class="content__inner">
+            <fieldset>
+                <legend>Member details</legend>
+                <div class="form__row">
+                    <div class="form__group form__group--required">
+                        <label for="id_first_name" class="form__label">First name</label>
+                        <div class="form__control form__control--input">
+                            <input type="text" name="first_name" value="John"
+                            maxlength="50" required="" id="id_first_name" />
+                        </div>
+                        <div class="form__help"></div>
+                    </div>
+                    <div class="form__group form__group--required">
+                        <label for="id_last_name" class="form__label">Last name</label>
+                        <div class="form__control form__control--input">
+                            <input type="text" name="last_name" value="Doe" maxlength=
+                            "50" required="" id="id_last_name" />
+                        </div>
+                        <div class="form__help"></div>
+                    </div>
+                </div>
+                <div class="form__row">
+                    <div class="form__group form__group--inactive">
+                        <label for="id_department" class="form__label">Department</label>
+                        <div class="form__control form__control--select">
+                            <select name="department" id="id_department">
+                                <option value="" selected="selected"></option>
+                                <option value="1">Option 1</option>
+                                <option value="2">Option 2</option>
+                                <option value="3">Option 3</option>
+                                <option value="4">Option 4</option>
+                            </select>
+                        </div>
+                        <div class="form__help"></div>
+                    </div>
+                </div>
+                <div class="form__row">
+                    <div class="form__group form__group--required">
+                        <label for="id_slug" class="form__label">Slug</label>
+                        <div class="form__control form__control--input">
+                            <input type="text" name="slug" value="john-doe"
+                            maxlength="50" required="" id="id_slug" />
+                        </div>
+                        <div class="form__help"></div>
+                    </div>
+                </div>
+                <div class="form__row">
+                    <div class="form__group">
+                        <label for="id_bio" class="form__label">Bio</label>
+                        <div class="form__control form__control--input">
+                            <textarea name="bio" cols="40" rows="10" id="id_bio">Sed molestie ut quam vitae placerat. Phasellus id tristique purus. Nam eget commodo nunc. Donec ultricies volutpat mi, rhoncus commodo odio hendrerit vitae. Praesent mauris ex, luctus vel elit eu, lobortis molestie dolor eleifend auctor.</textarea>
+                        </div>
+                        <div class="form__help"></div>
+                    </div>
+                </div>
+                <div class="form__row">
+                    <div class="form__group form__group--error">
+                        <label for="id_email" class="form__label">Email</label>
+                        <div class="form__control form__control--input">
+                            <input type="email" name="email" value=
+                            "name@email.com" maxlength="100" id="id_email" />
+                        </div>
+                        <div class="form__help">Please enter a valid email address.</div>
+                    </div>
+                    <div class="form__group form__group--inactive">
+                        <label for="id_phone" class="form__label">Phone</label>
+                        <div class="form__control form__control--input">
+                            <input type="text" name="phone" maxlength="50" id=
+                            "id_phone" />
+                        </div>
+                        <div class="form__help">Please remember to include your area code.</div>
+                    </div>
+                </div>
+                <div class="form__row">
+                    <div class="form__group">
+                        <div class="form__control">
+                            <label for="id_active" class="form__label"><input type=
+                            "checkbox" name="active" id="id_active" checked="checked" />
+                            Active</label>
+                        </div>
+                        <div class="form__help"></div>
+                    </div>
+                </div>
+                <div class="fieldset-actions">
+                    <a href="" class="btn btn--small btn--change">Edit profile</a>
+                </div>
+            </fieldset>
+
+            <fieldset class="table-view">
+                <legend>URLs</legend>
+                <table class="table table--clickable table--admin-mobile-view">
+                    <thead>
+                        <tr>
+                            <th>Network</th>
+                            <th>URL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>LinkedIn</td>
+                            <td><a href="https://www.linkedin.com/in/firstname-surname" target="_blank">https://www.linkedin.com/in/firstname-surname</a></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><a href="/admin/team/member/4/social/add" class="btn btn--create btn--small">Add URL</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+    </div>
+    {{> @content-foot-save}}
+</form>

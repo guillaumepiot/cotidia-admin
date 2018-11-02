@@ -10,7 +10,17 @@
 </head>
 <body class="menu--sidebar content--centered">
 
-{{{ yield }}}
+<div class="layout__menu">
+    {{ render "@menu" }}
+</div>
+
+<div class="layout__main">
+    {{> @toolbar }}
+
+    <div class="layout__content content">
+        {{{ yield }}}
+    </div>
+</div>
 
 <script type="text/javascript" src="{{ path '/js/menu.js' }}"></script>
 <script type="text/javascript" src="{{ path '/js/content.js' }}"></script>

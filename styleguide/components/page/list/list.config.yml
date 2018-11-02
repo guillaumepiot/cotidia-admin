@@ -1,0 +1,16 @@
+preview: '@preview--full-layout'
+
+variants:
+  - name: centered
+    preview: '@preview--full-layout-centered'
+
+  - name: padded
+    preview: '@preview--full-layout-padded'
+
+  - name: actions
+
+  - name: actions-centered
+    preview: '@preview--full-layout-centered'
+
+  - name: actions-padded
+    preview: '@preview--full-layout-padded'
