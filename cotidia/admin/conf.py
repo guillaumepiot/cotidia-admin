@@ -21,6 +21,9 @@ class AdminConf(AppConf):
     # A list of models and fields to search globally
     GLOBAL_SEARCH = []
 
+    # Menu header logo
+    SITE_LOGO = None
+
     DEBUG = False
 
     class Meta:

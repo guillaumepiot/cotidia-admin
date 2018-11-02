@@ -7,7 +7,7 @@ $menu_background_color: #00213E;
 $menu_background_color_mobile: #00213E;
 $menu_home_background_color: #00213E;
 $menu_border_color: $grey--medium;
-$menu_link_color: $grey--light;
+$menu_link_color: #fff;
 $menu_link_color_hover: #fff;
 $menu_link_background_color: transparent;
 $menu_link_background_color_hover: lighten(#00213E, 12%);
@@ -33,6 +33,7 @@ $menu_padding: 1rem;
 
 .menu-header {
     border-bottom: 1px solid $menu_border_color;
+    border-bottom: 1px solid var(--menu_border_color, $menu_border_color);
 
     @media screen and (min-width: $laptop-width) {
         position: fixed;
@@ -49,6 +50,7 @@ $menu_padding: 1rem;
 
 .menu-footer {
     border-top: 1px solid $menu_border_color;
+    border-top: 1px solid var(--menu_border_color, $menu_border_color);
     display: none;
 
     @media screen and (min-width: $laptop-width) {
@@ -73,7 +75,6 @@ $menu_padding: 1rem;
 body {
     .menu-item {
         float: none;
-        font-size: 90%;
 
         &:hover {
             background: none;
@@ -163,10 +164,6 @@ body {
 
                 &__link-text {
                     display: none;
-                }
-
-                &__link--drop-arrow:after {
-                    content: none;
                 }
 
                 &--home {
@@ -268,6 +265,7 @@ body {
 
 .menu-category {
     border-bottom: 1px solid $menu_border_color;
+    border-bottom: 1px solid var(--menu_border_color, $menu_border_color);
     display: block;
     min-height: 4rem;
     transition: background $animation-speed ease;
@@ -287,7 +285,8 @@ body {
         color: #fff;
         display: block;
         cursor: pointer;
-        font: inherit;
+        @include font-size($font_size--normal);
+        font-weight: bold;
         outline: none; // TODO
         padding: ($menu_padding * 0.667) $menu_padding;
         text-align: left;
@@ -313,8 +312,9 @@ body {
     &__subtitle {
         @include font-size($font_size--small);
 
-        color: $grey;
-        opacity: 1;
+        color: $menu_link_color;
+        font-weight: normal;
+        opacity: 0.8;
         position: absolute;
         transition: opacity 0.25s ease 0.5s;
         width: calc(100% - ($menu_padding * 2));
