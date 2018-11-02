@@ -16,3 +16,22 @@ $toolbar_profile_avatar_text_color: #fff;
 $toolbar_profile_avatar_arrow_color: #2d3546;
 
 $content-background-color: #f7f8fb;
+
+/**
+ * Breakpoints
+ */
+
+$desktop-width: 1280px;
+$laptop-width: 1024px;
+$tablet-width: $mobile-width + 1px;
+$mobile-width: 767px;
+
+// $grey--dark: #111315 !default;
+// $grey--medium: #555A5D !default;
+// $grey--light: #D0D5D7 !default;
+// $grey--lighter: #E5EBED !default;
+
+// Animations
+$animation-speed: 0.4s;
+$animation-speed--fast: 0.2s;
+$animation-speed--slow: 0.8s;
