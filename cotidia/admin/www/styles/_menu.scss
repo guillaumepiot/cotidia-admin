@@ -31,7 +31,8 @@ $menu_padding: $padding;
 .menu-footer {
     align-items: center;
     background: inherit;
-    color: #fff;
+    color: $menu_link_color;
+    color: var(--menu_link_color, $menu_link_color);
     display: flex;
     justify-content: space-between;
     padding: $menu_padding;
@@ -72,7 +73,6 @@ $menu_padding: $padding;
 body {
     .menu-item {
         float: none;
-        // font-size: 90%; Removed after reucing base font size for mobile in general
 
         &:hover {
             background: none;
@@ -80,6 +80,8 @@ body {
 
         &__link {
             align-items: center;
+            color: $menu_link_color;
+            color: var(--menu_link_color, $menu_link_color);
             display: flex;
             justify-content: flex-start;
             padding: ($menu_padding * 0.75) $menu_padding;
@@ -274,7 +276,8 @@ body {
     &__toggle {
         background: none;
         border: none;
-        color: #fff;
+        color: $menu_link_color;
+        color: var(--menu_link_color, $menu_link_color);
         cursor: pointer;
         display: block;
         font: inherit;
