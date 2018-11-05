@@ -24,6 +24,9 @@ class AdminConf(AppConf):
     # Menu header logo
     SITE_LOGO = None
 
+    # Show menu branding
+    SHOW_BRANDING = True
+
     DEBUG = False
 
     class Meta:

@@ -10,6 +10,7 @@ def admin_settings(request):
         "ADMIN_SHORTCUTS": settings.ADMIN_SHORTCUTS,
         "ADMIN_SHORTCUTS_TEXT": settings.ADMIN_SHORTCUTS_TEXT,
         "ADMIN_GLOBAL_SEARCH": settings.ADMIN_GLOBAL_SEARCH,
+        "ADMIN_SHOW_BRANDING": settings.ADMIN_SHOW_BRANDING,
         "DEBUG": settings.DEBUG,
         "ADMIN_DEBUG": settings.ADMIN_DEBUG
     }

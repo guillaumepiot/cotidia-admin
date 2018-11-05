@@ -36,9 +36,11 @@
         {% endfor %}
     </ul>
     <footer class="menu__footer menu-footer">
-        <div class="menu-footer__text">
-            Powered by <a href="https://cotidia.com/" target="_blank" title="Go to cotidia.com">Cotidia</a>
-        </div>
+        {% if ADMIN_SHOW_BRANDING %}
+        <a href="https://cotidia.com/" class="menu-footer__text" target="_blank" title="Go to cotidia.com">
+            Powered by Cotidia
+        </a>
+        {% endif %}
         <ul class="menu-footer__list">
             <li class="menu__item menu__item--sidebar-expand">
                 <a class="menu-item__link" href="#" title="Expand menu">
