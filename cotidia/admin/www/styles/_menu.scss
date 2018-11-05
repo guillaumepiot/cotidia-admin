@@ -342,7 +342,7 @@ body {
         }
     }
 
-    &__close-icon {
+    &__expand-icon {
         float: right;
         opacity: 0;
         transform: rotate(0deg);
@@ -350,7 +350,7 @@ body {
             opacity $animation-speed--slow ease,
             transform $animation-speed ease;
 
-        .menu-category--open > .menu-category__toggle:hover & {
+        .menu-category__toggle:hover & {
             opacity: 1;
         }
 
