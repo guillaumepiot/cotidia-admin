@@ -1,7 +1,5 @@
 
-$menu_sidebar_width: $menu-width;
 $menu_subnav_min_width: 180px;
-$menu_header_height: 4rem;
 
 $menu_background_color: #00213E;
 $menu_background_color_mobile: #00213E;
@@ -15,36 +13,39 @@ $menu_link_background_color_hover_mobile: transparent;
 $menu_link_background_color_active: lighten(#00213E, 6%);
 $menu_link_background_color_active_mobile: lighten(#00213E, 6%);
 $menu_background_color_section: desaturate(lighten($menu_background_color, 30%), 30%);
-$menu_padding: 1rem;
+$menu_padding: $padding;
 
-// New //
+.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: width $animation-speed ease;
+
+    &__container {
+        flex: 1;
+        overflow-y: scroll;
+    }
+}
+
 .menu-header,
 .menu-footer {
     align-items: center;
+    background: inherit;
     color: #fff;
     display: flex;
     justify-content: space-between;
     padding: $menu_padding;
-
-    @media screen and (min-width: $laptop-width) {
-        width: $menu_sidebar_width;
-    }
+    width: 100%;
 }
 
 .menu-header {
     border-bottom: 1px solid $menu_border_color;
     border-bottom: 1px solid var(--menu_border_color, $menu_border_color);
 
-    @media screen and (min-width: $laptop-width) {
-        position: fixed;
-        top: 0;
-    }
-
     &__logo {
         height: auto;
         max-height: 2rem;
         max-width: $menu_sidebar_width * 0.5;
-        width: auto;
     }
 }
 
@@ -53,13 +54,9 @@ $menu_padding: 1rem;
     border-top: 1px solid var(--menu_border_color, $menu_border_color);
     display: none;
 
-    @media screen and (min-width: $laptop-width) {
-        bottom: 0;
+    @media screen and (min-width: $menu-breakpoint) {
         display: flex;
-        left: 0;
-        position: fixed;
-        right: 0;
-        width: $menu_sidebar_width;
+        width: 100%;
     }
 
     &__text {
@@ -75,6 +72,7 @@ $menu_padding: 1rem;
 body {
     .menu-item {
         float: none;
+        // font-size: 90%; Removed after reucing base font size for mobile in general
 
         &:hover {
             background: none;
@@ -89,9 +87,11 @@ body {
                 background $animation-speed--fast ease,
                 color $animation-speed--fast ease;
 
-            &:hover {
+            &:hover,
+            &:focus {
                 background: rgba(255, 255, 255, 0.1);
                 color: $menu_link_color_hover;
+                outline: none;
             }
         }
 
@@ -105,10 +105,25 @@ body {
         }
     }
 
+    .menu__item {
+        float: none;
+
+        &--close {
+            padding: 0; //  Remove padding as padding is on link
+
+            .menu-item__link {
+                justify-content: flex-end;
+                padding: $menu_padding * 1.5;
+            }
+        }
+    }
+
     // Collapse
     &.menu--sidebar-collapse {
-        @media screen and (min-width: $laptop-width) {
+        @media screen and (min-width: $menu-breakpoint) {
             .menu {
+                width: $menu_collapse_width;
+
                 &__header {
                     height: auto;
                 }
@@ -121,7 +136,7 @@ body {
             .menu-header,
             .menu-footer {
                 padding: 0;
-                width: $toolbar_height;
+                width: 100%;
             }
 
             .menu-header {
@@ -131,10 +146,6 @@ body {
                 &__logo {
                     display: none;
                 }
-            }
-
-            .menu {
-                width: $toolbar_height;
             }
 
             .menu-category {
@@ -155,7 +166,7 @@ body {
             .menu-item {
                 &__link {
                     justify-content: center;
-                    width: $toolbar_height;
+                    width: 100%;
                 }
 
                 &__link-icon {
@@ -166,9 +177,11 @@ body {
                     display: none;
                 }
 
-                &--home {
-                    width: $toolbar_height;
+                &__link--drop-arrow::after {
+                    content: none;
+                }
 
+                &--home {
                     .menu-item__link-icon {
                         display: block;
                     }
@@ -178,18 +191,19 @@ body {
             .menu__item {
                 &--sidebar-collapse {
                     display: none;
-                    width: $toolbar_height;
                 }
 
                 &--sidebar-expand {
                     display: block;
-                    width: $toolbar_height;
                 }
             }
 
             .menu-footer {
                 position: relative;
-                width: $toolbar_height;
+
+                &__list {
+                    width: 100%;
+                }
 
                 &__text {
                     display: none;
@@ -200,14 +214,9 @@ body {
 
     // Not collapse
     &:not(.menu--sidebar-collapse) {
-        @media screen and (min-width: $laptop-width) {
+        @media screen and (min-width: $menu-breakpoint) {
             .menu {
-                height: 100%;
-                left: 0;
-                padding-bottom: $toolbar_height;
-                position: fixed;
-                top: 0;
-                transition: width $animation-speed ease;
+                height: 100vh;
                 width: $menu_sidebar_width;
                 z-index: 2;
 
@@ -219,10 +228,6 @@ body {
                     height: $content-foot-height;
                 }
 
-                &__container {
-                    padding-top: $menu_header_height !important;
-                }
-
                 &__item {
                     &--sidebar-collapse {
                         display: block;
@@ -231,7 +236,6 @@ body {
                     &--sidebar-expand {
                         display: none;
                     }
-
                 }
             }
 
@@ -252,14 +256,6 @@ body {
                 }
             }
         }
-
-        .menu__item {
-            &--close {
-                float: right !important;
-                padding: $menu_padding / 2;
-                z-index: 1;
-            }
-        }
     }
 }
 
@@ -270,10 +266,6 @@ body {
     min-height: 4rem;
     transition: background $animation-speed ease;
 
-    &:hover {
-        background: rgba(255, 255, 255, 0.1);
-    }
-
     &--open,
     &--open:hover {
         background: rgba(0, 0, 0, 0.1);
@@ -283,22 +275,39 @@ body {
         background: none;
         border: none;
         color: #fff;
-        display: block;
         cursor: pointer;
-        @include font-size($font_size--normal);
-        font-weight: bold;
-        outline: none; // TODO
+        display: block;
+        font: inherit;
+        outline: none;
         padding: ($menu_padding * 0.667) $menu_padding;
+        position: relative;
         text-align: left;
         width: 100%;
 
-        // Button is smaller than li element.
-        // Trying to target the parnet to take styling on buttons's hover
-        //  &:hover & {
-        //     // background: rgba(0, 0, 0, 0.2);
-        //     background: #f00 !important;
-        //     content: 'd';
-        // }
+        &::before {
+            content: '';
+            height: calc(100% + (0.667em * 2));
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: -2px;
+            transition:
+                background $animation-speed--fast ease 0.5s,
+                height $animation-speed--fast ease 0.5s;
+            width: 100%;
+
+            .menu-category--open & {
+                height: 100%;
+                transition-delay: 0s;
+            }
+        }
+
+        &:focus,
+        &:hover {
+            &::before {
+                background: rgba(255, 255, 255, 0.1);
+            }
+        }
     }
 
     &__title,
@@ -317,7 +326,7 @@ body {
         opacity: 0.8;
         position: absolute;
         transition: opacity 0.25s ease 0.5s;
-        width: calc(100% - ($menu_padding * 2));
+        width: calc(100% - (#{$menu_padding} * 2));
 
         .menu-category--open & {
             opacity: 0;
@@ -328,7 +337,7 @@ body {
     &__summary-icon {
         display: none;
 
-        @media screen and (min-width: $laptop-width) {
+        @media screen and (min-width: $menu-breakpoint) {
             display: block;
         }
     }

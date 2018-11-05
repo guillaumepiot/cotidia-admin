@@ -1,24 +1,33 @@
 $content-head-height: 5rem;
 $content-toolbar-height: 4.5rem;
 $content-foot-height: 3.5rem;
-$content-padding: 1rem;
+$content-padding: $padding;
 
 .content {
     background-color: $content-background-color;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 
     &--sticky {
+        overflow-y: hidden;
+
         .content__body {
             height: calc(100% - #{$content-head-height + $content-toolbar-height + $content-foot-height} - 1px);
+            overflow-x: hidden;
+            overflow-y: scroll;
             position: relative;
-            overflow: hidden;
         }
 
         .content__list {
             height: 100%;
-            width: 100%;
             overflow-x: auto;
             overflow-y: auto;
-            position: absolute;
+            width: 100%;
+
+            @media screen and (min-width: $menu-breakpoint) {
+                position: absolute;
+            }
         }
 
         .content__foot {
@@ -38,19 +47,24 @@ $content-padding: 1rem;
     }
 
     &__toolbar {
-        height: $content-toolbar-height;
-        display: flex;
-        justify-content: space-between;
         align-items: center;
-        position: relative;
+        display: flex;
+        flex-shrink: 0;
+        height: $content-toolbar-height;
+        justify-content: space-between;
         padding: 0 $content-padding;
+        position: relative;
         z-index: 5;
     }
 
     &__body {
+        @media screen and (max-width: $menu-breakpoint-max) {
+            flex: 1;
+        }
+
         &--sidebar {
             .content__list {
-                width: calc(100% - 16rem);
+                width: calc(100% - #{$menu_sidebar_width});
             }
 
             .content__sidebar {
@@ -59,17 +73,15 @@ $content-padding: 1rem;
         }
 
         fieldset {
-           margin: 2rem 0;
+           margin: ($content-padding * 2) 0;
         }
     }
 
     &__foot {
-
-        @media screen and (min-width: $menu-breakpoint) {
-            bottom: 0;
-            position: sticky;
-            z-index: 2;
-        }
+        // UH OH more Sticky!
+        position: -webkit-sticky;
+        position: sticky;
+        z-index: 4;
 
         &--sticky {
             background-color: $toolbar-background-color;
@@ -79,23 +91,23 @@ $content-padding: 1rem;
     }
 
     &__list {
-        transition: width $animation-speed ease;
         border-top: 1px solid $table-row-border-color;
+        transition: width $animation-speed ease;
     }
 
     &__sidebar {
-        height: 100%;
-        top: 0;
-        overflow-y: auto;
-        width: calc(16rem);
-        position: absolute;
-        right: 0rem;
-        transform: translate(16rem);
-        transition: transform $animation-speed ease;
         background-color: #fff;
         border-top: 1px solid $table-row-border-color;
         border-left: 1px solid $table-row-border-color;
+        height: 100%;
+        overflow-y: auto;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transform: translate($menu_sidebar_width);
+        transition: transform $animation-speed ease;
         user-select: none;
+        width: $menu_sidebar_width;
         z-index: 4; // To bring sidebar above table head
 
         fieldset {
@@ -109,6 +121,8 @@ $content-padding: 1rem;
     }
 
     &__filter {
+        align-items: center;
+        display: flex;
         flex: 1;
 
         // No need pushing when we have a button after
@@ -144,10 +158,18 @@ $content-padding: 1rem;
 .content-head {
     align-items: center;
     display: flex;
-    height: $content-head-height;
+    height: auto;
     justify-content: space-between;
-    width: 100%;
     position: relative;
+    padding-top: $padding / 2;
+    padding-bottom: $padding / 2;
+    width: 100%;
+
+    @media screen and (min-width: $menu-breakpoint) {
+        height: $content-head-height;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
 
     &__title {
         @include font_size($font_size--emphasis);
@@ -173,9 +195,9 @@ $content-padding: 1rem;
     display: flex;
     height: $content-foot-height;
     justify-content: space-between;
-    width: 100%;
     padding-left: $content-padding;
     padding-right: $content-padding;
+    width: 100%;
 
     &__left {
         justify-self: flex-start;
@@ -196,28 +218,28 @@ $content-padding: 1rem;
 
 body.content--centered {
     .content__inner {
-        max-width: $laptop-width;
-        width: 100%;
         margin: auto;
+        max-width: $laptop-width;
         padding-left: $content-padding;
         padding-right: $content-padding;
+        width: 100%;
     }
 
     .content__body {
         .content__inner {
+            height: 100%;
             overflow: hidden;
             position: relative;
             width: 100%;
-            height: 100%;
         }
     }
 
     .content__toolbar {
-        max-width: calc(#{$laptop-width});
-        width: 100%;
         margin: auto;
+        max-width: $laptop-width;
         padding-left: $content-padding;
         padding-right: $content-padding;
+        width: 100%;
     }
 
     .content__list {
@@ -228,13 +250,13 @@ body.content--centered {
 
     .content__body--sidebar .content__list {
         // full width - sidebar width - padding + Avoid double border
-        width: calc(100% - 16rem - #{$content-padding} + 1px);
+        width: calc(100% - #{$menu_sidebar_width} - #{$content-padding} + 1px);
     }
 
     .content__sidebar {
         border-right: 1px solid $table-row-border-color;
         right: $content-padding;
-        width: calc(16rem - #{$content-padding});
+        width: calc(#{$menu_sidebar_width} - #{$content-padding});
     }
 }
 
@@ -250,16 +272,16 @@ body.content--padded {
 
     .content__body {
         .content__inner {
+            height: 100%;
             overflow: hidden;
             position: relative;
             width: 100%;
-            height: 100%;
         }
 
         &--sidebar {
             .content__list {
                 // full width - sidebar width - padding + Avoid double border
-                width: calc(100% - 16rem - (#{$content-padding} * 2) + 1px);
+                width: calc(100% - #{$menu_sidebar_width} - (#{$content-padding} * 2) + 1px);
             }
 
             .content__sidebar {

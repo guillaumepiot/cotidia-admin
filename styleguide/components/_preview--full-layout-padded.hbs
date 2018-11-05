@@ -10,14 +10,12 @@
 </head>
 <body class="menu--sidebar content--padded">
 
-<div class="layout__menu">
-    {{ render "@menu" }}
-</div>
+{{ render "@menu" }}
 
 <div class="layout__main">
-    {{> @toolbar }}
+    {{> @header-toolbar }}
 
-    <div class="layout__content content">
+    <div class="layout__content">
         {{{ yield }}}
     </div>
 </div>
