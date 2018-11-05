@@ -62,6 +62,16 @@ $menu_padding: $padding;
 
     &__text {
         @include font-size($font_size--small);
+
+        color: $menu_link_color;
+        color: var(--menu_link_color, $menu_link_color);
+        opacity: 0.5;
+        transition: opacity $animation-speed ease;
+
+
+        &:hover {
+            opacity: 1;
+        }
     }
 
     &__list {
