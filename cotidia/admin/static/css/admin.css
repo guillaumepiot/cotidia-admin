@@ -3095,7 +3095,7 @@ body .menu__item {
       padding: 1.5rem; }
 @media screen and (min-width: 1024px) {
   body.menu--sidebar-collapse .menu {
-    width: 4rem; }
+    width: 3rem; }
     body.menu--sidebar-collapse .menu__header {
       height: auto; }
     body.menu--sidebar-collapse .menu__container {
