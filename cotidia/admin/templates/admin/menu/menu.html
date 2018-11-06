@@ -3,6 +3,8 @@
     <header class="menu__header menu-header">
         {% if ADMIN_SITE_LOGO %}
             <img src="{% static ADMIN_SITE_LOGO %}" class="menu-header__logo" alt="{{SITE_NAME}}">
+        {% else %}
+            {{SITE_NAME}}
         {% endif %}
         <div class="menu__item menu__item--open menu-item">
             <a href="#" class="menu-item__link" title="View navigation" aria-label="View navigation">
