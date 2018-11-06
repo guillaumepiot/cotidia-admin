@@ -72,6 +72,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
         context['row_actions'] = self.row_actions
         context['group_by'] = self.group_by
         context['next'] = self.request.path
+        context['total_results_count'] = self.get_queryset().count()
 
         if hasattr(self, 'filter') and self.filter and self.filter.data:
             context['filter_data'] = self.filter.data.dict()
