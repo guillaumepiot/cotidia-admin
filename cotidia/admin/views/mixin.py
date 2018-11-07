@@ -53,8 +53,7 @@ class ContextMixin:
 
 class ChildMixin:
     def get_parent(self, *args, **kwargs):
-        parent_id = kwargs['parent_id']
-
+        parent_id = self.kwargs['parent_id']
         return get_object_or_404(self.parent_model, id=parent_id)
 
     def get(self, *args, **kwargs):
