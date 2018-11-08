@@ -115,7 +115,20 @@ body {
             margin-right: $horizontal_padding;
             width: 1rem;
         }
+
+        &:not(.menu-item--category) + .menu-item--category {
+            // Add border when a category item follows a regular link item
+            border-top: 1px solid $menu_border_color;
+            border-top: 1px solid var(--menu_border_color, $menu_border_color);
+        }
+
+        &.menu-item--static + .menu-item--category {
+            // Remove border when category is directly after static menu link
+            // ie. an item that isn't generateed by the admin pages, but always there
+            border-top: none;
+        }
     }
+
 
     .menu__item {
         float: none;
@@ -168,9 +181,13 @@ body {
 
                 &__toggle {
                     text-align: center;
+
+                    &::before {
+                        height: calc(100% + 2px); // To allow for positioning already applied of -2px
+                    }
                 }
 
-                &__close-icon {
+                &__expand-icon {
                     display: none;
                 }
             }
@@ -252,6 +269,8 @@ body {
             }
 
             .menu-category {
+                min-height: 4rem;
+
                 &__summary-icon {
                     display: none;
                 }
@@ -275,7 +294,6 @@ body {
     border-bottom: 1px solid $menu_border_color;
     border-bottom: 1px solid var(--menu_border_color, $menu_border_color);
     display: block;
-    min-height: 4rem;
     transition: background $animation-speed ease;
 
     &--open,
