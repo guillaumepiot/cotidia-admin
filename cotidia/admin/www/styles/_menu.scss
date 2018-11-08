@@ -115,7 +115,20 @@ body {
             margin-right: $horizontal_padding;
             width: 1rem;
         }
+
+        &:not(.menu-item--category) + .menu-item--category {
+            // Add border when a category item follows a regular link item
+            border-top: 1px solid $menu_border_color;
+            border-top: 1px solid var(--menu_border_color, $menu_border_color);
+        }
+
+        &.menu-item--static + .menu-item--category {
+            // Remove border when category is directly after static menu link
+            // ie. an item that isn't generateed by the admin pages, but always there
+            border-top: none;
+        }
     }
+
 
     .menu__item {
         float: none;
