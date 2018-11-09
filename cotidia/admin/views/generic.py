@@ -264,7 +264,6 @@ class DynamicListView(
         return value
 
 
-
 class AdminGenericListView(
     StaffPermissionRequiredMixin,
     ContextMixin,
@@ -276,17 +275,28 @@ class AdminGenericListView(
 
     template_type = 'fluid'
 
+    def get_permission_required(self):
+        if self.kwargs.get('permission_required'):
+            return self.kwargs['permission_required']
+        elif hasattr(self, 'permission_required'):
+            return self.permission_required
+        else:
+            return '{}.add_{}'.format(
+                self.get_model()._meta.app_label,
+                self.get_model()._meta.model_name
+            )
+
     def get_model(self, *args, **kwargs):
         try:
             return ContentType.objects.get(
-                app_label=kwargs['app_label'],
-                model=kwargs['model']
+                app_label=self.kwargs['app_label'],
+                model=self.kwargs['model']
             ).model_class()
         except ContentType.DoesNotExist:
             raise Exception(
                 "Model with app label {} and model name {} does not exist.".format(
-                    kwargs['app_label'],
-                    kwargs['model']
+                    self.kwargs['app_label'],
+                    self.kwargs['model']
                 )
             )
 
