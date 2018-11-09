@@ -180,8 +180,8 @@ class DynamicListView(
             return self.permission_required
         else:
             return '{}.add_{}'.format(
-                self.get_model()._meta.app_label,
-                self.get_model()._meta.model_name
+                self.model._meta.app_label,
+                self.model._meta.model_name
             )
 
     def get_model(self, *args, **kwargs):
