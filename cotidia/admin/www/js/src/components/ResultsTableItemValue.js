@@ -78,10 +78,10 @@ export default class ResultsTableItemValue extends Component {
             innerComponent = <EditBoolean {...props} />
             break
           case 'choice':
-            innerComponent = <EditChoice {...props} options={column.options} />
+            innerComponent = <EditChoice {...props} options={column.editConfiguration.options} />
             break
           case 'choice-single':
-            innerComponent = <EditChoiceSingle {...props} options={column.options} />
+            innerComponent = <EditChoiceSingle {...props} options={column.editConfiguration.options} />
             break
           case 'date':
             innerComponent = <EditDate {...props} />
