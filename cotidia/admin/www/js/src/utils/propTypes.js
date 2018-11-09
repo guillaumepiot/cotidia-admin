@@ -145,6 +145,6 @@ export const dynamicListPropTypes = {
   ignoreStoredConfig: PropTypes.bool,
   listFields,
   sidebarFilters: stringList,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   toolbarFilters: stringList,
 }

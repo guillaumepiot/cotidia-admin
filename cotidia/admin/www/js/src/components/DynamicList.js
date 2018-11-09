@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { FullScreen } from './elements/global'
 import Modal from '../containers/Modal'
 
-import Header from '../containers/Header'
 import FilterSidebar from '../containers/FilterSidebar'
 import ToolBar from '../containers/ToolBar'
 import SearchResultsList from '../containers/SearchResultsList'
@@ -20,16 +19,18 @@ export default class DynamicList extends Component {
     hasListConfig: PropTypes.bool.isRequired,
     hasSidebar: PropTypes.bool.isRequired,
     showSidebar: PropTypes.bool.isRequired,
+    title: PropTypes.string,
   }
 
   render () {
     const {
       bootstrapped,
+      hasListConfig,
+      hasSidebar,
       networkError,
       searchMode,
-      hasSidebar,
       showSidebar,
-      hasListConfig,
+      title,
     } = this.props
 
     if (networkError) {
@@ -50,8 +51,16 @@ export default class DynamicList extends Component {
 
     return (
       <>
-        <Header />
+        {title && (
+          <div className='content__head'>
+            <div className='content__inner content-head'>
+              <div className='content-head__title'>{title}</div>
+            </div>
+          </div>
+        )}
+
         <ToolBar />
+
         <div className={`content__body ${(hasSidebar && showSidebar) ? 'content__body--sidebar' : ''}`}>
           <div className='content__inner'>
             <div className='content__list'>

@@ -2,10 +2,12 @@ import { connect } from 'react-redux'
 
 import {
   clearFilters,
+  manageColumns,
   performBatchAction,
   removeFilterValue,
   setFilterValue,
   setSearchTerm,
+  switchMode,
   toggleSidebar,
 } from '../redux/modules/search/actions'
 
@@ -25,11 +27,15 @@ const mapStateToProps = (state) => {
     anyResultsSelected: anyResultsSelected(state),
     batchActions: state.search.batchActions,
     cacheFilterLabel,
+    columnsConfigurable: state.config.columnsConfigurable,
     filterConfiguration: state.search.filterConfiguration || {},
     filters: state.search.filters,
+    hasListConfig: state.search.listFields != null,
     hasSidebar: state.search?.sidebarFilters.length > 0,
     getSuggestEngine,
+    mode: state.search.mode,
   }
+
   if (state.search?.filterSuggestConfiguration?.mode) {
     props.config = state.config
     props.filterSuggest = getSuggestEngine(
@@ -47,10 +53,12 @@ const mapStateToProps = (state) => {
 
 const actionCreators = {
   clearFilters,
+  manageColumns,
   performBatchAction,
   removeFilterValue,
   setFilterValue,
   setSearchTerm,
+  switchMode,
   toggleSidebar,
 }
 

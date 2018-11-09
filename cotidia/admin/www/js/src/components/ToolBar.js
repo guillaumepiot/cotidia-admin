@@ -25,18 +25,22 @@ export default class ToolBar extends Component {
     })),
     cacheFilterLabel: PropTypes.func,
     clearFilters: PropTypes.func.isRequired,
+    columnsConfigurable: PropTypes.bool.isRequired,
     config: PropTypes.object,
     filterConfiguration: filterConfiguration.isRequired,
     filters: PropTypes.object,
     filterSuggest: PropTypes.func,
     getSuggestEngine: PropTypes.func.isRequired,
-    globalActions: PropTypes.array,
+    hasListConfig: PropTypes.bool.isRequired,
     hasSidebar: PropTypes.bool.isRequired,
+    manageColumns: PropTypes.func.isRequired,
+    mode: PropTypes.string,
     performBatchAction: PropTypes.func.isRequired,
     removeFilterValue: PropTypes.func.isRequired,
     searchTerm: PropTypes.string,
     setFilterValue: PropTypes.func.isRequired,
     setSearchTerm: PropTypes.func.isRequired,
+    switchMode: PropTypes.func.isRequired,
     toggleSidebar: PropTypes.func.isRequired,
     toolbarFilters: PropTypes.array,
   }
@@ -44,7 +48,6 @@ export default class ToolBar extends Component {
   static defaultProps = {
     batchActions: [],
     filters: {},
-    globalActions: [],
     mode: 'table',
     searchTerm: '',
     toolbarFilters: [],
@@ -65,6 +68,12 @@ export default class ToolBar extends Component {
   clearSearchTerm = (e) => {
     this.props.clearFilters()
   }
+
+  manageColumns = (e) => this.props.manageColumns()
+
+  displayList = () => this.props.switchMode('list')
+
+  displayTable = () => this.props.switchMode('table')
 
   selectBatchAction = (e) => this.setState({ action: e.target.value })
 
@@ -339,8 +348,11 @@ export default class ToolBar extends Component {
   render () {
     const {
       anyResultsSelected,
+      columnsConfigurable,
       filterSuggest,
       filters,
+      mode,
+      hasListConfig,
       hasSidebar,
     } = this.props
 
@@ -352,12 +364,29 @@ export default class ToolBar extends Component {
           </div>
 
           <div className='content__actions'>
-            <button className='btn btn--outline btn--small' onClick={this.clearSearchTerm} title='Reset filters' type='button'>
+            {mode === 'table' && columnsConfigurable && (
+              <button className='btn btn--outline' onClick={this.manageColumns} title='Manage column' type='button'>
+                <Icon icon='columns' />
+              </button>
+            )}
+
+            {hasListConfig && (
+              <>
+                <button className={`btn ${mode === 'table' ? '' : 'btn--outline'}`} onClick={this.displayTable}>
+                  <Icon icon='table' />
+                </button>
+                <button className={`btn ${mode === 'list' ? '' : 'btn--outline'}`} onClick={this.displayList}>
+                  <Icon icon='bars' />
+                </button>
+              </>
+            )}
+
+            <button className='btn btn--outline' onClick={this.clearSearchTerm} title='Reset filters' type='button'>
               <Icon icon='sync-alt' />
             </button>
 
             {hasSidebar && (
-              <button className='btn btn--outline btn--small' onClick={this.toggleSidebar}>
+              <button className='btn btn--outline' onClick={this.toggleSidebar}>
                 <Icon icon='filter' />
               </button>
             )}
