@@ -22,13 +22,13 @@ class FieldRepresentationTests(TestCase):
             "verbatim"
         )
 
+        self.assertEqual(field_repr["integer_choice_field"]["filter"], "choice")
         self.assertEqual(
-            field_repr["integer_choice_field"]["filter"],
-            "choice"
+            field_repr["integer_choice_field"]["configuration"]["mode"], "options"
         )
 
         self.assertEqual(
-            field_repr["integer_choice_field"]["options"],
+            field_repr["integer_choice_field"]["configuration"]["options"],
             [
                 { "label": "Foo", "value": 1 },
                 { "label": "Bar", "value": 2 }
@@ -67,12 +67,13 @@ class FieldRepresentationTests(TestCase):
         self.assertEqual(field_repr["choice_field"]["display"], "verbatim")
         self.assertEqual(field_repr["choice_field"]["filter"], "choice")
         self.assertEqual(
-            field_repr["choice_field"]["options"],
+            field_repr["choice_field"]["configuration"]["options"],
             [
                 {"label": "Foo", "value": "foo"},
                 {"label": "Bar", "value": "bar"},
             ]
         )
+        self.assertEqual(field_repr["choice_field"]["configuration"]["mode"], "options")
 
     def test_text_field(self):
         serializer = ExampleModelOneSerializer()
@@ -395,12 +396,12 @@ class FieldRepresentationTests(TestCase):
 
         self.assertIn(
             { "label": model1.name, "value": str(model1.uuid) },
-            field_repr["many_to_many_field"]["options"]
+            field_repr["many_to_many_field"]["configuration"]["options"]
         )
 
         self.assertIn(
             { "label": model2.name, "value": str(model2.uuid) },
-            field_repr["many_to_many_field"]["options"]
+            field_repr["many_to_many_field"]["configuration"]["options"]
         )
 
     def test_get_related_fields_fields(self):

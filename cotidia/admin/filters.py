@@ -174,6 +174,7 @@ class BaseFilter(object):
     query_param = ""
     field_type = ""
     label = ""
+    default_q_obj = Q()
 
     def __init__(self, *args, **kwargs):
         self.field_name = kwargs.get("field_name", None)
@@ -192,7 +193,9 @@ class BaseFilter(object):
             self.label = self.field_name.replace(
                 '__', ' '
             ).replace('_', ' ').title()
-    
+        if kwargs.get("default_q_obj", False):
+            self.default_q_obj = kwargs["default_q_obj"]
+
     def parse_value(self, value):
         query_field = "{}{}{}".format(
             self.prefix,
@@ -206,23 +209,26 @@ class BaseFilter(object):
             self.field_name is not None,
             "Need to include field name"
         )
-        
-        q_obj = reduce(
-            lambda x, y: x | y,
-            [self.parse_value(val) for val in values],
-            Q()
-        )
+        if values:
+            q_obj = reduce(
+                lambda x, y: x | y,
+                [self.parse_value(val) for val in values],
+                Q()
+            )
+        else:
+            q_obj = self.default_q_obj
+
         return q_obj
 
     def annotate(self, queryset):
         return queryset
-    
+
     def get_query_param(self):
         return self.prefix + (self.query_param or self.field_name)
-    
+
     def filter(self, queryset, filter_params):
         return queryset
-    
+
     def get_representation(self):
         return {
             "filter" : self.type,
@@ -346,10 +352,64 @@ class ChoiceFilter(BaseFilter):
 
     def get_options(self):
         return self.options
-    
+
     def get_representation(self):
         repr = super().get_representation()
-        repr["options"] = self.get_options()
+        repr["configuration"] = {
+            'mode': 'options',
+            'options': self.get_options(),
+        }
+        return repr
+
+class AlgoliaFilter(ChoiceFilter):
+    algolia_indexes = None
+    algolia_api_key = None
+    algolia_app_id = None
+    algolia_filters = []
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.algolia_filters = kwargs.get('algolia_filters', [])
+
+        self.algolia_indexes = kwargs.get('algolia_indexes')
+        self.algolia_api_key = kwargs.get('algolia_api_key')
+        self.algolia_app_id = kwargs.get('algolia_app_id')
+
+        if self.algolia_api_key is None:
+            self.algolia_api_key = settings.ALGOLIA_SEARCH_API_KEY
+
+        if self.algolia_app_id is None:
+            self.algolia_app_id = settings.ALGOLIA["APPLICATION_ID"]
+
+        if self.algolia_indexes is None:
+            self.algolia_indexes = [settings.ALGOLIA_DEFAULT_INDEX]
+
+    def get_representation(self):
+        repr = super().get_representation()
+        repr["configuration"] = {
+            'mode': 'algolia',
+            'algoliaConfig': {
+                'appId': self.algolia_app_id,
+                'apiKey': self.algolia_api_key,
+                'indexes': self.algolia_indexes,
+                'filters': self.algolia_filters,
+            },
+        }
+        return repr
+
+class APIFilter(ChoiceFilter):
+    endpoint = None
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.endpoint = self.kwargs.get('endpoint', [])
+
+    def get_representation(self):
+        repr = super().get_representation()
+        repr["configuration"] = {
+            'mode': 'api',
+            'endpoint': self.endpoint,
+        }
         return repr
 
 class ForeignKeyFilter(ChoiceFilter):
@@ -369,24 +429,24 @@ class ForeignKeyFilter(ChoiceFilter):
                 "value": model.uuid
             } for model in self.get_queryset()
         ]
-    
+
     def get_model_label(self, model):
         return str(model)
-    
+
     def get_queryset(self):
         return self.model_class.objects.all()
-    
+
     def get_representation(self):
         repr =  super().get_representation()
         repr["many"] = True
         return repr
-    
+
 class DefaultGeneralQueryFilter(BaseFilter):
     fields = None
 
     def __init__(self, fields, *args, **kwargs):
         self.fields = fields
-    
+
     def get_q_object(self, values):
         q_obj = Q()
         for value in values:

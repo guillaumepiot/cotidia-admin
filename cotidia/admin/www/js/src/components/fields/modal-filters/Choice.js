@@ -7,10 +7,12 @@ export default class Choice extends Component {
   static propTypes = {
     config: PropTypes.shape({
       label: PropTypes.string.isRequired,
-      options: PropTypes.arrayOf(PropTypes.shape({
-        label: PropTypes.string.isRequired,
-        value: PropTypes.any.isRequired,
-      })).isRequired,
+      configuration: PropTypes.shape({
+        options: PropTypes.arrayOf(PropTypes.shape({
+          label: PropTypes.string.isRequired,
+          value: PropTypes.any.isRequired,
+        })).isRequired,
+      }).isRequired,
     }).isRequired,
     data: PropTypes.shape({
       value: PropTypes.arrayOf(PropTypes.string),
@@ -43,10 +45,10 @@ export default class Choice extends Component {
       <div className='form__group'>
         <label className='form__label'>{config.label} is any of</label>
         <div className='form__control'>
-          {config.options.length < 15
+          {config.configuration.options.length < 15
             ? (
               <ul>
-                {config.options.map(({ label, value }) => (
+                {config.configuration.options.map(({ label, value }) => (
                   <li key={value}>
                     <label>
                       <input
@@ -64,10 +66,10 @@ export default class Choice extends Component {
             ) : (
               <MultipleSelect
                 name='filterValue'
-                options={config.options}
+                options={config.configuration.options}
                 updateValue={this.handleMultipleSelectUpdate}
                 values={data.value?.map(
-                  (value) => config.options.find((option) => option.value === value)
+                  (value) => config.configuration.options.find((option) => option.value === value)
                 ) || []}
               />
             )

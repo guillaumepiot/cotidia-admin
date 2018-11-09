@@ -4,14 +4,9 @@ import PropTypes from 'prop-types'
 import {
   debounce,
   getFilterLabel,
-  hash,
-  humaniseSnakeCase,
-  identity,
 } from '../utils'
 
-import {
-  filterConfiguration,
-} from '../utils/propTypes'
+import { filterConfiguration } from '../utils/propTypes'
 
 import * as TOOLBAR_FILTERS from './fields/toolbar-filters'
 
@@ -28,11 +23,13 @@ export default class ToolBar extends Component {
       label: PropTypes.string.isRequired,
       onComplete: PropTypes.func,
     })),
+    cacheFilterLabel: PropTypes.func,
     clearFilters: PropTypes.func.isRequired,
     config: PropTypes.object,
-    filterConfiguration,
+    filterConfiguration: filterConfiguration.isRequired,
     filters: PropTypes.object,
     filterSuggest: PropTypes.func,
+    getSuggestEngine: PropTypes.func.isRequired,
     globalActions: PropTypes.array,
     hasSidebar: PropTypes.bool.isRequired,
     performBatchAction: PropTypes.func.isRequired,
@@ -81,76 +78,6 @@ export default class ToolBar extends Component {
     this.props.performBatchAction(action)
   }
 
-  augmentSuggestion = (item) => {
-    // Hack because an old version of the Python Algolia implementation indexed using `field`
-    // instead of `filter`, and we couldn't be bothered to reindex it and fix everything else that
-    // relied on this. But please use `filter`!
-    item.filter = item.filter || item.field
-
-    if (! this.props.filterConfiguration.hasOwnProperty(item.filter)) {
-      return
-    }
-
-    let richLabel
-
-    let matchField
-    let matchValue
-
-    for (const [field, result] of Object.entries(item._highlightResult)) {
-      if (Array.isArray(result)) {
-        const innerMatch = result.find((result) => result.matchLevel !== 'none')
-
-        if (innerMatch) {
-          matchField = field
-          matchValue = innerMatch.value
-          break
-        }
-      } else {
-        if (result.matchLevel !== 'none') {
-          matchField = field
-          matchValue = result.value
-          break
-        }
-      }
-    }
-
-    if (matchField && matchValue) {
-      if (matchField === 'label') {
-        richLabel = <span dangerouslySetInnerHTML={{ __html: matchValue }} />
-      } else {
-        richLabel = (
-          <>
-            { item.label }
-
-            <span className='control-select-option__meta'>
-              <span className='label control-select-option__label'>
-                { humaniseSnakeCase(matchField) }
-              </span>
-
-              <span dangerouslySetInnerHTML={{ __html: matchValue }} />
-            </span>
-          </>
-        )
-      }
-    }
-
-    richLabel = (
-      <>
-        <span className={`label control-select-option__label control-select-option__label--${hash(item.filter)}`}>
-          { this.props.filterConfiguration[item.filter].label }
-        </span>
-        { richLabel }
-      </>
-    )
-
-    return {
-      filter: item.filter,
-      value: `${item.filter}:${item.value}`,
-      label: item.label,
-      richLabel,
-    }
-  }
-
   getFilterSuggestions = async (q) => {
     // First set our state to searching and clear the currnent suggestions
     this.setState({
@@ -160,9 +87,7 @@ export default class ToolBar extends Component {
 
     // Now fire off the suggestion lookups.
     this.props.filterSuggest(q).then((suggestions) => {
-      this.setState({
-        filterSuggestions: suggestions.map(this.augmentSuggestion).filter(identity),
-      })
+      this.setState({ filterSuggestions: suggestions })
     }).finally(() => this.setState({ filterSuggestionsLoading: false }))
 
     // We want the Select to think we came back with immediate results so that we don't hide what's
@@ -174,7 +99,15 @@ export default class ToolBar extends Component {
     const filter = q.slice(0, q.indexOf(':'))
     let value = q.slice(q.indexOf(':') + 1)
 
-    // If the filter is a choice filter, technically that allows multiple seleciton, so we get the
+    // First find the full option object from state.
+    const item = this.state.filterSuggestions.find((item) => item.value === q)
+
+    // Now cache the label for the value so it can be accessed later.
+    if (item) {
+      this.props.cacheFilterLabel(filter, value, item.label)
+    }
+
+    // If the filter is a choice filter, technically that allows multiple selection, so we get the
     // existing filter value (or an empty array if there isn't one) and add the passed value to it.
     if (this.props.filterConfiguration[filter].filter === 'choice') {
       const existingValues = this.props.filters[filter] || []
@@ -196,7 +129,6 @@ export default class ToolBar extends Component {
           <label htmlFor='search' className='form__label'>Search</label>
           <Select
             controlOnly
-            getFilteredOptions={() => filterSuggestions}
             minCharSearch={2}
             name='q'
             placeholder='Start typing to filter...'
@@ -213,8 +145,11 @@ export default class ToolBar extends Component {
 
   renderSearchToolbar () {
     const {
+      cacheFilterLabel,
+      filterConfiguration,
       filters,
       filterSuggest,
+      getSuggestEngine,
       searchTerm,
       toolbarFilters,
     } = this.props
@@ -244,7 +179,12 @@ export default class ToolBar extends Component {
         </div>
 
         {toolbarFilters && toolbarFilters.map((filter) => {
-          const { filter: type, ...filterProps } = filter
+          const {
+            configuration,
+            filter: type,
+            label,
+            name,
+          } = filter
 
           let Component
 
@@ -257,16 +197,29 @@ export default class ToolBar extends Component {
           } else if (type === 'date') {
             Component = TOOLBAR_FILTERS.Date
           } else if (type === 'choice') {
-            Component = TOOLBAR_FILTERS.Choice
+            if (configuration.mode === 'options') {
+              Component = TOOLBAR_FILTERS.Choice
+            } else {
+              Component = TOOLBAR_FILTERS.Suggest
+            }
           } else if (type === 'choice-single') {
-            Component = TOOLBAR_FILTERS.ChoiceSingle
+            if (configuration.mode === 'options') {
+              Component = TOOLBAR_FILTERS.ChoiceSingle
+            } else {
+              Component = TOOLBAR_FILTERS.SuggestSingle
+            }
           }
 
           if (Component) {
             return (
               <div className='content-filter__item' key={filter.name}>
                 <Component
-                  {...filterProps}
+                  cacheFilterLabel={cacheFilterLabel}
+                  configuration={configuration}
+                  filter={type}
+                  label={label}
+                  name={name}
+                  suggest={getSuggestEngine(filter.configuration, filterConfiguration)}
                   updateValue={this.updateFilterValueFactory(filter.name)}
                   value={filters[filter.name]}
                 />
@@ -343,13 +296,20 @@ export default class ToolBar extends Component {
       return
     }
 
-    const filterName = this.props.filterConfiguration[filter].label
+    let filterName = this.props.filterConfiguration[filter].label
 
-    const filterLabel = getFilterLabel(
+    let filterLabel = getFilterLabel(
       this.props.filterConfiguration[filter],
+      filter,
       value,
       this.props.config
     )
+
+    // If there's no label, that means we should show the name as the label and not show the name.
+    if (filterLabel === null) {
+      filterLabel = filterName
+      filterName = null
+    }
 
     let serialisedValue = value
 

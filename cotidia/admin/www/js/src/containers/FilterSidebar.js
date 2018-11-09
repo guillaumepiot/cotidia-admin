@@ -7,12 +7,19 @@ import {
 
 import { getSidebarFilters } from '../redux/modules/search/selectors'
 
+import { cacheFilterLabel } from '../utils'
+
+import { getSuggestEngine } from '../utils/filterSuggestEngines'
+
 import FilterSidebar from '../components/FilterSidebar'
 
 const mapStateToProps = (state) => ({
+  cacheFilterLabel: cacheFilterLabel,
+  filterConfiguration: state.search.filterConfiguration || {},
   filters: state.search.filters,
-  sidebarFilters: getSidebarFilters(state),
+  getSuggestEngine,
   hasSidebarFilters: true,
+  sidebarFilters: getSidebarFilters(state),
 })
 
 const actionCreators = {
