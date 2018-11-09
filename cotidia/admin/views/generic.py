@@ -194,8 +194,8 @@ class DynamicListView(
         except ContentType.DoesNotExist:
             raise Exception(
                 "Model with app label {} and model name {} does not exist.".format(
-                    kwargs['app_label'],
-                    kwargs['model']
+                    self.kwargs['app_label'],
+                    self.kwargs['model']
                 )
             )
 
