@@ -302,10 +302,10 @@ function * handleDynamicListMessage ({ payload: { message } }) {
 }
 
 function * editField ({ payload: { item, column, value } }) {
-  const columnConfig = yield select((state) => state.search.columnConfiguration[column])
+  const editConfig = yield select((state) => state.search.columnConfiguration[column].editConfiguration)
 
   // TODO: Get full item object and pass it in to generateURL so that we have richer formatting of the URL.
-  let url = generateURL(columnConfig.editEndpoint, { uuid: item })
+  let url = generateURL(editConfig.endpoint, { uuid: item })
 
   try {
     const { ok, data } = yield call(
@@ -326,8 +326,8 @@ function * editField ({ payload: { item, column, value } }) {
         })
       }
 
-      if (columnConfig.afterEdit) {
-        columnConfig.afterEdit(value)
+      if (editConfig.onSuccess) {
+        editConfig.onSuccess(value)
       }
     }
   } catch {

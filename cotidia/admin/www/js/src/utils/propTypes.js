@@ -55,12 +55,14 @@ const columnConfigSingle = PropTypes.shape({
   label: PropTypes.string.isRequired,
   allowWrap: PropTypes.bool,
   maxWidth: PropTypes.number,
-  options, // TODO: this was for editing - we'll see if it should really still be required
   orderable: PropTypes.bool,
   listHandling,
-  editable: PropTypes.bool,
-  editEndpoint: PropTypes.string,
-  afterEdit: PropTypes.func,
+  editConfiguration: PropTypes.shape({
+    endpoint: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    options: requiredIf('type', ['choice', 'choice-single'], options),
+    onComplete: PropTypes.func,
+  }),
 })
 
 const columnConfiguration = PropTypes.objectOf(columnConfigSingle)

@@ -5,6 +5,7 @@ import { getValueFormatter } from '../utils/resultItems'
 
 import EditBoolean from './fields/editors/Boolean'
 import EditChoice from './fields/editors/Choice'
+import EditChoiceSingle from './fields/editors/ChoiceSingle'
 import EditDate from './fields/editors/Date'
 import EditText from './fields/editors/Text'
 import EditNumber from './fields/editors/Number'
@@ -57,7 +58,7 @@ export default class ResultsTableItemValue extends Component {
 
     const formattedValue = formatValue(item, column.accessor, column.display, column.listHandling)
 
-    if (column.editable) {
+    if (column.editConfiguration?.endpoint) {
       let innerComponent = (
         <div className='table-cell-editable__value'>
           {formattedValue}
@@ -72,12 +73,15 @@ export default class ResultsTableItemValue extends Component {
           value: this.state.value,
         }
 
-        switch (column.filter) {
+        switch (column.editConfiguration.type) {
           case 'boolean':
             innerComponent = <EditBoolean {...props} />
             break
           case 'choice':
             innerComponent = <EditChoice {...props} options={column.options} />
+            break
+          case 'choice-single':
+            innerComponent = <EditChoiceSingle {...props} options={column.options} />
             break
           case 'date':
             innerComponent = <EditDate {...props} />
