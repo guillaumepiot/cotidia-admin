@@ -1,7 +1,9 @@
 {% load admin_search_dashboard_tags %}
 {
     endpoint: '{{endpoint}}',
-    title: '{{title}}',
+    {% if title %}
+        title: '{{title}}',
+    {% if title %}
     columnConfiguration: {
         {% for field_name, field_data in field_representation.items %}
             {% if field_data %}
