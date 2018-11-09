@@ -164,6 +164,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
 
         return self.build_success_url()
 
+
 class DynamicListView(
     StaffPermissionRequiredMixin,
     ContextMixin,
@@ -187,8 +188,8 @@ class DynamicListView(
     def get_model(self, *args, **kwargs):
         try:
             return ContentType.objects.get(
-                app_label=kwargs['app_label'],
-                model=kwargs['model']
+                app_label=self.kwargs['app_label'],
+                model=self.kwargs['model']
             ).model_class()
         except ContentType.DoesNotExist:
             raise Exception(
