@@ -16,7 +16,9 @@ export const messageHandlerFactory = (store) => (event) => {
  * @see https://gist.github.com/LeverOne/1308368
  */
 export function uuid4(a) {
-  return a?(a^Math.random()*16>>a/4).toString(16):([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,uuid4)
+  return a
+    ? (a ^ ((Math.random() * 16) >> (a / 4))).toString(16)
+    : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, uuid4)
 }
 /* eslint-enable */
 
@@ -51,13 +53,13 @@ export function humaniseSnakeCase (snaked) {
 
 export const identity = (x) => x
 
+class PromiseCancelledError extends Error {}
+
 export const makePromiseCancellable = (promise) => {
   let isCancelled = false
 
-  const newPromise = new Promise(
-    (resolve, reject) => promise.then(
-      (r) => isCancelled ? reject({ isCanceled: true }) : resolve(r)
-    )
+  const newPromise = new Promise((resolve, reject) =>
+    promise.then((r) => (isCancelled ? reject(PromiseCancelledError) : resolve(r)))
   )
 
   newPromise.cancel = () => {
@@ -79,16 +81,22 @@ export const debounce = (ms, func) => {
   }
 }
 
-export function getFilterLabel (filter, value, config) {
+export function getFilterLabel (filter, filterName, value, config) {
   switch (filter.filter) {
     case 'boolean':
       return null
 
     case 'choice':
     case 'choice-single':
-      return filter?.options?.find(
-        (option) => option.value === value
-      )?.label
+      if (filter.configuration.mode === 'options') {
+        return filter?.configuration?.options?.find(
+          (option) => option.value === value
+        )?.label
+      } else {
+        // Get label from local storage cache.
+        // TODO: prefix cache with endpoint
+        return localStorage.getItem(`${filterName}:${value}`) || ''
+      }
 
     case 'date': {
       const min = value.min && moment(value.min).format(config.dateFormat)
@@ -104,4 +112,9 @@ export function getFilterLabel (filter, value, config) {
   }
 
   return ''
+}
+
+export function cacheFilterLabel (filter, value, label) {
+  // TODO: prefix cache with endpoint
+  localStorage.setItem(`${filter}:${value}`, label)
 }

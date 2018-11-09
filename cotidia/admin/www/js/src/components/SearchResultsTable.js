@@ -26,6 +26,14 @@ export default class SearchResultsTable extends Component {
     selected: [],
   }
 
+  tableRef = React.createRef()
+
+  componentDidUpdate (prevProps) {
+    if (prevProps.results !== this.props.results) {
+      this.tableRef.current.parentElement.scrollTop = 0
+    }
+  }
+
   render () {
     const {
       batchActions,
@@ -69,7 +77,7 @@ export default class SearchResultsTable extends Component {
     }
 
     return (
-      <table className={tableClassName.join(' ')}>
+      <table className={tableClassName.join(' ')} ref={this.tableRef}>
         <ResultsTableHeader />
         <ResultsTableFooter />
         <tbody>

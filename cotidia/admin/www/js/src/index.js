@@ -44,6 +44,7 @@ export default function DynamicListApp (props) {
 
 DynamicListApp.propTypes = dynamicListPropTypes
 
+// TODO: check whether this is up to date
 DynamicListApp.defaultProps = {
   batchActions: [],
   defaultColumns: [],
