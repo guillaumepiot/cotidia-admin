@@ -4,12 +4,12 @@
 			"@babel/env",
 			{
 				"targets": {
-					"browsers": ["last 2 versions", "ie >= 10"]
+					"browsers": ["last 2 versions", "ie >= 10"],
 				},
-				"useBuiltIns": "usage"
-			}
+				"useBuiltIns": "usage",
+			},
 		],
-		"@babel/react"
+		"@babel/react",
 	],
 	"plugins": [
 		"@babel/plugin-proposal-export-default-from",
@@ -21,6 +21,18 @@
 		["@babel/plugin-proposal-class-properties", { "loose": false }],
 
 		/* Not sure why this is required as it is stage-4 so should be in preset-env...? */
-		"@babel/plugin-proposal-optional-catch-binding"
-	]
+		"@babel/plugin-proposal-optional-catch-binding",
+	],
+	"env": {
+		"development": {
+			"presets": [
+				[
+					"@babel/react",
+					{
+						"development": true,
+					},
+				],
+			],
+		},
+	},
 }

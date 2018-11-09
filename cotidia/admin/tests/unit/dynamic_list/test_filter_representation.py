@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from cotidia.admin.serializers import BaseDynamicListSerializer
 from cotidia.admin.tests.models import ExampleModelOne, ExampleModelTwo
 from cotidia.admin.filters import (
@@ -8,6 +8,8 @@ from cotidia.admin.filters import (
     NumericFilter,
     BooleanFilter,
     ChoiceFilter,
+    APIFilter,
+    AlgoliaFilter,
     ForeignKeyFilter,
 )
 
@@ -252,7 +254,7 @@ class FieldRepresentationTests(TestCase):
         self.assertNotIn("many_to_many_field", serializer.get_filters().keys())
         self.assertNotIn("other_model", serializer.get_filters().keys())
         self.assertNotIn("other_model__name", serializer.get_filters().keys())
-    
+
     def test_filter_repr_keys_same(self):
         class ExampleModelOneSerializer(BaseDynamicListSerializer):
             other_model = ExampleModelTwoSerializer()
@@ -267,12 +269,12 @@ class FieldRepresentationTests(TestCase):
                 display_field = "char_field"
                 general_query_fields = ["char_field", "text_field", "slug_field"]
                 filters = '__all__'
-        serializer = ExampleModelOneSerializer()    
+        serializer = ExampleModelOneSerializer()
         self.assertEqual(
             set(serializer.get_filters().keys()),
             set(serializer.get_filter_representation().keys())
         )
-    
+
     def test_contains_filter_repr(self):
         f = ContainsFilter(field_name="field_name", prefix="prefix__")
         representation = f.get_representation()
@@ -285,7 +287,7 @@ class FieldRepresentationTests(TestCase):
         representation = f.get_representation()
         self.assertEqual(representation["filter"], "text")
         self.assertEqual(representation["queryParameter"], "prefix__field_name")
-    
+
     def test_date_time_filter_repr(self):
         f = DateTimeFilter(field_name="field_name", prefix="prefix__")
         representation = f.get_representation()
@@ -319,11 +321,100 @@ class FieldRepresentationTests(TestCase):
         representation = f.get_representation()
         self.assertEqual(representation["filter"], "choice")
         self.assertEqual(representation["queryParameter"], "prefix__field_name")
-        self.assertEqual(representation["options"], (
+        self.assertEqual(representation["configuration"]["mode"], "options")
+        self.assertEqual(representation["configuration"]["options"], (
             (1,2),
             (2,3),
             (3,4),
         ))
-    BooleanFilter,
-    ChoiceFilter,
-    ForeignKeyFilter,
+
+    def test_algolia_filter_repr(self):
+        f = AlgoliaFilter(
+            field_name="field_name",
+            prefix="prefix__",
+            algolia_filters=["field:foo", "field:bar"],
+            algolia_indexes=["index1", "index2"],
+            algolia_api_key="api_key",
+            algolia_app_id="app_id",
+        )
+        representation = f.get_representation()
+        self.assertEqual(representation["filter"], "choice")
+        self.assertEqual(representation["queryParameter"], "prefix__field_name")
+        self.assertEqual(
+            representation["configuration"]["mode"], "algolia"
+        )
+        self.assertEqual(
+            representation["configuration"]["algoliaConfig"]["appId"], "app_id"
+        )
+        self.assertEqual(
+            representation["configuration"]["algoliaConfig"]["apiKey"], "api_key"
+        )
+        self.assertEqual(
+            representation["configuration"]["algoliaConfig"]["indexes"], ["index1", "index2"]
+        )
+        self.assertEqual(
+            representation["configuration"]["algoliaConfig"]["filters"], ["field:foo", "field:bar"]
+        )
+
+    @override_settings(
+            ALGOLIA_DEFAULT_INDEX="index1",
+            ALGOLIA_SEARCH_API_KEY="api_key",
+            ALGOLIA={"APPLICATION_ID":"app_id"},
+    )
+    def test_algolia_filter_repr_settings_default(self):
+        f = AlgoliaFilter(
+            field_name="field_name",
+            prefix="prefix__",
+            algolia_filters=["field:foo", "field:bar"],
+        )
+        representation = f.get_representation()
+        self.assertEqual(representation["filter"], "choice")
+        self.assertEqual(representation["queryParameter"], "prefix__field_name")
+        self.assertEqual(
+            representation["configuration"]["mode"], "algolia"
+        )
+        self.assertEqual(
+            representation["configuration"]["algoliaConfig"]["appId"], "app_id"
+        )
+        self.assertEqual(
+            representation["configuration"]["algoliaConfig"]["apiKey"], "api_key"
+        )
+        self.assertEqual(
+            representation["configuration"]["algoliaConfig"]["indexes"], ["index1"]
+        )
+        self.assertEqual(
+            representation["configuration"]["algoliaConfig"]["filters"], ["field:foo", "field:bar"]
+        )
+
+    @override_settings(
+            ALGOLIA_DEFAULT_INDEX="invalid",
+            ALGOLIA_SEARCH_API_KEY="invalid",
+            ALGOLIA={"APPLICATION_ID":"invalid"},
+    )
+    def test_algolia_filter_repr_kwargs_override_settings(self):
+        f = AlgoliaFilter(
+            field_name="field_name",
+            prefix="prefix__",
+            algolia_filters=["field:foo", "field:bar"],
+            algolia_indexes=["index1", "index2"],
+            algolia_api_key="api_key",
+            algolia_app_id="app_id",
+        )
+        representation = f.get_representation()
+        self.assertEqual(representation["filter"], "choice")
+        self.assertEqual(representation["queryParameter"], "prefix__field_name")
+        self.assertEqual(
+            representation["configuration"]["mode"], "algolia"
+        )
+        self.assertEqual(
+            representation["configuration"]["algoliaConfig"]["appId"], "app_id"
+        )
+        self.assertEqual(
+            representation["configuration"]["algoliaConfig"]["apiKey"], "api_key"
+        )
+        self.assertEqual(
+            representation["configuration"]["algoliaConfig"]["indexes"], ["index1", "index2"]
+        )
+        self.assertEqual(
+            representation["configuration"]["algoliaConfig"]["filters"], ["field:foo", "field:bar"]
+        )

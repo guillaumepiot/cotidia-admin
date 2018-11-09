@@ -1,5 +1,5 @@
 from decimal import Decimal
-from datetime import datetime
+from datetime import datetime, date
 
 from django.urls import reverse
 
@@ -627,4 +627,75 @@ class AdminSearchDashboardTests(APITestCase):
             response.data['results'][0]['many_to_many_field'],
             ['Test Item']
         )
-    
+
+    def test_date_field_fitlering_equal(self):
+        ExampleModelOneFactory(date_field=date(year=2018,month=1,day=1), boolean_field=True)
+        ExampleModelOneFactory(date_field=date(year=2018,month=2,day=1), boolean_field=True)
+        ExampleModelOneFactory(date_field=date(year=2018,month=3,day=1), boolean_field=True)
+        ExampleModelOneFactory(date_field=date(year=2018,month=4,day=1), boolean_field=True)
+
+        response = self.client.get(self.url + '?date_field=2018-01-01')
+
+        self.assertEqual(response.data['total_result_count'], 1)
+
+        self.assertEqual(response.data['results'][0]['date_field'], '2018-01-01')
+
+    def test_date_field_fitlering_lte(self):
+        ExampleModelOneFactory(date_field=date(year=2018,month=1,day=1), boolean_field=True)
+        ExampleModelOneFactory(date_field=date(year=2018,month=2,day=1), boolean_field=True)
+        ExampleModelOneFactory(date_field=date(year=2018,month=3,day=1), boolean_field=True)
+        ExampleModelOneFactory(date_field=date(year=2018,month=4,day=1), boolean_field=True)
+
+        response = self.client.get(self.url + '?date_field=:2018-02-01')
+
+        self.assertEqual(response.data['total_result_count'], 2)
+
+        self.assertIn(
+            '2018-01-01',
+            [result["date_field"] for result in response.data['results']]
+        )
+        self.assertIn(
+            '2018-02-01',
+            [result["date_field"] for result in response.data['results']]
+        )
+
+    def test_date_field_fitlering_gte(self):
+        ExampleModelOneFactory(date_field=date(year=2018,month=1,day=1), boolean_field=True)
+        ExampleModelOneFactory(date_field=date(year=2018,month=2,day=1), boolean_field=True)
+        ExampleModelOneFactory(date_field=date(year=2018,month=3,day=1), boolean_field=True)
+        ExampleModelOneFactory(date_field=date(year=2018,month=4,day=1), boolean_field=True)
+
+        response = self.client.get(self.url + '?date_field=2018-03-01:')
+
+        self.assertEqual(response.data['total_result_count'], 2)
+
+        self.assertIn(
+            '2018-03-01',
+            [result["date_field"] for result in response.data['results']]
+        )
+        self.assertIn(
+            '2018-04-01',
+            [result["date_field"] for result in response.data['results']]
+        )
+
+    def test_date_field_fitlering_range(self):
+        ExampleModelOneFactory(date_field=date(year=2018,month=1,day=1), boolean_field=True)
+        ExampleModelOneFactory(date_field=date(year=2018,month=2,day=1), boolean_field=True)
+        ExampleModelOneFactory(date_field=date(year=2018,month=3,day=1), boolean_field=True)
+        ExampleModelOneFactory(date_field=date(year=2018,month=4,day=1), boolean_field=True)
+
+        response = self.client.get(self.url + '?date_field=2018-02-01:2018-04-01')
+
+        self.assertEqual(response.data['total_result_count'], 3)
+
+        self.assertIn('2018-02-01',
+            [result["date_field"] for result in response.data['results']]
+        )
+        self.assertIn(
+            '2018-03-01',
+            [result["date_field"] for result in response.data['results']]
+        )
+        self.assertIn(
+            '2018-04-01',
+            [result["date_field"] for result in response.data['results']]
+        )

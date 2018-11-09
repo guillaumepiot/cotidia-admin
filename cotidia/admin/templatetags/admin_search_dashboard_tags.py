@@ -66,10 +66,10 @@ def render_search_dashboard_config(
             filter_representation[name]["filter"] = field["filter"]
             column_representation[name]["filter"] = name
             filter_representation[name]["label"] = field["label"]
-            if field.get("options"):
-                filter_representation[name]["options"] = field["options"]
-                query_param = (filter_representation.get("queryParameter") or name)
-                filter_representation[name]["queryParameter"] = query_param
+            if field.get("configuration"):
+                filter_representation[name]["configuration"] = field["configuration"]
+            query_param = (filter_representation.get("queryParameter") or name)
+            filter_representation[name]["queryParameter"] = query_param
 
     extra_filters = serializer.get_option('extra_filters')
     if extra_filters:

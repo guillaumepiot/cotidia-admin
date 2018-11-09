@@ -1,5 +1,21 @@
 import PropTypes from 'prop-types'
 
+const requiredIf = (field, value, propType) => (props, prop, component) => {
+  let required = false
+
+  if (Array.isArray(value)) {
+    required = value.includes(props[field])
+  } else {
+    required = props[field] === value
+  }
+
+  if (required) {
+    return PropTypes.checkPropTypes({ [prop]: propType.isRequired }, props, 'prop', component)
+  } else {
+    return PropTypes.checkPropTypes({ [prop]: propType }, props, 'prop', component)
+  }
+}
+
 const stringList = PropTypes.arrayOf(PropTypes.string)
 
 export const option = PropTypes.shape({
@@ -30,23 +46,16 @@ const batchActions = PropTypes.arrayOf(batchAction)
 
 const categoriseBy = PropTypes.shape({
   column: PropTypes.string.isRequired,
-  display: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.string,
-  ]),
+  display: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
 })
 
 const columnConfigSingle = PropTypes.shape({
-  display: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.string,
-    PropTypes.array,
-  ]),
+  display: PropTypes.oneOfType([PropTypes.func, PropTypes.string, PropTypes.array]),
   filter: PropTypes.string,
   label: PropTypes.string.isRequired,
   allowWrap: PropTypes.bool,
   maxWidth: PropTypes.number,
-  options,
+  options, // TODO: this was for editing - we'll see if it should really still be required
   orderable: PropTypes.bool,
   listHandling,
   editable: PropTypes.bool,
@@ -73,41 +82,29 @@ const config = PropTypes.shape({
   weekDayStart: PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6, 7]),
 })
 
-const filterType = PropTypes.oneOf([
-  'text',
-  'choice',
-  'choice-single',
-  'boolean',
-  'number',
-  'date',
-])
+const algoliaConfig = PropTypes.shape({
+  appId: PropTypes.string.isRequired,
+  apiKey: PropTypes.string.isRequired,
+  indexes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  filters: PropTypes.arrayOf(PropTypes.string),
+})
+
+export const suggestConfiguration = PropTypes.shape({
+  algoliaConfig: requiredIf('mode', 'algolia', algoliaConfig),
+  endpoint: requiredIf('mode', 'api', PropTypes.string),
+  mode: PropTypes.oneOf(['algolia', 'api', 'options']).isRequired,
+  options: requiredIf('mode', 'options', options),
+})
+
+const filterType = PropTypes.oneOf(['text', 'choice', 'choice-single', 'boolean', 'number', 'date'])
 
 const filterConfigSingle = PropTypes.shape({
   label: PropTypes.string.isRequired,
   filter: filterType,
-  options,
+  configuration: requiredIf('filter', ['choice', 'choice-single'], suggestConfiguration),
 })
 
 export const filterConfiguration = PropTypes.objectOf(filterConfigSingle)
-
-const requiredIf = (field, value, propType) => (props, prop, component) => {
-  if (props[field] === value) {
-    return PropTypes.checkPropTypes({ [prop]: propType.isRequired }, props, 'prop', component)
-  }
-
-  return PropTypes.checkPropTypes({ [prop]: propType }, props, 'prop', component)
-}
-
-const filterSuggestConfiguration = PropTypes.shape({
-  algoliaConfig: requiredIf('mode', 'algolia', PropTypes.shape({
-    appId: PropTypes.string.isRequired,
-    apiKey: PropTypes.string.isRequired,
-    indexes: PropTypes.arrayOf(PropTypes.string).isRequired,
-    filters: PropTypes.arrayOf(PropTypes.string),
-  })),
-  endpoint: requiredIf('mode', 'api', PropTypes.string),
-  mode: PropTypes.oneOf(['algolia', 'api']).isRequired,
-})
 
 const globalAction = PropTypes.shape({
   action: PropTypes.string.isRequired,
@@ -143,7 +140,7 @@ export const dynamicListPropTypes = {
   detailURL: PropTypes.string,
   endpoint: PropTypes.string.isRequired,
   filterConfiguration,
-  filterSuggestConfiguration,
+  filterSuggestConfiguration: suggestConfiguration,
   globalActions,
   ignoreStoredConfig: PropTypes.bool,
   listFields,

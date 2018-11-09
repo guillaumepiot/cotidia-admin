@@ -131,7 +131,9 @@ class AdminModelSerializer(serializers.ModelSerializer):
                         if bypass_available_columns or sub_field_name in self._available_columns:
                             field_representation[sub_field_name] = value
                     default_field_repr = FIELD_MAPPING[AdminModelSerializer.__name__]()
-                    default_field_repr["options"] = field.get_choices()
+                    default_field_repr["configuration"] = {}
+                    default_field_repr["configuration"]["mode"] = 'options'
+                    default_field_repr["configuration"]["options"] = field.get_choices()
                     default_field_repr["label"] = label
                     field_representation[field_name] = default_field_repr
 
@@ -140,8 +142,11 @@ class AdminModelSerializer(serializers.ModelSerializer):
                 elif isinstance(field, serializers.ListSerializer):
                     try:
                         default_field_ref = FIELD_MAPPING[field.__class__.__name__]()
-                        default_field_ref["options"] = field.child.get_choices()
-                        default_field_ref["label"] = label
+                        options = field.child.get_choices()
+                        default_field_ref["configuration"] = {
+                            "mode": "options",
+                            "options": options,
+                        }
                     except AttributeError:
                         default_field_ref = FIELD_MAPPING[field.child.__class__.__name__]()
                         default_field_ref["filter"] = None
@@ -158,15 +163,20 @@ class AdminModelSerializer(serializers.ModelSerializer):
                             # Adds choices if there is a choices field on the
                             # serializer
                             default_field_ref["filter"] = 'choice'
-                            default_field_ref["options"] = [
-                                {"value": value, "label": label} for value, label in field.choices.items()
-                            ]
+                            default_field_ref["configuration"] = {
+                                'mode': 'options',
+                                'options': [
+                                    {"value": value, "label": label}
+                                    for value, label in field.choices.items()
+                                ]
+                            }
                         default_field_ref["label"] = label
                         field_representation[field_name] = default_field_ref
 
             # Applies any user defined field_repr values
             try:
                 override_repr = self.SearchProvider.field_representation
+                override_repr = self.make_config_compatible(override_repr)
                 for key, default_field_repr in field_representation.items():
                     if not bypass_available_columns and key not in self._available_columns:
                         continue
@@ -185,6 +195,19 @@ class AdminModelSerializer(serializers.ModelSerializer):
             self._field_representation = field_representation
 
         return self._field_representation
+
+    def make_config_compatible(self, config):
+        """
+        Makes the old style config work with new dynamic list config
+        """
+        for key, value in config.items():
+            # Upgrades to new choice filter config
+            if value.get('filter') in ['choice', 'choice-single'] and value.get('options') is not None:
+                config[key]["configuration"] = {
+                    'mode': 'options',
+                    'options': value["options"]
+                }
+        return config
 
     def get_option(self, attr, default=None):
         if hasattr(self, "SearchProvider"):
@@ -257,17 +280,17 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
         A series of assertions about the class that must always be true
         """
         assert hasattr(self, "SearchProvider"), "Serializer must have a SearchProvider defined"
-        
-        assert hasattr(self.SearchProvider, "exclude_filters") != hasattr(self.SearchProvider, "filters") 
-        # ( 
+
+        assert hasattr(self.SearchProvider, "exclude_filters") != hasattr(self.SearchProvider, "filters")
+        # (
         #     "Serializer must have either filters or exclude filters "
         #     "defined, and not both"
         # )
-        
+
 
     def get_nested_serializers(self):
         return [
-            name for name, field in self.fields.items() 
+            name for name, field in self.fields.items()
             if isinstance(field, BaseDynamicListSerializer)
         ]
 
@@ -306,7 +329,7 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
         self._assertions()
 
         # Short circuit the calculation if we have a cached version
-        if self._get_filters is not None: 
+        if self._get_filters is not None:
             return self._get_filters
 
         self._get_filters = {}
@@ -325,7 +348,7 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
                         self._get_filters[filter_name] = self.SearchProvider.override_filters[filter_name]
                     except (KeyError, AttributeError) as e:
                         raise AssertionError("Any additional filters must be defined in override filters")
-                        
+
         else:
             self._get_filters = all_filters
         return self._get_filters
@@ -509,7 +532,7 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
             self._field_representation = field_representation
 
         return self._field_representation
-    
+
     def get_filter_representation(self):
         return dict(
             [
