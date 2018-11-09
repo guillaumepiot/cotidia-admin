@@ -173,6 +173,17 @@ class DynamicListView(
     model = None
     template_type = 'fluid'
 
+    def get_permission_required(self):
+        if self.kwargs.get('permission_required'):
+            return self.kwargs['permission_required']
+        elif hasattr(self, 'permission_required'):
+            return self.permission_required
+        else:
+            return '{}.add_{}'.format(
+                self.get_model()._meta.app_label,
+                self.get_model()._meta.model_name
+            )
+
     def get_model(self, *args, **kwargs):
         try:
             return ContentType.objects.get(
