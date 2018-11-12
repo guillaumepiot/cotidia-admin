@@ -3672,8 +3672,10 @@ body:not(.menu--sidebar-collapse) .menu-footer .menu-item__link {
   background-color: #f5f7fb;
   clear: both; }
 
-fieldset.table-view .table tr:last-child tr, fieldset.table-view .table tr:last-child td {
-  border-bottom: none; }
+fieldset.table-view .table {
+  table-layout: fixed; }
+  fieldset.table-view .table tr:last-child tr, fieldset.table-view .table tr:last-child td {
+    border-bottom: none; }
 
 .control-select__options:hover .control-select__option--focused {
   background: none; }
