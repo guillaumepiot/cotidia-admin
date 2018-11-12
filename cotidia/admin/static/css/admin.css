@@ -3674,6 +3674,8 @@ body:not(.menu--sidebar-collapse) .menu-footer .menu-item__link {
 
 fieldset.table-view .table {
   table-layout: fixed; }
+  fieldset.table-view .table tr td {
+    word-break: break-word; }
   fieldset.table-view .table tr:last-child tr, fieldset.table-view .table tr:last-child td {
     border-bottom: none; }
 

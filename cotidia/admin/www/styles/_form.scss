@@ -20,6 +20,9 @@ fieldset {
         .table {
             table-layout: fixed;
             tr {
+                td {
+                    word-break: break-word;
+                }
                 &:last-child {
                     tr, td {
                         border-bottom: none;
