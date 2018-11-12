@@ -18,6 +18,7 @@
 fieldset {
     &.table-view {
         .table {
+            table-layout: fixed;
             tr {
                 &:last-child {
                     tr, td {
