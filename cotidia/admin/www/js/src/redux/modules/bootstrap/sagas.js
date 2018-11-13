@@ -46,7 +46,7 @@ export function * bootstrap ({ payload: config }) {
       columns: config.columns,
       defaultColumns: config.defaultColumns,
       defaultFilters: config.defaultFilters,
-      defaultPerPage: config.defaultPerPage,
+      defaultPerPage: config.defaultPerPage || 50,
       listFields: config.listFields,
       defaultOrderColumn,
       defaultOrderAscending,
