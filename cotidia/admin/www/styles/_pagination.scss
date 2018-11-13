@@ -14,7 +14,7 @@ $link-size: 1.75rem;
         text-align: center;
 
         @media screen and (min-width: $tablet-width) {
-            margin: 0 0.5rem;
+            margin: 0 $padding / 2;
 
             &:first-child {
                 margin-left: 0;
@@ -26,30 +26,33 @@ $link-size: 1.75rem;
         }
 
         @media screen and (min-width: $laptop-width) {
-            margin: 0 1rem;
+            margin: 0 $padding;
         }
     }
 
     &__link {
-        align-content: center;
+        @include font-size($font_size--small);
+
+        align-items: center;
         background-color: transparent;
         border: 1px solid $grey--light;
         border-radius: 50%;
         color: $grey;
         cursor: pointer;
         display: inline-flex;
+        // font-size: inherit;
         height: $link-size;
         justify-content: center;
         min-width: $link-size;
         padding: 0;
         text-align: center;
         transition:
-            background-color 0.3s ease,
-            color 0.3s ease;
+            background-color $animation-speed ease,
+            color $animation-speed ease;
         width: $link-size;
 
         &--prev {
-            margin-right: 1rem;
+            margin-right: $padding;
 
             .pagination__icon {
                 margin-left: -1px;
@@ -57,7 +60,7 @@ $link-size: 1.75rem;
         }
 
         &--next {
-            margin-left: 1rem;
+            margin-left: $padding;
         }
 
         &:hover {
@@ -76,6 +79,6 @@ $link-size: 1.75rem;
     }
 
     &__label {
-        margin-right: 0.5rem;
+        margin-right: $padding / 2;
     }
 }
