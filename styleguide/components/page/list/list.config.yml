@@ -9,6 +9,8 @@ variants:
 
   - name: actions
 
+  - name: tabbed
+
   - name: actions-centered
     preview: '@preview--full-layout-centered'
 

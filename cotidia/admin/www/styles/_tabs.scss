@@ -1,0 +1,20 @@
+.tab {
+    &__label {
+        background-color: #fff;
+        border-color: $table-row-border-color;
+        color: $grey--medium;
+        transition:
+            background-color $animation-speed ease,
+            color $animation-speed ease;
+
+        &:hover {
+            color: $grey--dark;
+        }
+
+        &--active,
+        &--active:hover {
+            background-color: $content-background-color;
+            color: $grey--dark;
+        }
+    }
+}
