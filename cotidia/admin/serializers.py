@@ -608,9 +608,11 @@ def choose_filter(field, field_name, prefix):
             )
         elif isinstance(field, serializers.ListSerializer):
             return choose_filter(field.child, field_name, prefix)
+        elif isinstance(field, serializers.ReadOnlyField):
+            return None # Don't generate filters for read only fields
         else:
             raise ValueError(
-                "Field {} not supported".format(field.__class__.name)
+                "Field {} not supported".format(field.__class__)
             )
     filter_class = FILTER_MAPPING.get(field_type.__name__)
     if filter_class:
