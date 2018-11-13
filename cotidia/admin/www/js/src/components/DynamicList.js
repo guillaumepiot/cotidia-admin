@@ -6,8 +6,8 @@ import Modal from '../containers/Modal'
 
 import FilterSidebar from '../containers/FilterSidebar'
 import ToolBar from '../containers/ToolBar'
-import SearchResultsList from '../containers/SearchResultsList'
-import SearchResultsTable from '../containers/SearchResultsTable'
+import SearchResultsList from '../containers/results/list/SearchResultsList'
+import SearchResultsTable from '../containers/results/table/SearchResultsTable'
 import Pagination from '../containers/Pagination'
 import GlobalActions from '../containers/GlobalActions'
 

@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { getValueFormatter } from '../utils/resultItems'
+import { getValueFormatter } from '../../../utils/resultItems'
 
-import EditBoolean from './fields/editors/Boolean'
-import EditChoice from './fields/editors/Choice'
-import EditChoiceSingle from './fields/editors/ChoiceSingle'
-import EditDate from './fields/editors/Date'
-import EditText from './fields/editors/Text'
-import EditNumber from './fields/editors/Number'
+import EditBoolean from '../../fields/editors/Boolean'
+import EditChoice from '../../fields/editors/Choice'
+import EditChoiceSingle from '../../fields/editors/ChoiceSingle'
+import EditDate from '../../fields/editors/Date'
+import EditText from '../../fields/editors/Text'
+import EditNumber from '../../fields/editors/Number'
 
-import { Icon } from './elements/global'
+import { Icon } from '../../elements/global'
 
 // TODO: Look into PureComponent like we do in ResultsTableItem. But redux...?
 export default class ResultsTableItemValue extends Component {

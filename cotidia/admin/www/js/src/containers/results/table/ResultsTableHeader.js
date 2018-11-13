@@ -7,15 +7,15 @@ import {
   setOrderColumn,
   toggleOrderDirection,
   toggleSelectAllResults,
-} from '../redux/modules/search/actions'
+} from '../../../redux/modules/search/actions'
 
 import {
   getVisibleColumnConfig,
   getActiveFilters,
   allResultsSelected,
-} from '../redux/modules/search/selectors'
+} from '../../../redux/modules/search/selectors'
 
-import ResultsTableHeader from '../components/ResultsTableHeader'
+import ResultsTableHeader from '../../../components/results/table/ResultsTableHeader'
 
 const mapStateToProps = (state) => ({
   allSelected: allResultsSelected(state),

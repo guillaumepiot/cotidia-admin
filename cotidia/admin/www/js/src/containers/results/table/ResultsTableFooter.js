@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 
-import { getVisibleColumnConfig } from '../redux/modules/search/selectors'
+import { getVisibleColumnConfig } from '../../../redux/modules/search/selectors'
 
-import ResultsTableFooter from '../components/ResultsTableFooter'
+import ResultsTableFooter from '../../../components/results/table/ResultsTableFooter'
 
 const mapStateToProps = (state) => ({
   batchActions: state.search.batchActions,

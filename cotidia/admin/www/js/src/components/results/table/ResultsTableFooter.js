@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { getValueFormatter } from '../utils/resultItems'
+import { getValueFormatter } from '../../../utils/resultItems'
 
 export default class ResultsTableFooter extends Component {
   static propTypes = {
