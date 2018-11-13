@@ -227,6 +227,11 @@ class DynamicListView(
         # serializer, so we'll call it `serializer` in the context.
         if self.kwargs.get('serializer_class'):
             context['serializer'] = self.kwargs['serializer_class']
+            if 'map' in self.kwargs['serializer_class'](
+                    ).get_option('allowed_results_modes', []):
+                context['needs_map_config'] = True
+
+
 
         if self.kwargs.get('endpoint'):
             context['endpoint'] = self.kwargs['endpoint']
@@ -236,6 +241,7 @@ class DynamicListView(
 
         if self.request.GET.get('_order'):
             context['default_order_by'] = self.request.GET.getlist('_order')
+
 
         # Generate list of all filters from GET parameters.
         filters = {}

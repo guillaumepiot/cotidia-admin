@@ -83,6 +83,15 @@
     {% if ignore_stored_config %}
         ignoreStoredConfig: {{ignore_stored_config|json}},
     {% endif %}
+    {% if allowed_results_modes %}
+        allowedResultsModes: {{allowed_results_modes|json|safe}},
+    {% endif %}
+    {% if default_results_mode %}
+        defaultResultsMode: {{default_results_mode|json|safe}},
+    {% endif %}
+    {% if map_configuration %}
+        mapConfiguration: {{map_configuration|json|safe}},
+    {% endif %}
 
     config: {
         {% if primary_color %}
