@@ -46,10 +46,12 @@ DynamicListApp.propTypes = dynamicListPropTypes
 
 // TODO: check whether this is up to date
 DynamicListApp.defaultProps = {
+  allowedResultsModes: ['table'],
   batchActions: [],
   defaultColumns: [],
   defaultFilters: {},
   defaultOrderBy: null,
+  defaultResultsMode: 'table',
   detailURL: null,
   ignoreStoredConfig: false,
 }

@@ -129,7 +129,13 @@ const listFields = PropTypes.shape({
   }),
 })
 
+const resultsMode = PropTypes.oneOf([
+  'list',
+  'table',
+])
+
 export const dynamicListPropTypes = {
+  allowedResultsModes: PropTypes.arrayOf(resultsMode),
   authToken: PropTypes.string.isRequired,
   batchActions,
   columnConfiguration: columnConfiguration.isRequired,
@@ -140,6 +146,7 @@ export const dynamicListPropTypes = {
   defaultFilters: PropTypes.object,
   defaultOrderBy: PropTypes.string,
   defaultPerPage: PropTypes.number,
+  defaultResultsMode: resultsMode,
   detailURL: PropTypes.string,
   endpoint: PropTypes.string.isRequired,
   filterConfiguration,

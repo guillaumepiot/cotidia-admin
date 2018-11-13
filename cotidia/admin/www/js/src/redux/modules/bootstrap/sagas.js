@@ -50,7 +50,8 @@ export function * bootstrap ({ payload: config }) {
       listFields: config.listFields,
       defaultOrderColumn,
       defaultOrderAscending,
-      mode: config.mode || 'table',
+      allowedResultsModes: config.allowedResultsModes || ['table'],
+      defaultResultsMode: config.defaultResultsMode || 'table',
       categoriseBy: config.categoriseBy || null,
     },
   })

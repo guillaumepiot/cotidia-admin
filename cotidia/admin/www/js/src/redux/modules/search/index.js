@@ -20,7 +20,8 @@ const initialState = {
 
   listFields: null,
 
-  mode: 'table',
+  allowedResultsModes: ['table'],
+  resultsMode: 'table',
 
   orderColumn: null,
   orderAscending: true,
@@ -162,7 +163,8 @@ export default (state = initialState, { type, payload } = {}) => {
         initialFilters: tidyFilters(payload.defaultFilters, payload),
         filters: tidyFilters(payload.defaultFilters, payload),
         listFields: payload.listFields,
-        mode: payload.mode,
+        allowedResultsModes: payload.allowedResultsModes,
+        resultsMode: payload.defaultResultsMode,
         categoriseBy: payload.categoriseBy,
       }
 
@@ -175,7 +177,7 @@ export default (state = initialState, { type, payload } = {}) => {
     case types.SWITCH_MODE:
       return {
         ...state,
-        mode: payload.mode,
+        resultsMode: payload.resultsMode,
       }
 
     case types.SET_ORDER_COLUMN:
@@ -281,8 +283,8 @@ export default (state = initialState, { type, payload } = {}) => {
         }
       }
 
-      if (payload.mode) {
-        newState.mode = payload.mode
+      if (payload.resultsMode) {
+        newState.resultsMode = payload.resultsMode
       }
 
       if (payload.perPage) {

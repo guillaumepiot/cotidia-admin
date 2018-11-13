@@ -8,8 +8,7 @@ const mapStateToProps = (state) => ({
   bootstrapped: state.bootstrap.bootstrapped,
   networkError: state.bootstrap.networkError,
 
-  searchMode: state.search.mode,
-  hasListConfig: state.search.listFields != null,
+  resultsMode: state.search.resultsMode,
 
   hasSidebar: state.search.sidebarFilters && state.search.sidebarFilters.length > 0,
   showSidebar: state.search.showSidebar,

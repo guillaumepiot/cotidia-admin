@@ -6,8 +6,10 @@ import Modal from '../containers/Modal'
 
 import FilterSidebar from '../containers/FilterSidebar'
 import ToolBar from '../containers/ToolBar'
+
 import SearchResultsList from '../containers/results/list/SearchResultsList'
 import SearchResultsTable from '../containers/results/table/SearchResultsTable'
+
 import Pagination from '../containers/Pagination'
 import GlobalActions from '../containers/GlobalActions'
 
@@ -15,9 +17,8 @@ export default class DynamicList extends Component {
   static propTypes = {
     bootstrapped: PropTypes.bool.isRequired,
     networkError: PropTypes.bool.isRequired,
-    searchMode: PropTypes.string.isRequired,
-    hasListConfig: PropTypes.bool.isRequired,
     hasSidebar: PropTypes.bool.isRequired,
+    resultsMode: PropTypes.string.isRequired,
     showSidebar: PropTypes.bool.isRequired,
     title: PropTypes.string,
   }
@@ -25,10 +26,9 @@ export default class DynamicList extends Component {
   render () {
     const {
       bootstrapped,
-      hasListConfig,
       hasSidebar,
       networkError,
-      searchMode,
+      resultsMode,
       showSidebar,
       title,
     } = this.props
@@ -64,11 +64,10 @@ export default class DynamicList extends Component {
         <div className={`content__body ${(hasSidebar && showSidebar) ? 'content__body--sidebar' : ''}`}>
           <div className='content__inner'>
             <div className='content__list'>
-              {hasListConfig && (searchMode === 'list') && (
+              {resultsMode === 'list' && (
                 <SearchResultsList />
               )}
-
-              {searchMode === 'table' && (
+              {resultsMode === 'table' && (
                 <SearchResultsTable />
               )}
             </div>

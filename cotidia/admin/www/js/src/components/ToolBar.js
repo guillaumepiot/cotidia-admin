@@ -16,6 +16,7 @@ import { Icon } from './elements/global'
 
 export default class ToolBar extends Component {
   static propTypes = {
+    allowedResultsModes: PropTypes.array.isRequired,
     anyResultsSelected: PropTypes.bool.isRequired,
     batchActions: PropTypes.arrayOf(PropTypes.shape({
       action: PropTypes.string.isRequired,
@@ -31,10 +32,9 @@ export default class ToolBar extends Component {
     filters: PropTypes.object,
     filterSuggest: PropTypes.func,
     getSuggestEngine: PropTypes.func.isRequired,
-    hasListConfig: PropTypes.bool.isRequired,
     hasSidebar: PropTypes.bool.isRequired,
     manageColumns: PropTypes.func.isRequired,
-    mode: PropTypes.string,
+    resultsMode: PropTypes.string.isRequired,
     performBatchAction: PropTypes.func.isRequired,
     removeFilterValue: PropTypes.func.isRequired,
     searchTerm: PropTypes.string,
@@ -48,7 +48,6 @@ export default class ToolBar extends Component {
   static defaultProps = {
     batchActions: [],
     filters: {},
-    mode: 'table',
     searchTerm: '',
     toolbarFilters: [],
   }
@@ -72,7 +71,6 @@ export default class ToolBar extends Component {
   manageColumns = (e) => this.props.manageColumns()
 
   displayList = () => this.props.switchMode('list')
-
   displayTable = () => this.props.switchMode('table')
 
   selectBatchAction = (e) => this.setState({ action: e.target.value })
@@ -347,12 +345,12 @@ export default class ToolBar extends Component {
 
   render () {
     const {
+      allowedResultsModes,
       anyResultsSelected,
       columnsConfigurable,
       filterSuggest,
       filters,
-      mode,
-      hasListConfig,
+      resultsMode,
       hasSidebar,
     } = this.props
 
@@ -364,20 +362,24 @@ export default class ToolBar extends Component {
           </div>
 
           <div className='content__actions'>
-            {mode === 'table' && columnsConfigurable && (
+            {resultsMode === 'table' && columnsConfigurable && (
               <button className='btn btn--outline' onClick={this.manageColumns} title='Manage column' type='button'>
                 <Icon icon='columns' />
               </button>
             )}
 
-            {hasListConfig && (
+            {allowedResultsModes.length > 1 && (
               <>
-                <button className={`btn ${mode === 'table' ? '' : 'btn--outline'}`} onClick={this.displayTable}>
-                  <Icon icon='table' />
-                </button>
-                <button className={`btn ${mode === 'list' ? '' : 'btn--outline'}`} onClick={this.displayList}>
-                  <Icon icon='bars' />
-                </button>
+                {allowedResultsModes.includes('table') && (
+                  <button className={`btn ${resultsMode === 'table' ? '' : 'btn--outline'}`} onClick={this.displayTable}>
+                    <Icon icon='table' />
+                  </button>
+                )}
+                {allowedResultsModes.includes('list') && (
+                  <button className={`btn ${resultsMode === 'list' ? '' : 'btn--outline'}`} onClick={this.displayList}>
+                    <Icon icon='bars' />
+                  </button>
+                )}
               </>
             )}
 

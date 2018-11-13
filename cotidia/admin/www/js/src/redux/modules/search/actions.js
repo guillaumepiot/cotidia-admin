@@ -10,9 +10,9 @@ export const setSearchTerm = (term) => ({
   payload: { term },
 })
 
-export const switchMode = (mode) => ({
+export const switchMode = (resultsMode) => ({
   type: types.SWITCH_MODE,
-  payload: { mode },
+  payload: { resultsMode },
 })
 
 export const configureFilter = (filter) => ({

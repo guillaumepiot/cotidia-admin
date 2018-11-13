@@ -24,16 +24,16 @@ import ToolBar from '../components/ToolBar'
 
 const mapStateToProps = (state) => {
   const props = {
+    allowedResultsModes: state.search.allowedResultsModes,
     anyResultsSelected: anyResultsSelected(state),
     batchActions: state.search.batchActions,
     cacheFilterLabel,
     columnsConfigurable: state.config.columnsConfigurable,
     filterConfiguration: state.search.filterConfiguration || {},
     filters: state.search.filters,
-    hasListConfig: state.search.listFields != null,
     hasSidebar: state.search?.sidebarFilters.length > 0,
     getSuggestEngine,
-    mode: state.search.mode,
+    resultsMode: state.search.resultsMode,
   }
 
   if (state.search?.filterSuggestConfiguration?.mode) {
