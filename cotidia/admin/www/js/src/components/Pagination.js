@@ -44,7 +44,7 @@ export default class Pagination extends Component {
               title='Previous'
               type='button'
             >
-              <Icon icon='chevron-left' />
+              <Icon className='pagination__icon' icon='chevron-left' />
             </button>
 
             Page {page} of {pageCount}
@@ -57,7 +57,7 @@ export default class Pagination extends Component {
               title='Next'
               type='button'
             >
-              <Icon icon='chevron-right' />
+              <Icon className='pagination__icon' icon='chevron-right' />
             </button>
           </div>
 
