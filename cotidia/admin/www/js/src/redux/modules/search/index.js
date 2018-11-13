@@ -149,7 +149,7 @@ export default (state = initialState, { type, payload } = {}) => {
         filterSuggestConfiguration: payload,
       }
 
-    case types.SET_COLUMN_CONFIG:
+    case types.SET_SEARCH_CONFIG:
       return {
         ...state,
         columnConfiguration: payload.columnConfiguration,
@@ -158,6 +158,7 @@ export default (state = initialState, { type, payload } = {}) => {
         visibleColumns: payload.defaultColumns,
         orderColumn: payload.defaultOrderColumn,
         orderAscending: payload.defaultOrderAscending,
+        perPage: payload.defaultPerPage,
         initialFilters: tidyFilters(payload.defaultFilters, payload),
         filters: tidyFilters(payload.defaultFilters, payload),
         listFields: payload.listFields,

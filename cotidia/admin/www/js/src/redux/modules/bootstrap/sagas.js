@@ -40,12 +40,13 @@ export function * bootstrap ({ payload: config }) {
   }
 
   yield put({
-    type: searchTypes.SET_COLUMN_CONFIG,
+    type: searchTypes.SET_SEARCH_CONFIG,
     payload: {
       columnConfiguration: config.columnConfiguration,
       columns: config.columns,
       defaultColumns: config.defaultColumns,
       defaultFilters: config.defaultFilters,
+      defaultPerPage: config.defaultPerPage,
       listFields: config.listFields,
       defaultOrderColumn,
       defaultOrderAscending,

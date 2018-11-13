@@ -139,6 +139,7 @@ export const dynamicListPropTypes = {
   defaultColumns: stringList,
   defaultFilters: PropTypes.object,
   defaultOrderBy: PropTypes.string,
+  defaultPerPage: PropTypes.number,
   detailURL: PropTypes.string,
   endpoint: PropTypes.string.isRequired,
   filterConfiguration,

@@ -8,7 +8,7 @@ export const SET_FILTER_CONFIGURATION = 'dynamic-list/search/SET_FILTER_CONFIGUR
 export const SET_TOOLBAR_FILTERS = 'dynamic-list/search/SET_TOOLBAR_FILTERS'
 export const SET_SIDEBAR_FILTERS = 'dynamic-list/search/SET_SIDEBAR_FILTERS'
 export const SET_FILTER_SUGGEST_CONFIGURATION = 'dynamic-list/search/SET_FILTER_SUGGEST_CONFIGURATION'
-export const SET_COLUMN_CONFIG = 'dynamic-list/search/SET_COLUMN_CONFIG'
+export const SET_SEARCH_CONFIG = 'dynamic-list/search/SET_SEARCH_CONFIG'
 
 export const LOAD_STORED_CONFIG = 'dynamic-list/search/LOAD_STORED_CONFIG'
 
