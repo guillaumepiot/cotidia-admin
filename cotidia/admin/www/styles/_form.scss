@@ -1,28 +1,31 @@
 .form {
     &__legend {
-        padding: 1rem 1rem;
+        background-color: $table-header-background-color;
         border-bottom: 1px solid $table-row-border-color;
         font-weight: 500;
-        padding-bottom: calc(1rem - 1px);
-        background-color: $table-header-background-color;
+        padding: $padding;
+        padding-bottom: calc($padding - 1px);
     }
 }
 
+// Foot for form fieldset with actions within
 .fieldset-actions {
-    padding: 1rem;
-    border-top: 1px solid $input_border_color;
     background-color: $toolbar-background-color;
+    border-top: 1px solid $input_border_color;
     clear: both;
+    padding: $padding;
 }
 
 fieldset {
     &.table-view {
         .table {
             table-layout: fixed;
+
             tr {
                 td {
                     word-break: break-word;
                 }
+
                 &:last-child {
                     tr, td {
                         border-bottom: none;
