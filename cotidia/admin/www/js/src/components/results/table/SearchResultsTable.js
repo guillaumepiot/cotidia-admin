@@ -57,7 +57,8 @@ export default class SearchResultsTable extends Component {
 
     const tableClassName = [
       'table',
-      `table--sticky`,
+      'table--sticky',
+      'table--admin-mobile-view',
     ]
 
     if (detailURL) {
