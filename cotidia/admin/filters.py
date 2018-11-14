@@ -443,12 +443,14 @@ class APIFilter(ChoiceFilter):
 class ForeignKeyFilter(ChoiceFilter):
     model_class = None
     lookup_expr = "__uuid"
+    queryset = None
     def __init__(self, model_class=None, field=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if model_class:
             self.model_class = model_class
         elif field:
             self.model_class = field.Meta.model
+        self.queryset = kwargs.get("queryset", None)
 
     def get_options(self):
         return [
@@ -462,7 +464,10 @@ class ForeignKeyFilter(ChoiceFilter):
         return str(model)
 
     def get_queryset(self):
-        return self.model_class.objects.all()
+        if self.queryset is not None:
+            return self.queryset
+        else:
+            return self.model_class.objects.all()
 
     def get_representation(self):
         repr =  super().get_representation()
