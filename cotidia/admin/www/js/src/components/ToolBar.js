@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import {
-  debounce,
-  getFilterLabel,
-} from '../utils'
+import { debounce } from '../utils'
 
 import { filterConfiguration } from '../utils/propTypes'
 
@@ -27,7 +24,6 @@ export default class ToolBar extends Component {
     cacheFilterLabel: PropTypes.func,
     clearFilters: PropTypes.func.isRequired,
     columnsConfigurable: PropTypes.bool.isRequired,
-    config: PropTypes.object,
     filterConfiguration: filterConfiguration.isRequired,
     filters: PropTypes.object,
     filterSuggest: PropTypes.func,
@@ -36,8 +32,8 @@ export default class ToolBar extends Component {
     manageColumns: PropTypes.func.isRequired,
     resultsMode: PropTypes.string.isRequired,
     performBatchAction: PropTypes.func.isRequired,
-    removeFilterValue: PropTypes.func.isRequired,
     searchTerm: PropTypes.string,
+    searchVisible: PropTypes.bool,
     setFilterValue: PropTypes.func.isRequired,
     setSearchTerm: PropTypes.func.isRequired,
     switchMode: PropTypes.func.isRequired,
@@ -49,6 +45,7 @@ export default class ToolBar extends Component {
     batchActions: [],
     filters: {},
     searchTerm: '',
+    searchVisible: true,
     toolbarFilters: [],
   }
 
@@ -159,6 +156,7 @@ export default class ToolBar extends Component {
       filterSuggest,
       getSuggestEngine,
       searchTerm,
+      searchVisible,
       toolbarFilters,
     } = this.props
 
@@ -168,23 +166,25 @@ export default class ToolBar extends Component {
 
     return (
       <>
-        <div className='content-filter__item'>
-          <div className='form__group form__group--boxed'>
-            <label htmlFor='search' className='form__label'>Search</label>
-            <TextInput
-              controlOnly
-              id='search'
-              label='Search'
-              name='searchTerm'
-              placeholder='Search'
-              prefix={<Icon icon='search' />}
-              type='text'
-              updateValue={this.updateSearchTerm}
-              updateValueOnBlur={false}
-              value={searchTerm}
-            />
+        {searchVisible && (
+          <div className='content-filter__item'>
+            <div className='form__group form__group--boxed'>
+              <label htmlFor='search' className='form__label'>Search</label>
+              <TextInput
+                controlOnly
+                id='search'
+                label='Search'
+                name='searchTerm'
+                placeholder='Search'
+                prefix={<Icon icon='search' />}
+                type='text'
+                updateValue={this.updateSearchTerm}
+                updateValueOnBlur={false}
+                value={searchTerm}
+              />
+            </div>
           </div>
-        </div>
+        )}
 
         {toolbarFilters && toolbarFilters.map((filter) => {
           const {
@@ -293,64 +293,11 @@ export default class ToolBar extends Component {
     }
   }
 
-  renderFilterTag = (filter, value) => {
-    // If the filter doesn't exist, skip it.
-    if (! this.props.filterConfiguration[filter]) {
-      return
-    }
-
-    // If the value is the equivalent of "unset", skip it.
-    if (value == null) {
-      return
-    }
-
-    let filterName = this.props.filterConfiguration[filter].label
-
-    let filterLabel = getFilterLabel(
-      this.props.filterConfiguration[filter],
-      filter,
-      value,
-      this.props.config
-    )
-
-    // If there's no label, that means we should show the name as the label and not show the name.
-    if (filterLabel === null) {
-      filterLabel = filterName
-      filterName = null
-    }
-
-    let serialisedValue = value
-
-    if (value.min && value.max) {
-      serialisedValue = `${value.min}-${value.max}`
-    }
-
-    return (
-      <div className='tag' key={`${filter}:${serialisedValue}`}>
-        {filterName && (
-          <span className='tag__category'>{filterName}</span>
-        )}
-        {filterLabel && (
-          <span className='tag__label'>{filterLabel}</span>
-        )}
-        <button
-          className='tag__clear btn btn--small'
-          onClick={() => this.props.removeFilterValue(filter, value)}
-          type='button'
-        >
-          <Icon icon='times' />
-        </button>
-      </div>
-    )
-  }
-
   render () {
     const {
       allowedResultsModes,
       anyResultsSelected,
       columnsConfigurable,
-      filterSuggest,
-      filters,
       resultsMode,
       hasSidebar,
     } = this.props
@@ -400,23 +347,6 @@ export default class ToolBar extends Component {
             )}
           </div>
         </div>
-        {filterSuggest && (Object.values(filters).length > 0) && (
-          <div className='content__filters'>
-            {Object.entries(filters).map(([filter, value]) => {
-              if (Array.isArray(value)) {
-                const tags = []
-
-                for (const singleValue of value) {
-                  tags.push(this.renderFilterTag(filter, singleValue))
-                }
-
-                return tags
-              }
-
-              return this.renderFilterTag(filter, value)
-            })}
-          </div>
-        )}
       </>
     )
   }

@@ -4,7 +4,6 @@ import {
   clearFilters,
   manageColumns,
   performBatchAction,
-  removeFilterValue,
   setFilterValue,
   setSearchTerm,
   switchMode,
@@ -37,13 +36,13 @@ const mapStateToProps = (state) => {
   }
 
   if (state.search?.filterSuggestConfiguration?.mode) {
-    props.config = state.config
     props.filterSuggest = getSuggestEngine(
       state.search.filterSuggestConfiguration,
       state.search.filterConfiguration,
       true
     )
   } else {
+    props.searchVisible = state.config.searchVisible
     props.searchTerm = state.search.searchTerm
     props.toolbarFilters = getToolbarFilters(state)
   }
@@ -55,7 +54,6 @@ const actionCreators = {
   clearFilters,
   manageColumns,
   performBatchAction,
-  removeFilterValue,
   setFilterValue,
   setSearchTerm,
   switchMode,

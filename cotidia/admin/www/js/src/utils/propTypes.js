@@ -78,8 +78,10 @@ const config = PropTypes.shape({
   columnsConfigurable: PropTypes.boolean,
   dateFormat: PropTypes.string,
   datetimeFormat: PropTypes.string,
+  filterTagBarVisible: PropTypes.bool,
   listHandling,
   primaryColor: PropTypes.string,
+  searchVisible: PropTypes.bool,
   sidebarStartsShown: PropTypes.boolean,
   weekDayStart: PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6, 7]),
 })

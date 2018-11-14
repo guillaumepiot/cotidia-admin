@@ -1,15 +1,17 @@
 import * as types from './types'
 
 const initialState = {
+  columnsConfigurable: true,
   dateFormat: 'D MMM YYYY',
   datetimeFormat: 'D MMM YYYY @ HH:mm',
-  primaryColor: '#00abd3',
-  columnsConfigurable: true,
+  filterTagBarVisible: false,
+  ignoreStoredConfig: false,
   listHandling: {
     style: 'string',
     value: ', ',
   },
-  ignoreStoredConfig: false,
+  primaryColor: '#00abd3',
+  searchVisible: true,
 }
 
 export default (state = initialState, { type, payload } = {}) => {
