@@ -191,6 +191,8 @@ def render_dynamic_list_config(
     context['columns_configurable'] = serializer.get_option(
         'columns_configurable'
     )
+    context['show_search'] = serializer.get_option('show_search', True)
+    context['filter_tag_bar_visible'] = serializer.get_option('filter_tag_bar_visible', False)
 
     # Stuff passed straight from the serializer.
     context['list_handling'] = serializer.get_option('list_handling')

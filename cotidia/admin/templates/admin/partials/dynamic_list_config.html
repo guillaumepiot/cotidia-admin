@@ -97,6 +97,16 @@
     {% endif %}
 
     config: {
+        {% if show_search %}
+            showSearch: true,
+        {% else %}
+            showSearch: false,
+        {% endif %}
+        {% if filter_tag_bar_visible %}
+            filterTagBarVisible: true,
+        {% else %}
+            filterTagBarVisible: false,
+        {% endif %}
         {% if primary_color %}
             primaryColour: '{{primary_color}}',
         {% endif %}
