@@ -92,6 +92,9 @@
     {% if map_configuration %}
         mapConfiguration: {{map_configuration|json|safe}},
     {% endif %}
+    {% if default_per_page %}
+        defaultPerPage: {{default_per_page|json|safe}},
+    {% endif %}
 
     config: {
         {% if primary_color %}
