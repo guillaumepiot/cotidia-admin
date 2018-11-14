@@ -100,6 +100,7 @@ def render_search_dashboard_config(
     context['columns_configurable'] = serializer.get_option(
         'columns_configurable'
     )
+    context['search_visible'] = True
 
     # Stuff passed straight from the serializer.
     context['list_handling'] = serializer.get_option('list_handling')
