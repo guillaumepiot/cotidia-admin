@@ -12,6 +12,7 @@ const mapStateToProps = (state) => ({
 
   hasSidebar: state.search.sidebarFilters && state.search.sidebarFilters.length > 0,
   showSidebar: state.search.showSidebar,
+  filterTagBarVisible: state.config.filterTagBarVisible,
 
   title: state.search.title,
 })

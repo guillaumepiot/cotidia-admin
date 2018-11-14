@@ -6,6 +6,7 @@ import Modal from '../containers/Modal'
 
 import FilterSidebar from '../containers/FilterSidebar'
 import ToolBar from '../containers/ToolBar'
+import FilterTagBar from '../containers/FilterTagBar'
 
 import SearchResultsList from '../containers/results/list/SearchResultsList'
 import SearchResultsMap from '../containers/results/map/SearchResultsMap'
@@ -17,6 +18,7 @@ import GlobalActions from '../containers/GlobalActions'
 export default class DynamicList extends Component {
   static propTypes = {
     bootstrapped: PropTypes.bool.isRequired,
+    filterTagBarVisible: PropTypes.bool,
     networkError: PropTypes.bool.isRequired,
     hasSidebar: PropTypes.bool.isRequired,
     resultsMode: PropTypes.string.isRequired,
@@ -27,6 +29,7 @@ export default class DynamicList extends Component {
   render () {
     const {
       bootstrapped,
+      filterTagBarVisible,
       hasSidebar,
       networkError,
       resultsMode,
@@ -61,6 +64,8 @@ export default class DynamicList extends Component {
         )}
 
         <ToolBar />
+
+        {filterTagBarVisible && <FilterTagBar />}
 
         <div className={`content__body ${(hasSidebar && showSidebar) ? 'content__body--sidebar' : ''}`}>
           <div className='content__inner'>
