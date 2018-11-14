@@ -26,6 +26,7 @@ export default class Text extends Component {
           label={this.props.label}
           placeholder={this.props.label}
           updateValue={this.updateValue}
+          updateValueOnEnter
           value={this.props.value}
         />
       </div>
