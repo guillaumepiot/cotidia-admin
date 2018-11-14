@@ -269,8 +269,6 @@ body {
             }
 
             .menu-category {
-                min-height: 4rem;
-
                 &__summary-icon {
                     display: none;
                 }
@@ -294,6 +292,7 @@ body {
     border-bottom: 1px solid $menu_border_color;
     border-bottom: 1px solid var(--menu_border_color, $menu_border_color);
     display: block;
+    min-height: 4rem;
     transition: background $animation-speed ease;
 
     &--open,
