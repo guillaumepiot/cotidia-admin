@@ -131,6 +131,7 @@ const listFields = PropTypes.shape({
 
 const resultsMode = PropTypes.oneOf([
   'list',
+  'map',
   'table',
 ])
 
@@ -154,6 +155,17 @@ export const dynamicListPropTypes = {
   globalActions,
   ignoreStoredConfig: PropTypes.bool,
   listFields,
+  mapConfiguration: PropTypes.shape({
+    defaultCoords: PropTypes.arrayOf(PropTypes.shape({
+      lat: PropTypes.number.isRequired,
+      lng: PropTypes.number.isRequired,
+    })),
+    marker: PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      background: PropTypes.string.isRequired,
+      foreground: PropTypes.string.isRequired,
+    }),
+  }),
   sidebarFilters: stringList,
   title: PropTypes.string,
   toolbarFilters: stringList,

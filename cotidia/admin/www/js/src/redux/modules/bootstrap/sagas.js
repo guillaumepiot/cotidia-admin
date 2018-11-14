@@ -53,6 +53,7 @@ export function * bootstrap ({ payload: config }) {
       allowedResultsModes: config.allowedResultsModes || ['table'],
       defaultResultsMode: config.defaultResultsMode || 'table',
       categoriseBy: config.categoriseBy || null,
+      mapConfiguration: config.mapConfiguration,
     },
   })
 

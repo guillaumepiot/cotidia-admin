@@ -19,6 +19,7 @@ const initialState = {
   visibleColumns: [], // Current visible columns
 
   listFields: null,
+  mapConfiguration: {},
 
   allowedResultsModes: ['table'],
   resultsMode: 'table',
@@ -166,6 +167,7 @@ export default (state = initialState, { type, payload } = {}) => {
         allowedResultsModes: payload.allowedResultsModes,
         resultsMode: payload.defaultResultsMode,
         categoriseBy: payload.categoriseBy,
+        mapConfiguration: payload.mapConfiguration,
       }
 
     case types.SET_SEARCH_TERM:

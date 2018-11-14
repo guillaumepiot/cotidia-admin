@@ -71,6 +71,7 @@ export default class ToolBar extends Component {
   manageColumns = (e) => this.props.manageColumns()
 
   displayList = () => this.props.switchMode('list')
+  displayMap = () => this.props.switchMode('map')
   displayTable = () => this.props.switchMode('table')
 
   selectBatchAction = (e) => this.setState({ action: e.target.value })
@@ -378,6 +379,11 @@ export default class ToolBar extends Component {
                 {allowedResultsModes.includes('list') && (
                   <button className={`btn ${resultsMode === 'list' ? '' : 'btn--outline'}`} onClick={this.displayList}>
                     <Icon icon='bars' />
+                  </button>
+                )}
+                {allowedResultsModes.includes('map') && (
+                  <button className={`btn ${resultsMode === 'map' ? '' : 'btn--outline'}`} onClick={this.displayMap}>
+                    <Icon icon='map-marker-alt' />
                   </button>
                 )}
               </>

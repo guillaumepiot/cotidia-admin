@@ -118,3 +118,38 @@ export function cacheFilterLabel (filter, value, label) {
   // TODO: prefix cache with endpoint
   localStorage.setItem(`${filter}:${value}`, label)
 }
+
+const iconCache = {}
+
+export const getMapIcon = (text, bg = 'fff', fg = '000') => {
+  if (text) {
+    const key = `${text}:${bg}:${fg}`
+
+    if (! (key in iconCache)) {
+      const width = 10 * text.length
+
+      iconCache[key] = {
+        url: (
+          'data:image/svg+xml;utf8,' +
+          encodeURIComponent(`<?xml version="1.0" standalone="no"?>
+            <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="26">
+              <g>
+                <rect x="0" y="0" width="${width}" height="21" rx="5" ry="5" fill="#${bg}" />
+                <text x="${width / 2}" y="16" font-size="14" font-family="Lucida Grande" text-anchor="middle" fill="#${fg}">${text}</text>
+                <polygon points="${(width / 2) - 4},21 ${(width / 2) + 4},21 ${width / 2},26" fill="#${bg}" />
+              </g>
+            </svg>
+          `)
+        ),
+        size: {
+          width: width,
+          height: 26,
+        },
+      }
+    }
+
+    return iconCache[key]
+  }
+
+  return null
+}

@@ -8,6 +8,7 @@ import FilterSidebar from '../containers/FilterSidebar'
 import ToolBar from '../containers/ToolBar'
 
 import SearchResultsList from '../containers/results/list/SearchResultsList'
+import SearchResultsMap from '../containers/results/map/SearchResultsMap'
 import SearchResultsTable from '../containers/results/table/SearchResultsTable'
 
 import Pagination from '../containers/Pagination'
@@ -70,17 +71,22 @@ export default class DynamicList extends Component {
               {resultsMode === 'table' && (
                 <SearchResultsTable />
               )}
+              {resultsMode === 'map' && (
+                <SearchResultsMap />
+              )}
             </div>
             <FilterSidebar />
           </div>
         </div>
 
-        <div className='content__foot'>
-          <div className='content__inner content-foot'>
-            <Pagination />
-            <GlobalActions />
+        {resultsMode !== 'map' && (
+          <div className='content__foot'>
+            <div className='content__inner content-foot'>
+              <Pagination />
+              <GlobalActions />
+            </div>
           </div>
-        </div>
+        )}
 
         <Modal />
       </>
