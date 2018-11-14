@@ -3129,7 +3129,7 @@ body .menu__item {
   body.menu--sidebar-collapse .menu-category__toggle {
     text-align: center; }
     body.menu--sidebar-collapse .menu-category__toggle::before {
-      height: calc(100% + 2px); }
+      height: 100%; }
   body.menu--sidebar-collapse .menu-category__expand-icon {
     display: none; }
   body.menu--sidebar-collapse .menu-item__link {
@@ -3166,10 +3166,8 @@ body .menu__item {
       display: block; }
     body:not(.menu--sidebar-collapse) .menu__item--sidebar-expand {
       display: none; }
-  body:not(.menu--sidebar-collapse) .menu-category {
-    min-height: 4rem; }
-    body:not(.menu--sidebar-collapse) .menu-category__summary-icon {
-      display: none; } }
+  body:not(.menu--sidebar-collapse) .menu-category__summary-icon {
+    display: none; } }
 body:not(.menu--sidebar-collapse) .menu-header .menu-item__link,
 body:not(.menu--sidebar-collapse) .menu-footer .menu-item__link {
   padding: 0.5rem; }
@@ -3181,6 +3179,7 @@ body:not(.menu--sidebar-collapse) .menu-footer .menu-item__link {
   border-bottom: 1px solid #555A5D;
   border-bottom: 1px solid var(--menu_border_color, #555A5D);
   display: block;
+  min-height: 4rem;
   transition: background 0.4s ease; }
   .menu-category--open, .menu-category--open:hover {
     background: rgba(0, 0, 0, 0.1); }
@@ -3199,15 +3198,15 @@ body:not(.menu--sidebar-collapse) .menu-footer .menu-item__link {
     width: 100%; }
     .menu-category__toggle::before {
       content: '';
-      height: calc(100% + (0.667em * 2));
+      height: calc(100% + ((1rem * 0.667) * 2) - (1px * 2));
       left: 0;
       position: absolute;
       right: 0;
-      top: -2px;
+      top: 0;
       transition: background 0.2s ease 0.5s, height 0.2s ease 0.5s;
       width: 100%; }
       .menu-category--open .menu-category__toggle::before {
-        height: 100%;
+        height: calc(100% - 1px);
         transition-delay: 0s; }
     .menu-category__toggle:focus::before, .menu-category__toggle:hover::before {
       background: rgba(255, 255, 255, 0.1); }
