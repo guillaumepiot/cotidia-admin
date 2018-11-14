@@ -1,0 +1,77 @@
+context:
+  adminTitle: Man With A Cam
+  adminLogo: https://app.manwithacam.org/img/mwac_logo_white_400.png
+
+  categories:
+    - title: Content
+      open: true
+      subtitle: Pages, Titles, Images, Meta data
+      icon: "fa fa-file"
+
+      links:
+        - link: /link-one
+          text: Home
+          icon: "fa fa-home"
+
+        - link: /link-two
+          text: About
+          icon: "fa fa-handshake"
+
+        - link: /link-three
+          text: Blog
+          icon: "fa fa-rss"
+
+        - link: /link-four
+          text: Contact
+          icon: "fa fa-phone"
+
+    - title: SEO
+      subtitle: Meta data, OG data, keywords
+      icon: "fa fa-search"
+
+      links:
+        - link: /link-one
+          text: Meta data
+          icon: "fa fa-newspaper"
+
+        - link: /link-two
+          text: OG Data
+          icon: "fab fa-facebook"
+
+        - link: /link-three
+          text: Settings
+          icon: "fa fa-cogs"
+
+    - title: Mail
+      subtitle: Emails, Contact forms, Contacts
+      icon: "fa fa-envelope"
+
+      links:
+        - link: /link-one
+          text: Emails
+          icon: "fa fa-at"
+
+        - link: /link-two
+          text: Enquiries
+          icon: "fas fa-envelope-open"
+
+        - link: /link-three
+          text: Contacts
+          icon: "fa fa-address-book"
+
+  links:
+    - link: /link-one
+      text: Home
+      icon: "fa fa-home"
+
+    - link: /link-two
+      text: About
+      icon: "fa fa-handshake"
+
+    - link: /link-three
+      text: Blog
+      icon: "fa fa-rss"
+
+    - link: /link-four
+      text: Contact
+      icon: "fa fa-phone"

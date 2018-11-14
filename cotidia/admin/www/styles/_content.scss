@@ -1,23 +1,35 @@
 $content-head-height: 5rem;
 $content-toolbar-height: 4.5rem;
 $content-foot-height: 3.5rem;
+$content-padding: $padding;
 
 .content {
     background-color: $content-background-color;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 
     &--sticky {
+        overflow-y: hidden;
+
         .content__body {
-            height: calc(100% - #{$content-head-height + $content-toolbar-height + $content-foot-height} - 1px);
+            flex: 1;
+            overflow-x: hidden;
+            overflow-y: scroll;
             position: relative;
-            overflow: hidden;
         }
+
         .content__list {
             height: 100%;
-            width: 100%;
             overflow-x: auto;
             overflow-y: auto;
-            position: absolute;
+            width: 100%;
+
+            @media screen and (min-width: $mobile-width) {
+                position: absolute;
+            }
         }
+
         .content__foot {
             background-color: $toolbar-background-color;
             border-top: 1px solid $table-row-border-color;
@@ -29,43 +41,47 @@ $content-foot-height: 3.5rem;
         border-bottom: 1px solid $toolbar_border_color;
 
         .content__inner {
-            padding-left: 1rem;
-            padding-right: 1rem;
+            padding-left: $content-padding;
+            padding-right: $content-padding;
         }
     }
 
     &__toolbar {
-        height: $content-toolbar-height;
-        display: flex;
-        justify-content: space-between;
         align-items: center;
+        display: flex;
+        flex-shrink: 0;
+        height: $content-toolbar-height;
+        justify-content: space-between;
+        padding: 0 $content-padding;
         position: relative;
-        padding: 0 1rem;
         z-index: 5;
     }
 
     &__body {
+        @media screen and (max-width: $mobile-width) {
+            flex: 1;
+        }
+
         &--sidebar {
             .content__list {
-                width: calc(100% - 16rem);
+                width: calc(100% - #{$menu_sidebar_width});
             }
+
             .content__sidebar {
                 transform: translate(0);
             }
         }
 
         fieldset {
-           margin: 2rem 0;
+           margin: ($content-padding * 2) 0;
         }
     }
 
     &__foot {
-
-        @media screen and (min-width: $menu-breakpoint) {
-            bottom: 0;
-            position: sticky;
-            z-index: 2;
-        }
+        // UH OH more Sticky!
+        position: -webkit-sticky;
+        position: sticky;
+        z-index: 4;
 
         &--sticky {
             background-color: $toolbar-background-color;
@@ -75,23 +91,24 @@ $content-foot-height: 3.5rem;
     }
 
     &__list {
-        transition: width $animation-speed ease;
         border-top: 1px solid $table-row-border-color;
+        transition: width $animation-speed ease;
     }
 
     &__sidebar {
-        height: 100%;
-        top: 0;
-        overflow-y: auto;
-        width: calc(16rem);
-        position: absolute;
-        right: 0rem;
-        transform: translate(16rem);
-        transition: transform $animation-speed ease;
         background-color: #fff;
         border-top: 1px solid $table-row-border-color;
         border-left: 1px solid $table-row-border-color;
+        height: 100%;
+        overflow-y: auto;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transform: translate($menu_sidebar_width);
+        transition: transform $animation-speed ease;
         user-select: none;
+        width: $menu_sidebar_width;
+        z-index: 4; // To bring sidebar above table head
 
         fieldset {
             border-width: 0;
@@ -104,8 +121,9 @@ $content-foot-height: 3.5rem;
     }
 
     &__filter {
-        display: flex;
         align-items: center;
+        display: flex;
+        flex: 1;
 
         // No need pushing when we have a button after
         .form__group {
@@ -125,18 +143,33 @@ $content-foot-height: 3.5rem;
 }
 
 .content-filter {
+    display: flex;
+    align-items: center;
+
     &__item {
         margin-right: 0.5rem;
+
+        &--wide {
+            flex: 1;
+        }
     }
 }
 
 .content-head {
     align-items: center;
     display: flex;
-    height: $content-head-height;
+    height: auto;
     justify-content: space-between;
-    width: 100%;
     position: relative;
+    padding-top: $padding / 2;
+    padding-bottom: $padding / 2;
+    width: 100%;
+
+    @media screen and (min-width: $mobile-width) {
+        height: $content-head-height;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
 
     &__title {
         @include font_size($font_size--emphasis);
@@ -162,9 +195,9 @@ $content-foot-height: 3.5rem;
     display: flex;
     height: $content-foot-height;
     justify-content: space-between;
+    padding-left: $content-padding;
+    padding-right: $content-padding;
     width: 100%;
-    padding-left: 1rem;
-    padding-right: 1rem;
 
     &__left {
         justify-self: flex-start;
@@ -185,63 +218,86 @@ $content-foot-height: 3.5rem;
 
 body.content--centered {
     .content__inner {
-        max-width: $laptop-width;
-        width: 100%;
         margin: auto;
-        padding-left: 1rem;
-        padding-right: 1rem;
+        max-width: $laptop-width;
+        padding-left: $content-padding;
+        padding-right: $content-padding;
+        width: 100%;
     }
+
     .content__body {
         .content__inner {
+            height: 100%;
             overflow: hidden;
             position: relative;
             width: 100%;
-            // max-width: calc(#{$laptop-width} - 2rem);
-            height: 100%;
-            // padding-left: 1rem;
-            // padding-right: 1rem;
         }
     }
+
     .content__toolbar {
-        max-width: calc(#{$laptop-width});
-        width: 100%;
         margin: auto;
-        padding-left: 1rem;
-        padding-right: 1rem;
+        max-width: $laptop-width;
+        padding-left: $content-padding;
+        padding-right: $content-padding;
+        width: 100%;
     }
+
     .content__list {
         border-left: 1px solid $table-row-border-color;
         border-right: 1px solid $table-row-border-color;
-        width: calc(100% - 2rem);
+
+        @media screen and (min-width: $tablet-width) {
+            width: calc(100% - (#{$content-padding} * 2));
+        }
     }
+
     .content__body--sidebar .content__list {
-        width: calc(100% - 16rem - 1rem);
+        // full width - sidebar width - padding + Avoid double border
+        width: calc(100% - #{$menu_sidebar_width} - #{$content-padding} + 1px);
     }
+
     .content__sidebar {
         border-right: 1px solid $table-row-border-color;
-        width: calc(16rem - 1rem);
-        right: 1rem;
+        right: $content-padding;
+        width: calc(#{$menu_sidebar_width} - #{$content-padding});
     }
 }
 
 body.content--padded {
     .content__inner {
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding-left: $content-padding;
+        padding-right: $content-padding;
     }
+
+    .content--sticky .content__list {
+        @media screen and (min-width: $tablet-width) {
+            width: calc(100% - (#{$content-padding} * 2));
+        }
+    }
+
     .content__body {
         .content__inner {
+            height: 100%;
             overflow: hidden;
             position: relative;
             width: 100%;
-            height: 100%;
+        }
+
+        &--sidebar {
+            .content__list {
+                // full width - sidebar width - padding + Avoid double border
+                width: calc(100% - #{$menu_sidebar_width} - (#{$content-padding} * 2) + 1px);
+            }
+
+            .content__sidebar {
+                right: $content-padding;
+                border-right: 1px solid $table-row-border-color;
+            }
         }
     }
+
     .content__list {
         border-left: 1px solid $table-row-border-color;
         border-right: 1px solid $table-row-border-color;
-    }
-    .content--sticky .content__list {
-        width: calc(100% - 2rem);
     }
 }

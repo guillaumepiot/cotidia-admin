@@ -31,7 +31,7 @@ def can_view_item(context, item):
 def build_permitted_item(context, item):
     """Return permitted links and sublinks."""
     data = {}
-    keys = ["text", "icon", "align_right", "url", "permissions"]
+    keys = ["text", "description", "icon", "align_right", "url", "permissions"]
     for key in keys:
         if item.get(key):
             data[key] = item.get(key)
@@ -63,11 +63,9 @@ def menu(context):
     app_name_list = [app.name for app in apps.get_app_configs()]
 
     # If we have an admin menu order specified, re-order accordingly
-
     processed_apps = []
 
     for section, section_apps in settings.ADMIN_MENU_DEFINITION.items():
-        current_menu_count = len(permitted_menu)
 
         for app in section_apps:
             processed_apps.append(app)
@@ -81,13 +79,6 @@ def menu(context):
             if admin_menu:
                 menu = admin_menu(context)
                 permitted_menu = build_permitted_menu(context, menu, permitted_menu)
-
-        if current_menu_count < len(permitted_menu):
-            # Insert header before the new menu item
-            permitted_menu.insert(current_menu_count, {'text': section})
-
-    # Add en empty break for the remaining unordered apps
-    permitted_menu.append({'text': ''})
 
     if settings.ADMIN_SHOW_DEFAULT_MENU:
         for app in app_name_list:

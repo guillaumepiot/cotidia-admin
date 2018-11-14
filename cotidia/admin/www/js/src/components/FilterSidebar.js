@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import { filterConfiguration } from '../utils/propTypes'
+
 import { Icon } from './elements/global'
 
 import * as SIDEBAR_FILTERS from './fields/sidebar-filters'
 
 export default class FilterSidebar extends Component {
   static propTypes = {
+    cacheFilterLabel: PropTypes.func.isRequired,
+    filterConfiguration: filterConfiguration.isRequired,
     filters: PropTypes.object,
+    getSuggestEngine: PropTypes.func.isRequired,
     hasSidebarFilters: PropTypes.bool.isRequired,
     setFilterValue: PropTypes.func.isRequired,
     sidebarFilters: PropTypes.array,
@@ -20,7 +25,10 @@ export default class FilterSidebar extends Component {
 
   render () {
     const {
+      cacheFilterLabel,
+      filterConfiguration,
       filters,
+      getSuggestEngine,
       hasSidebarFilters,
       sidebarFilters,
     } = this.props
@@ -42,7 +50,12 @@ export default class FilterSidebar extends Component {
             </div>
 
             {sidebarFilters && sidebarFilters.map((filter) => {
-              const { filter: type, ...filterProps } = filter
+              const {
+                configuration,
+                filter: type,
+                label,
+                name,
+              } = filter
 
               let Component
 
@@ -55,16 +68,29 @@ export default class FilterSidebar extends Component {
               } else if (type === 'date') {
                 Component = SIDEBAR_FILTERS.Date
               } else if (type === 'choice') {
-                Component = SIDEBAR_FILTERS.Choice
+                if (configuration.mode === 'options') {
+                  Component = SIDEBAR_FILTERS.Choice
+                } else {
+                  Component = SIDEBAR_FILTERS.Suggest
+                }
               } else if (type === 'choice-single') {
-                Component = SIDEBAR_FILTERS.ChoiceSingle
+                if (configuration.mode === 'options') {
+                  Component = SIDEBAR_FILTERS.ChoiceSingle
+                } else {
+                  Component = SIDEBAR_FILTERS.SuggestSingle
+                }
               }
 
               if (Component) {
                 return (
-                  <div className='form__row' key={filterProps.name}>
+                  <div className='form__row' key={filter.name}>
                     <Component
-                      {...filterProps}
+                      cacheFilterLabel={cacheFilterLabel}
+                      configuration={configuration}
+                      filter={type}
+                      label={label}
+                      name={name}
+                      suggest={getSuggestEngine(filter.configuration, filterConfiguration)}
                       updateValue={this.updateFilterValueFactory(filter.name)}
                       value={filters[filter.name]}
                     />

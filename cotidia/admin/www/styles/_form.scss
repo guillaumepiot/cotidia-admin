@@ -1,24 +1,31 @@
 .form {
     &__legend {
-        padding: 1rem 1rem;
+        background-color: $table-header-background-color;
         border-bottom: 1px solid $table-row-border-color;
         font-weight: 500;
-        padding-bottom: calc(1rem - 1px);
-        background-color: $table-header-background-color;
+        padding: $padding;
+        padding-bottom: calc($padding - 1px);
     }
 }
 
+// Foot for form fieldset with actions within
 .fieldset-actions {
-    padding: 1rem;
-    border-top: 1px solid $input_border_color;
     background-color: $toolbar-background-color;
+    border-top: 1px solid $input_border_color;
     clear: both;
+    padding: $padding;
 }
 
 fieldset {
     &.table-view {
         .table {
+            table-layout: fixed;
+
             tr {
+                td {
+                    word-break: break-word;
+                }
+
                 &:last-child {
                     tr, td {
                         border-bottom: none;
@@ -26,5 +33,106 @@ fieldset {
                 }
             }
         }
+    }
+}
+
+// Filter search control select options
+.control-select__options:hover {
+    .control-select__option--focused {
+        background: none;
+
+        &:hover {
+            background: $grey--lighter;
+        }
+    }
+}
+
+
+.control-select-option {
+    @include clearfix();
+
+    &__label {
+        background: $grey--lighter;
+        color: $grey--medium;
+        margin-right: 0.5rem;
+
+        .control-select-option:hover &,
+        .control-select-option:focus &,
+        .control-select-option--focused & {
+            background: #fff;
+        }
+
+        // Background colors use important to prevent hover color being used
+        &--0 {
+            background-color: #dff !important;
+        }
+
+        &--1 {
+            background-color: #fdf !important;
+        }
+
+        &--2 {
+            background-color: #ffd !important;
+        }
+
+        &--3 {
+            background-color: #ddf !important;
+        }
+
+        &--4 {
+            background-color: #fdd !important;
+        }
+
+        &--5 {
+            background-color: #dfd !important;
+        }
+
+        &--6 {
+            background-color: #eff !important;
+        }
+
+        &--7 {
+            background-color: #fef !important;
+        }
+
+        &--8 {
+            background-color: #ffe !important;
+        }
+
+        &--9 {
+            background-color: #eef !important;
+        }
+
+        &--10 {
+            background-color: #fee !important;
+        }
+
+        &--11 {
+            background-color: #efe !important;
+        }
+
+        &--12 {
+            background-color: #ddd !important;
+        }
+
+        &--13 {
+            background-color: #eee !important;
+        }
+
+        &--14 {
+            background-color: #fff !important;
+        }
+
+        &--15 {
+            background-color: #dfe !important;
+        }
+    }
+
+    &__meta {
+        float: right;
+    }
+
+    &__highlight {
+        text-decoration: underline;
     }
 }

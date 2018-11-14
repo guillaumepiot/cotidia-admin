@@ -1,3 +1,4 @@
+
 .table {
     border: none;
 
@@ -14,6 +15,7 @@
                         background-color: $toolbar-background-color;
                         color: $grey--dark;
                         cursor: default;
+
                         &:hover {
                             background-color: $toolbar-background-color;
                             color: $grey--dark;
@@ -23,6 +25,7 @@
                         background-color: $cyan;
                         color: #fff;
                         cursor: default;
+
                         &:hover {
                             background-color: $cyan;
                             color: #fff;
@@ -34,34 +37,38 @@
     }
 
     &--sticky {
+        position: inherit;
+
         > thead {
             > tr {
                 > th, > td {
-                    position: -webkit-sticky; // for safari
-                    position: sticky;
-                    top: 0;
-                    left: 0;
-                    z-index: 3;
-
-                    &:first-child {
-                        z-index: 4;
-                    }
-
-                    &::after {
-                        content: "";
-                        display: block;
-                        height: 1px;
-                        width: 100%;
-                        background-color: $table-row-border-color;
-                        position: absolute;
-                        bottom: 0;
+                    @media screen and (min-width: $mobile-width) {
                         left: 0;
+                        position: -webkit-sticky; // for safari
+                        position: sticky;
+                        top: 0;
+                        z-index: 3;
+
+                        &:first-child {
+                            z-index: 4;
+                        }
+
+                        &::after {
+                            background-color: $table-row-border-color;
+                            bottom: 0;
+                            content: "";
+                            display: block;
+                            height: 1px;
+                            left: 0;
+                            position: absolute;
+                            width: 100%;
+                        }
                     }
                 }
 
                 > th {
-                    padding-top: 1rem;
                     padding-bottom: 1rem;
+                    padding-top: 1rem;
                 }
 
                 > th:hover {
@@ -75,25 +82,27 @@
         > tfoot {
             > tr {
                 > th, > td {
-                    position: -webkit-sticky; // for safari
-                    position: sticky;
-                    bottom: 0;
-                    left: 0;
-                    z-index: 3;
-
-                    &:first-child {
-                        z-index: 4;
-                    }
-
-                    &::after {
-                        content: "";
-                        display: block;
-                        height: 1px;
-                        width: 100%;
-                        background-color: $table-row-border-color;
-                        position: absolute;
-                        top: 0;
+                    @media screen and (min-width: $mobile-width) {
+                        bottom: 0;
                         left: 0;
+                        position: -webkit-sticky; // for safari
+                        position: sticky;
+                        z-index: 3;
+
+                        &:first-child {
+                            z-index: 4;
+                        }
+
+                        &::after {
+                            background-color: $table-row-border-color;
+                            content: "";
+                            display: block;
+                            height: 1px;
+                            left: 0;
+                            position: absolute;
+                            top: 0;
+                            width: 100%;
+                        }
                     }
                 }
             }
@@ -103,23 +112,25 @@
             > tr {
                 > th, > td {
                     &.nowrap {
-                        white-space: nowrap;
-                        text-overflow: ellipsis;
                         max-width: 280px;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
 
                         .table-cell-editable__value {
-                            text-overflow: ellipsis;
-                            overflow: hidden;
                             max-width: 280px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
                         }
                     }
 
-                    &:first-child {
-                        position: -webkit-sticky; // for safari
-                        position: sticky;
-                        left: 0px;
-                        z-index: 2;
-                        box-shadow: inset -1px 0px $grey--light;
+                    @media screen and (min-width: $mobile-width) {
+                        &:first-child {
+                            box-shadow: inset -1px 0px $grey--light;
+                            left: 0px;
+                            position: -webkit-sticky; // for safari
+                            position: sticky;
+                            z-index: 2;
+                        }
                     }
 
                     &.table-cell {
@@ -150,8 +161,8 @@
                         z-index: 4;
                     }
                     &:nth-child(2) {
-                        left: 3.2rem;
                         box-shadow: inset -1px 0px $grey--light;
+                        left: 3.2rem;
                     }
                 }
             }
@@ -164,16 +175,16 @@
                         width: 3.2rem;
                     }
                     &:first-child, &:nth-child(2) {
+                        box-shadow: none;
+                        left: 0px;
                         position: -webkit-sticky; // for safari
                         position: sticky;
-                        left: 0px;
                         z-index: 2;
-                        box-shadow: none;
                     }
                     &:nth-child(2) {
+                        box-shadow: inset -1px 0px $grey--light;
                         left: 3.2rem;
                         width: 200px;
-                        box-shadow: inset -1px 0px $grey--light;
                     }
                 }
             }
@@ -189,25 +200,33 @@
                         z-index: 4;
                     }
                     &:nth-child(2) {
-                        left: 3.2rem;
                         box-shadow: inset -1px 0px $grey--light;
+                        left: 3.2rem;
                     }
                 }
             }
         }
     }
 
-    &--admin-mobile-view{
+    &--admin-mobile-view {
+
         @media screen and (max-width: $mobile-width) {
-            > thead > tr > th, > tbody > tr > td{
+            td, th {
                 display: none;
             }
-
             > thead > tr > th:first-child,
-            > tbody > tr > td:first-child,
-            .action-column + th:nth-child(2),
-            .action-column + td:nth-child(2){
+            > tbody > tr > td:first-child{
                 display: table-cell;
+            }
+        }
+        &.table--action {
+            @media screen and (max-width: $mobile-width) {
+                > thead > tr > th:first-child, th:nth-child(2),
+                > tbody > tr > td:first-child, td:nth-child(2),
+                > tfoot > tr > th:first-child, th:nth-child(2) {
+                    display: table-cell;
+                    left: auto;
+                }
             }
         }
     }
@@ -281,9 +300,9 @@
 
 .dragging-table-header {
     background-color: $table-header-background-color;
-    padding: 0.5rem 1rem;
     font-weight: 500;
     line-height: 2rem;
+    padding: 0.5rem 1rem;
     text-align: left;
     z-index: 5;
 }
@@ -292,11 +311,8 @@
 .table-cell-editable {
     display: flex;
     justify-content: flex-start;
+    margin: -0.5rem -1rem;
     min-width: 170px;
-    margin-top: -0.5rem;
-    margin-bottom: -0.5rem;
-    margin-left: -1rem;
-    margin-right: -1rem;
 
     &:hover {
         .table-cell-editable__action--edit {
@@ -305,14 +321,15 @@
     }
 
     &__value {
-        padding-left: 1rem;
         flex: 1;
+        padding-left: 1rem;
     }
 
     &__action {
-        width: 32px;
         background-color: transparent;
         border-width: 0;
+        width: 32px;
+
         &:hover {
             cursor: pointer;
         }
@@ -326,12 +343,12 @@
             }
         }
         &--save {
-            color: $background_color--create;
             background-color: #fff;
+            color: $background_color--create;
 
             &:hover {
-                color: #fff;
                 background-color: $background_color--create;
+                color: #fff;
 
                 .fa-check {
                     color: #fff;
@@ -339,12 +356,12 @@
             }
         }
         &--cancel {
-            color: $background_color--delete;
             background-color: #fff;
+            color: $background_color--delete;
 
             &:hover {
-                color: #fff;
                 background-color: $background_color--delete;
+                color: #fff;
 
                 .fa-times {
                     color: #fff;
@@ -354,10 +371,10 @@
     }
 
     .form__group {
-        margin: 0;
         background-color: #fff;
-        min-height: 39px;
         flex: 1;
+        margin: 0;
+        min-height: 39px;
 
         .form__control {
             border-bottom: 0;

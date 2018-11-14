@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ path '/css/admin.css' }}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>
+    <title>Preview</title>
+</head>
+<body>
+    <div style="
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    ">
+        {{{ yield }}}
+    </div>
+
+<script type="text/javascript" src="{{ path '/js/menu.js' }}"></script>
+<script type="text/javascript" src="{{ path '/js/content.js' }}"></script>
+<script type="text/javascript" src="{{ path '/js/sixteen.form.js' }}"></script>
+<script type="text/javascript" src="{{ path '/js/sixteen.tabs.js' }}"></script>
+<script type="text/javascript" src="{{ path '/js/sixteen.messages.js' }}"></script>
+
+</body>
+</html>

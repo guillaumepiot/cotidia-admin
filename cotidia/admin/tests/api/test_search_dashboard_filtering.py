@@ -637,11 +637,13 @@ class AdminSearchDashboardTests(APITestCase):
     @override_settings(DEBUG=True)
     def test_invalid_filter_key_debug(self):
         """An invalid filter key should be ignored."""
-
+        import logging
+        logging.disable(logging.CRITICAL)
         with self.assertRaises(FieldError):
             self.client.get(
                 self.url + '?unfilterable_property=1'
             )
+        logging.disable(logging.NOTSET)
 
     @override_settings(DEBUG=False)
     def test_invalid_filter_key(self):

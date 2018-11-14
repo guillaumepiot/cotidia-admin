@@ -14,7 +14,8 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@babel/polyfill": "^7.0.0-beta.55",
-    "@cotidia/react-ui": "^2.1.4",
+    "@cotidia/react-ui": "^3.0.0",
+    "algoliasearch": "^3.30.0",
     "immutable": "^3.8.2",
     "lodash.isequal": "^4.5.0",
     "moment": "^2.22.2",
@@ -23,6 +24,7 @@
     "react": "^16.4.2",
     "react-date-range": "^1.0.0-beta",
     "react-dom": "^16.4.2",
+    "react-google-maps": "^9.4.5",
     "react-redux": "^5.0.7",
     "react-sortable-hoc": "^0.8.3",
     "redux": "^4.0.0",
@@ -63,7 +65,7 @@
   "ava": {
     "require": [
       "babel-register",
-      "babel-polyfill"
+      "@babel/polyfill"
     ],
     "babel": "inherit",
     "concurrency": 6

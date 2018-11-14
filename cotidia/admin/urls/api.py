@@ -3,6 +3,7 @@ from django.urls import path
 from cotidia.admin.views.api import (
     AdminOrderableAPIView,
     SortAPIView,
+    DynamicListAPIView,
     AdminSearchDashboardAPIView,
     AdminSearchLookupAPIView,
     AdminBatchActionAPIView,
@@ -25,6 +26,11 @@ urlpatterns = [
         'list/<str:app_label>/<str:model>',
         AdminSearchDashboardAPIView.as_view(),
         name='object-list'
+    ),
+    path(
+        'dynamic-list/<str:app_label>/<str:model>',
+        DynamicListAPIView.as_view(),
+        name='dynamic-list'
     ),
     path(
         'batch-action/<str:app_label>/<str:model_name>/<str:action>',

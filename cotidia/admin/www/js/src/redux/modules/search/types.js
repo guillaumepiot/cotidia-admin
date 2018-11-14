@@ -4,10 +4,11 @@ export const SET_ENDPOINT = 'dynamic-list/search/SET_ENDPOINT'
 export const SET_DETAIL_URL = 'dynamic-list/search/SET_DETAIL_URL'
 export const SET_BATCH_ACTIONS = 'dynamic-list/search/SET_BATCH_ACTIONS'
 export const SET_GLOBAL_ACTIONS = 'dynamic-list/search/SET_GLOBAL_ACTIONS'
-export const SET_EXTRA_FILTERS = 'dynamic-list/search/SET_EXTRA_FILTERS'
+export const SET_FILTER_CONFIGURATION = 'dynamic-list/search/SET_FILTER_CONFIGURATION'
 export const SET_TOOLBAR_FILTERS = 'dynamic-list/search/SET_TOOLBAR_FILTERS'
 export const SET_SIDEBAR_FILTERS = 'dynamic-list/search/SET_SIDEBAR_FILTERS'
-export const SET_COLUMN_CONFIG = 'dynamic-list/search/SET_COLUMN_CONFIG'
+export const SET_FILTER_SUGGEST_CONFIGURATION = 'dynamic-list/search/SET_FILTER_SUGGEST_CONFIGURATION'
+export const SET_SEARCH_CONFIG = 'dynamic-list/search/SET_SEARCH_CONFIG'
 
 export const LOAD_STORED_CONFIG = 'dynamic-list/search/LOAD_STORED_CONFIG'
 
@@ -19,17 +20,19 @@ export const CLEAR_FILTER = 'dynamic-list/search/CLEAR_FILTER'
 export const CLEAR_FILTERS = 'dynamic-list/search/CLEAR_FILTERS'
 export const SET_ORDER_COLUMN = 'dynamic-list/search/SET_ORDER_COLUMN'
 export const TOGGLE_ORDER_DIRECTION = 'dynamic-list/search/TOGGLE_ORDER_DIRECTION'
+export const SET_PER_PAGE = 'dynamic-list/search/SET_PER_PAGE'
 
 export const PERFORM_SEARCH = 'dynamic-list/search/PERFORM_SEARCH'
 export const STORE_RESULTS = 'dynamic-list/search/STORE_RESULTS'
-export const REFRESH_RESULT = 'dynamic-list/search/REFRESH_RESULT'
-export const UPDATE_RESULT = 'dynamic-list/search/UPDATE_RESULT'
+export const REFRESH_SINGLE_RESULT = 'dynamic-list/search/REFRESH_SINGLE_RESULT'
+export const UPDATE_SINGLE_RESULT = 'dynamic-list/search/UPDATE_SINGLE_RESULT'
 
 export const MANAGE_COLUMNS = 'dynamic-list/search/MANAGE_COLUMNS'
 export const TOGGLE_COLUMN = 'dynamic-list/search/TOGGLE_COLUMN'
 export const RESET_COLUMNS = 'dynamic-list/search/RESET_COLUMNS'
 
 export const SET_FILTER_VALUE = 'dynamic-list/search/SET_FILTER_VALUE'
+export const REMOVE_FILTER_VALUE = 'dynamic-list/search/REMOVE_FILTER_VALUE'
 
 export const GET_RESULTS_PAGE = 'dynamic-list/search/GET_RESULTS_PAGE'
 

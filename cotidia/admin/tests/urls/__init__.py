@@ -27,6 +27,7 @@ urlpatterns = [
     ),
     path('admin/mail/', include('cotidia.mail.urls', namespace="mail-admin")),
     path('admin/demo/', include('cotidia.admin.tests.urls.admin', namespace="tests-admin")),
+    path('api/admin/', include('cotidia.admin.tests.urls.api.dynamic_list', namespace="dynamic-api")),
     path('admin/', dashboard, name="dashboard"),
 
 ]

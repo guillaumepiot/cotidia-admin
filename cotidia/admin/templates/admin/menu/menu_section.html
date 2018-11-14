@@ -1,5 +1,27 @@
 {% if item.text %}
-<div class="menu__section">
-    {{item.text}}
-</div>
+<li class="menu__item menu-item menu-item--category">
+    <div class="menu__category menu-category">
+        <button type="button" class="menu-category__toggle" title="{{item.text}}" aria-label="{{item.text}}">
+            <span class="menu-category__summary-icon">
+                <i class="fa fa-{{item.icon}}"></i>
+            </span>
+            <span class="menu-category__expand-icon">
+                <i class="fas fa-angle-down"></i>
+            </span>
+            <span class="menu-category__title">
+                {{item.text}}
+            </span>
+            <span class="menu-category__subtitle">
+                {{item.description}}
+            </span>
+        </button>
+        <ul class="menu-category__list">
+            {% for i in item.nav_items %}
+            {% with i as item %}
+                {% include "admin/menu/menu_item.html" %}
+            {% endwith %}
+            {% endfor %}
+        </ul>
+    </div>
+</li>
 {% endif %}

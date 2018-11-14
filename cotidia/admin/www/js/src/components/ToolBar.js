@@ -3,14 +3,17 @@ import PropTypes from 'prop-types'
 
 import { debounce } from '../utils'
 
+import { filterConfiguration } from '../utils/propTypes'
+
 import * as TOOLBAR_FILTERS from './fields/toolbar-filters'
 
-import { TextInput } from '@cotidia/react-ui'
+import { Select, TextInput } from '@cotidia/react-ui'
 
 import { Icon } from './elements/global'
 
 export default class ToolBar extends Component {
   static propTypes = {
+    allowedResultsModes: PropTypes.array.isRequired,
     anyResultsSelected: PropTypes.bool.isRequired,
     batchActions: PropTypes.arrayOf(PropTypes.shape({
       action: PropTypes.string.isRequired,
@@ -18,14 +21,22 @@ export default class ToolBar extends Component {
       label: PropTypes.string.isRequired,
       onComplete: PropTypes.func,
     })),
+    cacheFilterLabel: PropTypes.func,
     clearFilters: PropTypes.func.isRequired,
+    columnsConfigurable: PropTypes.bool.isRequired,
+    filterConfiguration: filterConfiguration.isRequired,
     filters: PropTypes.object,
-    globalActions: PropTypes.array,
+    filterSuggest: PropTypes.func,
+    getSuggestEngine: PropTypes.func.isRequired,
     hasSidebar: PropTypes.bool.isRequired,
+    manageColumns: PropTypes.func.isRequired,
+    resultsMode: PropTypes.string.isRequired,
     performBatchAction: PropTypes.func.isRequired,
     searchTerm: PropTypes.string,
+    searchVisible: PropTypes.bool,
     setFilterValue: PropTypes.func.isRequired,
     setSearchTerm: PropTypes.func.isRequired,
+    switchMode: PropTypes.func.isRequired,
     toggleSidebar: PropTypes.func.isRequired,
     toolbarFilters: PropTypes.array,
   }
@@ -33,14 +44,15 @@ export default class ToolBar extends Component {
   static defaultProps = {
     batchActions: [],
     filters: {},
-    globalActions: [],
-    mode: 'table',
     searchTerm: '',
+    searchVisible: true,
     toolbarFilters: [],
   }
 
   state = {
     action: '',
+    filterSuggestions: [],
+    filterSuggestionsLoading: false,
   }
 
   toggleSidebar = () => this.props.toggleSidebar()
@@ -52,6 +64,12 @@ export default class ToolBar extends Component {
   clearSearchTerm = (e) => {
     this.props.clearFilters()
   }
+
+  manageColumns = (e) => this.props.manageColumns()
+
+  displayList = () => this.props.switchMode('list')
+  displayMap = () => this.props.switchMode('map')
+  displayTable = () => this.props.switchMode('table')
 
   selectBatchAction = (e) => this.setState({ action: e.target.value })
 
@@ -65,35 +83,116 @@ export default class ToolBar extends Component {
     this.props.performBatchAction(action)
   }
 
+  getFilterSuggestions = async (q) => {
+    // First set our state to searching and clear the currnent suggestions
+    this.setState({
+      filterSuggestions: [],
+      filterSuggestionsLoading: true,
+    })
+
+    // Now fire off the suggestion lookups.
+    this.props.filterSuggest(q).then((suggestions) => {
+      this.setState({ filterSuggestions: suggestions })
+    }).finally(() => this.setState({ filterSuggestionsLoading: false }))
+
+    // We want the Select to think we came back with immediate results so that we don't hide what's
+    // in the list while we loasd the new results.
+    return Promise.resolve()
+  }
+
+  handleFilterSuggestionSelect = ({ q }) => {
+    const filter = q.slice(0, q.indexOf(':'))
+    let value = q.slice(q.indexOf(':') + 1)
+
+    // First find the full option object from state.
+    const item = this.state.filterSuggestions.find((item) => item.value === q)
+
+    // Now cache the label for the value so it can be accessed later.
+    if (item) {
+      this.props.cacheFilterLabel(filter, value, item.label)
+    }
+
+    // If the filter is a choice filter, technically that allows multiple selection, so we get the
+    // existing filter value (or an empty array if there isn't one) and add the passed value to it.
+    if (this.props.filterConfiguration[filter].filter === 'choice') {
+      const existingValues = this.props.filters[filter] || []
+      value = existingValues.concat([value])
+    }
+
+    this.props.setFilterValue(filter, value)
+  }
+
+  renderFilterSuggestToolbar () {
+    const {
+      filterSuggestionsLoading,
+      filterSuggestions,
+    } = this.state
+
+    return (
+      <div className='content-filter__item content-filter__item--wide'>
+        <div className='form__group form__group--boxed'>
+          <label htmlFor='search' className='form__label'>Search</label>
+          <Select
+            controlOnly
+            minCharSearch={2}
+            name='q'
+            placeholder='Start typing to filter...'
+            prefix={<Icon icon='search' />}
+            searchOptions={this.getFilterSuggestions}
+            suffix={filterSuggestionsLoading && <Icon icon='spinner' pulse />}
+            options={filterSuggestions}
+            updateValue={this.handleFilterSuggestionSelect}
+          />
+        </div>
+      </div>
+    )
+  }
+
   renderSearchToolbar () {
     const {
+      cacheFilterLabel,
+      filterConfiguration,
       filters,
+      filterSuggest,
+      getSuggestEngine,
       searchTerm,
+      searchVisible,
       toolbarFilters,
     } = this.props
 
+    if (filterSuggest) {
+      return this.renderFilterSuggestToolbar()
+    }
+
     return (
       <>
-        <div className='content-filter__item'>
-          <div className='form__group form__group--boxed'>
-            <label htmlFor='search' className='form__label'>Search</label>
-            <TextInput
-              controlOnly
-              id='search'
-              label='Search'
-              name='searchTerm'
-              placeholder='Search'
-              prefix={<Icon icon='search' />}
-              type='text'
-              updateValue={this.updateSearchTerm}
-              updateValueOnBlur={false}
-              value={searchTerm}
-            />
+        {searchVisible && (
+          <div className='content-filter__item'>
+            <div className='form__group form__group--boxed'>
+              <label htmlFor='search' className='form__label'>Search</label>
+              <TextInput
+                controlOnly
+                id='search'
+                label='Search'
+                name='searchTerm'
+                placeholder='Search'
+                prefix={<Icon icon='search' />}
+                type='text'
+                updateValue={this.updateSearchTerm}
+                updateValueOnBlur={false}
+                value={searchTerm}
+              />
+            </div>
           </div>
-        </div>
+        )}
 
         {toolbarFilters && toolbarFilters.map((filter) => {
-          const { filter: type, ...filterProps } = filter
+          const {
+            configuration,
+            filter: type,
+            label,
+            name,
+          } = filter
 
           let Component
 
@@ -106,16 +205,29 @@ export default class ToolBar extends Component {
           } else if (type === 'date') {
             Component = TOOLBAR_FILTERS.Date
           } else if (type === 'choice') {
-            Component = TOOLBAR_FILTERS.Choice
+            if (configuration.mode === 'options') {
+              Component = TOOLBAR_FILTERS.Choice
+            } else {
+              Component = TOOLBAR_FILTERS.Suggest
+            }
           } else if (type === 'choice-single') {
-            Component = TOOLBAR_FILTERS.ChoiceSingle
+            if (configuration.mode === 'options') {
+              Component = TOOLBAR_FILTERS.ChoiceSingle
+            } else {
+              Component = TOOLBAR_FILTERS.SuggestSingle
+            }
           }
 
           if (Component) {
             return (
-              <div className='content-filter__item' key={filterProps.name}>
+              <div className='content-filter__item' key={filter.name}>
                 <Component
-                  {...filterProps}
+                  cacheFilterLabel={cacheFilterLabel}
+                  configuration={configuration}
+                  filter={type}
+                  label={label}
+                  name={name}
+                  suggest={getSuggestEngine(filter.configuration, filterConfiguration)}
                   updateValue={this.updateFilterValueFactory(filter.name)}
                   value={filters[filter.name]}
                 />
@@ -183,28 +295,59 @@ export default class ToolBar extends Component {
 
   render () {
     const {
+      allowedResultsModes,
       anyResultsSelected,
+      columnsConfigurable,
+      resultsMode,
       hasSidebar,
     } = this.props
 
     return (
-      <div className='content__toolbar'>
-        <div className='content__filter content-filter form--animate'>
-          {anyResultsSelected ? this.renderBatchActionToolbar() : this.renderSearchToolbar()}
-        </div>
+      <>
+        <div className='content__toolbar'>
+          <div className='content__filter content-filter form--animate'>
+            {anyResultsSelected ? this.renderBatchActionToolbar() : this.renderSearchToolbar()}
+          </div>
 
-        <div className='content__actions'>
-          <button className='btn btn--outline btn--small' onClick={this.clearSearchTerm} title='Reset filters' type='button'>
-            <Icon icon='sync-alt' />
-          </button>
+          <div className='content__actions'>
+            {resultsMode === 'table' && columnsConfigurable && (
+              <button className='btn btn--outline' onClick={this.manageColumns} title='Manage column' type='button'>
+                <Icon icon='columns' />
+              </button>
+            )}
 
-          {hasSidebar && (
-            <button className='btn btn--outline btn--small' onClick={this.toggleSidebar}>
-              <Icon icon='filter' />
+            {allowedResultsModes.length > 1 && (
+              <>
+                {allowedResultsModes.includes('table') && (
+                  <button className={`btn ${resultsMode === 'table' ? '' : 'btn--outline'}`} onClick={this.displayTable}>
+                    <Icon icon='table' />
+                  </button>
+                )}
+                {allowedResultsModes.includes('list') && (
+                  <button className={`btn ${resultsMode === 'list' ? '' : 'btn--outline'}`} onClick={this.displayList}>
+                    <Icon icon='bars' />
+                  </button>
+                )}
+                {allowedResultsModes.includes('map') && (
+                  <button className={`btn ${resultsMode === 'map' ? '' : 'btn--outline'}`} onClick={this.displayMap}>
+                    <Icon icon='map-marker-alt' />
+                  </button>
+                )}
+              </>
+            )}
+
+            <button className='btn btn--outline' onClick={this.clearSearchTerm} title='Reset filters' type='button'>
+              <Icon icon='sync-alt' />
             </button>
-          )}
+
+            {hasSidebar && (
+              <button className='btn btn--outline' onClick={this.toggleSidebar}>
+                <Icon icon='filter' />
+              </button>
+            )}
+          </div>
         </div>
-      </div>
+      </>
     )
   }
 }

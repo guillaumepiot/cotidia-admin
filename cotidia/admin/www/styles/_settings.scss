@@ -1,10 +1,31 @@
 @import "../node_modules/sixteen/src/sixteen/settings";
 
+/**
+ * Font scaling
+ */
+
 $base_font_size: 15px;
 
-$menu-width: 16rem;
-$menu-breakpoint: 1024px;
+// How to modify the base font size between the different viewports.
+$font_size_multiplier--mobile: 1;
+$font_size_multiplier--tablet: 1;
+$font_size_multiplier--desktop: 1;
+
+/**
+ * Menu
+ */
+
+$menu_width: 16rem;
+$menu_collapse_width: 3rem;
+$menu_sidebar_width: $menu_width;
+$menu-breakpoint: $laptop-width;
+$menu-breakpoint-max: $menu-breakpoint - 1;
 $menu-background-color: #48484c;
+$menu_header_height: 4rem;
+
+/**
+ * Toolbar
+ */
 
 $toolbar-height: 4rem;
 $toolbar-background-color: #f5f7fb;
@@ -16,3 +37,25 @@ $toolbar_profile_avatar_text_color: #fff;
 $toolbar_profile_avatar_arrow_color: #2d3546;
 
 $content-background-color: #f7f8fb;
+
+
+/**
+ * Breakpoints
+ */
+
+$desktop-width: 1280px;
+$laptop-width: 1024px;
+$tablet-width: $mobile-width + 1px;
+$mobile-width: 767px;
+
+$padding: 1rem;
+
+// $grey--dark: #111315 !default;
+// $grey--medium: #555A5D !default;
+// $grey--light: #D0D5D7 !default;
+// $grey--lighter: #E5EBED !default;
+
+// Animations
+$animation-speed: 0.4s;
+$animation-speed--fast: 0.2s;
+$animation-speed--slow: 0.8s;

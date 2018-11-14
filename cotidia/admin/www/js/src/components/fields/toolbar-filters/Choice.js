@@ -7,12 +7,14 @@ export default class Choice extends Component {
   static propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    options: PropTypes.arrayOf(PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired,
-    })).isRequired,
+    configuration: PropTypes.shape({
+      options: PropTypes.arrayOf(PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        value: PropTypes.string.isRequired,
+      })).isRequired,
+    }).isRequired,
     updateValue: PropTypes.func.isRequired,
-    value: PropTypes.array,
+    value: PropTypes.arrayOf(PropTypes.string),
   }
 
   static defaultProps = {
@@ -30,7 +32,7 @@ export default class Choice extends Component {
   render () {
     // Reconstruct the array of value objects from just our array of values.
     const values = this.props.value?.map(
-      (value) => this.props.options.find((option) => option.value === value)
+      (value) => this.props.configuration.options.find((option) => option.value === value)
     ) || []
 
     return (
@@ -40,7 +42,8 @@ export default class Choice extends Component {
           displaySelections={false}
           name={this.props.name}
           label={this.props.label}
-          options={this.props.options}
+          options={this.props.configuration.options}
+          placeholder={this.props.label}
           updateValue={this.updateValue}
           values={values}
         />

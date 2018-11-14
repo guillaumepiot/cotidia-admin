@@ -10,9 +10,9 @@ export const setSearchTerm = (term) => ({
   payload: { term },
 })
 
-export const switchMode = (mode) => ({
+export const switchMode = (resultsMode) => ({
   type: types.SWITCH_MODE,
-  payload: { mode },
+  payload: { resultsMode },
 })
 
 export const configureFilter = (filter) => ({
@@ -56,17 +56,23 @@ export const setFilterValue = (filter, value) => ({
   payload: { filter, value },
 })
 
+export const removeFilterValue = (filter, value) => ({
+  type: types.REMOVE_FILTER_VALUE,
+  payload: { filter, value },
+})
+
 export const refreshCurrentPage = () => ({
   type: types.GET_RESULTS_PAGE,
-  payload: { page: 'current' },
+  payload: { page: null },
 })
-export const getPreviousPage = () => ({
+
+export const gotoPage = (page) => ({
   type: types.GET_RESULTS_PAGE,
-  payload: { page: 'previous' },
+  payload: { page },
 })
-export const getNextPage = () => ({
-  type: types.GET_RESULTS_PAGE,
-  payload: { page: 'next' },
+export const setPerPage = (perPage) => ({
+  type: types.SET_PER_PAGE,
+  payload: { perPage },
 })
 
 export const toggleResultSelected = (item) => ({

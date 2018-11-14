@@ -12,6 +12,7 @@ import DynamicList from './containers/DynamicList'
 
 import { FullScreen } from './components/elements/global'
 
+import AlgoliaSwitcher from './algolia-switcher'
 import TypeaheadSwitcher from './typeahead-switcher'
 import MultipleSelectWidget from './multiple-select-widget'
 
@@ -43,11 +44,14 @@ export default function DynamicListApp (props) {
 
 DynamicListApp.propTypes = dynamicListPropTypes
 
+// TODO: check whether this is up to date
 DynamicListApp.defaultProps = {
+  allowedResultsModes: ['table'],
   batchActions: [],
   defaultColumns: [],
   defaultFilters: {},
   defaultOrderBy: null,
+  defaultResultsMode: 'table',
   detailURL: null,
   ignoreStoredConfig: false,
 }
@@ -56,5 +60,6 @@ window.React = React
 window.ReactDOM = ReactDOM
 window.DynamicList = DynamicListApp
 
+window.AlgoliaSwitcher = AlgoliaSwitcher
 window.TypeaheadSwitcher = TypeaheadSwitcher
 window.MultipleSelectWidget = MultipleSelectWidget

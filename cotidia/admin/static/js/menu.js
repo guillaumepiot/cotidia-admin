@@ -64,6 +64,19 @@
         }
       })
     }
+
+    // Category menu toggle
+    document.querySelectorAll('.menu-category__toggle').forEach(function (toggle) {
+      toggle.addEventListener('click', function () {
+        toggle.parentElement.classList.toggle('menu-category--open')
+
+        document.querySelectorAll('.menu-category--open').forEach(function (item) {
+          if (item !== toggle.parentElement) {
+            item.classList.remove('menu-category--open')
+          }
+        })
+      })
+    })
   }
 
   function documentReady () {

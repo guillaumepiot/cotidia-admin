@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Select } from '@cotidia/react-ui'
+import { MultipleSelect } from '@cotidia/react-ui'
 
 export default class Choice extends Component {
   static propTypes = {
@@ -11,21 +11,20 @@ export default class Choice extends Component {
     updateValue: PropTypes.func.isRequired,
   }
 
-  updateValue = ({ [this.props.name]: value }) => this.props.updateValue(value)
+  updateValue = ({ [this.props.name]: value }) =>
+    this.props.updateValue(value.map((item) => item.value))
 
   render () {
-    const {
-      name,
-      options,
-      value,
-    } = this.props
+    const { name, options, value } = this.props
+
+    const values = value.map((value) => options.find((item) => item.value === value))
 
     return (
-      <Select
+      <MultipleSelect
         name={name}
-        updateValue={this.updateValue}
         options={options}
-        value={value}
+        updateValue={this.updateValue}
+        values={values}
       />
     )
   }

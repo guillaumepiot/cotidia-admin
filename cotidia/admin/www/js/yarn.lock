@@ -778,9 +778,9 @@
   dependencies:
     arrify "^1.0.1"
 
-"@cotidia/react-ui@^2.1.4":
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/@cotidia/react-ui/-/react-ui-2.1.4.tgz#b5719508d764c4d0fc18fdb12175fc57a0e7b2b3"
+"@cotidia/react-ui@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@cotidia/react-ui/-/react-ui-3.0.0.tgz#291cb34f7d82d6d7963871cae4872bb2cfde7202"
   dependencies:
     classnames "^2.2.6"
     moment "^2.22.2"
@@ -831,6 +831,10 @@ acorn@^5.0.0, acorn@^5.0.3, acorn@^5.6.0:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.1.tgz#f095829297706a7c9776958c0afc8930a9b9d9d8"
 
+agentkeepalive@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/agentkeepalive/-/agentkeepalive-2.2.0.tgz#c5d1bd4b129008f1163f236f86e5faea2026e2ef"
+
 ajv-keywords@^3.0.0, ajv-keywords@^3.1.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-3.2.0.tgz#e86b819c602cf8821ad637413698f1dec021847a"
@@ -852,6 +856,26 @@ ajv@^6.0.1, ajv@^6.1.0, ajv@^6.5.0:
     fast-json-stable-stringify "^2.0.0"
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.1"
+
+algoliasearch@^3.30.0:
+  version "3.30.0"
+  resolved "https://registry.yarnpkg.com/algoliasearch/-/algoliasearch-3.30.0.tgz#355585e49b672e5f71d45b9c2b371ecdff129cd1"
+  dependencies:
+    agentkeepalive "^2.2.0"
+    debug "^2.6.8"
+    envify "^4.0.0"
+    es6-promise "^4.1.0"
+    events "^1.1.0"
+    foreach "^2.0.5"
+    global "^4.3.2"
+    inherits "^2.0.1"
+    isarray "^2.0.1"
+    load-script "^1.0.0"
+    object-keys "^1.0.11"
+    querystring-es3 "^0.2.1"
+    reduce "^1.0.1"
+    semver "^5.1.0"
+    tunnel-agent "^0.6.0"
 
 align-text@^0.1.1, align-text@^0.1.3:
   version "0.1.4"
@@ -1856,6 +1880,10 @@ camelcase@^4.0.0, camelcase@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-4.1.0.tgz#d545635be1e33c542649c69173e5de6acfae34dd"
 
+can-use-dom@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/can-use-dom/-/can-use-dom-0.1.0.tgz#22cc4a34a0abc43950f42c6411024a3f6366b45a"
+
 caniuse-api@^1.5.2:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/caniuse-api/-/caniuse-api-1.6.1.tgz#b534e7c734c4f81ec5fbe8aca2ad24354b962c6c"
@@ -1917,6 +1945,10 @@ chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.4.1:
     ansi-styles "^3.2.1"
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
+
+change-emitter@^0.1.2:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/change-emitter/-/change-emitter-0.1.6.tgz#e8b2fe3d7f1ab7d69a32199aff91ea6931409515"
 
 chardet@^0.4.0:
   version "0.4.2"
@@ -2682,6 +2714,10 @@ doctrine@^2.1.0:
   dependencies:
     esutils "^2.0.2"
 
+dom-walk@^0.1.0:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/dom-walk/-/dom-walk-0.1.1.tgz#672226dc74c8f799ad35307df936aba11acd6018"
+
 domain-browser@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.2.0.tgz#3d31f50191a6749dd1375a7f522e823d42e54eda"
@@ -2761,6 +2797,13 @@ enhanced-resolve@^3.4.0:
     object-assign "^4.0.1"
     tapable "^0.2.7"
 
+envify@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/envify/-/envify-4.1.0.tgz#f39ad3db9d6801b4e6b478b61028d3f0b6819f7e"
+  dependencies:
+    esprima "^4.0.0"
+    through "~2.3.4"
+
 equal-length@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/equal-length/-/equal-length-1.0.1.tgz#21ca112d48ab24b4e1e7ffc0e5339d31fdfc274c"
@@ -2825,6 +2868,10 @@ es6-map@^0.1.3:
     es6-set "~0.1.5"
     es6-symbol "~3.1.1"
     event-emitter "~0.3.5"
+
+es6-promise@^4.1.0:
+  version "4.2.5"
+  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.5.tgz#da6d0d5692efb461e082c14817fe2427d8f5d054"
 
 es6-set@~0.1.5:
   version "0.1.5"
@@ -3090,7 +3137,7 @@ eventemitter3@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.0.tgz#090b4d6cdbd645ed10bf750d4b5407942d7ba163"
 
-events@^1.0.0:
+events@^1.0.0, events@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
 
@@ -3266,7 +3313,7 @@ faye-websocket@~0.11.0:
   dependencies:
     websocket-driver ">=0.5.1"
 
-fbjs@^0.8.16:
+fbjs@^0.8.1, fbjs@^0.8.16:
   version "0.8.17"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
   dependencies:
@@ -3596,6 +3643,13 @@ global-dirs@^0.1.0:
   dependencies:
     ini "^1.3.4"
 
+global@^4.3.2:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/global/-/global-4.3.2.tgz#e76989268a6c74c38908b1305b10fc0e394e9d0f"
+  dependencies:
+    min-document "^2.19.0"
+    process "~0.5.1"
+
 globals@^11.1.0, globals@^11.7.0:
   version "11.7.0"
   resolved "https://registry.yarnpkg.com/globals/-/globals-11.7.0.tgz#a583faa43055b1aca771914bf68258e2fc125673"
@@ -3624,6 +3678,10 @@ globby@^6.0.0, globby@^6.1.0:
     object-assign "^4.0.1"
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
+
+google-maps-infobox@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/google-maps-infobox/-/google-maps-infobox-2.0.0.tgz#1ea6de93c0cdf4138c2d586331835c83dcc59dc2"
 
 got@^6.7.1:
   version "6.7.1"
@@ -3771,7 +3829,7 @@ hoek@2.x.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
-hoist-non-react-statics@^2.5.0:
+hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
 
@@ -4360,6 +4418,10 @@ isarray@1.0.0, isarray@^1.0.0, isarray@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
 
+isarray@^2.0.1:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/isarray/-/isarray-2.0.4.tgz#38e7bcbb0f3ba1b7933c86ba1894ddfc3781bbb7"
+
 isexe@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
@@ -4585,6 +4647,10 @@ load-json-file@^4.0.0:
     pify "^3.0.0"
     strip-bom "^3.0.0"
 
+load-script@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/load-script/-/load-script-1.0.0.tgz#0491939e0bee5643ee494a7e3da3d2bac70c6ca4"
+
 loader-runner@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/loader-runner/-/loader-runner-2.3.0.tgz#f482aea82d543e07921700d5a46ef26fdac6b8a2"
@@ -4685,6 +4751,10 @@ lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.17.5,
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
+lodash@^4.16.2:
+  version "4.17.11"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
+
 loglevel@^1.4.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.6.1.tgz#e0fc95133b6ef276cdc8887cdaf24aa6f156f8fa"
@@ -4740,6 +4810,14 @@ map-visit@^1.0.0:
   resolved "https://registry.yarnpkg.com/map-visit/-/map-visit-1.0.0.tgz#ecdca8f13144e660f1b5bd41f12f3479d98dfb8f"
   dependencies:
     object-visit "^1.0.0"
+
+marker-clusterer-plus@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/marker-clusterer-plus/-/marker-clusterer-plus-2.1.4.tgz#f8eff74d599dab3b7d0e3fed5264ea0e704f5d67"
+
+markerwithlabel@^2.0.1:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/markerwithlabel/-/markerwithlabel-2.0.2.tgz#fa6aee4abb0ee553e24e2b708226858f58b8729e"
 
 matcher@^1.0.0:
   version "1.1.1"
@@ -4886,6 +4964,12 @@ mime@^1.5.0:
 mimic-fn@^1.0.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-1.2.0.tgz#820c86a39334640e99516928bd03fca88057d022"
+
+min-document@^2.19.0:
+  version "2.19.0"
+  resolved "https://registry.yarnpkg.com/min-document/-/min-document-2.19.0.tgz#7bd282e3f5842ed295bb748cdd9f1ffa2c824685"
+  dependencies:
+    dom-walk "^0.1.0"
 
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
@@ -5397,7 +5481,7 @@ object-copy@^0.1.0:
     define-property "^0.2.5"
     kind-of "^3.0.3"
 
-object-keys@^1.0.8, object-keys@^1.0.9:
+object-keys@^1.0.11, object-keys@^1.0.8, object-keys@^1.0.9, object-keys@~1.0.0:
   version "1.0.12"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.0.12.tgz#09c53855377575310cca62f55bb334abff7b3ed2"
 
@@ -6062,6 +6146,10 @@ process@^0.11.10:
   version "0.11.10"
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
 
+process@~0.5.1:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/process/-/process-0.5.2.tgz#1638d8a8e34c2f440a91db95ab9aeb677fc185cf"
+
 progress@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.0.tgz#8a1be366bf8fc23db2bd23f10c6fe920b4389d1f"
@@ -6078,7 +6166,7 @@ promzard@^0.3.0:
   dependencies:
     read "1"
 
-prop-types@15, prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.6.0, prop-types@^15.6.2:
+prop-types@15, prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   dependencies:
@@ -6155,7 +6243,7 @@ query-string@^4.1.0:
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
 
-querystring-es3@^0.2.0:
+querystring-es3@^0.2.0, querystring-es3@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/querystring-es3/-/querystring-es3-0.2.1.tgz#9ec61f79049875707d69414596fd907a4d711e73"
 
@@ -6243,6 +6331,22 @@ react-dom@^16.4.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
+
+react-google-maps@^9.4.5:
+  version "9.4.5"
+  resolved "https://registry.yarnpkg.com/react-google-maps/-/react-google-maps-9.4.5.tgz#920c199bdc925e0ce93880edffb09428d263aafa"
+  dependencies:
+    babel-runtime "^6.11.6"
+    can-use-dom "^0.1.0"
+    google-maps-infobox "^2.0.0"
+    invariant "^2.2.1"
+    lodash "^4.16.2"
+    marker-clusterer-plus "^2.1.4"
+    markerwithlabel "^2.0.1"
+    prop-types "^15.5.8"
+    recompose "^0.26.0"
+    scriptjs "^2.5.8"
+    warning "^3.0.0"
 
 react-list@^0.8.8:
   version "0.8.10"
@@ -6422,6 +6526,15 @@ realize-package-specifier@~3.0.3:
     dezalgo "^1.0.1"
     npm-package-arg "^4.1.1"
 
+recompose@^0.26.0:
+  version "0.26.0"
+  resolved "https://registry.yarnpkg.com/recompose/-/recompose-0.26.0.tgz#9babff039cb72ba5bd17366d55d7232fbdfb2d30"
+  dependencies:
+    change-emitter "^0.1.2"
+    fbjs "^0.8.1"
+    hoist-non-react-statics "^2.3.1"
+    symbol-observable "^1.0.4"
+
 redent@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/redent/-/redent-1.0.0.tgz#cf916ab1fd5f1f16dfb20822dd6ec7f730c2afde"
@@ -6442,6 +6555,12 @@ reduce-function-call@^1.0.1:
   resolved "https://registry.yarnpkg.com/reduce-function-call/-/reduce-function-call-1.0.2.tgz#5a200bf92e0e37751752fe45b0ab330fd4b6be99"
   dependencies:
     balanced-match "^0.4.2"
+
+reduce@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/reduce/-/reduce-1.0.1.tgz#14fa2e5ff1fc560703a020cbb5fbaab691565804"
+  dependencies:
+    object-keys "~1.0.0"
 
 redux-saga@^0.16.0:
   version "0.16.0"
@@ -6771,6 +6890,10 @@ schema-utils@^0.4.5:
   dependencies:
     ajv "^6.1.0"
     ajv-keywords "^3.1.0"
+
+scriptjs@^2.5.8:
+  version "2.5.9"
+  resolved "https://registry.yarnpkg.com/scriptjs/-/scriptjs-2.5.9.tgz#343915cd2ec2ed9bfdde2b9875cd28f59394b35f"
 
 select-hose@^2.0.0:
   version "2.0.0"
@@ -7376,7 +7499,7 @@ through2@^2.0.0:
     readable-stream "^2.1.5"
     xtend "~4.0.1"
 
-through@2, through@^2.3.6, through@~2.3, through@~2.3.1:
+through@2, through@^2.3.6, through@~2.3, through@~2.3.1, through@~2.3.4:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
 
@@ -7741,6 +7864,12 @@ vm-browserify@0.0.4:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-0.0.4.tgz#5d7ea45bbef9e4a6ff65f95438e0a87c357d5a73"
   dependencies:
     indexof "0.0.1"
+
+warning@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/warning/-/warning-3.0.0.tgz#32e5377cb572de4ab04753bdf8821c01ed605b7c"
+  dependencies:
+    loose-envify "^1.0.0"
 
 watchpack@^1.4.0:
   version "1.6.0"

@@ -72,6 +72,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
         context['row_actions'] = self.row_actions
         context['group_by'] = self.group_by
         context['next'] = self.request.path
+        context['total_results_count'] = self.get_queryset().count()
 
         if hasattr(self, 'filter') and self.filter and self.filter.data:
             context['filter_data'] = self.filter.data.dict()
@@ -164,6 +165,111 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
         return self.build_success_url()
 
 
+class DynamicListView(
+    StaffPermissionRequiredMixin,
+    ContextMixin,
+    TemplateView
+):
+    group_by = False
+    model = None
+    template_type = 'fluid'
+
+    def get_permission_required(self):
+        if self.kwargs.get('permission_required'):
+            return self.kwargs['permission_required']
+        elif hasattr(self, 'permission_required'):
+            return self.permission_required
+        else:
+            return '{}.add_{}'.format(
+                self.get_model()._meta.app_label,
+                self.get_model()._meta.model_name
+            )
+
+    def get_model(self, *args, **kwargs):
+        try:
+            return ContentType.objects.get(
+                app_label=self.kwargs['app_label'],
+                model=self.kwargs['model']
+            ).model_class()
+        except ContentType.DoesNotExist:
+            raise Exception(
+                "Model with app label {} and model name {} does not exist.".format(
+                    self.kwargs['app_label'],
+                    self.kwargs['model']
+                )
+            )
+
+    def get_template_names(self):
+
+        if self.kwargs.get('template_name') is not None:
+            return [self.kwargs.get('template_name')]
+        elif self.template_name is not None:
+            return [self.template_name]
+
+        template = 'admin/{app}/{model}/dynamic-list-view.html'.format(
+            app=self.model._meta.app_label,
+            model=self.model._meta.model_name
+        )
+
+        return [template, 'admin/generic/page/dynamic-list-view.html']
+
+    def get_context_data(self, *args, **kwargs):
+        self.model = self.get_model(*args, **kwargs)
+
+        context = super().get_context_data(**kwargs)
+
+        context['app_label'] = self.model._meta.app_label
+        context['model_name'] = self.model._meta.model_name
+
+        # Even though the serailizer is passed into the view as
+        # `serializer_class` and is indeed a class when it's passed in, by
+        # this time this code is running, it's an instance of the
+        # serializer, so we'll call it `serializer` in the context.
+        if self.kwargs.get('serializer_class'):
+            context['serializer'] = self.kwargs['serializer_class']
+            if 'map' in self.kwargs['serializer_class'](
+                    ).get_option('allowed_results_modes', []):
+                context['needs_map_config'] = True
+
+
+
+        if self.kwargs.get('endpoint'):
+            context['endpoint'] = self.kwargs['endpoint']
+
+        if self.request.GET.get('_column'):
+            context['default_columns'] = self.request.GET.getlist('_column')
+
+        if self.request.GET.get('_order'):
+            context['default_order_by'] = self.request.GET.getlist('_order')
+
+
+        # Generate list of all filters from GET parameters.
+        filters = {}
+
+        for key in self.request.GET:
+            if key[0] != '_':
+                filters[key] = self.parse_filter_values(
+                    self.request.GET.getlist(key)
+                )
+
+        context['default_filters'] = filters
+
+        return context
+
+    def parse_filter_values(self, value):
+        formatted = []
+        for v in value:
+            formatted.append(self.format_filter_value(v))
+        return formatted[0] if len(formatted) == 1 else formatted
+
+    def format_filter_value(self, value):
+        if value == 'true':
+            value = True
+        elif value == 'false':
+            value = False
+        return value
+
+
 class AdminGenericListView(
     StaffPermissionRequiredMixin,
     ContextMixin,
@@ -175,21 +281,35 @@ class AdminGenericListView(
 
     template_type = 'fluid'
 
+    def get_permission_required(self):
+        if self.kwargs.get('permission_required'):
+            return self.kwargs['permission_required']
+        elif hasattr(self, 'permission_required'):
+            return self.permission_required
+        else:
+            return '{}.add_{}'.format(
+                self.get_model()._meta.app_label,
+                self.get_model()._meta.model_name
+            )
+
     def get_model(self, *args, **kwargs):
         try:
             return ContentType.objects.get(
-                app_label=kwargs['app_label'],
-                model=kwargs['model']
+                app_label=self.kwargs['app_label'],
+                model=self.kwargs['model']
             ).model_class()
         except ContentType.DoesNotExist:
             raise Exception(
                 "Model with app label {} and model name {} does not exist.".format(
-                    kwargs['app_label'],
-                    kwargs['model']
+                    self.kwargs['app_label'],
+                    self.kwargs['model']
                 )
             )
 
     def get_template_names(self):
+
+        if self.kwargs.get('template_name'):
+            return [self.kwargs['template_name']]
 
         if self.template_name is not None:
             return [self.template_name]

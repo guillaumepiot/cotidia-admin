@@ -1,5 +1,4 @@
 import { call, put, select, take, takeEvery } from 'redux-saga/effects'
-import { delay } from 'redux-saga'
 import isEqual from 'lodash.isequal'
 
 import { uuid4 } from '../../../utils'
@@ -7,20 +6,13 @@ import { generateURL, fetchAuthenticated } from '../../../utils/api'
 
 import { showModal } from '../modal/sagas'
 
-import { refreshCurrentPage } from './actions'
 import * as types from './types'
 import * as modalTypes from '../modal/types'
 
 export function * configureFilter ({ payload: { filter } }) {
-  const { columnConfiguration, extraFilters, filters } = yield select((state) => state.search)
+  const { filterConfiguration, filters } = yield select((state) => state.search)
 
-  let title = 'Filter'
-
-  if (columnConfiguration[filter]) {
-    title = columnConfiguration[filter].label
-  } else {
-    title = extraFilters[filter].label
-  }
+  let title = filterConfiguration[filter].label
 
   const { submittedData } = yield call(showModal, {
     component: 'Filter',
@@ -97,14 +89,18 @@ export function getFilterValue (value) {
   }
 }
 
-function getSearchQueryString (data) {
+function getSearchQueryString (data, page = null) {
   const queryString = {}
 
   for (const [key, value] of Object.entries(data.filters)) {
-    const val = getFilterValue(value)
+    if (data.filterConfiguration.hasOwnProperty(key)) {
+      const queryParameter = data.filterConfiguration[key].queryParameter || key
 
-    if (val != null) {
-      queryString[key] = val
+      const val = getFilterValue(value)
+
+      if (val != null) {
+        queryString[queryParameter] = val
+      }
     }
   }
 
@@ -116,17 +112,18 @@ function getSearchQueryString (data) {
     queryString._q = data.searchTerm
   }
 
+  if (page) {
+    queryString._per_page = data.perPage
+    queryString._page = page
+  }
+
   return queryString
 }
 
 function * performSearch () {
-  const searchID = uuid4()
-
-  yield put({ type: types.SEARCH_START, payload: { id: searchID } })
-
+  // Before we perform the actual search, quickly just fire off the filter change event.
   const { search: data } = yield select()
 
-  // Now we have the search data, quickly just fire off the filter change event.
   const filterChangeEvent = new CustomEvent(
     'DynamicList:filterChange',
     { bubbles: true, detail: data.filters }
@@ -134,11 +131,28 @@ function * performSearch () {
 
   document.dispatchEvent(filterChangeEvent)
 
-  const queryString = getSearchQueryString(data)
+  // Now do the search - hardcode page to 1 to reset to first page.
+  yield call(getSearchResultForPage, 1)
+}
 
-  let url = generateURL(data.endpoint, { '?': queryString })
+function * getSearchResultForPage (page = null) {
+  const searchID = uuid4()
+
+  const { search: data } = yield select()
+
+  // If no page was sent in, default to the current page as a way to "refresh" the current page,
+  // further defaulting to 1 if there's no current Page set.
+  if (! page) {
+    page = data.pagination.page || 1
+  }
+
+  const queryString = getSearchQueryString(data, page)
+
+  const url = generateURL(data.endpoint, { '?': queryString })
 
   try {
+    yield put({ type: types.SEARCH_START, payload: { id: searchID } })
+
     const { ok, data: result } = yield call(fetchAuthenticated, 'GET', url)
 
     if (ok) {
@@ -156,7 +170,7 @@ function * performSearch () {
   }
 }
 
-function * refreshResult ({ uuid }) {
+function * refreshSingleResult ({ uuid }) {
   const { search: { endpoint } } = yield select()
 
   let url = generateURL(endpoint, { '?': { uuid } })
@@ -165,7 +179,7 @@ function * refreshResult ({ uuid }) {
 
   if (ok && data.results?.length) {
     yield put({
-      type: types.UPDATE_RESULT,
+      type: types.UPDATE_SINGLE_RESULT,
       payload: {
         uuid,
         // There should only be one result, but it'll still be an array. Either
@@ -177,34 +191,7 @@ function * refreshResult ({ uuid }) {
 }
 
 function * getResultsPage ({ payload: { page } }) {
-  const pagination = yield select((state) => state.search.pagination)
-
-  const url = pagination[page]
-
-  if (! url) {
-    return
-  }
-
-  const searchID = uuid4()
-
-  yield put({ type: types.SEARCH_START, payload: { id: searchID } })
-
-  try {
-    const { ok, data: result } = yield call(fetchAuthenticated, 'GET', url)
-
-    if (ok) {
-      yield put({
-        type: types.STORE_RESULTS,
-        payload: {
-          id: searchID,
-          url,
-          result,
-        },
-      })
-    }
-  } finally {
-    yield put({ type: types.SEARCH_END, payload: { id: searchID } })
-  }
+  yield call(getSearchResultForPage, page)
 }
 
 function * saveColumnConfig () {
@@ -218,9 +205,10 @@ function * saveColumnConfig () {
   const state = yield select((state) => state.search)
 
   const config = {
-    mode: state.mode,
+    resultsMode: state.resultsMode,
     orderColumn: state.orderColumn,
     orderAscending: state.orderAscending,
+    perPage: state.perPage,
   }
 
   // Only set visibleColumns if state.visibleColumns differs from state.defaultColumns, just so we
@@ -293,6 +281,7 @@ function * performBatchAction ({ payload: { action } }) {
 function * performGlobalAction ({ payload: { action } }) {
   const { search } = yield select()
 
+  // Don't pass a page into getSearchQueryString as we don't want the results to be paginated.
   const queryStringData = getSearchQueryString(search)
   const queryString = generateURL('', { '?': queryStringData })
 
@@ -304,18 +293,19 @@ function * handleDynamicListMessage ({ payload: { message } }) {
 
   if (message.endpoint === endpoint) {
     if (message.action === 'refresh') {
-      yield put({ type: types.PERFORM_SEARCH })
+      // A `null` page will get the current page.
+      yield put({ type: types.GET_RESULTS_PAGE, payload: { page: null } })
     } else if (message.action === 'refreshResult') {
-      yield put({ type: types.REFRESH_RESULT, uuid: message.resultUUID })
+      yield put({ type: types.REFRESH_SINGLE_RESULT, uuid: message.resultUUID })
     }
   }
 }
 
 function * editField ({ payload: { item, column, value } }) {
-  const columnConfig = yield select((state) => state.search.columnConfiguration[column])
+  const editConfig = yield select((state) => state.search.columnConfiguration[column].editConfiguration)
 
   // TODO: Get full item object and pass it in to generateURL so that we have richer formatting of the URL.
-  let url = generateURL(columnConfig.editEndpoint, { uuid: item })
+  let url = generateURL(editConfig.endpoint, { uuid: item })
 
   try {
     const { ok, data } = yield call(
@@ -327,9 +317,8 @@ function * editField ({ payload: { item, column, value } }) {
 
     if (ok) {
       if (data) {
-        // yield put ({ type: types.REFRESH_RESULT, uuid: data.uuid })
         yield put({
-          type: types.UPDATE_RESULT,
+          type: types.UPDATE_SINGLE_RESULT,
           payload: {
             uuid: item,
             data,
@@ -337,8 +326,8 @@ function * editField ({ payload: { item, column, value } }) {
         })
       }
 
-      if (columnConfig.afterEdit) {
-        columnConfig.afterEdit(value)
+      if (editConfig.onSuccess) {
+        editConfig.onSuccess(value)
       }
     }
   } catch {
@@ -354,11 +343,13 @@ export default function * watcher () {
   yield takeEvery(types.SET_SEARCH_TERM, performSearch)
   yield takeEvery(types.SET_ORDER_COLUMN, performSearch)
   yield takeEvery(types.TOGGLE_ORDER_DIRECTION, performSearch)
+  yield takeEvery(types.SET_PER_PAGE, performSearch)
   yield takeEvery(types.SET_FILTER_VALUE, performSearch)
+  yield takeEvery(types.REMOVE_FILTER_VALUE, performSearch)
   yield takeEvery(types.CLEAR_FILTER, performSearch)
   yield takeEvery(types.CLEAR_FILTERS, performSearch)
 
-  yield takeEvery(types.REFRESH_RESULT, refreshResult)
+  yield takeEvery(types.REFRESH_SINGLE_RESULT, refreshSingleResult)
 
   yield takeEvery(types.RESET_COLUMNS, removeSavedColumnConfig)
   yield takeEvery(

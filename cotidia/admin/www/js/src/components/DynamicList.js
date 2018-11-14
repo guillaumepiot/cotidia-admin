@@ -4,32 +4,37 @@ import PropTypes from 'prop-types'
 import { FullScreen } from './elements/global'
 import Modal from '../containers/Modal'
 
-import Header from '../containers/Header'
 import FilterSidebar from '../containers/FilterSidebar'
 import ToolBar from '../containers/ToolBar'
-import SearchResultsList from '../containers/SearchResultsList'
-import SearchResultsTable from '../containers/SearchResultsTable'
+import FilterTagBar from '../containers/FilterTagBar'
+
+import SearchResultsList from '../containers/results/list/SearchResultsList'
+import SearchResultsMap from '../containers/results/map/SearchResultsMap'
+import SearchResultsTable from '../containers/results/table/SearchResultsTable'
+
 import Pagination from '../containers/Pagination'
 import GlobalActions from '../containers/GlobalActions'
 
 export default class DynamicList extends Component {
   static propTypes = {
     bootstrapped: PropTypes.bool.isRequired,
+    filterTagBarVisible: PropTypes.bool,
     networkError: PropTypes.bool.isRequired,
-    searchMode: PropTypes.string.isRequired,
-    hasListConfig: PropTypes.bool.isRequired,
     hasSidebar: PropTypes.bool.isRequired,
+    resultsMode: PropTypes.string.isRequired,
     showSidebar: PropTypes.bool.isRequired,
+    title: PropTypes.string,
   }
 
   render () {
     const {
       bootstrapped,
-      networkError,
-      searchMode,
+      filterTagBarVisible,
       hasSidebar,
+      networkError,
+      resultsMode,
       showSidebar,
-      hasListConfig,
+      title,
     } = this.props
 
     if (networkError) {
@@ -50,29 +55,43 @@ export default class DynamicList extends Component {
 
     return (
       <>
-        <Header />
+        {title && (
+          <div className='content__head'>
+            <div className='content__inner content-head'>
+              <div className='content-head__title'>{title}</div>
+            </div>
+          </div>
+        )}
+
         <ToolBar />
+
+        {filterTagBarVisible && <FilterTagBar />}
+
         <div className={`content__body ${(hasSidebar && showSidebar) ? 'content__body--sidebar' : ''}`}>
           <div className='content__inner'>
             <div className='content__list'>
-              {hasListConfig && (searchMode === 'list') && (
+              {resultsMode === 'list' && (
                 <SearchResultsList />
               )}
-
-              {searchMode === 'table' && (
+              {resultsMode === 'table' && (
                 <SearchResultsTable />
+              )}
+              {resultsMode === 'map' && (
+                <SearchResultsMap />
               )}
             </div>
             <FilterSidebar />
           </div>
         </div>
 
-        <div className='content__foot'>
-          <div className='content__inner content-foot'>
-            <Pagination />
-            <GlobalActions />
+        {resultsMode !== 'map' && (
+          <div className='content__foot'>
+            <div className='content__inner content-foot'>
+              <Pagination />
+              <GlobalActions />
+            </div>
           </div>
-        </div>
+        )}
 
         <Modal />
       </>

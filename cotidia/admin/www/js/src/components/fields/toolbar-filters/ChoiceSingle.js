@@ -7,10 +7,12 @@ export default class ChoiceSingle extends Component {
   static propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    options: PropTypes.arrayOf(PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired,
-    })).isRequired,
+    configuration: PropTypes.shape({
+      options: PropTypes.arrayOf(PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        value: PropTypes.string.isRequired,
+      })).isRequired,
+    }).isRequired,
     updateValue: PropTypes.func.isRequired,
     value: PropTypes.string,
   }
@@ -28,7 +30,8 @@ export default class ChoiceSingle extends Component {
           controlOnly
           label={this.props.label}
           name={this.props.name}
-          options={this.props.options}
+          placeholder={this.props.label}
+          options={this.props.configuration.options}
           updateValue={this.updateValue}
           value={this.props.value}
         />

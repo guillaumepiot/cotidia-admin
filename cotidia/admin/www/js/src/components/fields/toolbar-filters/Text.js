@@ -24,7 +24,9 @@ export default class Text extends Component {
           controlOnly
           name={this.props.name}
           label={this.props.label}
+          placeholder={this.props.label}
           updateValue={this.updateValue}
+          updateValueOnEnter
           value={this.props.value}
         />
       </div>

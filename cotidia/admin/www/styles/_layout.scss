@@ -1,41 +1,80 @@
 $toolbar-height: 4rem; // Toolbar height
 
+body {
+    // Content has bg-color but doesnt always extend full height
+    background-color: #f7f8fb;
+}
+
 .layout {
+    display: none;
+
     &__menu {
+        width: 100%;
+        z-index: 6;
+
+        @media screen and (max-width: $menu-breakpoint-max) {
+            // Fixed header on mobile
+            height: $menu_header_height;
+            position: fixed;
+            top: 0;
+            z-index: 10;
+        }
+
         @media screen and (min-width: $menu-breakpoint) {
             width: $menu-width;
             min-height: 100vh;
-            position: fixed;
-            z-index: 3;
         }
     }
+
     &__main {
-        @media screen and (min-width: $menu-breakpoint) {
-            display: flex;
-            flex-direction: column;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        position: relative;
+
+        // @media screen and (max-width: $menu-breakpoint-max) {
+        //     padding-top: $menu_header_height; // To allow for mobile fixed header height
+        // }
+
+        @media screen and (min-width: $mobile-width) {
+            height: 100vh;
             position: fixed;
+            top: 0;
+            transition: left $animation-speed ease, width $animation-speed ease;
+            width: 100vw;
+            padding-top: $menu_header_height;
+        }
+
+        @media screen and (max-width: $menu-breakpoint) {
+            top: $menu_header_height;
+            padding-top: 0;
+        }
+
+        @media screen and (min-width: $menu-breakpoint) {
             top: 0;
             left: $menu-width;
             width: calc(100vw - #{$menu-width});
-            height: 100vh;
-            transition: left $animation-speed ease, width $animation-speed ease;
+            padding-top: 0;
         }
     }
+
     &__toolbar {
         @media screen and (min-width: $menu-breakpoint) {
-            position: relative;
             height: $toolbar-height;
+            position: relative;
             z-index: 2;
         }
     }
+
     &__content {
+        flex: 1;
+        overflow-y: scroll;
+
         @media screen and (min-width: $menu-breakpoint) {
-            flex: 1;
             overflow-y: scroll;
             position: relative;
             z-index: 1;
-            display: flex;
-            flex-direction: column;
         }
     }
 }
@@ -54,7 +93,6 @@ body.menu--sidebar-collapse {
         @media screen and (min-width: $menu-breakpoint) {
             left: $toolbar_height;
             width: calc(100vw - #{$toolbar_height});
-
         }
     }
 }

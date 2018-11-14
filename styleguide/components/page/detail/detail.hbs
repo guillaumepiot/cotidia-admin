@@ -1,0 +1,73 @@
+<form class="content form form--animate" action="" method="post">
+    {{> @content-head-title-actions}}
+    <div class="content__body">
+        <div class="content__inner">
+            <fieldset class="detail">
+                <legend>Member details</legend>
+                <div class="form__row">
+                    <div class="form__group">
+                        <label class="form__label">Name</label>
+                        <div class="form__control">John Doe</div>
+                    </div>
+                </div>
+                <div class="form__row">
+                    <div class="form__group">
+                        <label class="form__label">Role</label>
+                        <div class="form__control">Managing Director</div>
+                    </div>
+                </div>
+                <div class="form__row">
+                    <div class="form__group">
+                        <label class="form__label">Slug</label>
+                        <div class="form__control">alan-doe</div>
+                    </div>
+                </div>
+                <div class="form__row">
+                    <div class="form__group">
+                        <label class="form__label">Biography</label>
+                        <div class="form__control">Sed molestie ut quam vitae placerat. Phasellus id tristique purus. Nam eget commodo nunc. Donec ultricies volutpat mi, rhoncus commodo odio hendrerit vitae. Praesent mauris ex, luctus vel elit eu, lobortis molestie dolor eleifend auctor.</div>
+                    </div>
+                </div>
+                <div class="form__row">
+                    <div class="form__group">
+                        <label class="form__label">Email</label>
+                        <div class="form__control">name@email.com</div>
+                    </div>
+                    <div class="form__group">
+                        <label class="form__label">Phone</label>
+                        <div class="form__control">+44 (0) 121 638 0845</div>
+                    </div>
+                </div>
+                <div class="form__row">
+                    <div class="form__group">
+                        <label class="form__label">Active</label>
+                        <div class="form__control">
+                            <span class="fa fa-check text-green"></span>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="table-view">
+                <legend>URLs</legend>
+                <table class="table table--clickable table--admin-mobile-view">
+                    <thead>
+                        <tr>
+                            <th>Network</th>
+                            <th>URL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>LinkedIn</td>
+                            <td><a href="https://www.linkedin.com/in/firstname-surname" target="_blank">https://www.linkedin.com/in/firstname-surname</a></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><a href="/admin/team/member/4/social/add" class="btn btn--create btn--small">Add URL</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+    </div>
+    {{> @content-foot}}
+</form>

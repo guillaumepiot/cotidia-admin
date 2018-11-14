@@ -72,7 +72,11 @@ if (!Element.prototype.matches) {
 
     // if there was no group found, or the group that was found opted out of the
     // animation, do not continue.
-    if (! group || group.classList.contains('form__group--no-animate')) {
+    if (
+      ! group ||
+      group.classList.contains('form__group--no-animate') ||
+      group.classList.contains('form__group--boxed')
+    ) {
       return
     }
     // First set the initial state of the field. (We have to use setTimeout as

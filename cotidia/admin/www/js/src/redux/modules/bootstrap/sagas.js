@@ -11,9 +11,10 @@ export function * bootstrap ({ payload: config }) {
   yield put({ type: searchTypes.SET_DETAIL_URL, payload: config.detailURL })
   yield put({ type: searchTypes.SET_BATCH_ACTIONS, payload: config.batchActions || [] })
   yield put({ type: searchTypes.SET_GLOBAL_ACTIONS, payload: config.globalActions || [] })
-  yield put({ type: searchTypes.SET_EXTRA_FILTERS, payload: config.extraFilters || {} })
+  yield put({ type: searchTypes.SET_FILTER_CONFIGURATION, payload: config.filterConfiguration || {} })
   yield put({ type: searchTypes.SET_TOOLBAR_FILTERS, payload: config.toolbarFilters || [] })
   yield put({ type: searchTypes.SET_SIDEBAR_FILTERS, payload: config.sidebarFilters || [] })
+  yield put({ type: searchTypes.SET_FILTER_SUGGEST_CONFIGURATION, payload: config.filterSuggestConfiguration })
 
   const { sidebarStartsShown = false, ...configRest } = config.config
 
@@ -39,17 +40,20 @@ export function * bootstrap ({ payload: config }) {
   }
 
   yield put({
-    type: searchTypes.SET_COLUMN_CONFIG,
+    type: searchTypes.SET_SEARCH_CONFIG,
     payload: {
       columnConfiguration: config.columnConfiguration,
       columns: config.columns,
       defaultColumns: config.defaultColumns,
       defaultFilters: config.defaultFilters,
+      defaultPerPage: config.defaultPerPage || 50,
       listFields: config.listFields,
       defaultOrderColumn,
       defaultOrderAscending,
-      mode: config.mode || 'table',
+      allowedResultsModes: config.allowedResultsModes || ['table'],
+      defaultResultsMode: config.defaultResultsMode || 'table',
       categoriseBy: config.categoriseBy || null,
+      mapConfiguration: config.mapConfiguration,
     },
   })
 

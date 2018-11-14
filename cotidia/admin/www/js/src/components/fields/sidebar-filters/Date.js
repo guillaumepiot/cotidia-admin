@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import { getValueFormatter } from '../../../utils/resultItems'
 
+import { Icon } from '../../elements/global'
+
 class Date extends Component {
   static propTypes = {
     config: PropTypes.object,
@@ -31,9 +33,11 @@ class Date extends Component {
     return (
       <div className='form__group'>
         <button className='btn btn--outline' onClick={this.openDateRangePicker} type='button'>
-          Choose date range for {this.props.label}
+          <Icon className='far' icon='calendar-alt' />
+          {' '}
+          {this.props.label}
+          {value && `: ${min} – ${max}`}
         </button>
-        {value && `${min} – ${max}`}
       </div>
     )
   }

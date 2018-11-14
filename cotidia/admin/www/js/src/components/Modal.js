@@ -70,7 +70,10 @@ export default class Modal extends Component {
   componentWillReceiveProps (nextProps) {
     // If closing, reset modal to initial state.
     if (this.props.isOpen === true && nextProps.isOpen === false) {
-      this.setState({ data: initialState.data })
+      this.setState({
+        data: initialState.data,
+        bork: initialState.bork,
+      })
     }
 
     // If opening, and we have data, set it.
@@ -80,6 +83,8 @@ export default class Modal extends Component {
   }
 
   componentDidCatch () {
+    // TODO: Test whether the error is still caught by Sentry or whether we need to explicitly
+    // TODO: capture it here.
     this.setState({ bork: true })
   }
 
@@ -154,7 +159,7 @@ export default class Modal extends Component {
             ) }
             <div className='dialog__body dialog-section--padded'>
               { bork ? (
-                <p>Something has gone horribly wrong!</p>
+                <p>Sorry, there has been an error in this modal.</p>
               ) : (form ? (
                 <form id={id} onSubmit={this.submitModal}>
                   { component }

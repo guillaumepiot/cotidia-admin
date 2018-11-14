@@ -18,7 +18,7 @@ export const getValueFormatter = (config) => {
     boolean: (value) => (
       value ? <Icon icon='check' /> : <Icon icon='times' />
     ),
-    link: (value, type) => {
+    link: (value, _, __, type) => {
       if (! value) {
         return null
       }
@@ -34,10 +34,10 @@ export const getValueFormatter = (config) => {
       return <a href={link} onClick={(e) => e.stopPropagation()}>{value}</a>
     },
     raw: (value) => ({ __html: value }),
-    label: (value, type) => value && (
+    label: (value, _, __, type) => value && (
       <span className={`label ${type && `label--${type}`}`}>{value}</span>
     ),
-    file: (value, item, accessor, endpoint, extraData) => (
+    file: (value, item, _, endpoint, extraData) => (
       <FileUpload
         endpoint={generateURL(endpoint, item)}
         extraData={extraData}
@@ -52,7 +52,7 @@ export const getValueFormatter = (config) => {
    * is that it is made to make the implementing devloper's job as easy as possible, so should
    * handle arrays of things like strings, objects with a __html for raw HTML and even React
    * elements (e.g. file uploader widgets). And of course, strings and the other two are treated
-   * quite diffrerently.
+   * quite differently.
    * Anyway, it's all quite disgusting, and I hate the multiple-array-iteration, along with cloning
    * React elements, etc., but it's the best I can come up with at the moment.
    */

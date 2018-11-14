@@ -1,41 +1,59 @@
-<menu class="menu">
-    <header class="menu__item menu__item--open menu-item">
-        <a href="#" class="menu-item__link"><span class="fa fa-bars"></span></a>
-        <span class="menu__title">{{SITE_NAME}}</span>
+{% load staticfiles %}
+<menu class="layout__menu menu">
+    <header class="menu__header menu-header">
+        {% if ADMIN_SITE_LOGO %}
+            <img src="{% static ADMIN_SITE_LOGO %}" class="menu-header__logo" alt="{{SITE_NAME}}">
+        {% else %}
+            {{SITE_NAME}}
+        {% endif %}
+        <div class="menu__item menu__item--open menu-item">
+            <a href="#" class="menu-item__link" title="View navigation" aria-label="View navigation">
+                <i class="fas fa-bars"></i>
+            </a>
+        </div>
+        <a class="menu-item__link hidden-mobile hidden-tablet" href="{% url 'dashboard' %}" title="Dashboard" aria-label="Dashboard">
+            <i class="fas fa-tachometer-alt"></i>
+        </a>
     </header>
     <ul class="menu__container">
-        <li class="menu__item menu__item--close menu-item">
-            <a href="#" class="menu-item__link"><span class="fa fa-close"></span></a>
+        <li class="menu__item menu__item--close menu-item menu-item--static">
+            <a class="menu-item__link" href="#" title="Close" aria-label="close">
+                <i class="fa fa-times"></i>
+            </a>
         </li>
-        <li class="menu__item menu-item menu-item--home">
-            <a href="{% url 'dashboard' %}" class="menu-item__link">
+        <li class="menu__item menu-item menu-item--static hidden-laptop hidden-desktop">
+            <a class="menu-item__link" href="#" title="Dashboard" aria-label="Dashboard">
                 <span class="menu-item__link-icon">
-                    <span class="fa fa-home"></span>
+                    <i class="fas fa-tachometer-alt"></i>
                 </span>
-                <span class="menu-item__link-text">{{SITE_NAME}}</span>
+                <span class="menu-item__link-text">Dashboard</span>
             </a>
         </li>
         {% for item in menu %}
-            {% if not item.url and not item.nav_items %}
+            {% if item.nav_items %}
                 {% include "admin/menu/menu_section.html" %}
             {% else %}
                 {% include "admin/menu/menu_item.html" %}
             {% endif %}
         {% endfor %}
-        <li class="menu__item menu__item--sidebar-expand">
-            <a href="#" class="menu-item__link" title="expand">
-                <span class="menu-item__link-icon">
-                    <span class="fa fa-chevron-right"></span>
-                </span>
-            </a>
-        </li>
-        <li class="menu__item menu__item--sidebar-collapse">
-            <a href="#" class="menu-item__link" title="collapse">
-                <span class="menu-item__link-icon">
-                    <span class="fa fa-chevron-left"></span>
-                </span>
-                <span class="menu-item__link-text">Collapse menu</span>
-            </a>
-        </li>
     </ul>
+    <footer class="menu__footer menu-footer">
+        {% if ADMIN_SHOW_BRANDING %}
+        <a href="https://cotidia.com/" class="menu-footer__text" target="_blank" title="Go to cotidia.com">
+            Powered by Cotidia
+        </a>
+        {% endif %}
+        <ul class="menu-footer__list">
+            <li class="menu__item menu__item--sidebar-expand">
+                <a class="menu-item__link" href="#" title="Expand menu">
+                    <i class="fas fa-angle-right"></i>
+                </a>
+            </li>
+            <li class="menu__item menu__item--sidebar-collapse">
+                <a class="menu-item__link" href="#" title="Collapse menu">
+                    <i class="fas fa-angle-left"></i>
+                </a>
+            </li>
+        </ul>
+    </footer>
 </menu>

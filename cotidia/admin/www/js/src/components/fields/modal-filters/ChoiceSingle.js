@@ -7,10 +7,12 @@ export default class ChoiceSingle extends Component {
   static propTypes = {
     config: PropTypes.shape({
       label: PropTypes.string.isRequired,
-      options: PropTypes.arrayOf(PropTypes.shape({
-        label: PropTypes.string.isRequired,
-        value: PropTypes.any.isRequired,
-      })).isRequired,
+      configuration: PropTypes.shape({
+        options: PropTypes.arrayOf(PropTypes.shape({
+          label: PropTypes.string.isRequired,
+          value: PropTypes.any.isRequired,
+        })).isRequired,
+      }).isRequired,
     }).isRequired,
     data: PropTypes.shape({
       value: PropTypes.string,
@@ -29,10 +31,10 @@ export default class ChoiceSingle extends Component {
       <div className='form__group'>
         <label className='form__label'>{config.label} is</label>
         <div className='form__control'>
-          {config.options.length < 15
+          {config.configuration.options.length < 15
             ? (
               <ul>
-                {config.options.map(({ label, value }) => (
+                {config.configuration.options.map(({ label, value }) => (
                   <li key={value}>
                     <label>
                       <input
@@ -50,9 +52,9 @@ export default class ChoiceSingle extends Component {
             ) : (
               <Select
                 name='value'
-                options={config.options}
+                options={config.configuration.options}
                 updateValue={this.updateValue}
-                values={data.value || ''}
+                value={data.value || ''}
               />
             )
           }

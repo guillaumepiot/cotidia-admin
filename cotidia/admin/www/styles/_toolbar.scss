@@ -1,4 +1,8 @@
+$toolbar-padding: $padding;
+$avatar-size: 2.667rem;
+
 .toolbar {
+    align-items: center;
     background-color: $toolbar_background_color;
     background-color: var(--toolbar_background_color, $toolbar_background_color);
     border-bottom: 1px solid $toolbar-border-color;
@@ -8,8 +12,7 @@
     color: var(--toolbar_text_color, $toolbar_text_color);
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 0 1rem;
+    padding: 0 $toolbar-padding;
 
     @media screen and (min-width: $menu-breakpoint) {
         height: $toolbar-height;
@@ -20,23 +23,30 @@
         color: var(--toolbar_profile_avatar_background_color, $toolbar_profile_avatar_background_color);
     }
 
-    &__left {
+    &__left,
+    &__right {
+        align-items: center;
         display: flex;
         justify-content: flex-start;
-        align-items: center;
+    }
 
+    &__left {
         .toolbar__item {
-            margin-right: 1rem;
+            margin-right: $toolbar-padding * 0.667;
+
+            @media screen and (min-width: $menu-breakpoint) {
+                margin-right: $toolbar-padding;
+            }
         }
     }
 
     &__right {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-
         .toolbar__item {
-            margin-left: 1rem;
+            margin-left: $toolbar-padding * 0.667;
+
+            @media screen and (min-width: $menu-breakpoint) {
+                margin-left: $toolbar-padding;
+            }
         }
     }
 
@@ -56,11 +66,11 @@
 }
 
 .toolbar-profile {
-    position: relative;
-    height: $toolbar_height;
-    display: flex;
-    justify-content: center;
     align-items: center;
+    display: flex;
+    height: $toolbar_height;
+    justify-content: center;
+    position: relative;
 
     &:hover {
         cursor: pointer;
@@ -68,7 +78,7 @@
         .toolbar-menu {
             display: block;
             opacity: 1;
-            right: -0.5rem;
+            right: $toolbar-padding / 2;
             transform: translate(0, 4px);
         }
 
@@ -78,31 +88,32 @@
     }
 
     &__avatar {
-        @include font-size($font_size--normal);
         background-color: $toolbar_profile_avatar_background_color;
         background-color: var(--toolbar_profile_avatar_background_color, $toolbar_profile_avatar_background_color);
+        border-radius: ($toolbar_height - ($toolbar-padding / 2)) / 2;
+        border-width: 0;
         color: $toolbar_profile_avatar_text_color;
         color: var(--toolbar_profile_avatar_text_color, $toolbar_profile_avatar_text_color);
         display: inline-block;
-        width: 39px;
-        height: 39px;
-        border-radius: ($toolbar_height - 0.5rem) / 2;
-        border-width: 0;
-        text-align: center;
+        height: $avatar-size;
+        margin-right: $toolbar-padding;
         position: relative;
-        margin-right: 1rem;
+        text-align: center;
         top: 0;
+        width: $avatar-size;
+        @include font-size($font_size--normal);
 
         &::after {
-            content: "";
-            position: absolute;
-            pointer-events: none;
-            right: -1rem;
-            top: calc(50% - 2px);
             @include triangle(down, 10px, 5px, rgba(255, 255, 255, 0.5));
+
             border-top-color: $toolbar_profile_avatar_arrow_color;
             border-top-color: var(--toolbar_profile_avatar_arrow_color, $toolbar_profile_avatar_arrow_color);
+            content: "";
             opacity: 0.5;
+            position: absolute;
+            pointer-events: none;
+            right: -$toolbar-padding;
+            top: calc(50% - 2px);
         }
 
         &:hover {
@@ -116,11 +127,11 @@
 }
 
 .toolbar-shortcuts {
-    position: relative;
-    height: $toolbar_height;
+    align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
+    height: $toolbar_height;
+    position: relative;
 
     &:hover {
         cursor: pointer;
@@ -128,7 +139,7 @@
         .toolbar-menu {
             display: block;
             opacity: 1;
-            right: -0.5rem;
+            right: -($toolbar-padding / 2);
             transform: translate(0, 4px);
         }
     }
@@ -136,48 +147,28 @@
     .btn {
         background-color: $toolbar_profile_avatar_background_color;
         background-color: var(--toolbar_profile_avatar_background_color, $toolbar_profile_avatar_background_color);
-        border-width: 0;
         border-radius: 50px;
+        border-width: 0;
     }
 }
 
 .toolbar-menu {
-    position: absolute;
-    top: calc( #{$toolbar_height} - 5px);
-    right: -9999px;
-    opacity: 0;
-    width: 240px;
     background-color: #fff;
     border: 1px solid $toolbar-border-color;
     border-radius: $border-radius;
     box-shadow: 0px 2px 4px rgba(43, 47, 56, 0.18);
+    opacity: 0;
+    position: absolute;
+    right: -9999px;
+    top: calc( #{$toolbar_height} - 5px);
     transform: translate(0, -4px);
     transition: transform $animation-speed ease, opacity $animation-speed ease;
-    // margin-top: 4px;
-
-    // &::before {
-    //     content: "";
-    //     position: absolute;
-    //     right: 0.5rem;
-    //     top: -9px;
-    //     @include triangle(up, 16px, 8px, $toolbar-form-border-color);
-    //     border-top-color: $toolbar_profile_avatar_arrow_color;
-    //     border-top-color: var(--toolbar_profile_avatar_arrow_color, $toolbar_profile_avatar_arrow_color);
-    // }
-
-    // &::after {
-    //     content: "";
-    //     position: absolute;
-    //     right: 0.5rem;
-    //     top: -8px;
-    //     @include triangle(up, 16px, 8px, #fff);
-    //     border-top-color: $toolbar_profile_avatar_arrow_color;
-    //     border-top-color: var(--toolbar_profile_avatar_arrow_color, $toolbar_profile_avatar_arrow_color);
-    // }
+    width: 240px;
+    z-index: 6;
 
     &__link {
         display: block;
-        padding: 0 1rem;
+        padding: 0 $toolbar-padding;
         line-height: 3rem;
 
         &:hover {
@@ -186,9 +177,9 @@
     }
 
     &__item {
-        padding: 0.5rem 1rem;
-        color: $grey--dark;
         border-bottom: 1px solid $grey--light;
+        color: $grey--dark;
+        padding: ($toolbar-padding / 2) ($toolbar-padding);
     }
 
     &--active {

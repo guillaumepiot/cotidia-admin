@@ -2,4 +2,28 @@
     .svg-inline--fa {
         vertical-align: -0.18em;
     }
+
+    &--light {
+        border-width: 1px;
+
+        &.btn--outline {
+            border-color: $grey--light;
+
+            &.btn--primary {
+                border-color: $background_color--primary;
+            }
+            &.btn--create {
+                border-color: $background_color--create;
+            }
+            &.btn--change {
+                border-color: $background_color--change;
+            }
+            &.btn--cancel {
+                border-color: $background_color--cancel;
+            }
+            &.btn--delete {
+                border-color: $background_color--delete;
+            }
+        }
+    }
 }

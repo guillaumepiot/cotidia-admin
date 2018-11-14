@@ -36,7 +36,10 @@ class ContextMixin:
         context['verbose_name_plural'] = self.model._meta.verbose_name_plural
         context['http_referer'] = self.request.META.get("HTTP_REFERER")
 
-        context['template_type'] = self.template_type
+        if kwargs.get('template_type'):
+            context['template_type'] = kwargs['template_type']
+        else:
+            context['template_type'] = self.template_type
 
         context["list_url"] = self.get_list_url()
 
@@ -50,8 +53,7 @@ class ContextMixin:
 
 class ChildMixin:
     def get_parent(self, *args, **kwargs):
-        parent_id = kwargs['parent_id']
-
+        parent_id = self.kwargs['parent_id']
         return get_object_or_404(self.parent_model, id=parent_id)
 
     def get(self, *args, **kwargs):
