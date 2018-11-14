@@ -13,7 +13,7 @@ $content-padding: $padding;
         overflow-y: hidden;
 
         .content__body {
-            height: calc(100% - #{$content-head-height + $content-toolbar-height + $content-foot-height} - 1px);
+            flex: 1;
             overflow-x: hidden;
             overflow-y: scroll;
             position: relative;
@@ -25,7 +25,7 @@ $content-padding: $padding;
             overflow-y: auto;
             width: 100%;
 
-            @media screen and (min-width: $menu-breakpoint) {
+            @media screen and (min-width: $mobile-width) {
                 position: absolute;
             }
         }
@@ -58,7 +58,7 @@ $content-padding: $padding;
     }
 
     &__body {
-        @media screen and (max-width: $menu-breakpoint-max) {
+        @media screen and (max-width: $mobile-width) {
             flex: 1;
         }
 
@@ -165,7 +165,7 @@ $content-padding: $padding;
     padding-bottom: $padding / 2;
     width: 100%;
 
-    @media screen and (min-width: $menu-breakpoint) {
+    @media screen and (min-width: $mobile-width) {
         height: $content-head-height;
         padding-top: 0;
         padding-bottom: 0;
@@ -245,7 +245,10 @@ body.content--centered {
     .content__list {
         border-left: 1px solid $table-row-border-color;
         border-right: 1px solid $table-row-border-color;
-        width: calc(100% - (#{$content-padding} * 2));
+
+        @media screen and (min-width: $tablet-width) {
+            width: calc(100% - (#{$content-padding} * 2));
+        }
     }
 
     .content__body--sidebar .content__list {
@@ -267,7 +270,9 @@ body.content--padded {
     }
 
     .content--sticky .content__list {
-        width: calc(100% - (#{$content-padding} * 2));
+        @media screen and (min-width: $tablet-width) {
+            width: calc(100% - (#{$content-padding} * 2));
+        }
     }
 
     .content__body {

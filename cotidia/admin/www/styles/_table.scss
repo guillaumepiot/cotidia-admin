@@ -42,7 +42,7 @@
         > thead {
             > tr {
                 > th, > td {
-                    @media screen and (min-width: $menu-breakpoint) {
+                    @media screen and (min-width: $mobile-width) {
                         left: 0;
                         position: -webkit-sticky; // for safari
                         position: sticky;
@@ -82,7 +82,7 @@
         > tfoot {
             > tr {
                 > th, > td {
-                    @media screen and (min-width: $menu-breakpoint) {
+                    @media screen and (min-width: $mobile-width) {
                         bottom: 0;
                         left: 0;
                         position: -webkit-sticky; // for safari
@@ -123,7 +123,7 @@
                         }
                     }
 
-                    @media screen and (min-width: $menu-breakpoint) {
+                    @media screen and (min-width: $mobile-width) {
                         &:first-child {
                             box-shadow: inset -1px 0px $grey--light;
                             left: 0px;
@@ -208,13 +208,25 @@
         }
     }
 
-    &--admin-mobile-view{
+    &--admin-mobile-view {
+
         @media screen and (max-width: $mobile-width) {
+            td, th {
+                display: none;
+            }
             > thead > tr > th:first-child,
-            > tbody > tr > td:first-child,
-            .action-column + th:nth-child(2),
-            .action-column + td:nth-child(2){
+            > tbody > tr > td:first-child{
                 display: table-cell;
+            }
+        }
+        &.table--action {
+            @media screen and (max-width: $mobile-width) {
+                > thead > tr > th:first-child, th:nth-child(2),
+                > tbody > tr > td:first-child, td:nth-child(2),
+                > tfoot > tr > th:first-child, th:nth-child(2) {
+                    display: table-cell;
+                    left: auto;
+                }
             }
         }
     }

@@ -33,17 +33,29 @@ body {
         overflow-y: scroll;
         position: relative;
 
-        @media screen and (max-width: $menu-breakpoint-max) {
-            padding-top: $menu_header_height; // To allow for mobile fixed header height
-        }
+        // @media screen and (max-width: $menu-breakpoint-max) {
+        //     padding-top: $menu_header_height; // To allow for mobile fixed header height
+        // }
 
-        @media screen and (min-width: $menu-breakpoint) {
+        @media screen and (min-width: $mobile-width) {
             height: 100vh;
-            left: $menu-width;
             position: fixed;
             top: 0;
             transition: left $animation-speed ease, width $animation-speed ease;
+            width: 100vw;
+            padding-top: $menu_header_height;
+        }
+
+        @media screen and (max-width: $menu-breakpoint) {
+            top: $menu_header_height;
+            padding-top: 0;
+        }
+
+        @media screen and (min-width: $menu-breakpoint) {
+            top: 0;
+            left: $menu-width;
             width: calc(100vw - #{$menu-width});
+            padding-top: 0;
         }
     }
 

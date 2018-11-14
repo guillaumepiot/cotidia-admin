@@ -13,11 +13,9 @@ $avatar-size: 2.667rem;
     display: flex;
     justify-content: space-between;
     padding: 0 $toolbar-padding;
-    zoom: 85%;
 
     @media screen and (min-width: $menu-breakpoint) {
         height: $toolbar-height;
-        zoom: 100%;
     }
 
     a {
@@ -103,10 +101,6 @@ $avatar-size: 2.667rem;
         text-align: center;
         top: 0;
         width: $avatar-size;
-
-        @media screen and (min-width: $menu-breakpoint) {
-            @include font-size($font_size--normal);
-        }
 
         &::after {
             @include triangle(down, 10px, 5px, rgba(255, 255, 255, 0.5));
