@@ -3321,7 +3321,15 @@ body:not(.menu--sidebar-collapse) .menu-footer .menu-item__link {
     position: relative;
     text-align: center;
     top: 0;
-    width: 2.667rem; }
+    width: 2.667rem;
+    line-height: 1.5em !important;
+    font-size: 1rem !important; }
+    @media screen and (min-width: 768px) {
+      .toolbar-profile__avatar {
+        font-size: 1rem !important; } }
+    @media screen and (min-width: 1024px) {
+      .toolbar-profile__avatar {
+        font-size: 1rem !important; } }
     .toolbar-profile__avatar::after {
       border-style: solid;
       height: 0;

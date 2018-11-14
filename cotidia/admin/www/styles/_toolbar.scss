@@ -101,6 +101,7 @@ $avatar-size: 2.667rem;
         text-align: center;
         top: 0;
         width: $avatar-size;
+        @include font-size($font_size--normal);
 
         &::after {
             @include triangle(down, 10px, 5px, rgba(255, 255, 255, 0.5));
