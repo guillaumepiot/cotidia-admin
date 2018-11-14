@@ -13,9 +13,13 @@
 {% endblock layout_content %}
 
 {% block footer_scripts %}
+    {% if needs_map_config %}
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.33&amp;key={{ GOOGLE_API_KEY }}"></script>
+    {% endif %}
     {{block.super}}
     <script>
         // <![CDATA[
+
             var dynamicListData = {% render_dynamic_list_config app_label model_name request.user.token.key serializer=serializer endpoint=endpoint default_columns=default_columns default_order_by=default_order_by default_filters=default_filters %}
 
             if (window.ReactDOM && window.React && window.DynamicList) {

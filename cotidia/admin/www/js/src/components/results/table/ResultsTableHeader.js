@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc'
 
-import { Icon } from './elements/global'
-import { uuid4 } from '../utils'
+import { Icon } from '../../elements/global'
+import { uuid4 } from '../../../utils'
 
 const DragHandle = SortableHandle(() => (
   <span className='table-header__item'>

@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 
-import { toggleResultSelected } from '../redux/modules/search/actions'
+import { toggleResultSelected } from '../../../redux/modules/search/actions'
 
-import SearchResultsList from '../components/SearchResultsList'
+import SearchResultsList from '../../../components/results/list/SearchResultsList'
 
 const mapStateToProps = (state) => ({
   batchActions: state.search.batchActions,

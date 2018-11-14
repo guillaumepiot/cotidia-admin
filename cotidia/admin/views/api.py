@@ -142,9 +142,8 @@ class DynamicListAPIView(ListAPIView):
         for name, filter in filters.items():
             qs = filter.annotate(qs)
             filter_params = filter_args.getlist(filter.get_query_param())
-            if filter_params:
-                q_obj &= filter.get_q_object(filter_params)
-        
+            q_obj &= filter.get_q_object(filter_params)
+
         if general_filter:
             general_query_params = filter_args.getlist('_q')
             qs = general_filter.annotate(qs)
@@ -158,7 +157,7 @@ class DynamicListAPIView(ListAPIView):
 
         if general_filter:
             qs = general_filter.filter(qs, filter_args)
-        
+
 
         raw_ordering_params = filter_args.getlist('_order')
         ordering_params = []

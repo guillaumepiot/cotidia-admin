@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 
-import { editField } from '../redux/modules/search/actions'
+import { editField } from '../../../redux/modules/search/actions'
 
-import ResultsTableItemValue from '../components/ResultsTableItemValue'
+import ResultsTableItemValue from '../../../components/results/table/ResultsTableItemValue'
 
 const mapStateToProps = (state) => ({
   config: state.config,

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { generateURL } from '../utils/api'
+import { generateURL } from '../../../utils/api'
 
 import ResultsListItem from './ResultsListItem'
-import Pagination from '../containers/Pagination'
+import Pagination from '../../../containers/Pagination'
 
 export default class SearchResultsList extends Component {
   static propTypes = {

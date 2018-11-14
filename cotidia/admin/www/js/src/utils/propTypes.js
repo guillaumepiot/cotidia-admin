@@ -78,8 +78,10 @@ const config = PropTypes.shape({
   columnsConfigurable: PropTypes.boolean,
   dateFormat: PropTypes.string,
   datetimeFormat: PropTypes.string,
+  filterTagBarVisible: PropTypes.bool,
   listHandling,
   primaryColor: PropTypes.string,
+  searchVisible: PropTypes.bool,
   sidebarStartsShown: PropTypes.boolean,
   weekDayStart: PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6, 7]),
 })
@@ -129,7 +131,14 @@ const listFields = PropTypes.shape({
   }),
 })
 
+const resultsMode = PropTypes.oneOf([
+  'list',
+  'map',
+  'table',
+])
+
 export const dynamicListPropTypes = {
+  allowedResultsModes: PropTypes.arrayOf(resultsMode),
   authToken: PropTypes.string.isRequired,
   batchActions,
   columnConfiguration: columnConfiguration.isRequired,
@@ -140,6 +149,7 @@ export const dynamicListPropTypes = {
   defaultFilters: PropTypes.object,
   defaultOrderBy: PropTypes.string,
   defaultPerPage: PropTypes.number,
+  defaultResultsMode: resultsMode,
   detailURL: PropTypes.string,
   endpoint: PropTypes.string.isRequired,
   filterConfiguration,
@@ -147,6 +157,17 @@ export const dynamicListPropTypes = {
   globalActions,
   ignoreStoredConfig: PropTypes.bool,
   listFields,
+  mapConfiguration: PropTypes.shape({
+    defaultCoords: PropTypes.arrayOf(PropTypes.shape({
+      lat: PropTypes.number.isRequired,
+      lng: PropTypes.number.isRequired,
+    })),
+    marker: PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      background: PropTypes.string.isRequired,
+      foreground: PropTypes.string.isRequired,
+    }),
+  }),
   sidebarFilters: stringList,
   title: PropTypes.string,
   toolbarFilters: stringList,

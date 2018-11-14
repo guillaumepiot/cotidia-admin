@@ -216,7 +216,7 @@ class BaseFilter(object):
                 Q()
             )
         else:
-            q_obj = self.default_q_obj
+            q_obj = self.get_default_q_obj()
 
         return q_obj
 
@@ -235,6 +235,9 @@ class BaseFilter(object):
             "queryParameter": self.get_query_param(),
             "label" : self.label,
         }
+
+    def get_default_q_obj(self):
+        return self.default_q_obj
 
 class ComparableFilter(BaseFilter):
     field_regex = None
@@ -320,27 +323,52 @@ class NumericFilter(ComparableFilter):
     field_regex = r'(\-?[0-9]+(?:\.[0-9]+)?)'
     data_type = Decimal
 
-class BooleanFilter(BaseFilter):
+class ToggleFilter(BaseFilter):
+    type="boolean"
+    true_value = Q()
+    false_value = Q()
+
+    def __init__(self, *args, **kwargs):
+        self.true_value = kwargs.get("true_value", Q())
+        self.false_value = kwargs.get("false_value", Q())
+
+        # Super is after the above so if a default_q_obj is specified it is
+        # overwritten in this
+        super().__init__(*args, **kwargs)
+
+    def get_q_object(self, values):
+        if values and values[0] == "true":
+            return self.get_true_value()
+        elif values and values[0] == "false":
+            return self.get_false_value()
+        else:
+            return self.default_q_obj
+
+    def get_true_value(self):
+        return self.true_value
+
+    def get_false_value(self):
+        return self.false_value
+
+class BooleanFilter(ToggleFilter):
     type = "boolean"
-    def parse_value(self, value):
-        if value == "true":
-            return Q(
-                **{"{}{}{}".format(
-                    self.prefix, self.field_name,
-                    self.lookup_expr
-                ): True}
-            )
+    def get_true_value(self):
+        return Q(
+            **{"{}{}{}".format(
+                self.prefix, self.field_name,
+                self.lookup_expr
+            ): True}
+        )
 
-        if value == "false":
-            return Q(
-                **{
-                    "{}{}{}".format(
-                        self.prefix, self.field_name, self.lookup_expr
-                    ): False
-                }
-            )
+    def get_false_value(self):
+        return Q(
+            **{
+                "{}{}{}".format(
+                    self.prefix, self.field_name, self.lookup_expr
+                ): False
+            }
+        )
 
-        return Q()
 
 class ChoiceFilter(BaseFilter):
     type="choice"

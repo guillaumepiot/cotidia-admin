@@ -46,12 +46,14 @@ export function * bootstrap ({ payload: config }) {
       columns: config.columns,
       defaultColumns: config.defaultColumns,
       defaultFilters: config.defaultFilters,
-      defaultPerPage: config.defaultPerPage,
+      defaultPerPage: config.defaultPerPage || 50,
       listFields: config.listFields,
       defaultOrderColumn,
       defaultOrderAscending,
-      mode: config.mode || 'table',
+      allowedResultsModes: config.allowedResultsModes || ['table'],
+      defaultResultsMode: config.defaultResultsMode || 'table',
       categoriseBy: config.categoriseBy || null,
+      mapConfiguration: config.mapConfiguration,
     },
   })
 

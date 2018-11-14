@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { getValueFormatter } from '../utils/resultItems'
+import { getValueFormatter } from '../../../utils/resultItems'
 
-import ResultsTableHeader from '../containers/ResultsTableHeader'
-import ResultsTableFooter from '../containers/ResultsTableFooter'
-import ResultsTableItem from '../containers/ResultsTableItem'
+import ResultsTableHeader from '../../../containers/results/table/ResultsTableHeader'
+import ResultsTableFooter from '../../../containers/results/table/ResultsTableFooter'
+import ResultsTableItem from '../../../containers/results/table/ResultsTableItem'
 
 const CATEGORY_ROW_COLSPAN = 3
 
@@ -57,7 +57,8 @@ export default class SearchResultsTable extends Component {
 
     const tableClassName = [
       'table',
-      `table--sticky`,
+      'table--sticky',
+      'table--admin-mobile-view',
     ]
 
     if (detailURL) {

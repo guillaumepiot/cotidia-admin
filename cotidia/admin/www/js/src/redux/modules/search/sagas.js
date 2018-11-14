@@ -205,7 +205,7 @@ function * saveColumnConfig () {
   const state = yield select((state) => state.search)
 
   const config = {
-    mode: state.mode,
+    resultsMode: state.resultsMode,
     orderColumn: state.orderColumn,
     orderAscending: state.orderAscending,
     perPage: state.perPage,

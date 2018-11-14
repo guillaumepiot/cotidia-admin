@@ -191,6 +191,8 @@ def render_dynamic_list_config(
     context['columns_configurable'] = serializer.get_option(
         'columns_configurable'
     )
+    context['search_visible'] = serializer.get_option('search_visible', True)
+    context['filter_tag_bar_visible'] = serializer.get_option('filter_tag_bar_visible', False)
 
     # Stuff passed straight from the serializer.
     context['list_handling'] = serializer.get_option('list_handling')
@@ -203,6 +205,10 @@ def render_dynamic_list_config(
     context['sidebar_starts_shown'] = serializer.get_option('sidebar_starts_shown')
     context['ignore_stored_config'] = serializer.get_option('ignore_stored_config')
     context['filter_suggest_configuration'] = serializer.get_option('filter_suggest_configuration')
+    context['allowed_results_modes'] = serializer.get_option('allowed_results_modes')
+    context['default_results_mode'] = serializer.get_option('default_results_mode')
+    context['map_configuration'] = serializer.get_option('map_configuration')
+    context['default_per_page'] = serializer.get_option('default_per_page')
 
     # Batch actions can be overridden by the caller, so allow for that.
     if batch_actions:

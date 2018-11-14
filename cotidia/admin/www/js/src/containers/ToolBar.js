@@ -4,7 +4,6 @@ import {
   clearFilters,
   manageColumns,
   performBatchAction,
-  removeFilterValue,
   setFilterValue,
   setSearchTerm,
   switchMode,
@@ -24,26 +23,26 @@ import ToolBar from '../components/ToolBar'
 
 const mapStateToProps = (state) => {
   const props = {
+    allowedResultsModes: state.search.allowedResultsModes,
     anyResultsSelected: anyResultsSelected(state),
     batchActions: state.search.batchActions,
     cacheFilterLabel,
     columnsConfigurable: state.config.columnsConfigurable,
     filterConfiguration: state.search.filterConfiguration || {},
     filters: state.search.filters,
-    hasListConfig: state.search.listFields != null,
     hasSidebar: state.search?.sidebarFilters.length > 0,
     getSuggestEngine,
-    mode: state.search.mode,
+    resultsMode: state.search.resultsMode,
   }
 
   if (state.search?.filterSuggestConfiguration?.mode) {
-    props.config = state.config
     props.filterSuggest = getSuggestEngine(
       state.search.filterSuggestConfiguration,
       state.search.filterConfiguration,
       true
     )
   } else {
+    props.searchVisible = state.config.searchVisible
     props.searchTerm = state.search.searchTerm
     props.toolbarFilters = getToolbarFilters(state)
   }
@@ -55,7 +54,6 @@ const actionCreators = {
   clearFilters,
   manageColumns,
   performBatchAction,
-  removeFilterValue,
   setFilterValue,
   setSearchTerm,
   switchMode,

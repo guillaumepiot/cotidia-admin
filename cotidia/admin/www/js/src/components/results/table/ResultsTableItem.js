@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
-import { generateURL } from '../utils/api'
+import { generateURL } from '../../../utils/api'
 
-import ResultTableItemValue from '../containers/ResultsTableItemValue'
+import ResultTableItemValue from '../../../containers/results/table/ResultsTableItemValue'
 
 // Normally we wouldn't bother with perf optimisation, but this takes a render of 250 items down
 // from 130ms to 25-30ms when only one of the items changes (e.g. select an item).
