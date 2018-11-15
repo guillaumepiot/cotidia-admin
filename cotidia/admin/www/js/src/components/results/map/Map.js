@@ -24,9 +24,9 @@ class Map extends Component {
       lng: PropTypes.number.isRequired,
     })),
     markerConfig: PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      background: PropTypes.string.isRequired,
-      foreground: PropTypes.string.isRequired,
+      labelField: PropTypes.string.isRequired,
+      backgroundField: PropTypes.string.isRequired,
+      foregroundField: PropTypes.string.isRequired,
     }).isRequired,
     onMarkerClick: PropTypes.func.isRequired,
     results: PropTypes.arrayOf(PropTypes.shape({
@@ -73,9 +73,9 @@ class Map extends Component {
   render () {
     const {
       markerConfig: {
-        label: markerLabel,
-        background: markerBackground,
-        foreground: markerForeground,
+        labelField,
+        backgroundField,
+        foregroundField,
       },
       onMarkerClick,
       results,
@@ -89,9 +89,9 @@ class Map extends Component {
       >
         {results && results.map((item) => (
           <Marker
-            icon={getMapIcon(item[markerLabel], item[markerBackground], item[markerForeground])}
+            icon={getMapIcon(item[labelField], item[backgroundField], item[foregroundField])}
             key={item.uuid}
-            title={item[markerLabel]}
+            title={item[labelField]}
             position={{ lat: item.lat, lng: item.lng }}
             onClick={() => onMarkerClick(item)}
           />

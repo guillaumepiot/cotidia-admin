@@ -174,9 +174,9 @@ export const dynamicListPropTypes = {
       lng: PropTypes.number.isRequired,
     })),
     marker: PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      background: PropTypes.string.isRequired,
-      foreground: PropTypes.string.isRequired,
+      labelField: PropTypes.string.isRequired,
+      backgroundField: PropTypes.string.isRequired,
+      foregroundField: PropTypes.string.isRequired,
     }),
   }),
   sidebarFilters: filterList,
