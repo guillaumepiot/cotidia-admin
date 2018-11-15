@@ -59,12 +59,26 @@ class Map extends Component {
       let bounds
 
       if (this.props.results.length) {
-        bounds = this.props.results
+        bounds = [ ...this.props.results ]
       } else {
-        bounds = this.props.defaultCoords
+        bounds = [ ...this.props.defaultCoords ]
       }
 
       if (bounds) {
+        if (bounds.length === 1) {
+          // If there's only one result, add two fake points NE and SW of that point that are each 1
+          // degree away in lat and lng, meaning that the zoom doesn't get too close. Not ideal but
+          // we can't specify a maximum zoom wirthout limiting the user-controlled zoom as well.
+          bounds.push({
+            lat: bounds[0].lat + 1,
+            lng: bounds[0].lng + 1,
+          })
+          bounds.push({
+            lat: bounds[0].lat - 1,
+            lng: bounds[0].lng - 1,
+          })
+        }
+
         this.mapRef.fitBounds(getLatLngBounds(bounds), 20)
       }
     }
