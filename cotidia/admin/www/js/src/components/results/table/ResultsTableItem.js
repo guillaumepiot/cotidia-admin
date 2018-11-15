@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
-import { generateURL } from '../../../utils/api'
-
 import ResultTableItemValue from '../../../containers/results/table/ResultsTableItemValue'
 
 // Normally we wouldn't bother with perf optimisation, but this takes a render of 250 items down
@@ -12,7 +10,7 @@ export default class ResultsTableItem extends PureComponent {
   static propTypes = {
     checked: PropTypes.bool.isRequired,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-    detailURL: PropTypes.string,
+    detailURLField: PropTypes.string,
     item: PropTypes.shape({
       uuid: PropTypes.string.isRequired,
     }).isRequired,
@@ -20,8 +18,22 @@ export default class ResultsTableItem extends PureComponent {
     toggleResultSelected: PropTypes.func.isRequired,
   }
 
+  getItemURL (item) {
+    if (this.props.detailURLField) {
+      const url = item[this.props.detailURLField]
+
+      if (typeof url === 'string' && url.length) {
+        return url
+      }
+    }
+
+    return null
+  }
+
   handleClickRow = (e) => {
-    if (this.props.detailURL) {
+    const url = this.getItemURL(this.props.item)
+
+    if (url) {
       this.viewItem(e.metaKey || e.ctrlKey || e.shiftKey)
     } else if (this.props.showCheck) {
       this.checkItem()
@@ -29,7 +41,7 @@ export default class ResultsTableItem extends PureComponent {
   }
 
   viewItem = (newWindow = false) => {
-    const url = generateURL(this.props.detailURL, this.props.item)
+    const url = this.getItemURL(this.props.item)
 
     if (newWindow) {
       window.open(url)

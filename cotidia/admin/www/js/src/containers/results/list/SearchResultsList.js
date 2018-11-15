@@ -8,7 +8,6 @@ const mapStateToProps = (state) => ({
   batchActions: state.search.batchActions,
   columnConfiguration: state.search.columnConfiguration,
   config: state.config,
-  detailURL: state.search.detailURL,
   listFields: state.search.listFields,
   loading: state.search.loading,
   results: state.search.results,

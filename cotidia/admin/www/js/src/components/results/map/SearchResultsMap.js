@@ -1,25 +1,37 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { generateURL } from '../../../utils/api'
-
 import Map from './Map'
 
 export default class SearchResultsMap extends Component {
   static propTypes = {
     defaultCoords: PropTypes.array.isRequired,
-    detailURL: PropTypes.string,
+    detailURLField: PropTypes.string,
     // loading: PropTypes.bool,
     marker: PropTypes.object.isRequired,
     results: PropTypes.arrayOf(PropTypes.object),
   }
 
-  viewItem = (item) => {
-    if (this.props.detailURL) {
-      const url = generateURL(this.props.detailURL, item)
+  getItemURL (item) {
+    if (this.props.detailURLField) {
+      const url = item[this.props.detailURLField]
 
-      window.open(url)
+      if (typeof url === 'string' && url.length) {
+        return url
+      }
     }
+
+    return null
+  }
+
+  viewItem = (item) => {
+    const url = this.getItemURL(item)
+
+    if (! url) {
+      return
+    }
+
+    window.open(url)
   }
 
   render () {

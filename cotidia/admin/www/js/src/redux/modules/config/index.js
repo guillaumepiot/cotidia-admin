@@ -4,6 +4,7 @@ const initialState = {
   columnsConfigurable: true,
   dateFormat: 'D MMM YYYY',
   datetimeFormat: 'D MMM YYYY @ HH:mm',
+  detailURLField: null,
   filterTagBarVisible: false,
   ignoreStoredConfig: false,
   listHandling: {
