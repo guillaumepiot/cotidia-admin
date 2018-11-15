@@ -7,7 +7,6 @@ export default class SearchResultsMap extends Component {
   static propTypes = {
     defaultCoords: PropTypes.array.isRequired,
     detailURLField: PropTypes.string,
-    // loading: PropTypes.bool,
     marker: PropTypes.object.isRequired,
     results: PropTypes.arrayOf(PropTypes.object),
   }
