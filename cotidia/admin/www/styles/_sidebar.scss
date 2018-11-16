@@ -1,17 +1,18 @@
 $sidebar_title_height: calc(#{$base_line_height} + (#{$padding} * 2));
+$sidebar_border_color: $grey--light;
 
 .sidebar-title {
     height: $sidebar_title_height;
     position: sticky;
     top: 0;
-    // padding-bottom: $sidebar_title_height;
     width: 100%;
     z-index: 2;
 }
 
-
 // Filter sidebar
 .filter-section {
+    border-top: 1px solid $sidebar_border_color !important;
+
     &__title {
         cursor: pointer;
         -webkit-position: sticky;
@@ -21,7 +22,15 @@ $sidebar_title_height: calc(#{$base_line_height} + (#{$padding} * 2));
     }
 
     &__content {
+        background: #f9f9f9;
+        // Background gradient to give visual separation between sections and non-section areas
+        background: -moz-linear-gradient(top, #ffffff 0%, #f9f9f9 100%);
+        background: -webkit-linear-gradient(top, #ffffff 0%,#f9f9f9 100%);
+        background: linear-gradient(to bottom, #ffffff 0%,#f9f9f9 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f9f9f9',GradientType=0 );
         display: none;
+        padding-bottom: $padding / 2;
+        padding-top: $padding / 2;
 
         .filter-section--open & {
             display: block;
@@ -32,8 +41,7 @@ $sidebar_title_height: calc(#{$base_line_height} + (#{$padding} * 2));
         float: right;
         opacity: 0.5;
         transition:
-            opacity $animation-speed ease,
-            transform $animation-speed ease;
+            opacity $animation-speed ease;
 
         .filter-section__title:hover & {
             opacity: 1;
@@ -42,5 +50,23 @@ $sidebar_title_height: calc(#{$base_line_height} + (#{$padding} * 2));
         .filter-section--open & {
             transform: rotate(-180deg);
         }
+    }
+
+    &--open {
+        & + .form__row {
+            border-top: 1px solid $sidebar_border_color !important;
+        }
+    }
+
+    &:not(.filter-section--open) + .filter-section,
+    .sidebar-title + & {
+        border-top: none !important;
+    }
+}
+
+.content__sidebar {
+    & > form > fieldset > .form__row {
+        padding-bottom: $padding / 2;
+        padding-top: $padding / 2;
     }
 }
