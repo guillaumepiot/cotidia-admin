@@ -1,0 +1,46 @@
+$sidebar_title_height: calc(#{$base_line_height} + (#{$padding} * 2));
+
+.sidebar-title {
+    height: $sidebar_title_height;
+    position: sticky;
+    top: 0;
+    // padding-bottom: $sidebar_title_height;
+    width: 100%;
+    z-index: 2;
+}
+
+
+// Filter sidebar
+.filter-section {
+    &__title {
+        cursor: pointer;
+        -webkit-position: sticky;
+        position: sticky;
+        top: $sidebar_title_height;
+        z-index: 1;
+    }
+
+    &__fieldset {
+        display: none;
+
+        .filter-section--open & {
+            display: block;
+        }
+    }
+
+    &__expand {
+        float: right;
+        opacity: 0.5;
+        transition:
+            opacity $animation-speed ease,
+            transform $animation-speed ease;
+
+        .filter-section__title:hover & {
+            opacity: 1;
+        }
+
+        .filter-section--open & {
+            transform: rotate(-180deg);
+        }
+    }
+}
