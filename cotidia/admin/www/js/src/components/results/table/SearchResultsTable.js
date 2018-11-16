@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import isEqual from 'lodash.isequal'
+
 import { getValueFormatter } from '../../../utils/resultItems'
 
 import ResultsTableHeader from '../../../containers/results/table/ResultsTableHeader'
@@ -8,6 +10,15 @@ import ResultsTableFooter from '../../../containers/results/table/ResultsTableFo
 import ResultsTableItem from '../../../containers/results/table/ResultsTableItem'
 
 const CATEGORY_ROW_COLSPAN = 3
+
+const mappedEqual = (a, b, mapFunction) => {
+  // If they are the same object, let's use a quick win.
+  if (a === b) {
+    return true
+  }
+
+  return isEqual(a.map(mapFunction), b.map(mapFunction))
+}
 
 export default class SearchResultsTable extends Component {
   static propTypes = {
@@ -29,7 +40,7 @@ export default class SearchResultsTable extends Component {
   tableRef = React.createRef()
 
   componentDidUpdate (prevProps) {
-    if (prevProps.results !== this.props.results) {
+    if (! mappedEqual(prevProps.results, this.props.results, ({ uuid }) => uuid)) {
       this.tableRef.current.parentElement.scrollTop = 0
     }
   }
