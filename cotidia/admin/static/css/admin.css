@@ -2884,6 +2884,7 @@ body {
     width: 16rem;
     z-index: 4; }
     .content__sidebar fieldset {
+      border-radius: 0;
       border-width: 0;
       margin: 0; }
     .content__sidebar .toggle-sidebar {
@@ -3856,24 +3857,41 @@ fieldset.table-view .table {
   width: 100%;
   z-index: 2; }
 
-.filter-section__title {
-  cursor: pointer;
-  -webkit-position: sticky;
-  position: sticky;
-  top: calc(1.5em + (1rem * 2));
-  z-index: 1; }
-.filter-section__content {
-  display: none; }
-  .filter-section--open .filter-section__content {
-    display: block; }
-.filter-section__expand {
-  float: right;
-  opacity: 0.5;
-  transition: opacity 0.4s ease, transform 0.4s ease; }
-  .filter-section__title:hover .filter-section__expand {
-    opacity: 1; }
-  .filter-section--open .filter-section__expand {
-    transform: rotate(-180deg); }
+.filter-section {
+  border-top: 1px solid #D0D5D7 !important; }
+  .filter-section__title {
+    cursor: pointer;
+    -webkit-position: sticky;
+    position: sticky;
+    top: calc(1.5em + (1rem * 2));
+    z-index: 1; }
+  .filter-section__content {
+    background: #f9f9f9;
+    background: -moz-linear-gradient(top, #ffffff 0%, #f9f9f9 100%);
+    background: -webkit-linear-gradient(top, #ffffff 0%, #f9f9f9 100%);
+    background: linear-gradient(to bottom, #ffffff 0%, #f9f9f9 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f9f9f9',GradientType=0 );
+    display: none;
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem; }
+    .filter-section--open .filter-section__content {
+      display: block; }
+  .filter-section__expand {
+    float: right;
+    opacity: 0.5;
+    transition: opacity 0.4s ease; }
+    .filter-section__title:hover .filter-section__expand {
+      opacity: 1; }
+    .filter-section--open .filter-section__expand {
+      transform: rotate(-180deg); }
+  .filter-section--open + .form__row {
+    border-top: 1px solid #D0D5D7 !important; }
+  .filter-section:not(.filter-section--open) + .filter-section, .sidebar-title + .filter-section {
+    border-top: none !important; }
+
+.content__sidebar > form > fieldset > .form__row {
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem; }
 
 /*
  * Menu
