@@ -1,0 +1,34 @@
+{
+    "context": {
+        "form_group_class": "",
+        "label": "Do you have access to the following?",
+        "help": "This is required for your insurance policy"
+    },
+    "variants": [
+        {
+            "name": "required",
+            "context": {
+                "form_group_class": " form__group--required",
+                "input_attributes": " required"
+            }
+        },
+        {
+            "name": "error",
+            "context": {
+                "form_group_class": " form__group--required form__group--error",
+                "help": "A valid choice is required",
+                "error": "Please check at least one option"
+            }
+        },
+        {
+            "name": "inline",
+            "context": {
+                "form_group_class": " form__group--required form__group--error",
+                "help": "A valid choice is required",
+                "form_control_class": " form__control--inline"
+            }
+        }
+    ]
+}
+
+
