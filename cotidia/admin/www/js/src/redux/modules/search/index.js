@@ -35,6 +35,7 @@ const initialState = {
   searchTerm: null,
 
   results: [],
+  resultsMeta: {},
   loading: false,
   searchID: null,
 
@@ -242,6 +243,7 @@ export default (state = initialState, { type, payload } = {}) => {
             pageCount: payload.result.page_count,
             page: payload.result.current_page,
           },
+          resultsMeta: payload.result.meta || {},
         }
       } else {
         return state

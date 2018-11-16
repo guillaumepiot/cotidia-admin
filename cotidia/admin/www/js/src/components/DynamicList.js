@@ -84,14 +84,12 @@ export default class DynamicList extends Component {
           </div>
         </div>
 
-        {resultsMode !== 'map' && (
-          <div className='content__foot'>
-            <div className='content__inner content-foot'>
-              <Pagination />
-              <GlobalActions />
-            </div>
+        <div className='content__foot'>
+          <div className='content__inner content-foot'>
+            <Pagination />
+            <GlobalActions />
           </div>
-        )}
+        </div>
 
         <Modal />
       </>

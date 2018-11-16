@@ -6,7 +6,11 @@ import Pagination from '../components/Pagination'
 
 const mapStateToProps = (state) => ({
   ...state.search.pagination,
+
   perPage: state.search.perPage,
+
+  resultsMeta: state.search.resultsMeta,
+  resultsMode: state.search.resultsMode,
 })
 
 const actionCreators = { gotoPage, setPerPage }

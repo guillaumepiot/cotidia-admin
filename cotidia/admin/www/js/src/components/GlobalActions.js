@@ -20,7 +20,7 @@ export default class GlobalActions extends Component {
   render () {
     const { globalActions } = this.props
 
-    if (! globalActions) {
+    if (! (globalActions && globalActions.length)) {
       return null
     }
 
