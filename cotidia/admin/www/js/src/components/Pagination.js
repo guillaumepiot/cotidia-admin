@@ -21,12 +21,10 @@ export default class Pagination extends Component {
 
   setPerPage = (e) => this.props.setPerPage(Number(e.target.value))
 
-  renderPaginationInfo () {
-    const { resultsMeta } = this.props
-
+  renderSimpleContent (content) {
     return (
       <div className='content-foot__left'>
-        {resultsMeta.paginationInfo}
+        {content}
       </div>
     )
   }
@@ -43,7 +41,7 @@ export default class Pagination extends Component {
     } = this.props
 
     if (resultsMeta.paginationInfo) {
-      return this.renderPaginationInfo()
+      return this.renderSimpleContent(resultsMeta.paginationInfo)
     }
 
     if (! page) {
@@ -51,7 +49,7 @@ export default class Pagination extends Component {
     }
 
     if (resultsMode === 'map') {
-      return null
+      return this.renderSimpleContent(`Showing ${pageResultCount} results`)
     }
 
     return (
