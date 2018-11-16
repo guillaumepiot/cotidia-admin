@@ -4,7 +4,7 @@
         border-bottom: 1px solid $table-row-border-color;
         font-weight: 500;
         padding: $padding;
-        padding-bottom: calc($padding - 1px);
+        padding-bottom: calc(#{$padding} - 1px);
     }
 }
 

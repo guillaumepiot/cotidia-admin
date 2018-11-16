@@ -1,0 +1,32 @@
+{
+    "context": {
+        "form_group_class": "",
+        "label": "Gender",
+        "help": "Some helpful information"
+    },
+    "variants": [
+        {
+            "name": "required",
+            "context": {
+                "form_group_class": " form__group--required",
+                "input_attributes": " required",
+                "help": "Answer truthfully"
+            }
+        },
+        {
+            "name": "error",
+            "context": {
+                "form_group_class": " form__group--required form__group--error",
+                "help": "A valid choice is required"
+            }
+        },
+        {
+            "name": "boxed",
+            "context": {
+                "form_group_class": " form__group--boxed"
+            }
+        }
+    ]
+}
+
+
