@@ -26,6 +26,11 @@
                 </fieldset>
             </div>
 
+            {{!-- Item without section --}}
+            <div class="form__row">
+                {{ render '@text' }}
+            </div>
+
             {{!-- Section --}}
             <div class="filter-section filter-section--open">
                 <div class="form__legend filter-section__title">
@@ -44,8 +49,9 @@
                 </fieldset>
             </div>
 
+
             {{!-- Section --}}
-            <div class="filter-section">
+            <div class="filter-section filter-section">
                 <div class="form__legend filter-section__title">
                     Title 3
                     <button type="button" class="btn btn--link btn--small filter-section__expand">
@@ -57,6 +63,11 @@
                         {{ render '@radio--label-less' }}
                     </div>
                 </fieldset>
+            </div>
+
+            {{!-- Item without section --}}
+            <div class="form__row">
+                <div class="btn btn--primary">Button</div>
             </div>
 
             {{!-- Section --}}
@@ -82,6 +93,21 @@
                     </div>
                     <div class="form__row">
                         {{ render '@select' }}
+                    </div>
+                </fieldset>
+            </div>
+
+            {{!-- Section --}}
+            <div class="filter-section">
+                <div class="form__legend filter-section__title">
+                    Title 5
+                    <button type="button" class="btn btn--link btn--small filter-section__expand">
+                        <i class="fa fa-chevron-down"></i>
+                    </button>
+                </div>
+                <fieldset class="filter-section__content">
+                    <div class="form__row">
+                        {{ render '@text' }}
                     </div>
                 </fieldset>
             </div>
