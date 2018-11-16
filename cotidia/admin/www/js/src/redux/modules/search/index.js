@@ -250,7 +250,7 @@ export default (state = initialState, { type, payload } = {}) => {
         ...state,
         results: state.results.map((result) => (
           result.uuid === payload.uuid ? payload.data : result
-        ))
+        )),
       }
 
     case types.TOGGLE_COLUMN: {
