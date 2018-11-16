@@ -229,6 +229,8 @@ export default (state = initialState, { type, payload } = {}) => {
           results: payload.result.results.reduce((agg, item) => {
             if (! agg.find((innerItem) => item.uuid === innerItem.uuid)) {
               agg.push(item)
+            } else {
+              console.warn(`Duplicate UUID ${item.uuid} detected, result item ignored.`)
             }
 
             return agg
