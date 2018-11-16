@@ -20,7 +20,7 @@ $sidebar_title_height: calc(#{$base_line_height} + (#{$padding} * 2));
         z-index: 1;
     }
 
-    &__fieldset {
+    &__content {
         display: none;
 
         .filter-section--open & {
