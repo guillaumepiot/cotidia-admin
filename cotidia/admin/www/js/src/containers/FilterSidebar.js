@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
   const sidebarFilters = getSidebarFilters(state)
 
   return {
-    cacheFilterLabel: cacheFilterLabel,
+    cacheFilterLabel,
     filterConfiguration: state.search.filterConfiguration || {},
     filters: state.search.filters,
     getSuggestEngine,

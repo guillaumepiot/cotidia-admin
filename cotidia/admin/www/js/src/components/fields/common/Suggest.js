@@ -67,7 +67,6 @@ export default class Suggest extends Component {
 
   render () {
     const {
-      cacheFilterLabel,
       multiple,
       suggest,
       updateValue,

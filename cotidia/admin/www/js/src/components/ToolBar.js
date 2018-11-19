@@ -109,6 +109,9 @@ export default class ToolBar extends Component {
 
     // Now cache the label for the value so it can be accessed later.
     if (item) {
+      // TODO: Only cache if this is a value we can't label from config. Maybe detect filter type
+      // TODO: from filterConfiguration maybe and only cache if it's a suggest-based
+      // TODO: choice/choice-single?
       this.props.cacheFilterLabel(filter, value, item.label)
     }
 
