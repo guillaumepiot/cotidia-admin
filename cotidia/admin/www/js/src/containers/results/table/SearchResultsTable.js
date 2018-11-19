@@ -9,7 +9,6 @@ const mapStateToProps = (state) => ({
   categoriseBy: state.search.categoriseBy,
   columns: getVisibleColumnConfig(state),
   config: state.config,
-  detailURL: state.search.detailURL,
   loading: state.search.loading,
   results: state.search.results,
 })

@@ -52,7 +52,6 @@ DynamicListApp.defaultProps = {
   defaultFilters: {},
   defaultOrderBy: null,
   defaultResultsMode: 'table',
-  detailURL: null,
   ignoreStoredConfig: false,
 }
 

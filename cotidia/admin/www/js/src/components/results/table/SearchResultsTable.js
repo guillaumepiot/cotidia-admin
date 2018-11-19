@@ -26,7 +26,6 @@ export default class SearchResultsTable extends Component {
     categoriseBy: PropTypes.object,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
     config: PropTypes.object,
-    detailURL: PropTypes.string,
     loading: PropTypes.bool,
     results: PropTypes.arrayOf(PropTypes.object),
   }
@@ -51,7 +50,6 @@ export default class SearchResultsTable extends Component {
       categoriseBy,
       columns,
       config,
-      detailURL,
       loading,
       results,
     } = this.props
@@ -72,7 +70,9 @@ export default class SearchResultsTable extends Component {
       'table--admin-mobile-view',
     ]
 
-    if (detailURL) {
+    // If the implementor is trying to give us a detail URL field, we have to assume that at least
+    // one result may be clickable, so we set the whole table to clickable.
+    if (config.detailURLField) {
       tableClassName.push('table--clickable')
     }
 

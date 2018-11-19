@@ -31,6 +31,7 @@ SUPPORTED_FIELDS_TYPES = sorted(
         serializers.ListSerializer,
         serializers.RelatedField,
         serializers.ManyRelatedField,
+        serializers.SerializerMethodField,
     ],
     key=lambda x: len(x.mro()),
     reverse=True
@@ -113,6 +114,10 @@ FIELD_MAPPING = {
         "filter": "text",
         "foreign_key": True
     }),
+    "SerializerMethodField": (lambda: {
+        "display": "verbatim",
+        "filter": "text"
+    }),
 }
 
 FILTER_MAPPING = {
@@ -134,7 +139,7 @@ FILTER_MAPPING = {
     "ManyRelatedField": ForeignKeyFilter,
 }
 
-DYNAMIC_LIST_FIELD_MAPPING = { 
+DYNAMIC_LIST_FIELD_MAPPING = {
     "DateTimeField": (lambda: {
         "display": "datetime",
     }),
