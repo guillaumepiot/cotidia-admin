@@ -14,7 +14,7 @@ import { FullScreen } from './components/elements/global'
 
 import AlgoliaSwitcher from './algolia-switcher'
 import TypeaheadSwitcher from './typeahead-switcher'
-import MultipleSelectWidget from './multiple-select-widget'
+import TypeaheadSelectWidget from './typeahead-select-widget'
 
 export default function DynamicListApp (props) {
   const { authToken, ...config } = props
@@ -62,4 +62,4 @@ window.DynamicList = DynamicListApp
 
 window.AlgoliaSwitcher = AlgoliaSwitcher
 window.TypeaheadSwitcher = TypeaheadSwitcher
-window.MultipleSelectWidget = MultipleSelectWidget
+window.TypeaheadSelectWidget = TypeaheadSelectWidget

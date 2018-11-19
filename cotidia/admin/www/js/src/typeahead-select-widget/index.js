@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { MultipleSelect } from '@cotidia/react-ui'
+import { MultipleSelect, Select } from '@cotidia/react-ui'
 
-export default class MultipleSelectWidget extends Component {
+export default class TypeaheadSelectWidget extends Component {
   static propTypes = {
     apiEndpoint: PropTypes.string.isRequired,
+    defaultOptions: PropTypes.arrayOf(PropTypes.any),
     extraGroupClasses: PropTypes.arrayOf(PropTypes.string),
     initialValue: PropTypes.arrayOf(PropTypes.any).isRequired,
     label: PropTypes.string,
     minchars: PropTypes.number,
+    multiple: PropTypes.bool,
     name: PropTypes.string.isRequired,
     onUpdate: PropTypes.func,
     placeholder: PropTypes.string,
@@ -17,6 +19,7 @@ export default class MultipleSelectWidget extends Component {
 
   static defaultProps = {
     minchars: 1,
+    multiple: false,
     placeholder: '',
   }
 
@@ -49,32 +52,53 @@ export default class MultipleSelectWidget extends Component {
     }
   }
 
-  updateSelected = ({ q }) => {
-    this.setState({ value: q })
-    this.props.onUpdate && this.props.onUpdate(q)
+  updateSelected = (data) => {
+    let value
+
+    if (this.props.multiple) {
+      value = data.q
+    } else {
+      value = data[this.props.name]
+    }
+
+    this.setState({ value })
+    this.props.onUpdate && this.props.onUpdate(value)
   }
 
   render () {
-    return (
+    const {
+      apiEndpoint,
+      initialValue,
+      minchars,
+      multiple,
+      onUpdate,
+      ...passThruProps
+    } = this.props
+
+    const {
+      options,
+      value,
+    } = this.state
+
+    const props = {
+      ...passThruProps,
+      minCharSearch: minchars,
+      options,
+      prefix: <span className='fa fa-search' />,
+      searchOptions: this.searchOptions,
+      updateValue: this.updateSelected,
+    }
+
+    return multiple ? (
       <>
-        {this.state.value && this.state.value.map((item) => (
+        {value && value.map((item) => (
           <input key={item.value} type='hidden' name={this.props.name} value={item.value} />
         ))}
 
-        <MultipleSelect
-          defaultOptions={this.props.defaultOptions}
-          extraGroupClasses={this.props.extraGroupClasses}
-          label={this.props.label}
-          name='q'
-          minCharSearch={this.props.minchars}
-          options={this.state.options}
-          placeholder={this.props.placeholder}
-          prefix={<span className='fa fa-search' />}
-          searchOptions={this.searchOptions}
-          updateValue={this.updateSelected}
-          values={this.state.value}
-        />
+        <MultipleSelect {...props} name='q' values={value} />
       </>
+    ) : (
+      <Select {...props} value={value} />
     )
   }
 }
