@@ -41,20 +41,47 @@ export const getActiveFilters = createSelector(
 export const allResultsSelected = (state) => (state.search.selected.length > 0) && (state.search.selected.length === state.search.results.length)
 export const anyResultsSelected = (state) => state.search.selected.length > 0
 
-const getFiltersArray = (state, filters) => {
+// Pluck a filter by name from the filterconfig and also add its name into its config. If it doesn't
+// exist, return undefined.
+const getFilter = (state, filter) => {
+  if (state.search.filterConfiguration.hasOwnProperty(filter)) {
+    return {
+      ...state.search.filterConfiguration[filter],
+      name: filter,
+    }
+  }
+}
+
+const getFilters = (state, filters) => {
   if (! filters) {
     return []
   }
 
-  return filters.map((filter) => {
-    if (state.search.filterConfiguration.hasOwnProperty(filter)) {
-      return {
-        ...state.search.filterConfiguration[filter],
-        name: filter,
+  const getFilterForState = getFilter.bind(null, state)
+
+  const newFilters = []
+
+  for (const filterOrGroup of filters) {
+    if (filterOrGroup.hasOwnProperty('filters')) {
+      newFilters.push({
+        ...filterOrGroup,
+        filters: filterOrGroup.filters.map(getFilterForState).filter(identity),
+      })
+    } else {
+      const filter = getFilterForState(filterOrGroup)
+
+      if (filter) {
+        newFilters.push(filter)
       }
     }
-  }).filter(identity)
+  }
+
+  return newFilters
 }
 
-export const getToolbarFilters = (state) => getFiltersArray(state, state.search.toolbarFilters)
-export const getSidebarFilters = (state) => getFiltersArray(state, state.search.sidebarFilters)
+// Toolbar filters have no concept of filter groups, so just smush them all together.
+export const getToolbarFilters = (state) => getFilters(state, state.search.toolbarFilters).flatMap(
+  (filterOrGroup) => filterOrGroup.filters || filterOrGroup
+)
+
+export const getSidebarFilters = (state) => getFilters(state, state.search.sidebarFilters)

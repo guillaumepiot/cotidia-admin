@@ -13,14 +13,18 @@ import { getSuggestEngine } from '../utils/filterSuggestEngines'
 
 import FilterSidebar from '../components/FilterSidebar'
 
-const mapStateToProps = (state) => ({
-  cacheFilterLabel: cacheFilterLabel,
-  filterConfiguration: state.search.filterConfiguration || {},
-  filters: state.search.filters,
-  getSuggestEngine,
-  hasSidebarFilters: true,
-  sidebarFilters: getSidebarFilters(state),
-})
+const mapStateToProps = (state) => {
+  const sidebarFilters = getSidebarFilters(state)
+
+  return {
+    cacheFilterLabel: cacheFilterLabel,
+    filterConfiguration: state.search.filterConfiguration || {},
+    filters: state.search.filters,
+    getSuggestEngine,
+    hasSidebarFilters: sidebarFilters.length > 0,
+    sidebarFilters,
+  }
+}
 
 const actionCreators = {
   setFilterValue,

@@ -10,6 +10,8 @@ export default class Pagination extends Component {
     pageCount: PropTypes.number.isRequired,
     pageResultCount: PropTypes.number.isRequired,
     perPage: PropTypes.number.isRequired,
+    resultsMeta: PropTypes.object.isRequired,
+    resultsMode: PropTypes.string.isRequired,
     setPerPage: PropTypes.func.isRequired,
     totalResultsCount: PropTypes.number.isRequired,
   }
@@ -19,21 +21,39 @@ export default class Pagination extends Component {
 
   setPerPage = (e) => this.props.setPerPage(Number(e.target.value))
 
+  renderSimpleContent (content) {
+    return (
+      <div className='content-foot__left'>
+        {content}
+      </div>
+    )
+  }
+
   render () {
     const {
       page,
       pageCount,
       pageResultCount,
       perPage,
+      resultsMeta,
+      resultsMode,
       totalResultsCount,
     } = this.props
+
+    if (resultsMeta.paginationInfo) {
+      return this.renderSimpleContent(resultsMeta.paginationInfo)
+    }
 
     if (! page) {
       return null
     }
 
+    if (resultsMode === 'map') {
+      return this.renderSimpleContent(`Showing ${pageResultCount} results`)
+    }
+
     return (
-      <div className='content-foot__left' style={{ display: 'flex', alignItems: 'center' }}>
+      <div className='content-foot__left'>
         <div className='pagination'>
           <div className='pagination__subsection'>
             <button

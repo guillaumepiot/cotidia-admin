@@ -1,0 +1,115 @@
+{
+    "context": {
+        "form_group_class": "",
+        "type": "text",
+        "label": "First name",
+        "help": "Some helpful information",
+        "placeholder": "Frank Green"
+    },
+    "variants": [
+        {
+            "name": "required",
+            "context": {
+                "form_group_class": " form__group--required",
+                "input_attributes": " required"
+            }
+        },
+        {
+            "name": "boxed",
+            "context": {
+                "form_group_class": " form__group--boxed",
+                "input_attributes": " required"
+            }
+        },
+        {
+            "name": "boxed error",
+            "context": {
+                "form_group_class": " form__group--boxed form__group--error",
+                "input_attributes": " required"
+            }
+        },
+        {
+            "name": "email",
+            "context": {
+                "form_group_class": "",
+                "type": "email",
+                "label": "Email",
+                "help": "A valid email is required",
+                "placeholder": ""
+            }
+        },
+        {
+            "name": "password",
+            "context": {
+                "form_group_class": " form__group--required",
+                "type": "password",
+                "label": "Password",
+                "help": "At least 6 characters required. One letter and one number."
+            }
+        },
+        {
+            "name": "url",
+            "context": {
+                "form_group_class": "",
+                "type": "url",
+                "label": "URL",
+                "help": "A valid URL is required",
+                "placeholder": ""
+            }
+        },
+        {
+            "name": "prefix",
+            "context": {
+                "type": "text",
+                "label": "Time",
+                "placeholder": "0:00"
+            }
+        },
+        {
+            "name": "date",
+            "context": {
+                "type": "date",
+                "label": "Date"
+            }
+        },
+        {
+            "name": "number",
+            "context": {
+                "type": "number",
+                "label": "Number",
+                "placeholder": "12"
+            }
+        },
+        {
+            "name": "range",
+            "context": {
+                "type": "range",
+                "label": "Range",
+                "form_control_class": "form__control--borderless"
+            }
+        },
+        {
+            "name": "search",
+            "context": {
+                "type": "search",
+                "label": "Search"
+            }
+        },
+        {
+            "name": "tel",
+            "context": {
+                "type": "tel",
+                "label": "Telephone"
+            }
+        },
+        {
+            "name": "time",
+            "context": {
+                "type": "time",
+                "label": "Time"
+            }
+        }
+    ]
+}
+
+

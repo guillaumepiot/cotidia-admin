@@ -110,6 +110,17 @@ const filterConfigSingle = PropTypes.shape({
 
 export const filterConfiguration = PropTypes.objectOf(filterConfigSingle)
 
+const filterList = PropTypes.oneOfType([
+  stringList,
+  PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      defaultOpen: PropTypes.bool,
+      filters: stringList,
+    })
+  ),
+])
+
 const globalAction = PropTypes.shape({
   action: PropTypes.string.isRequired,
   icon: PropTypes.string,
@@ -168,7 +179,7 @@ export const dynamicListPropTypes = {
       foreground: PropTypes.string.isRequired,
     }),
   }),
-  sidebarFilters: stringList,
+  sidebarFilters: filterList,
   title: PropTypes.string,
-  toolbarFilters: stringList,
+  toolbarFilters: filterList,
 }
