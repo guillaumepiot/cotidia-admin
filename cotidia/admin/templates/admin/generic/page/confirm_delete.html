@@ -3,6 +3,8 @@
     {% trans "Delete" %} {{verbose_name}}
 {% endblock title %}
 
+{% block body_class %}content--centered{% endblock body_class %}
+
 {% block content_title %}
     {% if list_url %}
     <a href="{{list_url}}" class="btn btn--link tooltip tooltip--bottom-center back-to-list" data-tooltip="Back to list">
