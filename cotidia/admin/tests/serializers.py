@@ -14,7 +14,6 @@ from cotidia.admin.tests.models import (
 class ExampleModelTwoSerializer(AdminModelSerializer):
     class Meta:
         model = ExampleModelTwo
-
         exclude = ["uuid", "other_model"]
 
     class SearchProvider:
@@ -29,7 +28,6 @@ class ExampleModelOneSerializer(AdminModelSerializer):
 
     class Meta:
         model = ExampleModelOne
-
         exclude = ["uuid", "duration_field"]
 
     class SearchProvider:
@@ -38,9 +36,9 @@ class ExampleModelOneSerializer(AdminModelSerializer):
 
 
 class DynamicListModelTwoSerializer(BaseDynamicListSerializer):
+
     class Meta:
         model = ExampleModelTwo
-
         exclude = ["uuid", "other_model"]
 
     class SearchProvider:
@@ -52,6 +50,7 @@ class DynamicListModelOneSerializer(BaseDynamicListSerializer):
     other_model = DynamicListModelTwoSerializer()
 
     many_to_many_field = DynamicListModelTwoSerializer(many=True)
+
     class Meta:
         model = ExampleModelOne
         exclude = ["uuid", "duration_field"]
@@ -60,7 +59,6 @@ class DynamicListModelOneSerializer(BaseDynamicListSerializer):
         display_field = "char_field"
         general_query_fields = ["char_field", "text_field", "slug_field"]
         filters = '__all__'
-
 
 
 class DeclaredModelSerializer(AdminModelSerializer):
