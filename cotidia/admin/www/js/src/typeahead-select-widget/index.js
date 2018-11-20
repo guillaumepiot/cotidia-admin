@@ -98,7 +98,10 @@ export default class TypeaheadSelectWidget extends Component {
         <MultipleSelect {...props} name='q' values={value} />
       </>
     ) : (
-      <Select {...props} value={value} />
+      <>
+        <input type='hidden' name={this.props.name} value={value} />
+        <Select {...props} value={value} />
+      </>
     )
   }
 }
