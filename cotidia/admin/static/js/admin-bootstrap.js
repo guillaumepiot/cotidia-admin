@@ -31,8 +31,8 @@
     })
   }
 
-  if (window.React && window.ReactDOM && window.MultipleSelectWidget) {
-    document.querySelectorAll('[data-widget="multiple-select"]').forEach(function (formGroup) {
+  if (window.React && window.ReactDOM && window.TypeaheadSelectWidget) {
+    document.querySelectorAll('[data-widget="typeahead-select"]').forEach(function (formGroup) {
       var initialData = JSON.parse(formGroup.dataset.initial)
 
       var keyedData = {}
@@ -42,19 +42,31 @@
 
       var parent = formGroup.parentElement
       var name = formGroup.dataset.name
+      var multiple = 'multiple' in formGroup.dataset
+
+      var initialValue = ''
+
+      if (multiple) {
+        initialValue = Array.prototype.map.call(
+          formGroup.querySelectorAll('input[value]'),
+          function (item) {
+            return { value: item.value, label: keyedData[item.value] || '' }
+          }
+        )
+      } else {
+        if (formGroup.querySelector('input[value]')) {
+          initialValue = formGroup.querySelector('input[value]').value
+        }
+      }
 
       var config = {
         apiEndpoint: formGroup.dataset.typeaheadEndpoint,
         defaultOptions: initialData,
         extraGroupClasses: Array.prototype.slice.call(formGroup.classList),
-        initialValue: Array.prototype.map.call(
-          formGroup.querySelectorAll('input[value]'),
-          function (item) {
-            return { value: item.value, label: keyedData[item.value] || '' }
-          }
-        ),
+        initialValue: ,
         label: formGroup.dataset.label,
         minchars: formGroup.dataset.typeaheadMinchars ? parseInt(formGroup.dataset.typeaheadMinchars) : 1,
+        multiple: multiple,
         name: name,
         onUpdate: function (value) {
           var event = new CustomEvent('change', {
@@ -72,7 +84,7 @@
 
       ReactDOM.render(
         React.createElement(
-          window.MultipleSelectWidget,
+          window.TypeaheadSelectWidget,
           config
         ),
         parent
