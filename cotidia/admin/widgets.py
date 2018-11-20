@@ -464,7 +464,6 @@ class SelectSingleLookup(forms.HiddenInput):
         else:
             initial_data = []
 
-
         context = super().get_context(name, value, attrs)
         context['config'] = {
             'data-widget': 'typeahead-select',
@@ -475,6 +474,7 @@ class SelectSingleLookup(forms.HiddenInput):
             'data-typeahead-minchars': "3",
             'data-initial': json.dumps(initial_data),
             'data-placeholder': self.config['placeholder'],
+            'data-id': 'id_{}'.format(name)
         }
         return context
 
@@ -501,11 +501,10 @@ class SelectMultipleLookup(forms.MultipleHiddenInput):
             )
         return endpoint
 
-
     def get_initial_data(self, value):
         if self.config.get("queryset"):
             queryset = self.config["queryset"].filter(
-               **{f"{self.queryset_lookup}__in": value}
+                **{f"{self.queryset_lookup}__in": value}
             )
             initial_data = [
                 {
@@ -520,7 +519,6 @@ class SelectMultipleLookup(forms.MultipleHiddenInput):
                     'label': c[1]
                 } for c in self.choices if c[0] in value
             ]
-
 
         return initial_data
 
@@ -540,5 +538,6 @@ class SelectMultipleLookup(forms.MultipleHiddenInput):
             'data-typeahead-minchars': "3",
             'data-initial': json.dumps(initial_data),
             'data-placeholder': self.config['placeholder'],
+            'data-id': 'id_{}'.format(name)
         }
         return context
