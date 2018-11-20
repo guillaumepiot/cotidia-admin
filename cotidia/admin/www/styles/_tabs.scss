@@ -18,3 +18,13 @@
         }
     }
 }
+
+body.content--centered {
+    .tabs {
+        margin: auto;
+        max-width: $laptop-width;
+        padding-left: $content-padding;
+        padding-right: $content-padding;
+        width: 100%;
+    }
+}
