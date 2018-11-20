@@ -1,3 +1,5 @@
+from pprint import pprint
+
 import urllib
 
 from django.views.generic import (
@@ -173,6 +175,7 @@ class DynamicListView(
     group_by = False
     model = None
     template_type = 'fluid'
+    add_view = False
 
     def get_permission_required(self):
         if self.kwargs.get('permission_required'):
@@ -221,15 +224,28 @@ class DynamicListView(
         context['app_label'] = self.model._meta.app_label
         context['model_name'] = self.model._meta.model_name
 
+        context['title'] = self.model._meta.verbose_name_plural
+        context['tab_title'] = self.model._meta.verbose_name_plural
+
+
         # Even though the serailizer is passed into the view as
         # `serializer_class` and is indeed a class when it's passed in, by
         # this time this code is running, it's an instance of the
         # serializer, so we'll call it `serializer` in the context.
         if self.kwargs.get('serializer_class'):
             context['serializer'] = self.kwargs['serializer_class']
+            serializer = self.kwargs['serializer_class']()
+            title_value = serializer.get_option('title', False)
+            if title_value in [None, '']:
+                context["title"] = ''
+            elif title_value:
+                context["title"] = title_value
+                context["tab_title"] = title_value
+
             if 'map' in self.kwargs['serializer_class'](
                     ).get_option('allowed_results_modes', []):
                 context['needs_map_config'] = True
+
 
 
 
@@ -252,7 +268,10 @@ class DynamicListView(
                     self.request.GET.getlist(key)
                 )
 
+        context['add_view'] = self.kwargs.get('add_view', self.add_view)
+
         context['default_filters'] = filters
+        pprint(context)
 
         return context
 

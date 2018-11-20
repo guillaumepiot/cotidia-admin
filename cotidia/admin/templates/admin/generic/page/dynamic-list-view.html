@@ -1,16 +1,17 @@
-{% extends "admin/page.html" %}{% load admin_search_dashboard_tags i18n admin_toolbar_tags admin_list_tags %}
+{% extends "admin/generic/page/list.html" %}{% load admin_search_dashboard_tags i18n admin_toolbar_tags admin_list_tags %}
 {% load staticfiles %}
 {% block title %}
-    {{verbose_name_plural}}
+    {{tab_title}}
 {% endblock title %}
 
-{% block layout_content %}
+{% block content_title %}{{title}}{% endblock content_title %}
+{% block page_content %}
     {% block messages %}
         {% include "admin/generic/messages.html" %}
     {% endblock messages %}
     <div class="layout__content content content--sticky" id="dynamic-list"></div>
     <div id="modal-container"></div>
-{% endblock layout_content %}
+{% endblock page_content %}
 
 {% block footer_scripts %}
     {% if needs_map_config %}
