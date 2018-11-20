@@ -32,7 +32,7 @@ export default class TypeaheadSelectWidget extends Component {
     const apiEndpointVariable = `${this.props.name}APIEndpoint`
 
     const url = new URL(
-      window[apiEndpointVariable] ? apiEndpointVariable : this.props.apiEndpoint,
+      window[apiEndpointVariable] ? window[apiEndpointVariable] : this.props.apiEndpoint,
       window.location.href
     )
 
