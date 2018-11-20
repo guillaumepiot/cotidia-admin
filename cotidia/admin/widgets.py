@@ -415,33 +415,128 @@ class GeolocateInput(forms.TextInput):
         )
 
 
-class SelectMultipleLookup(forms.MultipleHiddenInput):
+class SelectSingleLookup(forms.HiddenInput):
     template_name = 'admin/widgets/select_multiple_lookup.html'
+    queryset_lookup = "pk"
 
-    def __init__(self, config=None, *args, **kwargs):
+    def __init__(self, config=None, queryset_lookup="pk", *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.config = config
+        self.queryset_lookup = queryset_lookup
 
-    def get_context(self, name, value, attrs):
-        initial_data = [
-            {
-                'value': c[0],
-                'label': c[1]
-            } for c in self.choices if value and c[0] in value
-        ]
-
-        context = super().get_context(name, value, attrs)
-        context['config'] = {
-            'data-widget': 'multiple-select',
-            'data-label': self.config.get('label', False),
-            'data-name': name,
-            'data-typeahead-endpoint': reverse(
+    def get_endpoint(self):
+        if self.config.get("endpoint"):
+            endpoint = self.config["endpoint"]
+        else:
+            endpoint = reverse(
                 'generic-api:multiple-select-lookup',
                 kwargs={
                     'app_label': self.config['app_label'],
                     'model_name': self.config['model_name']
                 }
-            ),
+            )
+        return endpoint
+
+    def get_initial_data(self, value):
+        if 'queryset' in self.config:
+            instance = self.config["queryset"].get(
+               **{self.queryset_lookup: value}
+            )
+            initial_data = [
+                {
+                    'value': getattr(instance, self.queryset_lookup),
+                    'label': str(instance),
+                }
+            ]
+        else:
+            initial_data = [
+                {
+                    'value': c[0],
+                    'label': c[1]
+                } for c in self.choices if c[0] == value
+            ]
+
+        return initial_data
+
+    def get_context(self, name, value, attrs):
+        if value:
+            initial_data = self.get_initial_data(value)
+        else:
+            initial_data = []
+
+
+        context = super().get_context(name, value, attrs)
+        context['config'] = {
+            'data-widget': 'typeahead-select',
+            'data-multiple': False,
+            'data-label': self.config.get('label', False),
+            'data-name': name,
+            'data-typeahead-endpoint': self.get_endpoint,
+            'data-typeahead-minchars': "3",
+            'data-initial': json.dumps(initial_data),
+            'data-placeholder': self.config['placeholder'],
+        }
+        return context
+
+
+class SelectMultipleLookup(forms.MultipleHiddenInput):
+    template_name = 'admin/widgets/select_multiple_lookup.html'
+    queryset_lookup = "pk"
+
+    def __init__(self, config=None, queryset_lookup="pk", *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.config = config
+        self.queryset_lookup = queryset_lookup
+
+    def get_endpoint(self):
+        if self.config.get("endpoint"):
+            endpoint = self.config["endpoint"] + '?country=d2dba710-bf66-4d7e-a490-e92875618857'
+        else:
+            endpoint = reverse(
+                'generic-api:multiple-select-lookup',
+                kwargs={
+                    'app_label': self.config['app_label'],
+                    'model_name': self.config['model_name']
+                }
+            )
+        return endpoint
+
+
+    def get_initial_data(self, value):
+        if self.config.get("queryset"):
+            queryset = self.config["queryset"].filter(
+               **{f"{self.queryset_lookup}__in": value}
+            )
+            initial_data = [
+                {
+                    'value': getattr(instance, self.queryset_lookup),
+                    'label': str(instance),
+                } for instance in queryset
+            ]
+        else:
+            initial_data = [
+                {
+                    'value': c[0],
+                    'label': c[1]
+                } for c in self.choices if c[0] in value
+            ]
+
+
+        return initial_data
+
+    def get_context(self, name, value, attrs):
+        if value:
+            initial_data = self.get_initial_data(value)
+        else:
+            initial_data = []
+
+        context = super().get_context(name, value, attrs)
+        context['config'] = {
+            'data-widget': 'typeahead-select',
+            'data-multiple': True,
+            'data-label': self.config.get('label', False),
+            'data-name': name,
+            'data-typeahead-endpoint': self.get_endpoint,
             'data-typeahead-minchars': "3",
             'data-initial': json.dumps(initial_data),
             'data-placeholder': self.config['placeholder'],
