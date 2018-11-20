@@ -29,13 +29,13 @@ export default class TypeaheadSelectWidget extends Component {
   }
 
   searchOptions = async (q) => {
-    const params = new URLSearchParams()
+    const url = new URL(this.props.apiEndpoint, window.location.href)
 
-    params.set('q', q)
+    url.searchParams.set('q', q)
 
     try {
       const res = await fetch(
-        `${this.props.apiEndpoint}?${params}`,
+        url,
         {
           headers: { Accept: 'application/json' },
           credentials: 'include',
