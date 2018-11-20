@@ -12,7 +12,6 @@ from cotidia.admin.filters import DefaultGeneralQueryFilter
 
 
 class AdminModelSerializer(serializers.ModelSerializer):
-    enable_detail_url = True
 
     def to_representation(self, instance):
         repr = super().to_representation(instance)
@@ -43,7 +42,13 @@ class AdminModelSerializer(serializers.ModelSerializer):
                         if key_name not in repr.keys():
                             repr.update({key_name: subvalue})
                     repr[key] = repr[key][display_field]
-        return repr
+
+            # Add detail url automatically
+            detail_url_field = self.get_detail_url_field()
+            if detail_url_field == '_detail_url':
+                repr[detail_url_field] = instance.get_admin_detail_url()
+
+            return repr
 
     def get_choices(self):
         try:
@@ -76,28 +81,6 @@ class AdminModelSerializer(serializers.ModelSerializer):
                 'model': self.Meta.model._meta.model_name
             }
         )
-
-    def get_detail_url(self):
-        if self.get_option('enable_detail_url', default=True):
-            detail_url = self.get_option('detail_url')
-
-            if not detail_url:
-                try:
-                    # Here we generate a concrete URL for the detial view based
-                    # on a fake ID of `9999`. Later we will string replace this
-                    # for the `:id` placeholder to create a prototype URL.
-                    fake_detail_url = reverse(
-                        '{app_label}-admin:{model_name}-detail'.format(
-                            app_label=self.Meta.model._meta.app_label,
-                            model_name=self.Meta.model._meta.model_name
-                        ),
-                        kwargs={'pk': '9999'}
-                    )
-                except NoReverseMatch:
-                    pass
-                else:
-                    # Create prototype URL from concrete one.
-                    return fake_detail_url.replace('9999', ':id')
 
     def get_field_representation(self, label_prefix="", bypass_available_columns=False):
         # Checks if there is a cached version
@@ -166,8 +149,8 @@ class AdminModelSerializer(serializers.ModelSerializer):
                             default_field_ref["configuration"] = {
                                 'mode': 'options',
                                 'options': [
-                                    {"value": value, "label": label}
-                                    for value, label in field.choices.items()
+                                    {"value": v, "label": l}
+                                    for v, l in field.choices.items()
                                 ]
                             }
                         default_field_ref["label"] = label
@@ -198,7 +181,7 @@ class AdminModelSerializer(serializers.ModelSerializer):
 
     def make_config_compatible(self, config):
         """
-        Makes the old style config work with new dynamic list config
+        Make the old style config work with new dynamic list config
         """
         for key, value in config.items():
             # Upgrades to new choice filter config
@@ -262,6 +245,10 @@ class AdminModelSerializer(serializers.ModelSerializer):
 
         return self._columns
 
+    def get_detail_url_field(self):
+        return self.get_option('detail_url_field', '_detail_url')
+
+
 class SortSerializer(serializers.Serializer):
     data = serializers.ListField(
         child=serializers.UUIDField()
@@ -272,6 +259,7 @@ class AdminSearchLookupSerializer(serializers.Serializer):
     value = serializers.CharField()
     label = serializers.CharField()
 
+
 class BaseDynamicListSerializer(serializers.ModelSerializer):
     _get_filters = None
 
@@ -281,12 +269,9 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
         """
         assert hasattr(self, "SearchProvider"), "Serializer must have a SearchProvider defined"
 
+        # Serializer must have either filters or exclude filters defined,
+        # not both
         assert hasattr(self.SearchProvider, "exclude_filters") != hasattr(self.SearchProvider, "filters")
-        # (
-        #     "Serializer must have either filters or exclude filters "
-        #     "defined, and not both"
-        # )
-
 
     def get_nested_serializers(self):
         return [
@@ -324,7 +309,6 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
                         filters[name] = chosen_filter
         return filters
 
-
     def get_filters(self, prefix=""):
         self._assertions()
 
@@ -352,7 +336,6 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
         else:
             self._get_filters = all_filters
         return self._get_filters
-
 
     def to_representation(self, instance):
         repr = super().to_representation(instance)
@@ -383,7 +366,13 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
                         if key_name not in repr.keys():
                             repr.update({key_name: subvalue})
                     repr[key] = repr[key][display_field]
-        return repr
+
+            # Add detail url automatically
+            detail_url_field = self.get_detail_url_field()
+            if detail_url_field == '_detail_url':
+                repr[detail_url_field] = instance.get_admin_detail_url()
+
+            return repr
 
     def get_choices(self):
         try:
@@ -417,28 +406,6 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
             }
         )
 
-    def get_detail_url(self):
-        if self.get_option('enable_detail_url', default=True):
-            detail_url = self.get_option('detail_url')
-
-            if not detail_url:
-                try:
-                    # Here we generate a concrete URL for the detial view based
-                    # on a fake ID of `9999`. Later we will string replace this
-                    # for the `:id` placeholder to create a prototype URL.
-                    fake_detail_url = reverse(
-                        '{app_label}-admin:{model_name}-detail'.format(
-                            app_label=self.Meta.model._meta.app_label,
-                            model_name=self.Meta.model._meta.model_name
-                        ),
-                        kwargs={'pk': '9999'}
-                    )
-                except NoReverseMatch:
-                    pass
-                else:
-                    # Create prototype URL from concrete one.
-                    return fake_detail_url.replace('9999', ':id')
-
     def get_general_query_filter(self):
         if hasattr(self.SearchProvider, "general_query_filter"):
             return self.SearchProvider.general_query_filter
@@ -448,6 +415,7 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
             )
         else:
             return None
+
     def get_field_representation(self, label_prefix="", bypass_available_columns=False):
         # Checks if there is a cached version
         if not hasattr(self, "_field_representation"):
@@ -541,7 +509,6 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
             ]
         )
 
-
     def get_option(self, attr, default=None):
         if hasattr(self, "SearchProvider"):
             return getattr(self.SearchProvider, attr, default)
@@ -595,6 +562,10 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
 
         return self._columns
 
+    def get_detail_url_field(self):
+        return self.get_option('detail_url_field', '_detail_url')
+
+
 def choose_filter(field, field_name, prefix):
     # Get the most specific class we suppport for each field
     field_type = next(
@@ -609,7 +580,7 @@ def choose_filter(field, field_name, prefix):
         elif isinstance(field, serializers.ListSerializer):
             return choose_filter(field.child, field_name, prefix)
         elif isinstance(field, serializers.ReadOnlyField):
-            return None # Don't generate filters for read only fields
+            return None  # Don't generate filters for read only fields
         else:
             raise ValueError(
                 "Field {} not supported".format(field.__class__)

@@ -24,9 +24,9 @@ class Map extends Component {
       lng: PropTypes.number.isRequired,
     })),
     markerConfig: PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      background: PropTypes.string.isRequired,
-      foreground: PropTypes.string.isRequired,
+      labelField: PropTypes.string.isRequired,
+      backgroundField: PropTypes.string.isRequired,
+      foregroundField: PropTypes.string.isRequired,
     }).isRequired,
     onMarkerClick: PropTypes.func.isRequired,
     results: PropTypes.arrayOf(PropTypes.shape({
@@ -59,12 +59,26 @@ class Map extends Component {
       let bounds
 
       if (this.props.results.length) {
-        bounds = this.props.results
+        bounds = [ ...this.props.results ]
       } else {
-        bounds = this.props.defaultCoords
+        bounds = [ ...this.props.defaultCoords ]
       }
 
       if (bounds) {
+        if (bounds.length === 1) {
+          // If there's only one result, add two fake points NE and SW of that point that are each 1
+          // degree away in lat and lng, meaning that the zoom doesn't get too close. Not ideal but
+          // we can't specify a maximum zoom wirthout limiting the user-controlled zoom as well.
+          bounds.push({
+            lat: bounds[0].lat + 1,
+            lng: bounds[0].lng + 1,
+          })
+          bounds.push({
+            lat: bounds[0].lat - 1,
+            lng: bounds[0].lng - 1,
+          })
+        }
+
         this.mapRef.fitBounds(getLatLngBounds(bounds), 20)
       }
     }
@@ -73,9 +87,9 @@ class Map extends Component {
   render () {
     const {
       markerConfig: {
-        label: markerLabel,
-        background: markerBackground,
-        foreground: markerForeground,
+        labelField,
+        backgroundField,
+        foregroundField,
       },
       onMarkerClick,
       results,
@@ -89,9 +103,9 @@ class Map extends Component {
       >
         {results && results.map((item) => (
           <Marker
-            icon={getMapIcon(item[markerLabel], item[markerBackground], item[markerForeground])}
+            icon={getMapIcon(item[labelField], item[backgroundField], item[foregroundField])}
             key={item.uuid}
-            title={item[markerLabel]}
+            title={item[labelField]}
             position={{ lat: item.lat, lng: item.lng }}
             onClick={() => onMarkerClick(item)}
           />

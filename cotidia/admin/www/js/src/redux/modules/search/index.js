@@ -3,7 +3,6 @@ import * as types from './types'
 const initialState = {
   title: null,
   endpoint: null,
-  detailURL: null,
 
   columnConfiguration: {}, // Config for all columns
   columns: [], // Available columns (as an array of labelled categories)
@@ -108,12 +107,6 @@ export default (state = initialState, { type, payload } = {}) => {
       return {
         ...state,
         endpoint: payload,
-      }
-
-    case types.SET_DETAIL_URL:
-      return {
-        ...state,
-        detailURL: payload,
       }
 
     case types.SET_BATCH_ACTIONS:

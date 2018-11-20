@@ -89,7 +89,6 @@ def render_search_dashboard_config(
     context['title'] = serializer.get_option('title', default=model._meta.verbose_name_plural.title())
     context['field_representation'] = column_representation
     context['filters'] = filter_representation
-    context['detail_url'] = serializer.get_detail_url()
 
     # Get some config values
     context['primary_color'] = serializer.get_option('primary_color')
@@ -112,6 +111,7 @@ def render_search_dashboard_config(
     context['list_fields'] = serializer.get_option('list_fields')
     context['sidebar_starts_shown'] = serializer.get_option('sidebar_starts_shown')
     context['ignore_stored_config'] = serializer.get_option('ignore_stored_config')
+    context['detail_url_field'] = serializer.get_detail_url_field()
 
     # Batch actions can be overridden by the caller, so allow for that.
     if batch_actions:
@@ -181,7 +181,6 @@ def render_dynamic_list_config(
     context['auth_token'] = auth_token
     context['title'] = serializer.get_option('title', default=model._meta.verbose_name_plural.title())
     context['field_representation'] = serializer.get_field_representation()
-    context['detail_url'] = serializer.get_detail_url()
 
     # Get some config values
     context['primary_color'] = serializer.get_option('primary_color')
@@ -210,6 +209,7 @@ def render_dynamic_list_config(
     context['default_results_mode'] = serializer.get_option('default_results_mode')
     context['map_configuration'] = serializer.get_option('map_configuration')
     context['default_per_page'] = serializer.get_option('default_per_page')
+    context['detail_url_field'] = serializer.get_detail_url_field()
 
     # Batch actions can be overridden by the caller, so allow for that.
     if batch_actions:

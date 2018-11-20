@@ -45,9 +45,6 @@
     {% if auth_token %}
         authToken: '{{auth_token}}',
     {% endif %}
-    {% if detail_url %}
-        detailURL: '{{detail_url}}',
-    {% endif %}
     {% if default_columns %}
         defaultColumns: {{default_columns|safe}},
     {% endif %}
@@ -130,6 +127,9 @@
         {% endif %}
         {% if table_striped %}
             tableStriped: {{table_striped|json}},
+        {% endif %}
+        {% if detail_url_field %}
+            detailURLField: '{{detail_url_field}}',
         {% endif %}
     },
     {% if batch_actions %}

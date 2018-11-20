@@ -4,8 +4,7 @@ import SearchResultsMap from '../../../components/results/map/SearchResultsMap'
 
 const mapStateToProps = (state) => ({
   ...state.search.mapConfiguration,
-  detailURL: state.search.detailURL,
-  loading: state.search.loading,
+  detailURLField: state.config.detailURLField,
   results: state.search.results,
 })
 

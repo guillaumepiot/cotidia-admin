@@ -9,7 +9,7 @@ import ResultsTableItem from '../../../components/results/table/ResultsTableItem
 const mapStateToProps = (state, props) => ({
   checked: state.search.selected.includes(props.item.uuid),
   columns: getVisibleColumnConfig(state),
-  detailURL: state.search.detailURL,
+  detailURLField: state.config.detailURLField,
   showCheck: state.search.batchActions.length > 0,
 })
 

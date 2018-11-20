@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { generateURL } from '../../../utils/api'
-
 import ResultsListItem from './ResultsListItem'
 import Pagination from '../../../containers/Pagination'
 
@@ -11,7 +9,6 @@ export default class SearchResultsList extends Component {
     batchActions: PropTypes.arrayOf(PropTypes.object),
     columnConfiguration: PropTypes.object.isRequired,
     config: PropTypes.object,
-    detailURL: PropTypes.string,
     listFields: PropTypes.shape({
       left: PropTypes.shape({
         top: PropTypes.string,
@@ -28,15 +25,29 @@ export default class SearchResultsList extends Component {
     toggleResultSelected: PropTypes.func.isRequired,
   }
 
-  viewItem = (item, newWindow) => {
-    if (this.props.detailURL) {
-      const url = generateURL(this.props.detailURL, item)
+  getItemURL (item) {
+    if (this.props.config.detailURLField) {
+      const url = item[this.props.config.detailURLField]
 
-      if (newWindow) {
-        window.open(url)
-      } else {
-        window.location = url
+      if (typeof url === 'string' && url.length) {
+        return url
       }
+    }
+
+    return null
+  }
+
+  viewItem = (item, newWindow) => {
+    const url = this.getItemURL(item)
+
+    if (! url) {
+      return
+    }
+
+    if (newWindow) {
+      window.open(url)
+    } else {
+      window.location = url
     }
   }
 
@@ -47,7 +58,6 @@ export default class SearchResultsList extends Component {
       batchActions,
       columnConfiguration,
       config,
-      detailURL,
       loading,
       results,
       selected,
@@ -67,7 +77,7 @@ export default class SearchResultsList extends Component {
               item={item}
               showCheck={batchActions.length > 0}
               listFields={listFields}
-              viewItem={detailURL ? this.viewItem : null}
+              viewItem={this.getItemURL(item) ? this.viewItem : null}
             />
           ))}
         </div>
