@@ -390,8 +390,30 @@
                 }
             }
 
-            .control-select__options {
-                z-index: 5;
+            .control-select {
+                &__clear-button {
+                    top: calc(0.5rem + 2px);
+                }
+                &__options {
+                    z-index: 5;
+                }
+                &__option {
+                    color: $form_color_input;
+
+                    &--focused, &:hover, &:focus {
+                        background-color: $form_color_select_focus;
+                        color: $form_color_input;
+                    }
+
+                    &--selected, &--selected:hover, &--selected:focus {
+                        background-color: $form_color_active;
+                        color: #fff;
+                    }
+
+                    &--highlighted {
+                        color: $form_color_input;
+                    }
+                }
             }
         }
 

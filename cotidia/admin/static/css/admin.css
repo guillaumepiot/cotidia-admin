@@ -3612,8 +3612,20 @@ body:not(.menu--sidebar-collapse) .menu-footer .menu-item__link {
         padding: 0.5rem 1rem; }
       .table-cell-editable .form__group .form__control--input::after, .table-cell-editable .form__group .form__control--select::after, .table-cell-editable .form__group .form__control--textarea::after {
         top: 18px; }
+      .table-cell-editable .form__group .form__control .control-select__clear-button {
+        top: calc(0.5rem + 2px); }
       .table-cell-editable .form__group .form__control .control-select__options {
         z-index: 5; }
+      .table-cell-editable .form__group .form__control .control-select__option {
+        color: #111315; }
+        .table-cell-editable .form__group .form__control .control-select__option--focused, .table-cell-editable .form__group .form__control .control-select__option:hover, .table-cell-editable .form__group .form__control .control-select__option:focus {
+          background-color: #E5EBED;
+          color: #111315; }
+        .table-cell-editable .form__group .form__control .control-select__option--selected, .table-cell-editable .form__group .form__control .control-select__option--selected:hover, .table-cell-editable .form__group .form__control .control-select__option--selected:focus {
+          background-color: #00abd3;
+          color: #fff; }
+        .table-cell-editable .form__group .form__control .control-select__option--highlighted {
+          color: #111315; }
     .table-cell-editable .form__group .form__help {
       display: none; }
 
