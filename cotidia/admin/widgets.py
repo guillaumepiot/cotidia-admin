@@ -416,7 +416,7 @@ class GeolocateInput(forms.TextInput):
 
 
 class SelectSingleLookup(forms.HiddenInput):
-    template_name = 'admin/widgets/select_multiple_lookup.html'
+    template_name = 'admin/widgets/select_single_lookup.html'
     queryset_lookup = "pk"
 
     def __init__(self, config=None, queryset_lookup="pk", *args, **kwargs):
@@ -470,7 +470,7 @@ class SelectSingleLookup(forms.HiddenInput):
             'data-multiple': False,
             'data-label': self.config.get('label', False),
             'data-name': name,
-            'data-typeahead-endpoint': self.get_endpoint,
+            'data-typeahead-endpoint': self.get_endpoint(),
             'data-typeahead-minchars': "3",
             'data-initial': json.dumps(initial_data),
             'data-placeholder': self.config['placeholder'],

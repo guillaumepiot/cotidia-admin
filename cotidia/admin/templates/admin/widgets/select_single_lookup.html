@@ -1,0 +1,3 @@
+<div class="form__group"{% for name, value in config.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}>
+        {% include "django/forms/widgets/hidden.html" %}
+</div>
