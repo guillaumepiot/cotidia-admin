@@ -29,7 +29,12 @@ export default class TypeaheadSelectWidget extends Component {
   }
 
   searchOptions = async (q) => {
-    const url = new URL(this.props.apiEndpoint, window.location.href)
+    const apiEndpointVariable = `${this.props.name}APIEndpoint`
+
+    const url = new URL(
+      window[apiEndpointVariable] ? apiEndpointVariable : this.props.apiEndpoint,
+      window.location.href
+    )
 
     url.searchParams.set('q', q)
 
