@@ -1,5 +1,4 @@
 // Bootstrap types
-export const SET_TITLE = 'dynamic-list/search/SET_TITLE'
 export const SET_ENDPOINT = 'dynamic-list/search/SET_ENDPOINT'
 export const SET_BATCH_ACTIONS = 'dynamic-list/search/SET_BATCH_ACTIONS'
 export const SET_GLOBAL_ACTIONS = 'dynamic-list/search/SET_GLOBAL_ACTIONS'

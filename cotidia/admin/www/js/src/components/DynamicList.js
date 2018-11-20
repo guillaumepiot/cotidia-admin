@@ -23,7 +23,6 @@ export default class DynamicList extends Component {
     hasSidebar: PropTypes.bool.isRequired,
     resultsMode: PropTypes.string.isRequired,
     showSidebar: PropTypes.bool.isRequired,
-    title: PropTypes.string,
   }
 
   render () {
@@ -34,7 +33,6 @@ export default class DynamicList extends Component {
       networkError,
       resultsMode,
       showSidebar,
-      title,
     } = this.props
 
     if (networkError) {
@@ -55,14 +53,6 @@ export default class DynamicList extends Component {
 
     return (
       <>
-        {title && (
-          <div className='content__head'>
-            <div className='content__inner content-head'>
-              <div className='content-head__title'>{title}</div>
-            </div>
-          </div>
-        )}
-
         <ToolBar />
 
         {filterTagBarVisible && <FilterTagBar />}

@@ -180,6 +180,5 @@ export const dynamicListPropTypes = {
     }),
   }),
   sidebarFilters: filterList,
-  title: PropTypes.string,
   toolbarFilters: filterList,
 }

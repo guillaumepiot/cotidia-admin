@@ -6,7 +6,6 @@ import * as searchActions from '../search/actions'
 import * as searchTypes from '../search/types'
 
 export function * bootstrap ({ payload: config }) {
-  yield put({ type: searchTypes.SET_TITLE, payload: config.title })
   yield put({ type: searchTypes.SET_ENDPOINT, payload: config.endpoint })
   yield put({ type: searchTypes.SET_BATCH_ACTIONS, payload: config.batchActions || [] })
   yield put({ type: searchTypes.SET_GLOBAL_ACTIONS, payload: config.globalActions || [] })

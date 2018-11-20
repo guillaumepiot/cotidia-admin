@@ -1,7 +1,6 @@
 import * as types from './types'
 
 const initialState = {
-  title: null,
   endpoint: null,
 
   columnConfiguration: {}, // Config for all columns
@@ -97,12 +96,6 @@ const tidyFilters = (filters, state) => {
 
 export default (state = initialState, { type, payload } = {}) => {
   switch (type) {
-    case types.SET_TITLE:
-      return {
-        ...state,
-        title: payload,
-      }
-
     case types.SET_ENDPOINT:
       return {
         ...state,
