@@ -63,7 +63,7 @@
         apiEndpoint: formGroup.dataset.typeaheadEndpoint,
         defaultOptions: initialData,
         extraGroupClasses: Array.prototype.slice.call(formGroup.classList),
-        initialValue: ,
+        initialValue: initialValue,
         label: formGroup.dataset.label,
         minchars: formGroup.dataset.typeaheadMinchars ? parseInt(formGroup.dataset.typeaheadMinchars) : 1,
         multiple: multiple,
