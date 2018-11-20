@@ -444,7 +444,7 @@ class SelectSingleLookup(forms.HiddenInput):
             )
             initial_data = [
                 {
-                    'value': getattr(instance, self.queryset_lookup),
+                    'value': str(getattr(instance, self.queryset_lookup)),
                     'label': str(instance),
                 }
             ]
