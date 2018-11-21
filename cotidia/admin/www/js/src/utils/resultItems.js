@@ -13,8 +13,8 @@ export const getValueFormatter = (config) => {
   const formatters = {
     verbatim: (value) => (value == null) ? '' : String(value),
     number: (value) => (value && ! isNaN(Number(value))) ? Number(value).toLocaleString() : null,
-    percentage: (value) => (value && ! isNaN(Number(value))) ? Number(value).toLocaleString({ style: 'percent' }) : null,
-    currency: (value, _, __, currency) => (value && ! isNaN(Number(value))) ? Number(value).toLocaleString({ style: 'currency', currency }) : null,
+    percentage: (value) => (value && ! isNaN(Number(value))) ? Number(value).toLocaleString(undefined, { style: 'percent' }) : null,
+    currency: (value, _, __, currency) => (value && ! isNaN(Number(value))) ? Number(value).toLocaleString(undefined, { style: 'currency', currency }) : null,
     date: (value) => value && moment(value).format(config.dateFormat),
     datetime: (value) => value && moment(value).format(config.datetimeFormat),
     boolean: (value) => (
