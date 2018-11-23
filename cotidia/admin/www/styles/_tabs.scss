@@ -1,3 +1,29 @@
+//Tabs flex layout for full height
+.tabs {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    height: 100%;
+
+    &__panels {
+        display: flex;
+        flex: 1;
+    }
+}
+
+.tab {
+    &__panel {
+        display: flex;
+        flex: 1;
+
+        > .content {
+            display: flex;
+            flex: 1;
+        }
+    }
+}
+
+// Tab styling
 .tab {
     &__label {
         background-color: #fff;

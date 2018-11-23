@@ -1,20 +1,27 @@
-<div class="content content--sticky">
+<div class="tabs tabs--borderless">
     {{> @content-head--tabbed }}
-    {{> @content-toolbar }}
-    <div class="content__body">
-        <div class="content__inner">
-            <div class="content__list">
-                {{> @table--sticky }}
+
+    <div class="tabs__panels">
+        <div class="tab__panel">
+            <div class="layout__content content content--sticky">
+                {{> @content-toolbar }}
+                <div class="content__body">
+                    <div class="content__inner">
+                        <div class="content__list">
+                            {{> @table--sticky }}
+                        </div>
+                        {{> @content-sidebar }}
+                    </div>
+                </div>
+                <div class="content__foot">
+                    <div class="content__inner content-foot">
+                        <div class="content-foot__left">
+                            {{> @pagination }}
+                        </div>
+                        <div class="content-foot__right"></div>
+                    </div>
+                </div>
             </div>
-            {{> @content-sidebar }}
-        </div>
-    </div>
-    <div class="content__foot">
-        <div class="content__inner content-foot">
-            <div class="content-foot__left">
-                {{> @pagination }}
-            </div>
-            <div class="content-foot__right"></div>
         </div>
     </div>
 </div>
