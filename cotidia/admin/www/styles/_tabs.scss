@@ -24,6 +24,12 @@
 }
 
 // Tab styling
+.tabs {
+    &__nav {
+        padding-top: $padding;
+    }
+}
+
 .tab {
     &__label {
         background-color: #fff;
