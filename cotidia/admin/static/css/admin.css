@@ -3867,6 +3867,9 @@ fieldset.table-view .table {
     display: flex;
     flex: 1; }
 
+.tabs__nav {
+  padding-top: 1rem; }
+
 .tab__label {
   background-color: #fff;
   border-color: #D0D5D7;
