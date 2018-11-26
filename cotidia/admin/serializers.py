@@ -515,6 +515,42 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
 
         return default
 
+    def get_meta_data(self, page, queryset):
+        meta_data = {}
+        pagination_info = self.get_pagination_info(page, queryset)
+        if pagination_info is not None:
+            meta_data["pagination_info"] = pagination_info
+        return meta_data
+
+    def get_pagination_context(self, page, queryset):
+        page_result_count = len(page.object_list)
+        total_result_count = page.paginator.count
+        current_page = page.number
+        page_count = page.paginator.num_pages
+        per_page = page.paginator.per_page
+        first_result_index = page.start_index()
+        last_result_index = page.end_index()
+        return {
+            'page_result_count': page_result_count,
+            'total_result_count': total_result_count,
+            'current_page': current_page,
+            'page_count': page_count,
+            'first_result_index': first_result_index,
+            'last_result_index': last_result_index,
+            'per_page': per_page,
+        }
+
+    def get_pagination_info(self, page, queryset):
+        pagination_info = None
+        pagination_context = self.get_pagination_context(page, queryset)
+        if self.get_option('pagination_info_string'):
+            pagination_info = self.get_option('pagination_info_string').format(
+                **pagination_context
+            )
+            return pagination_info
+        else:
+            return None
+
     def get_general_query_fields(self):
         return self.get_option(
             'general_query_fields',
