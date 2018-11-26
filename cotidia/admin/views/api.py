@@ -55,15 +55,6 @@ class GenericAdminPaginationStyle(PageNumberPagination):
     page_query_param = '_page'
 
     def get_paginated_response(self, data):
-        return Response(OrderedDict([
-            ('total_result_count', self.page.paginator.count),
-            ('current_page', self.page.number),
-            ('page_result_count', len(data)),
-            ('page_count', self.page.paginator.num_pages),
-            ('next', self.get_next_link()),
-            ('previous', self.get_previous_link()),
-            ('results', data),
-        ]))
         return Response(
             OrderedDict(
                 [
