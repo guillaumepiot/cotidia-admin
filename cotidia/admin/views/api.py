@@ -55,15 +55,28 @@ class GenericAdminPaginationStyle(PageNumberPagination):
     page_query_param = '_page'
 
     def get_paginated_response(self, data):
-        return Response(OrderedDict([
-            ('total_result_count', self.page.paginator.count),
-            ('current_page', self.page.number),
-            ('page_result_count', len(data)),
-            ('page_count', self.page.paginator.num_pages),
-            ('next', self.get_next_link()),
-            ('previous', self.get_previous_link()),
-            ('results', data),
-        ]))
+        return Response(
+            OrderedDict(
+                [
+                    ("total_result_count", self.page.paginator.count),
+                    ("current_page", self.page.number),
+                    ("page_result_count", len(data)),
+                    ("page_count", self.page.paginator.num_pages),
+                    ("next", self.get_next_link()),
+                    ("meta", self.get_meta_data()),
+                    ("previous", self.get_previous_link()),
+                    ("results", data),
+                    ("first_result_index", self.page.start_index()),
+                    ("last_result_index", self.page.end_index()),
+                ]
+            )
+        )
+
+    def get_meta_data(self):
+        if hasattr(self, "queryset") and hasattr(self, "serializer"):
+            return self.serializer.get_meta_data(self.page, self.queryset)
+        else:
+            return {}
 
 
 class AdminSearchDashboardUpdateView(UpdateAPIView):
@@ -114,6 +127,20 @@ class DynamicListAPIView(ListAPIView):
 
         return super().get_permissions()
 
+    @property
+    def paginator(self):
+        """
+        The paginator instance associated with the view, or `None`.
+        """
+        if not hasattr(self, "_paginator"):
+            if self.pagination_class is None:
+                self._paginator = None
+            else:
+                self._paginator = self.pagination_class()
+                self._paginator.queryset = self.get_queryset()
+                self._paginator.serializer = self.get_serializer()
+        return self._paginator
+
     def get_model_class(self):
         if not self._model_class:
             self._model_class = ContentType.objects.get(
@@ -124,84 +151,87 @@ class DynamicListAPIView(ListAPIView):
         return self._model_class
 
     def get_queryset(self):
-        model_class = self.get_model_class()
-        serializer_class = self.get_serializer_class()
-        serializer = serializer_class()
+        if not hasattr(self, "_queryset"):
+            model_class = self.get_model_class()
+            serializer_class = self.get_serializer_class()
+            serializer = serializer_class()
 
-        filters = serializer.get_filters()
-        filter_args = self.request.GET
-        field_repr = serializer.get_field_representation()
-        general_filter = serializer.get_general_query_filter()
+            filters = serializer.get_filters()
+            filter_args = self.request.GET
+            field_repr = serializer.get_field_representation()
+            general_filter = serializer.get_general_query_filter()
 
-        if serializer.get_option('get_queryset'):
-            qs = serializer.get_option('get_queryset')()
-        else:
-            qs = model_class.objects.all()
+            if serializer.get_option("get_queryset"):
+                qs = serializer.get_option("get_queryset")()
+            else:
+                qs = model_class.objects.all()
 
-        q_obj = Q()
-        for name, filter in filters.items():
-            qs = filter.annotate(qs)
-            filter_params = filter_args.getlist(filter.get_query_param())
-            q_obj &= filter.get_q_object(filter_params)
+            q_obj = Q()
+            for name, filter in filters.items():
+                qs = filter.annotate(qs)
+                filter_params = filter_args.getlist(filter.get_query_param())
+                q_obj &= filter.get_q_object(filter_params)
 
-        if general_filter:
-            general_query_params = filter_args.getlist('_q')
-            qs = general_filter.annotate(qs)
-            q_obj &= general_filter.get_q_object(general_query_params)
+            if general_filter:
+                general_query_params = filter_args.getlist("_q")
+                qs = general_filter.annotate(qs)
+                q_obj &= general_filter.get_q_object(general_query_params)
 
-        qs = qs.filter(q_obj)
+            qs = qs.filter(q_obj)
 
+            for name, filter in filters.items():
+                qs = filter.filter(qs, filter_args)
 
-        for name, filter in filters.items():
-            qs = filter.filter(qs, filter_args)
+            if general_filter:
+                qs = general_filter.filter(qs, filter_args)
 
-        if general_filter:
-            qs = general_filter.filter(qs, filter_args)
+            raw_ordering_params = filter_args.getlist("_order")
+            ordering_params = []
+            for param in raw_ordering_params:
+                if param:
+                    desc = False
+                    key = param
+                    if param[0] == "-":
+                        desc = True
+                        key = param[1:]
 
+                    # Append custom ordering
+                    if field_repr.get(key):
+                        ordering_params += [
+                            ("-" + x) if desc else x
+                            for x in field_repr[key].get("ordering_fields", [key])
+                        ]
 
-        raw_ordering_params = filter_args.getlist('_order')
-        ordering_params = []
-        for param in raw_ordering_params:
-            if param:
-                desc = False
-                key = param
-                if param[0] == '-':
-                    desc = True
-                    key = param[1:]
+            if ordering_params:
+                # Here we add an annotation to make sure when we order, the value is
+                # empty
+                first_field = ordering_params[0]
+                clean_field_name = (
+                    first_field[1:] if first_field[0] == "-" else first_field
+                )
+                try:
+                    condition_blank = Q(**{clean_field_name + "__exact": ""})
+                    annotation = {
+                        "val_is_empty": Count(
+                            Case(
+                                When(condition_blank, then=1), output_field=CharField()
+                            )
+                        )
+                    }
+                    qs = qs.annotate(**annotation)
+                    ordering_params = ["val_is_empty"] + ordering_params
+                except (ValidationError, ValueError):
+                    # This is added as number an dates all have sensible defaults
+                    pass
+                parsed_ordering_params = [parse_ordering(x) for x in ordering_params]
+                qs = qs.order_by(*parsed_ordering_params)
+            else:
+                default_order_by = serializer.get_option("default_order_by")
+                if default_order_by:
+                    qs = qs.order_by(default_order_by)
 
-                # Append custom ordering
-                if field_repr.get(key):
-                    ordering_params += [
-                        ('-' + x) if desc else x
-                        for x in field_repr[key].get('ordering_fields', [key])
-                    ]
-
-        if ordering_params:
-            # Here we add an annotation to make sure when we order, the value is
-            # empty
-            first_field = ordering_params[0]
-            clean_field_name = first_field[
-                1:] if first_field[0] == '-' else first_field
-            try:
-                condition_blank = Q(**{clean_field_name + "__exact": ""})
-                annotation = {"val_is_empty": Count(Case(
-                    When(condition_blank, then=1), output_field=CharField(),
-                ))}
-                qs = qs.annotate(**annotation)
-                ordering_params = ["val_is_empty"] + ordering_params
-            except (ValidationError, ValueError):
-                # This is added as number an dates all have sensible defaults
-                pass
-            parsed_ordering_params = [
-                parse_ordering(x) for x in ordering_params
-            ]
-            qs = qs.order_by(*parsed_ordering_params)
-        else:
-            default_order_by = serializer.get_option('default_order_by')
-            if default_order_by:
-                qs = qs.order_by(default_order_by)
-
-        return qs
+            self._queryset = qs
+        return self._queryset
 
     def get_serializer_class(self):
         if self.kwargs.get('serializer_class', False):
