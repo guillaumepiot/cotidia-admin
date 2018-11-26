@@ -517,12 +517,12 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
 
     def get_meta_data(self, page, queryset):
         meta_data = {}
-        pagination_info = self.get_pagination_info(page, queryset)
-        if pagination_info is not None:
-            meta_data["pagination_info"] = pagination_info
+        footer_info = self.get_footer_info(page, queryset)
+        if footer_info is not None:
+            meta_data["footer_info"] = footer_info
         return meta_data
 
-    def get_pagination_context(self, page, queryset):
+    def get_footer_info_context(self, page, queryset):
         page_result_count = len(page.object_list)
         total_result_count = page.paginator.count
         current_page = page.number
@@ -540,14 +540,14 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
             'per_page': per_page,
         }
 
-    def get_pagination_info(self, page, queryset):
-        pagination_info = None
-        pagination_context = self.get_pagination_context(page, queryset)
-        if self.get_option('pagination_info_string'):
-            pagination_info = self.get_option('pagination_info_string').format(
-                **pagination_context
+    def get_footer_info(self, page, queryset):
+        footer_info = None
+        footer_info_context = self.get_footer_info_context(page, queryset)
+        if self.get_option('footer_info_string'):
+            footer_info = self.get_option('footer_info_string').format(
+                **footer_info_context
             )
-            return pagination_info
+            return footer_info
         else:
             return None
 
