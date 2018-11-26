@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 from cotidia.core.models import BaseModel
 
@@ -7,8 +8,7 @@ class ExampleModelOne(BaseModel):
     # Numeric Fields
     integer_field = models.IntegerField(null=True, blank=True)
     integer_choice_field = models.IntegerField(
-        choices=((1, "Foo"), (2, "Bar")),
-        null=True, blank=True
+        choices=((1, "Foo"), (2, "Bar")), null=True, blank=True
     )
     float_field = models.FloatField(null=True, blank=True)
     decimal_field = models.DecimalField(
@@ -21,9 +21,7 @@ class ExampleModelOne(BaseModel):
     # Text based fields
     char_field = models.CharField(max_length=50, null=True, blank=True)
     choice_field = models.CharField(
-        max_length=50,
-        choices=(("foo", "Foo"), ("bar", "Bar")),
-        null=True, blank=True
+        max_length=50, choices=(("foo", "Foo"), ("bar", "Bar")), null=True, blank=True
     )
     text_field = models.TextField(null=True, blank=True)
     email_field = models.EmailField(null=True, blank=True)
@@ -40,21 +38,24 @@ class ExampleModelOne(BaseModel):
 
     # Foreign key fields
     other_model = models.ForeignKey(
-        'tests.ExampleModelTwo',
+        "tests.ExampleModelTwo",
         related_name="reverse",
-        on_delete=models.SET_NULL, null=True, blank=True
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
     )
-    many_to_many_field = models.ManyToManyField(
-        'tests.ExampleModelTwo',
-        blank=True
-    )
+    many_to_many_field = models.ManyToManyField("tests.ExampleModelTwo", blank=True)
+
+    def get_admin_detail_url(self):
+        return reverse("tests-admin:examplemodelone-detail", kwargs={"pk": self.id})
 
     class Meta:
-        ordering = ('integer_field',)
+        ordering = ("integer_field",)
 
     class SearchProvider:
         def serializer():
             from cotidia.admin.tests.serializers import ExampleModelOneSerializer
+
             return ExampleModelOneSerializer
 
     @property
@@ -66,14 +67,18 @@ class ExampleModelTwo(BaseModel):
     number = models.IntegerField(null=True, blank=True)
     name = models.CharField(max_length=50, null=True, blank=True)
     other_model = models.ForeignKey(
-        'tests.ExampleModelOne',
+        "tests.ExampleModelOne",
         related_name="reverse_related_models",
-        null=True, blank=True,
-        on_delete=models.SET_NULL
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
     )
 
     class Meta:
-        ordering = ('number',)
+        ordering = ("number",)
+
+    def get_admin_detail_url(self):
+        return reverse("tests-admin:examplemodeltwo-detail", kwargs={"pk": self.id})
 
 
 class AutoSerializerModel(BaseModel):
@@ -82,4 +87,4 @@ class AutoSerializerModel(BaseModel):
 
 class DeclaredSerializerModel(BaseModel):
     class SearchProvider:
-        admin_serializer = 'cotidia.admin.tests.serializers.DeclaredModelSerializer'
+        admin_serializer = "cotidia.admin.tests.serializers.DeclaredModelSerializer"

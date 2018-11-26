@@ -59,6 +59,15 @@ class DynamicListModelOneSerializer(BaseDynamicListSerializer):
         display_field = "char_field"
         general_query_fields = ["char_field", "text_field", "slug_field"]
         filters = '__all__'
+        pagination_info_string = (
+            "page_result_count {page_result_count} "
+            "total_result_count {total_result_count} "
+            "current_page {current_page} "
+            "page_count {page_count} "
+            "first_result_count {first_result_index} "
+            "last_result_count {last_result_index} "
+            "per_page {per_page} "
+        )
 
 
 class DeclaredModelSerializer(AdminModelSerializer):
