@@ -59,7 +59,7 @@ class DynamicListModelOneSerializer(BaseDynamicListSerializer):
         display_field = "char_field"
         general_query_fields = ["char_field", "text_field", "slug_field"]
         filters = '__all__'
-        pagination_info_string = (
+        footer_info_string = (
             "page_result_count {page_result_count} "
             "total_result_count {total_result_count} "
             "current_page {current_page} "

@@ -25,7 +25,7 @@ class AdminSearchDashboardTests(APITestCase):
         response = self.client.get(self.url, {})
 
         self.assertEqual(
-            response.data["meta"]["pagination_info"],
+            response.data["meta"]["footer_info"],
             (
                 "page_result_count 50 "
                 "total_result_count 60 "
