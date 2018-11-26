@@ -40,8 +40,9 @@ export default class Pagination extends Component {
       totalResultsCount,
     } = this.props
 
-    if (resultsMeta.paginationInfo) {
-      return this.renderSimpleContent(resultsMeta.paginationInfo)
+    // Snake case because Python conventions.
+    if (resultsMeta.footer_info) {
+      return this.renderSimpleContent(resultsMeta.footer_info)
     }
 
     if (! page) {
