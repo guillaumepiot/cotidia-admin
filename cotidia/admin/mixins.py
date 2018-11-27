@@ -16,6 +16,7 @@ class UserCheckMixin(object):
 
         return super().dispatch(request, *args, **kwargs)
 
+
 class StaffPermissionRequiredMixin(UserCheckMixin):
     def get_permission_required(self):
         if hasattr(self, "permission_required"):

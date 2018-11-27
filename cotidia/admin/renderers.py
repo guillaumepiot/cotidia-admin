@@ -25,8 +25,8 @@ def flatten_item(item):
 
 
 def render_to_csv(data, filename="export"):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="{}.csv"'.format(filename)
+    response = HttpResponse(content_type="text/csv")
+    response["Content-Disposition"] = 'attachment; filename="{}.csv"'.format(filename)
 
     writer = csv.writer(response)
 
@@ -50,20 +50,17 @@ def render_to_csv(data, filename="export"):
 def render_to_pdf(data, template="admin/export/pdf.html", filename="export"):
 
     if HTML is None:
-        raise Exception('Weasyprint module not installed!')
+        raise Exception("Weasyprint module not installed!")
 
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="{}.pdf"'.format(filename)
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = 'attachment; filename="{}.pdf"'.format(filename)
 
     if data:
         json_data = JSONRenderer().render(data)
 
         data = json.loads(json_data)
 
-        context = {
-            'keys': [k for k in data[0].keys()],
-            'data': data
-        }
+        context = {"keys": [k for k in data[0].keys()], "data": data}
 
         html = render_to_string(template, context)
 

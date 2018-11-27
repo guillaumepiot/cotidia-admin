@@ -30,25 +30,24 @@ from cotidia.admin.templatetags.admin_list_tags import get_admin_url
 class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
     columns = ()
     paginate_by = 25
-    template_type = 'padded'  # Options: fluid, padded, centered
+    template_type = "padded"  # Options: fluid, padded, centered
     filterset = None
     # TODO
     # Option to show or not the detail view from the list
     # detail_view = True
     add_view = True
     actions = []
-    row_click_action = 'update'  # or "detail"
-    row_actions = ['view', 'update', 'delete']
+    row_click_action = "update"  # or "detail"
+    row_actions = ["view", "update", "delete"]
     group_by = False
     orderable = False  # 'arrow', 'drag'
 
     def get_permission_required(self):
-        if hasattr(self, 'permission_required'):
+        if hasattr(self, "permission_required"):
             return self.permission_required
         else:
-            return '{}.add_{}'.format(
-                self.model._meta.app_label,
-                self.model._meta.model_name
+            return "{}.add_{}".format(
+                self.model._meta.app_label, self.model._meta.model_name
             )
 
     def get_queryset(self):
@@ -56,9 +55,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
 
         if self.filterset:
             self.filter = self.filterset(
-                self.request.GET,
-                queryset=queryset,
-                request=self.request
+                self.request.GET, queryset=queryset, request=self.request
             )
 
             queryset = self.filter.qs
@@ -68,43 +65,39 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['columns'] = self.columns
-        context['add_view'] = self.add_view
-        context['row_click_action'] = self.row_click_action
-        context['row_actions'] = self.row_actions
-        context['group_by'] = self.group_by
-        context['next'] = self.request.path
-        context['total_results_count'] = self.get_queryset().count()
+        context["columns"] = self.columns
+        context["add_view"] = self.add_view
+        context["row_click_action"] = self.row_click_action
+        context["row_actions"] = self.row_actions
+        context["group_by"] = self.group_by
+        context["next"] = self.request.path
+        context["total_results_count"] = self.get_queryset().count()
 
-        if hasattr(self, 'filter') and self.filter and self.filter.data:
-            context['filter_data'] = self.filter.data.dict()
+        if hasattr(self, "filter") and self.filter and self.filter.data:
+            context["filter_data"] = self.filter.data.dict()
 
-            if 'page' in context['filter_data']:
-                del context['filter_data']['page']
+            if "page" in context["filter_data"]:
+                del context["filter_data"]["page"]
 
-            context['filter_params'] = urllib.parse.urlencode(
-                context['filter_data']
-            )
+            context["filter_params"] = urllib.parse.urlencode(context["filter_data"])
 
-            context['next'] += '?' + context['filter_params']
+            context["next"] += "?" + context["filter_params"]
 
-        context['next'] = urllib.parse.quote(context['next'])
+        context["next"] = urllib.parse.quote(context["next"])
 
         if self.actions:
             action_list = ()
 
             for action in self.actions:
                 action_func = getattr(self, action)
-                action_name = getattr(action_func, 'action_name', action)
+                action_name = getattr(action_func, "action_name", action)
 
-                action_list += (action, action_name),
+                action_list += ((action, action_name),)
 
-            context['actions'] = {
-                'form': ActionForm(action_list=action_list),
-            }
+            context["actions"] = {"form": ActionForm(action_list=action_list)}
 
-        context['orderable'] = getattr(self, 'orderable', None)
-        context['filter'] = getattr(self, 'filter', None)
+        context["orderable"] = getattr(self, "orderable", None)
+        context["filter"] = getattr(self, "filter", None)
 
         return context
 
@@ -113,20 +106,19 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
         if self.template_name is not None:
             return [self.template_name]
 
-        template = 'admin/{app}/{model}/list.html'.format(
-            app=self.model._meta.app_label,
-            model=self.model._meta.model_name
+        template = "admin/{app}/{model}/list.html".format(
+            app=self.model._meta.app_label, model=self.model._meta.model_name
         )
 
-        return [template, 'admin/generic/page/list.html']
+        return [template, "admin/generic/page/list.html"]
 
     def post(self, *args, **kwargs):
-        action = self.request.POST.get('actions')
-        action_items = self.request.POST.getlist('action_items')
+        action = self.request.POST.get("actions")
+        action_items = self.request.POST.getlist("action_items")
 
         action_func = getattr(self, action)
 
-        action_name = getattr(action_func, 'action_name', action)
+        action_name = getattr(action_func, "action_name", action)
 
         for object_id in action_items:
             try:
@@ -140,137 +132,120 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
         return HttpResponseRedirect(self.get_success_url(action_name))
 
     def build_success_url(self):
-        if self.request.GET.get('next'):
-            return self.request.GET['next']
+        if self.request.GET.get("next"):
+            return self.request.GET["next"]
 
-        if hasattr(self.model, 'SearchProvider'):
+        if hasattr(self.model, "SearchProvider"):
             return reverse(
                 "generic-admin:list",
                 kwargs={
                     "app_label": self.model._meta.app_label,
-                    "model": self.model._meta.model_name
-                }
+                    "model": self.model._meta.model_name,
+                },
             )
         else:
             return get_admin_url(
-                self.model._meta.app_label,
-                self.model._meta.model_name,
-                'list'
+                self.model._meta.app_label, self.model._meta.model_name, "list"
             )
 
     def get_success_url(self, action):
         messages.success(
-            self.request,
-            "'{}' has been executed successfully.".format(action)
+            self.request, "'{}' has been executed successfully.".format(action)
         )
 
         return self.build_success_url()
 
 
-class DynamicListView(
-    StaffPermissionRequiredMixin,
-    ContextMixin,
-    TemplateView
-):
+class DynamicListView(StaffPermissionRequiredMixin, ContextMixin, TemplateView):
     group_by = False
     model = None
-    template_type = 'fluid'
+    template_type = "fluid"
     add_view = False
 
     def get_permission_required(self):
-        if self.kwargs.get('permission_required'):
-            return self.kwargs['permission_required']
-        elif hasattr(self, 'permission_required'):
+        if self.kwargs.get("permission_required"):
+            return self.kwargs["permission_required"]
+        elif hasattr(self, "permission_required"):
             return self.permission_required
         else:
-            return '{}.add_{}'.format(
-                self.get_model()._meta.app_label,
-                self.get_model()._meta.model_name
+            return "{}.add_{}".format(
+                self.get_model()._meta.app_label, self.get_model()._meta.model_name
             )
 
     def get_model(self, *args, **kwargs):
         try:
             return ContentType.objects.get(
-                app_label=self.kwargs['app_label'],
-                model=self.kwargs['model']
+                app_label=self.kwargs["app_label"], model=self.kwargs["model"]
             ).model_class()
         except ContentType.DoesNotExist:
             raise Exception(
                 "Model with app label {} and model name {} does not exist.".format(
-                    self.kwargs['app_label'],
-                    self.kwargs['model']
+                    self.kwargs["app_label"], self.kwargs["model"]
                 )
             )
 
     def get_template_names(self):
 
-        if self.kwargs.get('template_name') is not None:
-            return [self.kwargs.get('template_name')]
+        if self.kwargs.get("template_name") is not None:
+            return [self.kwargs.get("template_name")]
         elif self.template_name is not None:
             return [self.template_name]
 
-        template = 'admin/{app}/{model}/dynamic-list-view.html'.format(
-            app=self.model._meta.app_label,
-            model=self.model._meta.model_name
+        template = "admin/{app}/{model}/dynamic-list-view.html".format(
+            app=self.model._meta.app_label, model=self.model._meta.model_name
         )
 
-        return [template, 'admin/generic/page/dynamic-list-view.html']
+        return [template, "admin/generic/page/dynamic-list-view.html"]
 
     def get_context_data(self, *args, **kwargs):
         self.model = self.get_model(*args, **kwargs)
 
         context = super().get_context_data(**kwargs)
 
-        context['app_label'] = self.model._meta.app_label
-        context['model_name'] = self.model._meta.model_name
+        context["app_label"] = self.model._meta.app_label
+        context["model_name"] = self.model._meta.model_name
 
-        context['title'] = self.model._meta.verbose_name_plural
-        context['tab_title'] = self.model._meta.verbose_name_plural
-
+        context["title"] = self.model._meta.verbose_name_plural
+        context["tab_title"] = self.model._meta.verbose_name_plural
 
         # Even though the serailizer is passed into the view as
         # `serializer_class` and is indeed a class when it's passed in, by
         # this time this code is running, it's an instance of the
         # serializer, so we'll call it `serializer` in the context.
-        if self.kwargs.get('serializer_class'):
-            context['serializer'] = self.kwargs['serializer_class']
-            serializer = self.kwargs['serializer_class']()
-            title_value = serializer.get_option('title', False)
-            if title_value in [None, '']:
-                context["title"] = ''
+        if self.kwargs.get("serializer_class"):
+            context["serializer"] = self.kwargs["serializer_class"]
+            serializer = self.kwargs["serializer_class"]()
+            title_value = serializer.get_option("title", False)
+            if title_value in [None, ""]:
+                context["title"] = ""
             elif title_value:
                 context["title"] = title_value
                 context["tab_title"] = title_value
 
-            if 'map' in self.kwargs['serializer_class'](
-                    ).get_option('allowed_results_modes', []):
-                context['needs_map_config'] = True
+            if "map" in self.kwargs["serializer_class"]().get_option(
+                "allowed_results_modes", []
+            ):
+                context["needs_map_config"] = True
 
+        if self.kwargs.get("endpoint"):
+            context["endpoint"] = self.kwargs["endpoint"]
 
+        if self.request.GET.get("_column"):
+            context["default_columns"] = self.request.GET.getlist("_column")
 
-
-        if self.kwargs.get('endpoint'):
-            context['endpoint'] = self.kwargs['endpoint']
-
-        if self.request.GET.get('_column'):
-            context['default_columns'] = self.request.GET.getlist('_column')
-
-        if self.request.GET.get('_order'):
-            context['default_order_by'] = self.request.GET.getlist('_order')
-
+        if self.request.GET.get("_order"):
+            context["default_order_by"] = self.request.GET.getlist("_order")
 
         # Generate list of all filters from GET parameters.
         filters = {}
 
         for key in self.request.GET:
-            if key[0] != '_':
-                filters[key] = self.parse_filter_values(
-                    self.request.GET.getlist(key)
-                )
+            if key[0] != "_":
+                filters[key] = self.parse_filter_values(self.request.GET.getlist(key))
 
-        context['add_view'] = self.kwargs.get('add_view', self.add_view)
+        context["add_view"] = self.kwargs.get("add_view", self.add_view)
 
-        context['default_filters'] = filters
+        context["default_filters"] = filters
         pprint(context)
 
         return context
@@ -282,98 +257,88 @@ class DynamicListView(
         return formatted[0] if len(formatted) == 1 else formatted
 
     def format_filter_value(self, value):
-        if value == 'true':
+        if value == "true":
             value = True
-        elif value == 'false':
+        elif value == "false":
             value = False
         return value
 
 
-class AdminGenericListView(
-    StaffPermissionRequiredMixin,
-    ContextMixin,
-    TemplateView
-):
+class AdminGenericListView(StaffPermissionRequiredMixin, ContextMixin, TemplateView):
     group_by = False
 
     model = None
 
-    template_type = 'fluid'
+    template_type = "fluid"
 
     def get_permission_required(self):
-        if self.kwargs.get('permission_required'):
-            return self.kwargs['permission_required']
-        elif hasattr(self, 'permission_required'):
+        if self.kwargs.get("permission_required"):
+            return self.kwargs["permission_required"]
+        elif hasattr(self, "permission_required"):
             return self.permission_required
         else:
-            return '{}.add_{}'.format(
-                self.get_model()._meta.app_label,
-                self.get_model()._meta.model_name
+            return "{}.add_{}".format(
+                self.get_model()._meta.app_label, self.get_model()._meta.model_name
             )
 
     def get_model(self, *args, **kwargs):
         try:
             return ContentType.objects.get(
-                app_label=self.kwargs['app_label'],
-                model=self.kwargs['model']
+                app_label=self.kwargs["app_label"], model=self.kwargs["model"]
             ).model_class()
         except ContentType.DoesNotExist:
             raise Exception(
                 "Model with app label {} and model name {} does not exist.".format(
-                    self.kwargs['app_label'],
-                    self.kwargs['model']
+                    self.kwargs["app_label"], self.kwargs["model"]
                 )
             )
 
     def get_template_names(self):
 
-        if self.kwargs.get('template_name'):
-            return [self.kwargs['template_name']]
+        if self.kwargs.get("template_name"):
+            return [self.kwargs["template_name"]]
 
         if self.template_name is not None:
             return [self.template_name]
 
-        template = 'admin/{app}/{model}/dynamic-list.html'.format(
-            app=self.model._meta.app_label,
-            model=self.model._meta.model_name
+        template = "admin/{app}/{model}/dynamic-list.html".format(
+            app=self.model._meta.app_label, model=self.model._meta.model_name
         )
 
-        return [template, 'admin/generic/page/dynamic-list.html']
+        return [template, "admin/generic/page/dynamic-list.html"]
 
     def get_context_data(self, *args, **kwargs):
         self.model = self.get_model(*args, **kwargs)
 
         context = super().get_context_data(**kwargs)
 
-        context['app_label'] = self.model._meta.app_label
-        context['model_name'] = self.model._meta.model_name
+        context["app_label"] = self.model._meta.app_label
+        context["model_name"] = self.model._meta.model_name
 
         # Even though the serailizer is passed into the view as
         # `serializer_class` and is indeed a class when it's passed in, by
         # this time this code is running, it's an instance of the
         # serializer, so we'll call it `serializer` in the context.
-        if self.kwargs.get('serializer_class'):
-            context['serializer'] = self.kwargs['serializer_class']
+        if self.kwargs.get("serializer_class"):
+            context["serializer"] = self.kwargs["serializer_class"]
 
-        if self.kwargs.get('endpoint'):
-            context['endpoint'] = self.kwargs['endpoint']
+        if self.kwargs.get("endpoint"):
+            context["endpoint"] = self.kwargs["endpoint"]
 
-        if self.request.GET.get('_column'):
-            context['default_columns'] = self.request.GET.getlist('_column')
+        if self.request.GET.get("_column"):
+            context["default_columns"] = self.request.GET.getlist("_column")
 
-        if self.request.GET.get('_order'):
-            context['default_order_by'] = self.request.GET.getlist('_order')
+        if self.request.GET.get("_order"):
+            context["default_order_by"] = self.request.GET.getlist("_order")
 
         # Generate list of all filters from GET parameters.
         filters = {}
 
         for key in self.request.GET:
-            if key[0] != '_':
-                filters[key] = self.parse_filter_values(
-                    self.request.GET.getlist(key)
-                )
+            if key[0] != "_":
+                filters[key] = self.parse_filter_values(self.request.GET.getlist(key))
 
-        context['default_filters'] = filters
+        context["default_filters"] = filters
 
         return context
 
@@ -384,15 +349,15 @@ class AdminGenericListView(
         return formatted[0] if len(formatted) == 1 else formatted
 
     def format_filter_value(self, value):
-        if value == 'true':
+        if value == "true":
             value = True
-        elif value == 'false':
+        elif value == "false":
             value = False
         return value
 
 
 class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):
-    template_type = 'centered'  # Options: fluid, centered
+    template_type = "centered"  # Options: fluid, centered
 
     fieldsets = []
 
@@ -403,7 +368,7 @@ class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):
             else:
                 q = queryset
 
-            key = self.kwargs.get('pk')
+            key = self.kwargs.get("pk")
 
             q = q.filter(uuid=key)
 
@@ -412,12 +377,11 @@ class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):
             return super().get_object(queryset)
 
     def get_permission_required(self):
-        if hasattr(self, 'permission_required'):
+        if hasattr(self, "permission_required"):
             return self.permission_required
         else:
-            return '{}.add_{}'.format(
-                self.model._meta.app_label,
-                self.model._meta.model_name
+            return "{}.add_{}".format(
+                self.model._meta.app_label, self.model._meta.model_name
             )
 
     def get_fieldsets(self):
@@ -426,10 +390,10 @@ class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['fieldsets'] = self.get_fieldsets()
+        context["fieldsets"] = self.get_fieldsets()
 
-        if self.request.GET.get('next'):
-            context['next'] = self.request.GET['next']
+        if self.request.GET.get("next"):
+            context["next"] = self.request.GET["next"]
 
         return context
 
@@ -438,31 +402,29 @@ class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):
         if self.template_name is not None:
             return [self.template_name]
 
-        template = 'admin/{app}/{model}/detail.html'.format(
-            app=self.model._meta.app_label,
-            model=self.model._meta.model_name
+        template = "admin/{app}/{model}/detail.html".format(
+            app=self.model._meta.app_label, model=self.model._meta.model_name
         )
 
-        return [template, 'admin/generic/page/detail.html']
+        return [template, "admin/generic/page/detail.html"]
 
 
 class AdminCreateView(StaffPermissionRequiredMixin, ContextMixin, CreateView):
-    template_type = 'centered'  # Options: fluid, centered
+    template_type = "centered"  # Options: fluid, centered
 
     def get_permission_required(self):
-        if hasattr(self, 'permission_required'):
+        if hasattr(self, "permission_required"):
             return self.permission_required
         else:
-            return '{}.add_{}'.format(
-                self.model._meta.app_label,
-                self.model._meta.model_name
+            return "{}.add_{}".format(
+                self.model._meta.app_label, self.model._meta.model_name
             )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        if self.request.GET.get('next'):
-            context['next'] = self.request.GET['next']
+        if self.request.GET.get("next"):
+            context["next"] = self.request.GET["next"]
 
         return context
 
@@ -471,35 +433,32 @@ class AdminCreateView(StaffPermissionRequiredMixin, ContextMixin, CreateView):
         if self.template_name is not None:
             return [self.template_name]
 
-        template = 'admin/{app}/{model}/form.html'.format(
-            app=self.model._meta.app_label,
-            model=self.model._meta.model_name
+        template = "admin/{app}/{model}/form.html".format(
+            app=self.model._meta.app_label, model=self.model._meta.model_name
         )
 
-        return [template, 'admin/generic/page/form.html']
+        return [template, "admin/generic/page/form.html"]
 
     def build_success_url(self):
-        if self.request.GET.get('next'):
-            return self.request.GET['next']
+        if self.request.GET.get("next"):
+            return self.request.GET["next"]
 
-        url_name = '{}-admin:{}-detail'.format(
-            self.model._meta.app_label,
-            self.model._meta.model_name
+        url_name = "{}-admin:{}-detail".format(
+            self.model._meta.app_label, self.model._meta.model_name
         )
 
         return reverse(url_name, args=[self.object.id])
 
     def get_success_url(self):
         messages.success(
-            self.request,
-            "{} has been created.".format(self.model._meta.verbose_name)
+            self.request, "{} has been created.".format(self.model._meta.verbose_name)
         )
 
         return self.build_success_url()
 
 
 class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
-    template_type = 'centered'  # Options: fluid, centered
+    template_type = "centered"  # Options: fluid, centered
     # TODO
     # fixed actions bar
 
@@ -510,7 +469,7 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
             else:
                 q = queryset
 
-            key = self.kwargs.get('pk')
+            key = self.kwargs.get("pk")
 
             q = q.filter(uuid=key)
 
@@ -519,19 +478,18 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
             return super().get_object(queryset)
 
     def get_permission_required(self):
-        if hasattr(self, 'permission_required'):
+        if hasattr(self, "permission_required"):
             return self.permission_required
         else:
-            return '{}.change_{}'.format(
-                self.model._meta.app_label,
-                self.model._meta.model_name
+            return "{}.change_{}".format(
+                self.model._meta.app_label, self.model._meta.model_name
             )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        if self.request.GET.get('next'):
-            context['next'] = self.request.GET['next']
+        if self.request.GET.get("next"):
+            context["next"] = self.request.GET["next"]
 
         return context
 
@@ -540,36 +498,32 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
         if self.template_name is not None:
             return [self.template_name]
 
-        template = 'admin/{app}/{model}/form.html'.format(
-            app=self.model._meta.app_label,
-            model=self.model._meta.model_name
+        template = "admin/{app}/{model}/form.html".format(
+            app=self.model._meta.app_label, model=self.model._meta.model_name
         )
 
-        return [template, 'admin/generic/page/form.html']
+        return [template, "admin/generic/page/form.html"]
 
     def build_success_url(self):
-        if self.request.GET.get('next'):
-            return self.request.GET['next']
+        if self.request.GET.get("next"):
+            return self.request.GET["next"]
 
-        if hasattr(self.model, 'SearchProvider'):
+        if hasattr(self.model, "SearchProvider"):
             return reverse(
                 "generic-admin:list",
                 kwargs={
                     "app_label": self.model._meta.app_label,
-                    "model": self.model._meta.model_name
-                }
+                    "model": self.model._meta.model_name,
+                },
             )
         else:
             return get_admin_url(
-                self.model._meta.app_label,
-                self.model._meta.model_name,
-                'list'
+                self.model._meta.app_label, self.model._meta.model_name, "list"
             )
 
     def build_detail_url(self):
-        url_name = '{}-admin:{}-detail'.format(
-            self.model._meta.app_label,
-            self.model._meta.model_name
+        url_name = "{}-admin:{}-detail".format(
+            self.model._meta.app_label, self.model._meta.model_name
         )
 
         return reverse(url_name, args=[self.get_object().id])
@@ -578,49 +532,44 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
         messages.success(
             self.request,
             '{} has been updated. <a href="{}">View</a>'.format(
-                self.model._meta.verbose_name,
-                self.build_detail_url()
-            )
+                self.model._meta.verbose_name, self.build_detail_url()
+            ),
         )
 
         return self.build_success_url()
 
 
 class AdminDeleteView(StaffPermissionRequiredMixin, ContextMixin, DeleteView):
-    template_type = 'centered'
+    template_type = "centered"
 
     def get_permission_required(self):
-        if hasattr(self, 'permission_required'):
+        if hasattr(self, "permission_required"):
             return self.permission_required
         else:
-            return '{}.delete_{}'.format(
-                self.model._meta.app_label,
-                self.model._meta.model_name
+            return "{}.delete_{}".format(
+                self.model._meta.app_label, self.model._meta.model_name
             )
 
     def build_success_url(self):
-        if self.request.GET.get('next'):
-            return self.request.GET['next']
+        if self.request.GET.get("next"):
+            return self.request.GET["next"]
 
-        if hasattr(self.model, 'SearchProvider'):
+        if hasattr(self.model, "SearchProvider"):
             return reverse(
                 "generic-admin:list",
                 kwargs={
                     "app_label": self.model._meta.app_label,
-                    "model": self.model._meta.model_name
-                }
+                    "model": self.model._meta.model_name,
+                },
             )
         else:
             return get_admin_url(
-                self.model._meta.app_label,
-                self.model._meta.model_name,
-                'list'
+                self.model._meta.app_label, self.model._meta.model_name, "list"
             )
 
     def get_success_url(self):
         messages.success(
-            self.request,
-            "{} has been deleted.".format(self.model._meta.verbose_name)
+            self.request, "{} has been deleted.".format(self.model._meta.verbose_name)
         )
 
         return self.build_success_url()
@@ -628,16 +577,16 @@ class AdminDeleteView(StaffPermissionRequiredMixin, ContextMixin, DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['template_type'] = self.template_type
+        context["template_type"] = self.template_type
 
-        context['app_label'] = self.model._meta.app_label
-        context['model_name'] = self.model._meta.model_name
-        context['object_name'] = self.model._meta.object_name
+        context["app_label"] = self.model._meta.app_label
+        context["model_name"] = self.model._meta.model_name
+        context["object_name"] = self.model._meta.object_name
 
-        context['cancel_url'] = self.build_success_url()
+        context["cancel_url"] = self.build_success_url()
 
-        if self.request.GET.get('next'):
-            context['next'] = self.request.GET['next']
+        if self.request.GET.get("next"):
+            context["next"] = self.request.GET["next"]
 
         return context
 
@@ -646,12 +595,11 @@ class AdminDeleteView(StaffPermissionRequiredMixin, ContextMixin, DeleteView):
         if self.template_name is not None:
             return [self.template_name]
 
-        template = 'admin/{app}/{model}/confirm_delete.html'.format(
-            app=self.model._meta.app_label,
-            model=self.model._meta.model_name
+        template = "admin/{app}/{model}/confirm_delete.html".format(
+            app=self.model._meta.app_label, model=self.model._meta.model_name
         )
 
-        return [template, 'admin/generic/page/confirm_delete.html']
+        return [template, "admin/generic/page/confirm_delete.html"]
 
     def delete(self, request, *args, **kwargs):
         """Catch protected objects."""
@@ -665,7 +613,7 @@ class AdminDeleteView(StaffPermissionRequiredMixin, ContextMixin, DeleteView):
                 self.request,
                 "{} can not be deleted because it has other objects depending on it.".format(
                     self.model._meta.verbose_name
-                )
+                ),
             )
 
             return self.get(request, *args, **kwargs)
@@ -689,32 +637,31 @@ class AdminChildDeleteView(ChildMixin, AdminDeleteView):
         if self.template_name is not None:
             return [self.template_name]
 
-        template = 'admin/{app}/{model}/child_confirm_delete.html'.format(
-            app=self.model._meta.app_label,
-            model=self.model._meta.model_name
+        template = "admin/{app}/{model}/child_confirm_delete.html".format(
+            app=self.model._meta.app_label, model=self.model._meta.model_name
         )
 
-        return [template, 'admin/generic/page/child_confirm_delete.html']
+        return [template, "admin/generic/page/child_confirm_delete.html"]
 
 
 class AdminOrderableView(View):
     def post(self, *args, **kwargs):
-        content_type_id = kwargs.get('content_type_id')
-        object_id = kwargs.get('object_id')
+        content_type_id = kwargs.get("content_type_id")
+        object_id = kwargs.get("object_id")
 
         content_type = ContentType.objects.get_for_id(content_type_id)
         item = content_type.get_object_for_this_type(id=object_id)
 
-        action = self.request.POST.get('action')
+        action = self.request.POST.get("action")
 
-        if action == 'move-up':
+        if action == "move-up":
             item.move_up()
-        elif action == 'move-down':
+        elif action == "move-down":
             item.move_down()
 
         messages.success(self.request, "Item has been reordered.")
 
-        return HttpResponseRedirect(self.request.META['HTTP_REFERER'])
+        return HttpResponseRedirect(self.request.META["HTTP_REFERER"])
 
     def get(self, *args, **kwargs):
         self.request.POST = self.request.GET
@@ -723,7 +670,7 @@ class AdminOrderableView(View):
 
 
 class AdminGenericSearchView(StaffPermissionRequiredMixin, TemplateView):
-    template_name = 'admin/generic/page/search.html'
+    template_name = "admin/generic/page/search.html"
 
     def search_objects(self, query):
         return search_objects(query)
@@ -731,14 +678,14 @@ class AdminGenericSearchView(StaffPermissionRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        query = self.request.GET.get('query')
+        query = self.request.GET.get("query")
 
-        context['global_search_query'] = query
+        context["global_search_query"] = query
 
         objects = self.search_objects(query)
 
         paginator = Paginator(objects, 25)
-        page = self.request.GET.get('page')
+        page = self.request.GET.get("page")
 
         try:
             page_obj = paginator.page(page)
@@ -749,14 +696,14 @@ class AdminGenericSearchView(StaffPermissionRequiredMixin, TemplateView):
             # If page is out of range (e.g. 9999), deliver last page of results.
             page_obj = paginator.page(paginator.num_pages)
 
-        context['object_list'] = page_obj.object_list
-        context['num_results'] = paginator.count
-        context['page_obj'] = page_obj
+        context["object_list"] = page_obj.object_list
+        context["num_results"] = paginator.count
+        context["page_obj"] = page_obj
 
-        context['url_params'] = 'query={}&'.format(query)
+        context["url_params"] = "query={}&".format(query)
 
-        if self.request.GET.get('next'):
-            context['next'] = self.request.GET['next']
+        if self.request.GET.get("next"):
+            context["next"] = self.request.GET["next"]
 
         return context
 
@@ -765,32 +712,29 @@ class AdminGenericExportView(StaffPermissionRequiredMixin, View):
     """Export serialized data to a file."""
 
     def get(self, *args, **kwargs):
-        model = kwargs['model']
-        app_label = kwargs['app_label']
+        model = kwargs["model"]
+        app_label = kwargs["app_label"]
 
-        serializer_class = kwargs.get('serializer_class', None)
+        serializer_class = kwargs.get("serializer_class", None)
 
-        fmt = kwargs['format']
+        fmt = kwargs["format"]
 
         model_class = ContentType.objects.get(
-            app_label=app_label,
-            model=model
+            app_label=app_label, model=model
         ).model_class()
 
         if not serializer_class:
             serializer_class = model_class.get_admin_serializer()
 
         qs = get_queryset(
-            model_class,
-            serializer_class=serializer_class,
-            filter_args=self.request.GET
+            model_class, serializer_class=serializer_class, filter_args=self.request.GET
         )
 
         data = serializer_class(qs, many=True).data
 
-        if fmt == 'csv':
+        if fmt == "csv":
             return render_to_csv(data)
-        elif fmt == 'pdf':
+        elif fmt == "pdf":
             return render_to_pdf(data)
 
         response = HttpResponse("No format to render.")

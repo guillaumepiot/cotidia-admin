@@ -1,13 +1,11 @@
-from cotidia.admin.serializers import (
-    AdminModelSerializer, BaseDynamicListSerializer
-)
+from cotidia.admin.serializers import AdminModelSerializer, BaseDynamicListSerializer
 
 from rest_framework import serializers
 
 from cotidia.admin.tests.models import (
     ExampleModelOne,
     ExampleModelTwo,
-    DeclaredSerializerModel
+    DeclaredSerializerModel,
 )
 
 
@@ -36,14 +34,13 @@ class ExampleModelOneSerializer(AdminModelSerializer):
 
 
 class DynamicListModelTwoSerializer(BaseDynamicListSerializer):
-
     class Meta:
         model = ExampleModelTwo
         exclude = ["uuid", "other_model"]
 
     class SearchProvider:
         display_field = "name"
-        filters = '__all__'
+        filters = "__all__"
 
 
 class DynamicListModelOneSerializer(BaseDynamicListSerializer):
@@ -58,7 +55,7 @@ class DynamicListModelOneSerializer(BaseDynamicListSerializer):
     class SearchProvider:
         display_field = "char_field"
         general_query_fields = ["char_field", "text_field", "slug_field"]
-        filters = '__all__'
+        filters = "__all__"
         footer_info_string = (
             "page_result_count {page_result_count} "
             "total_result_count {total_result_count} "
@@ -85,20 +82,12 @@ class CustomSerializer(AdminModelSerializer):
 
 
 class CustomColumnChildSerializer(AdminModelSerializer):
-
     class Meta:
         model = ExampleModelTwo
 
     class SearchProvider:
         display_field = "char_field"
-        columns = [
-            {
-                "label": "Number",
-                "columns": [
-                    'number',
-                ]
-            }
-        ]
+        columns = [{"label": "Number", "columns": ["number"]}]
 
 
 class CustomColumnSerializer(AdminModelSerializer):
@@ -113,17 +102,7 @@ class CustomColumnSerializer(AdminModelSerializer):
         columns = [
             {
                 "label": "Other model",
-                "columns": [
-                    'other_model',
-                    'other_model__number',
-                    'other_model__name',
-                ]
+                "columns": ["other_model", "other_model__number", "other_model__name"],
             },
-            {
-                "label": "Model one",
-                "columns": [
-                    'integer_field',
-                    'boolean_field',
-                ]
-            }
+            {"label": "Model one", "columns": ["integer_field", "boolean_field"]},
         ]

@@ -10,10 +10,10 @@ class TestSerializer1(AdminModelSerializer):
 
     class SearchProvider:
         default_columns = [
-            'integer_field',
-            'float_field',
-            'decimal_field',
-            'char_field',
+            "integer_field",
+            "float_field",
+            "decimal_field",
+            "char_field",
         ]
 
 
@@ -27,7 +27,7 @@ class TestSerializer3(AdminModelSerializer):
         model = ExampleModelOne
 
     class SearchProvider:
-        display_field = 'name'
+        display_field = "name"
 
 
 class TestSerializer4(AdminModelSerializer):
@@ -46,7 +46,7 @@ class DefaultColumnsTests(TestCase):
 
         self.assertEqual(
             default_fields,
-            ['integer_field', 'float_field', 'decimal_field', 'char_field']
+            ["integer_field", "float_field", "decimal_field", "char_field"],
         )
 
     def test_no_search_provider_fields(self):
@@ -54,18 +54,18 @@ class DefaultColumnsTests(TestCase):
 
         default_fields = serializer.get_default_columns()
 
-        self.assertEqual(default_fields, ['id'])
+        self.assertEqual(default_fields, ["id"])
 
     def test_default_fields_display_name(self):
         serializer = TestSerializer3()
 
         default_fields = serializer.get_default_columns()
 
-        self.assertEqual(default_fields, ['name'])
+        self.assertEqual(default_fields, ["name"])
 
     def test_default_fields_display_name_is_none(self):
         serializer = TestSerializer4()
 
         default_fields = serializer.get_default_columns()
 
-        self.assertEqual(default_fields, ['id'])
+        self.assertEqual(default_fields, ["id"])

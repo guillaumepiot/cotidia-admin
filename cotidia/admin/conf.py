@@ -30,4 +30,4 @@ class AdminConf(AppConf):
     DEBUG = False
 
     class Meta:
-        prefix = 'admin'
+        prefix = "admin"

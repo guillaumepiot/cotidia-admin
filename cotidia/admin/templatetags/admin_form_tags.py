@@ -13,12 +13,14 @@ def is_select(field):
 
 @register.filter()
 def is_input(field):
-    if isinstance(field.field.widget, forms.TextInput) \
-            or isinstance(field.field.widget, forms.EmailInput) \
-            or isinstance(field.field.widget, forms.URLInput) \
-            or isinstance(field.field.widget, forms.Textarea) \
-            or isinstance(field.field.widget, forms.NumberInput) \
-            or isinstance(field.field.widget, forms.PasswordInput):
+    if (
+        isinstance(field.field.widget, forms.TextInput)
+        or isinstance(field.field.widget, forms.EmailInput)
+        or isinstance(field.field.widget, forms.URLInput)
+        or isinstance(field.field.widget, forms.Textarea)
+        or isinstance(field.field.widget, forms.NumberInput)
+        or isinstance(field.field.widget, forms.PasswordInput)
+    ):
         return True
     return False
 
@@ -36,5 +38,3 @@ def is_checkbox_multiple(field):
 @register.filter()
 def is_radio_button(field):
     return isinstance(field.field.widget, RadioButtonSelect)
-
-

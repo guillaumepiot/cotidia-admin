@@ -12,7 +12,7 @@ def admin_settings(request):
         "ADMIN_GLOBAL_SEARCH": settings.ADMIN_GLOBAL_SEARCH,
         "ADMIN_SHOW_BRANDING": settings.ADMIN_SHOW_BRANDING,
         "DEBUG": settings.DEBUG,
-        "ADMIN_DEBUG": settings.ADMIN_DEBUG
+        "ADMIN_DEBUG": settings.ADMIN_DEBUG,
     }
 
     return data
