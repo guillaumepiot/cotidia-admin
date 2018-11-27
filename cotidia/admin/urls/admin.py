@@ -18,10 +18,6 @@ urlpatterns = [
     path("list/<str:app_label>/<str:model>", DynamicListView.as_view(), name="list"),
     path("search", AdminGenericSearchView.as_view(), name="search"),
     path(
-        "list/<str:app_label>/<str:model>", AdminGenericListView.as_view(), name="list"
-    ),
-    path("search", AdminGenericSearchView.as_view(), name="search"),
-    path(
         "export/<str:app_label>/<str:model>/csv",
         AdminGenericExportView.as_view(),
         {"format": "csv"},
