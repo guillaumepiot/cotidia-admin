@@ -51,6 +51,22 @@ const initialState = {
   showSidebar: true,
 }
 
+const resolveResultsMode = (requestedMode, allowedModes) => {
+  if (allowedModes.includes(requestedMode)) {
+    return requestedMode
+  }
+
+  if (allowedModes.includes('table')) {
+    return 'table'
+  }
+
+  if (allowedModes.length) {
+    return allowedModes[0]
+  }
+
+  throw new Error('No usable results mode found to display reults. There is a configuration error.')
+}
+
 const tidyFilters = (filters, state) => {
   const newFilters = {}
 
@@ -152,7 +168,7 @@ export default (state = initialState, { type, payload } = {}) => {
         filters: tidyFilters(payload.defaultFilters, payload),
         listFields: payload.listFields,
         allowedResultsModes: payload.allowedResultsModes,
-        resultsMode: payload.defaultResultsMode,
+        resultsMode: resolveResultsMode(payload.defaultResultsMode, payload.allowedResultsModes),
         categoriseBy: payload.categoriseBy,
         mapConfiguration: payload.mapConfiguration,
       }
@@ -166,7 +182,7 @@ export default (state = initialState, { type, payload } = {}) => {
     case types.SWITCH_MODE:
       return {
         ...state,
-        resultsMode: payload.resultsMode,
+        resultsMode: resolveResultsMode(payload.resultsMode, state.allowedResultsModes),
       }
 
     case types.SET_ORDER_COLUMN:
@@ -276,7 +292,7 @@ export default (state = initialState, { type, payload } = {}) => {
       }
 
       if (payload.resultsMode) {
-        newState.resultsMode = payload.resultsMode
+        newState.resultsMode = resolveResultsMode(payload.resultsMode, state.allowedResultsModes)
       }
 
       if (payload.perPage) {
