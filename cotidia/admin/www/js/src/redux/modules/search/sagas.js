@@ -1,3 +1,4 @@
+import React from 'react'
 import { call, put, select, take, takeEvery } from 'redux-saga/effects'
 import isEqual from 'lodash.isequal'
 
@@ -8,6 +9,8 @@ import { showModal } from '../modal/sagas'
 
 import * as types from './types'
 import * as modalTypes from '../modal/types'
+
+import ClearFilterButton from '../../../containers/modals/_ClearFilterButton'
 
 export function * configureFilter ({ payload: { filter } }) {
   const { filterConfiguration, filters } = yield select((state) => state.search)
@@ -21,12 +24,14 @@ export function * configureFilter ({ payload: { filter } }) {
       title: title,
       form: true,
       submitButton: 'Update filter',
+      otherButtons: <ClearFilterButton filter={filter} />,
     },
     data: {
       value: filters[filter],
     },
     modalActions: {
       submittedData: take(modalTypes.SUBMIT_MODAL),
+      clearFilter: take(types.CLEAR_FILTER),
     },
   })
 
