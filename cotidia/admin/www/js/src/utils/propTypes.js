@@ -111,14 +111,16 @@ const filterConfigSingle = PropTypes.shape({
 
 export const filterConfiguration = PropTypes.objectOf(filterConfigSingle)
 
-const filterList = PropTypes.arrayOf([
-  PropTypes.string,
-  PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    defaultOpen: PropTypes.bool,
-    filters: stringList,
-  }),
-])
+const filterList = PropTypes.arrayOf(
+  PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      defaultOpen: PropTypes.bool,
+      filters: stringList,
+    }),
+  ])
+)
 
 const globalAction = PropTypes.shape({
   action: PropTypes.string.isRequired,
