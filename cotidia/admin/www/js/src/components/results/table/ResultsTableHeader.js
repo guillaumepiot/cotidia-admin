@@ -35,7 +35,7 @@ const Header = SortableElement(({
     Using a 'random' and always-changing key here means that the span will *always*
     rerender, this is because we may change the sort order icon, and because
     FontAwesome replaces our span with an SVG, React doesn't know how to perform this
-    change so just doesn't do anything. If we tell the parent to *alwasy* rerender,
+    change so just doesn't do anything. If we tell the parent to *always* rerender,
     it's not the best on perf, but does mean we get icons actually changing.
     */}
     {orderable && (
@@ -183,7 +183,7 @@ export default class ResultsTableHeader extends Component {
             if (column.type === 'data') {
               const orderable = categoriseBy == null && column.orderable !== false
               const isOrderColumn = orderColumn === column.id
-              const isFiltered = filters.includes(column.filters)
+              const isFiltered = filters.includes(column.filter)
 
               return (
                 <Header
