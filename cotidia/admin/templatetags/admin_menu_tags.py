@@ -39,9 +39,7 @@ def build_permitted_item(context, item):
         data["nav_items"] = []
         for subitem in item.get("nav_items"):
             if can_view_item(context, subitem):
-                data["nav_items"].append(
-                    build_permitted_item(context, subitem)
-                )
+                data["nav_items"].append(build_permitted_item(context, subitem))
     return data
 
 
@@ -96,5 +94,5 @@ def menu(context):
     context = context.flatten()
     context["menu"] = permitted_menu
 
-    template = get_template('admin/menu/menu.html')
+    template = get_template("admin/menu/menu.html")
     return template.render(context)

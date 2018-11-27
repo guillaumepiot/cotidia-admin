@@ -6,6 +6,7 @@ from django.http import HttpResponse
 
 from .models import GenericRecord
 
+
 class AdminTestOrderableAPIView(AdminOrderableAPIView):
     pass
 
@@ -25,10 +26,11 @@ class TestAdminPageView(View):
             "content_type_id": content_type.id,
             "default_columns": [],
             "default_filters": [],
-            "default_order": []
+            "default_order": [],
         }
 
         return render(self.request, "admin/generic/utils/test.html", context)
+
 
 def stub_view(request, *args, **kwargs):
     return HttpResponse()

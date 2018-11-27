@@ -81,8 +81,6 @@ export default class SearchResultsList extends Component {
             />
           ))}
         </div>
-
-        <Pagination />
       </>
     )
   }

@@ -5,18 +5,17 @@ from cotidia.admin.serializers import BaseDynamicListSerializer
 
 
 class TestDetailURLSerializer(TestCase):
-
     def test_detail_url_none(self):
         class ExampleModelOneSerializer(BaseDynamicListSerializer):
             other_model = ExampleModelOne()
 
             class Meta:
                 model = ExampleModelOne
-                fields = '__all__'
+                fields = "__all__"
 
             class SearchProvider:
                 display_field = "char_field"
-                filters = '__all__'
+                filters = "__all__"
                 detail_url_field = None
 
         serializer = ExampleModelOneSerializer()
@@ -28,14 +27,14 @@ class TestDetailURLSerializer(TestCase):
 
             class Meta:
                 model = ExampleModelOne
-                fields = '__all__'
+                fields = "__all__"
 
             class SearchProvider:
                 display_field = "char_field"
-                filters = '__all__'
+                filters = "__all__"
 
         serializer = ExampleModelOneSerializer()
-        self.assertEqual(serializer.get_detail_url_field(), '_detail_url')
+        self.assertEqual(serializer.get_detail_url_field(), "_detail_url")
 
     def test_detail_url_custom(self):
         class ExampleModelOneSerializer(BaseDynamicListSerializer):
@@ -43,12 +42,12 @@ class TestDetailURLSerializer(TestCase):
 
             class Meta:
                 model = ExampleModelOne
-                fields = '__all__'
+                fields = "__all__"
 
             class SearchProvider:
                 display_field = "char_field"
-                filters = '__all__'
-                detail_url_field = 'detail_url'
+                filters = "__all__"
+                detail_url_field = "detail_url"
 
         serializer = ExampleModelOneSerializer()
-        self.assertEqual(serializer.get_detail_url_field(), 'detail_url')
+        self.assertEqual(serializer.get_detail_url_field(), "detail_url")
