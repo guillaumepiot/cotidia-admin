@@ -14,7 +14,7 @@ def get_attr(obj, column):
     attr = None
 
     if obj:
-        attrs = column.split('.')
+        attrs = column.split(".")
         attr = getattr(obj, attrs.pop(0))
         for a in attrs:
             attr = getattr(attr, a)
@@ -22,7 +22,7 @@ def get_attr(obj, column):
     # If the object attribute is a method, call it
 
     if callable(attr):
-        if attr.__class__.__name__ == 'ManyRelatedManager':
+        if attr.__class__.__name__ == "ManyRelatedManager":
             return attr.all()
 
         return attr()

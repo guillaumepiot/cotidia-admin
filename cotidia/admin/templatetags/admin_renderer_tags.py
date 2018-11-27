@@ -12,6 +12,7 @@ def flatten_item(value):
 
     return value
 
+
 @register.filter
 def get_dict_value(d, k):
     if d and k:

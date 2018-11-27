@@ -7,44 +7,37 @@ from cotidia.admin.views.api import (
     AdminSearchDashboardAPIView,
     AdminSearchLookupAPIView,
     AdminBatchActionAPIView,
-    AdminMultipleSelectAPIView
+    AdminMultipleSelectAPIView,
 )
 
 app_name = "cotidia.admin"
 
 urlpatterns = [
     path(
-        'order/<int:content_type_id>/<int:object_id>',
+        "order/<int:content_type_id>/<int:object_id>",
         AdminOrderableAPIView.as_view(),
-        name='order'
+        name="order",
     ),
+    path("sort/<int:content_type_id>", SortAPIView.as_view(), name="sort"),
     path(
-        'sort/<int:content_type_id>',
-        SortAPIView.as_view(),
-        name="sort"),
-    path(
-        'list/<str:app_label>/<str:model>',
+        "list/<str:app_label>/<str:model>",
         AdminSearchDashboardAPIView.as_view(),
-        name='object-list'
+        name="object-list",
     ),
     path(
-        'dynamic-list/<str:app_label>/<str:model>',
+        "dynamic-list/<str:app_label>/<str:model>",
         DynamicListAPIView.as_view(),
-        name='dynamic-list'
+        name="dynamic-list",
     ),
     path(
-        'batch-action/<str:app_label>/<str:model_name>/<str:action>',
+        "batch-action/<str:app_label>/<str:model_name>/<str:action>",
         AdminBatchActionAPIView.as_view(),
-        name='batch-action'
+        name="batch-action",
     ),
+    path("search-lookup", AdminSearchLookupAPIView.as_view(), name="search-lookup"),
     path(
-        'search-lookup',
-        AdminSearchLookupAPIView.as_view(),
-        name='search-lookup'
-    ),
-    path(
-        'multiple-select-lookup/<str:app_label>/<str:model_name>/',
+        "multiple-select-lookup/<str:app_label>/<str:model_name>/",
         AdminMultipleSelectAPIView.as_view(),
-        name='multiple-select-lookup'
-    )
+        name="multiple-select-lookup",
+    ),
 ]

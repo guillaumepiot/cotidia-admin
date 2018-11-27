@@ -13,6 +13,7 @@ from cotidia.admin.filters import (
     ForeignKeyFilter,
 )
 
+
 class ExampleModelTwoSerializer(BaseDynamicListSerializer):
     class Meta:
         model = ExampleModelTwo
@@ -20,7 +21,7 @@ class ExampleModelTwoSerializer(BaseDynamicListSerializer):
 
     class SearchProvider:
         display_field = "name"
-        filters = '__all__'
+        filters = "__all__"
 
 
 class ExampleModelOneSerializer(BaseDynamicListSerializer):
@@ -35,7 +36,7 @@ class ExampleModelOneSerializer(BaseDynamicListSerializer):
     class SearchProvider:
         display_field = "char_field"
         general_query_fields = ["char_field", "text_field", "slug_field"]
-        filters = '__all__'
+        filters = "__all__"
 
 
 class FieldRepresentationTests(TestCase):
@@ -52,7 +53,8 @@ class FieldRepresentationTests(TestCase):
             class SearchProvider:
                 display_field = "char_field"
                 general_query_fields = ["char_field", "text_field", "slug_field"]
-                filters = '__all__'
+                filters = "__all__"
+
         serializer = ExampleModelOneSerializer()
         self.assertIn("char_field", serializer.get_filters().keys())
         self.assertIn("char_field", serializer.get_filters().keys())
@@ -88,7 +90,8 @@ class FieldRepresentationTests(TestCase):
             class SearchProvider:
                 display_field = "char_field"
                 general_query_fields = ["char_field", "text_field", "slug_field"]
-                exclude_filters = ['integer_field']
+                exclude_filters = ["integer_field"]
+
         serializer = ExampleModelOneSerializer()
         self.assertNotIn("integer_field", serializer.get_filters().keys())
         self.assertIn("char_field", serializer.get_filters().keys())
@@ -123,7 +126,8 @@ class FieldRepresentationTests(TestCase):
             class SearchProvider:
                 display_field = "char_field"
                 general_query_fields = ["char_field", "text_field", "slug_field"]
-                exclude_filters = ['other_model']
+                exclude_filters = ["other_model"]
+
         serializer = ExampleModelOneSerializer()
         self.assertIn("integer_field", serializer.get_filters().keys())
         self.assertIn("char_field", serializer.get_filters().keys())
@@ -158,7 +162,8 @@ class FieldRepresentationTests(TestCase):
             class SearchProvider:
                 display_field = "char_field"
                 general_query_fields = ["char_field", "text_field", "slug_field"]
-                exclude_filters = ['other_model__name']
+                exclude_filters = ["other_model__name"]
+
         serializer = ExampleModelOneSerializer()
         self.assertIn("integer_field", serializer.get_filters().keys())
         self.assertIn("char_field", serializer.get_filters().keys())
@@ -193,10 +198,8 @@ class FieldRepresentationTests(TestCase):
             class SearchProvider:
                 display_field = "char_field"
                 general_query_fields = ["char_field", "text_field", "slug_field"]
-                filters = [
-                    'integer_field',
-                    'char_field'
-                ]
+                filters = ["integer_field", "char_field"]
+
         serializer = ExampleModelOneSerializer()
         self.assertIn("integer_field", serializer.get_filters().keys())
         self.assertIn("char_field", serializer.get_filters().keys())
@@ -230,11 +233,8 @@ class FieldRepresentationTests(TestCase):
             class SearchProvider:
                 display_field = "char_field"
                 general_query_fields = ["char_field", "text_field", "slug_field"]
-                filters = [
-                    'integer_field',
-                    'char_field',
-                    "other_model__number"
-                ]
+                filters = ["integer_field", "char_field", "other_model__number"]
+
         serializer = ExampleModelOneSerializer()
         self.assertIn("integer_field", serializer.get_filters().keys())
         self.assertIn("char_field", serializer.get_filters().keys())
@@ -268,11 +268,12 @@ class FieldRepresentationTests(TestCase):
             class SearchProvider:
                 display_field = "char_field"
                 general_query_fields = ["char_field", "text_field", "slug_field"]
-                filters = '__all__'
+                filters = "__all__"
+
         serializer = ExampleModelOneSerializer()
         self.assertEqual(
             set(serializer.get_filters().keys()),
-            set(serializer.get_filter_representation().keys())
+            set(serializer.get_filter_representation().keys()),
         )
 
     def test_contains_filter_repr(self):
@@ -280,7 +281,6 @@ class FieldRepresentationTests(TestCase):
         representation = f.get_representation()
         self.assertEqual(representation["filter"], "text")
         self.assertEqual(representation["queryParameter"], "prefix__field_name")
-
 
     def test_exact_filter_repr(self):
         f = ExactFilter(field_name="field_name", prefix="prefix__")
@@ -313,20 +313,16 @@ class FieldRepresentationTests(TestCase):
         self.assertEqual(representation["queryParameter"], "prefix__field_name")
 
     def test_boolean_filter_repr(self):
-        f = ChoiceFilter(field_name="field_name", prefix="prefix__", options=(
-            (1,2),
-            (2,3),
-            (3,4),
-        ))
+        f = ChoiceFilter(
+            field_name="field_name", prefix="prefix__", options=((1, 2), (2, 3), (3, 4))
+        )
         representation = f.get_representation()
         self.assertEqual(representation["filter"], "choice")
         self.assertEqual(representation["queryParameter"], "prefix__field_name")
         self.assertEqual(representation["configuration"]["mode"], "options")
-        self.assertEqual(representation["configuration"]["options"], (
-            (1,2),
-            (2,3),
-            (3,4),
-        ))
+        self.assertEqual(
+            representation["configuration"]["options"], ((1, 2), (2, 3), (3, 4))
+        )
 
     def test_algolia_filter_repr(self):
         f = AlgoliaFilter(
@@ -340,9 +336,7 @@ class FieldRepresentationTests(TestCase):
         representation = f.get_representation()
         self.assertEqual(representation["filter"], "choice")
         self.assertEqual(representation["queryParameter"], "prefix__field_name")
-        self.assertEqual(
-            representation["configuration"]["mode"], "algolia"
-        )
+        self.assertEqual(representation["configuration"]["mode"], "algolia")
         self.assertEqual(
             representation["configuration"]["algoliaConfig"]["appId"], "app_id"
         )
@@ -350,16 +344,18 @@ class FieldRepresentationTests(TestCase):
             representation["configuration"]["algoliaConfig"]["apiKey"], "api_key"
         )
         self.assertEqual(
-            representation["configuration"]["algoliaConfig"]["indexes"], ["index1", "index2"]
+            representation["configuration"]["algoliaConfig"]["indexes"],
+            ["index1", "index2"],
         )
         self.assertEqual(
-            representation["configuration"]["algoliaConfig"]["filters"], ["field:foo", "field:bar"]
+            representation["configuration"]["algoliaConfig"]["filters"],
+            ["field:foo", "field:bar"],
         )
 
     @override_settings(
-            ALGOLIA_DEFAULT_INDEX="index1",
-            ALGOLIA_SEARCH_API_KEY="api_key",
-            ALGOLIA={"APPLICATION_ID":"app_id"},
+        ALGOLIA_DEFAULT_INDEX="index1",
+        ALGOLIA_SEARCH_API_KEY="api_key",
+        ALGOLIA={"APPLICATION_ID": "app_id"},
     )
     def test_algolia_filter_repr_settings_default(self):
         f = AlgoliaFilter(
@@ -370,9 +366,7 @@ class FieldRepresentationTests(TestCase):
         representation = f.get_representation()
         self.assertEqual(representation["filter"], "choice")
         self.assertEqual(representation["queryParameter"], "prefix__field_name")
-        self.assertEqual(
-            representation["configuration"]["mode"], "algolia"
-        )
+        self.assertEqual(representation["configuration"]["mode"], "algolia")
         self.assertEqual(
             representation["configuration"]["algoliaConfig"]["appId"], "app_id"
         )
@@ -383,13 +377,14 @@ class FieldRepresentationTests(TestCase):
             representation["configuration"]["algoliaConfig"]["indexes"], ["index1"]
         )
         self.assertEqual(
-            representation["configuration"]["algoliaConfig"]["filters"], ["field:foo", "field:bar"]
+            representation["configuration"]["algoliaConfig"]["filters"],
+            ["field:foo", "field:bar"],
         )
 
     @override_settings(
-            ALGOLIA_DEFAULT_INDEX="invalid",
-            ALGOLIA_SEARCH_API_KEY="invalid",
-            ALGOLIA={"APPLICATION_ID":"invalid"},
+        ALGOLIA_DEFAULT_INDEX="invalid",
+        ALGOLIA_SEARCH_API_KEY="invalid",
+        ALGOLIA={"APPLICATION_ID": "invalid"},
     )
     def test_algolia_filter_repr_kwargs_override_settings(self):
         f = AlgoliaFilter(
@@ -403,9 +398,7 @@ class FieldRepresentationTests(TestCase):
         representation = f.get_representation()
         self.assertEqual(representation["filter"], "choice")
         self.assertEqual(representation["queryParameter"], "prefix__field_name")
-        self.assertEqual(
-            representation["configuration"]["mode"], "algolia"
-        )
+        self.assertEqual(representation["configuration"]["mode"], "algolia")
         self.assertEqual(
             representation["configuration"]["algoliaConfig"]["appId"], "app_id"
         )
@@ -413,8 +406,10 @@ class FieldRepresentationTests(TestCase):
             representation["configuration"]["algoliaConfig"]["apiKey"], "api_key"
         )
         self.assertEqual(
-            representation["configuration"]["algoliaConfig"]["indexes"], ["index1", "index2"]
+            representation["configuration"]["algoliaConfig"]["indexes"],
+            ["index1", "index2"],
         )
         self.assertEqual(
-            representation["configuration"]["algoliaConfig"]["filters"], ["field:foo", "field:bar"]
+            representation["configuration"]["algoliaConfig"]["filters"],
+            ["field:foo", "field:bar"],
         )

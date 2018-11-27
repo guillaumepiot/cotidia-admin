@@ -7,15 +7,13 @@ app_name = "dynamic-api"
 
 urlpatterns = [
     path(
-        r'admin/dynamic-list',
+        r"admin/dynamic-list",
         DynamicListAPIView.as_view(),
         {
-            'model': 'examplemodelone',
-            'app_label': 'tests',
-            'serializer_class': DynamicListModelOneSerializer,
+            "model": "examplemodelone",
+            "app_label": "tests",
+            "serializer_class": DynamicListModelOneSerializer,
         },
-        name='exampleone-list'
+        name="exampleone-list",
     )
-
 ]
-

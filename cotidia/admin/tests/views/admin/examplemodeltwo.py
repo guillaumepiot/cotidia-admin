@@ -26,64 +26,39 @@ class ExampleModelTwoFilter(django_filters.FilterSet):
     class Meta:
         model = ExampleModelTwo
 
-        fields = [
-            'id',
-            'number',
-            'name',
-            'other_model',
-        ]
+        fields = ["id", "number", "name", "other_model"]
 
 
 class ExampleModelTwoList(AdminListView):
     columns = (
-         ('ID', 'id'),
-         ('number', 'number'),
-         ('name', 'name'),
-         ('other model', 'other_model'),
+        ("ID", "id"),
+        ("number", "number"),
+        ("name", "name"),
+        ("other model", "other_model"),
     )
 
     model = ExampleModelTwo
 
     filterset = ExampleModelTwoFilter
 
-    row_actions = ['create', 'update', 'view', 'delete']
+    row_actions = ["create", "update", "view", "delete"]
 
 
 class ExampleModelTwoDetail(AdminDetailView):
     model = ExampleModelTwo
 
-    permission_required = 'tests.change_examplemodeltwo'
+    permission_required = "tests.change_examplemodeltwo"
 
     fieldsets = [
         {
-            'legend': 'Example Model Two Details',
-            'fields': [
-                [
-                    {
-                        'label': 'ID',
-                        'field': 'id',
-                    },
-                ],
-                [
-                    {
-                        'label': 'number',
-                        'field': 'number',
-                    },
-                ],
-                [
-                    {
-                        'label': 'name',
-                        'field': 'name',
-                    },
-                ],
-                [
-                    {
-                        'label': 'other model',
-                        'field': 'other_model',
-                    },
-                ],
+            "legend": "Example Model Two Details",
+            "fields": [
+                [{"label": "ID", "field": "id"}],
+                [{"label": "number", "field": "number"}],
+                [{"label": "name", "field": "name"}],
+                [{"label": "other model", "field": "other_model"}],
             ],
-        },
+        }
     ]
 
 
@@ -92,14 +67,13 @@ class ExampleModelTwoCreate(AdminCreateView):
 
     form_class = ExampleModelTwoAddForm
 
-    permission_required = 'tests.add_examplemodeltwo'
+    permission_required = "tests.add_examplemodeltwo"
 
     def get_success_url(self):
-        messages.success(self.request, 'ExampleModelTwo has been created.')
+        messages.success(self.request, "ExampleModelTwo has been created.")
 
         return reverse(
-            'tests-admin:examplemodeltwo-detail',
-            kwargs={'pk': self.object.id}
+            "tests-admin:examplemodeltwo-detail", kwargs={"pk": self.object.id}
         )
 
 
@@ -108,26 +82,22 @@ class ExampleModelTwoUpdate(AdminUpdateView):
 
     form_class = ExampleModelTwoUpdateForm
 
-    permission_required = 'tests.change_examplemodeltwo'
+    permission_required = "tests.change_examplemodeltwo"
 
     def get_success_url(self):
-        messages.success(
-            self.request,
-            'ExampleModelTwo details have been updated.'
-        )
+        messages.success(self.request, "ExampleModelTwo details have been updated.")
 
         return reverse(
-            'tests-admin:examplemodeltwo-detail',
-            kwargs={'pk': self.object.id}
+            "tests-admin:examplemodeltwo-detail", kwargs={"pk": self.object.id}
         )
 
 
 class ExampleModelTwoDelete(AdminDeleteView):
     model = ExampleModelTwo
 
-    permission_required = 'app.delete_examplemodeltwo'
+    permission_required = "app.delete_examplemodeltwo"
 
     def get_success_url(self):
-        messages.success(self.request, 'ExampleModelTwo has been deleted.')
+        messages.success(self.request, "ExampleModelTwo has been deleted.")
 
-        return reverse('tests-admin:examplemodeltwo-list')
+        return reverse("tests-admin:examplemodeltwo-list")

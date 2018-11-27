@@ -4,22 +4,17 @@ from datetime import datetime
 from django.urls import reverse
 from rest_framework.test import APITestCase
 from cotidia.account import fixtures
-from cotidia.admin.tests.factory import (
-    ExampleModelOneFactory,
-    ExampleModelTwoFactory,
-)
+from cotidia.admin.tests.factory import ExampleModelOneFactory, ExampleModelTwoFactory
 
 
 class AdminSearchDashboardTestsGeneralQuery(APITestCase):
     @fixtures.admin_user
     def setUp(self):
         self.url = reverse(
-            'generic-api:object-list',
-            kwargs={"app_label": "tests", "model": "examplemodelone"}
+            "generic-api:object-list",
+            kwargs={"app_label": "tests", "model": "examplemodelone"},
         )
-        self.client.credentials(
-            HTTP_AUTHORIZATION='Token ' + self.admin_user_token.key
-        )
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + self.admin_user_token.key)
 
     def test_general_query(self):
         ExampleModelOneFactory.create(char_field="foobar")
@@ -27,6 +22,6 @@ class AdminSearchDashboardTestsGeneralQuery(APITestCase):
         ExampleModelOneFactory.create(slug_field="lafoot")
         ExampleModelOneFactory.create(text_field="")
 
-        response = self.client.get(self.url, {'_q': 'foo'})
+        response = self.client.get(self.url, {"_q": "foo"})
 
-        self.assertEqual(response.data['total_result_count'], 3)
+        self.assertEqual(response.data["total_result_count"], 3)
