@@ -6,9 +6,6 @@
 
 {% block content_title %}{{title}}{% endblock content_title %}
 {% block page_content %}
-    {% block messages %}
-        {% include "admin/generic/messages.html" %}
-    {% endblock messages %}
     <div class="layout__content content content--sticky" id="dynamic-list"></div>
     <div id="modal-container"></div>
 {% endblock page_content %}
