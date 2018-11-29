@@ -137,7 +137,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
 
         if hasattr(self.model, "SearchProvider"):
             return reverse(
-                "generic-admin:list",
+                "generic-admin:dynamic-list",
                 kwargs={
                     "app_label": self.model._meta.app_label,
                     "model": self.model._meta.model_name,
@@ -510,7 +510,7 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
 
         if hasattr(self.model, "SearchProvider"):
             return reverse(
-                "generic-admin:list",
+                "generic-admin:dynamic-list",
                 kwargs={
                     "app_label": self.model._meta.app_label,
                     "model": self.model._meta.model_name,
@@ -556,7 +556,7 @@ class AdminDeleteView(StaffPermissionRequiredMixin, ContextMixin, DeleteView):
 
         if hasattr(self.model, "SearchProvider"):
             return reverse(
-                "generic-admin:list",
+                "generic-admin:dynamic-list",
                 kwargs={
                     "app_label": self.model._meta.app_label,
                     "model": self.model._meta.model_name,
