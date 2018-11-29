@@ -153,6 +153,7 @@ class BaseFilter(object):
     field_type = ""
     label = ""
     default_q_obj = Q()
+    type = "verbatim"
 
     def __init__(self, *args, **kwargs):
         self.field_name = kwargs.get("field_name", None)
@@ -184,7 +185,6 @@ class BaseFilter(object):
             )
         else:
             q_obj = self.get_default_q_obj()
-
         return q_obj
 
     def annotate(self, queryset):
