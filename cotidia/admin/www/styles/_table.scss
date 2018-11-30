@@ -328,7 +328,6 @@
     &__action {
         background-color: transparent;
         border-width: 0;
-        width: 32px;
 
         &:hover {
             cursor: pointer;
@@ -383,6 +382,9 @@
             input, select {
                 padding: 0.5rem 1rem;
             }
+            &.control-select input[type="text"] {
+                padding-right: 2rem;
+            }
 
             &--input, &--select, &--textarea {
                 &::after {
@@ -396,23 +398,6 @@
                 }
                 &__options {
                     z-index: 5;
-                }
-                &__option {
-                    color: $form_color_input;
-
-                    &--focused, &:hover, &:focus {
-                        background-color: $form_color_select_focus;
-                        color: $form_color_input;
-                    }
-
-                    &--selected, &--selected:hover, &--selected:focus {
-                        background-color: $form_color_active;
-                        color: #fff;
-                    }
-
-                    &--highlighted {
-                        color: $form_color_input;
-                    }
                 }
             }
         }
