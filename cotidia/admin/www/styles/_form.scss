@@ -36,18 +36,6 @@ fieldset {
     }
 }
 
-// Filter search control select options
-.control-select__options:hover {
-    .control-select__option--focused {
-        background: none;
-
-        &:hover {
-            background: $grey--lighter;
-        }
-    }
-}
-
-
 .control-select-option {
     @include clearfix();
 
