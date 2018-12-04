@@ -105,6 +105,7 @@ DYNAMIC_LIST_FIELD_MAPPING = {
     "ListSerializer": (lambda: {"display": "verbatim"}),
     "RelatedField": (lambda: {"display": "verbatim"}),
     "ManyRelatedField": (lambda: {"display": "verbatim"}),
+    "SerializerMethodField": (lambda: {"display": "verbatim", "filter": "text"}),
 }
 DYNAMIC_LIST_SUPPORTED_FIELDS_TYPES = sorted(
     [
