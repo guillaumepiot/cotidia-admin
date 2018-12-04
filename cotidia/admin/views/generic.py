@@ -37,7 +37,7 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
     # detail_view = True
     add_view = True
     actions = []
-    row_click_action = "update"  # or "detail"
+    row_click_action = "detail"
     row_actions = ["view", "update", "delete"]
     group_by = False
     orderable = False  # 'arrow', 'drag'

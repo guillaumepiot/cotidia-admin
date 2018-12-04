@@ -69,11 +69,11 @@
         <td class="text-right">
             {% for action in row_actions %}
                 {% if action == "view" %}
-                    <a href="{% get_admin_url app_label model_name "detail" object %}" class="btn btn--small btn--primary">{% trans "View" %}</a>
+                    <a href="{% get_admin_url app_label model_name "detail" object %}" class="btn btn--small btn--cancel" title="{% trans "View" %}"><span class="fa fa-eye"></span></a>
                 {% elif action == "delete" %}
-                    <a href="{% get_admin_url app_label model_name "delete" object %}" class="btn btn--small btn--delete">{% trans "Delete" %}</a>
+                    <a href="{% get_admin_url app_label model_name "delete" object %}" class="btn btn--small btn--cancel"  title="{% trans "Delete" %}"><span class="fa fa-trash"></span></a>
                 {% elif action == "update" %}
-                    <a href="{% get_admin_url app_label model_name "update" object %}" class="btn btn--small btn--change">{% trans "Update" %}</a>
+                    <a href="{% get_admin_url app_label model_name "update" object %}" class="btn btn--small btn--cancel"  title="{% trans "Update" %}"><span class="fa fa-pen"></span></a>
                 {% endif %}
             {% endfor %}
 

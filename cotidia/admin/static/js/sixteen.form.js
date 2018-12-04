@@ -74,8 +74,7 @@ if (!Element.prototype.matches) {
     // animation, do not continue.
     if (
       ! group ||
-      group.classList.contains('form__group--no-animate') ||
-      group.classList.contains('form__group--boxed')
+      group.classList.contains('form__group--no-animate')
     ) {
       return
     }

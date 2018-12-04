@@ -1534,11 +1534,13 @@ hr {
   .form__group--boxed.form__group--active .form__label {
     display: none; }
   .form__group--boxed.form__group--inactive .form__label {
-    display: block; }
+    display: block;
+    z-index: 1; }
   .form__group--boxed .form__label {
     display: none;
     position: absolute;
     left: 1rem;
+    top: calc(0.5rem + 1px);
     transform: translateY(0); }
   .form__group--boxed .control-select__clear-button {
     top: calc(0.5rem - 1px);
