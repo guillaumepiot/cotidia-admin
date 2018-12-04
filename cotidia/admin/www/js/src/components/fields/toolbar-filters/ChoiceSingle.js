@@ -25,17 +25,15 @@ export default class ChoiceSingle extends Component {
 
   render () {
     return (
-      <div className='form__group form__group--boxed'>
-        <Select
-          controlOnly
-          label={this.props.label}
-          name={this.props.name}
-          placeholder={this.props.label}
-          options={this.props.configuration.options}
-          updateValue={this.updateValue}
-          value={this.props.value}
-        />
-      </div>
+      <Select
+        extraGroupClasses={['form__group--boxed']}
+        label={this.props.label}
+        name={this.props.name}
+        placeholder={this.props.label}
+        options={this.props.configuration.options}
+        updateValue={this.updateValue}
+        value={this.props.value}
+      />
     )
   }
 }

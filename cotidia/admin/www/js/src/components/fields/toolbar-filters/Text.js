@@ -19,17 +19,15 @@ export default class Text extends Component {
 
   render () {
     return (
-      <div className='form__group form__group--boxed'>
-        <TextInput
-          controlOnly
-          name={this.props.name}
-          label={this.props.label}
-          placeholder={this.props.label}
-          updateValue={this.updateValue}
-          updateValueOnEnter
-          value={this.props.value}
-        />
-      </div>
+      <TextInput
+        extraGroupClasses={['form__group--boxed']}
+        name={this.props.name}
+        label={this.props.label}
+        placeholder={this.props.label}
+        updateValue={this.updateValue}
+        updateValueOnEnter
+        value={this.props.value}
+      />
     )
   }
 }

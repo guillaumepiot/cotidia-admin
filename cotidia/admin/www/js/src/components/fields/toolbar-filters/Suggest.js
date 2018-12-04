@@ -32,16 +32,14 @@ export default class SuggestMultiple extends Component {
     )
 
     return (
-      <div className='form__group form__group--boxed'>
-        <Suggest
-          {...this.props}
-          controlOnly
-          multiple
-          placeholder={this.props.label}
-          updateValue={this.updateValue}
-          values={values}
-        />
-      </div>
+      <Suggest
+        {...this.props}
+        extraGroupClasses={['form__group--boxed']}
+        multiple
+        placeholder={this.props.label}
+        updateValue={this.updateValue}
+        values={values}
+      />
     )
   }
 }

@@ -19,13 +19,11 @@ export default class SuggestSingle extends Component {
 
   render () {
     return (
-      <div className='form__group form__group--boxed'>
-        <Suggest
-          {...this.props}
-          controlOnly
-          placeholder={this.props.label}
-        />
-      </div>
+      <Suggest
+        {...this.props}
+        extraGroupClasses={['form__group--boxed']}
+        placeholder={this.props.label}
+      />
     )
   }
 }

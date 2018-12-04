@@ -36,18 +36,16 @@ export default class Choice extends Component {
     ) || []
 
     return (
-      <div className='form__group form__group--boxed'>
-        <MultipleSelect
-          controlOnly
-          displaySelections={false}
-          name={this.props.name}
-          label={this.props.label}
-          options={this.props.configuration.options}
-          placeholder={this.props.label}
-          updateValue={this.updateValue}
-          values={values}
-        />
-      </div>
+      <MultipleSelect
+        displaySelections={false}
+        extraGroupClasses={['form__group--boxed']}
+        name={this.props.name}
+        label={this.props.label}
+        options={this.props.configuration.options}
+        placeholder={this.props.label}
+        updateValue={this.updateValue}
+        values={values}
+      />
     )
   }
 }
