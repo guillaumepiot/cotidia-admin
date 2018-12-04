@@ -7,7 +7,7 @@
 
 {% block content_title %}
     {% if list_url %}
-    <a href="{{list_url}}" class="btn btn--link tooltip tooltip--bottom-center back-to-list" data-tooltip="Back to list">
+    <a href="{{list_url}}" class="btn btn--link btn--cancel tooltip tooltip--bottom-center back-to-list" data-tooltip="Back to list">
         <span class="fa fa-list"></span>
     </a>
     {% endif %}
@@ -17,10 +17,10 @@
 {% endblock content_title %}
 
 {% block content_actions %}
-<a href="{% get_admin_url app_label model_name 'update' object %}" class="btn btn--link tooltip tooltip--bottom-center" data-tooltip="Edit">
+<a href="{% get_admin_url app_label model_name 'update' object %}" class="btn btn--link btn--small tooltip tooltip--bottom-center" data-tooltip="Edit">
     <span class="fa fa-pen"></span>
 </a>
-<a href="{% get_admin_url app_label model_name "delete" object %}" class="btn btn--link tooltip tooltip--bottom-center" data-tooltip="Delete">
+<a href="{% get_admin_url app_label model_name "delete" object %}" class="btn btn--link btn--small tooltip tooltip--bottom-center" data-tooltip="Delete">
     <span class="fa fa-trash"></span>
 </a>
 {% endblock content_actions %}

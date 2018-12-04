@@ -1,16 +1,18 @@
 {% extends "admin/page.html" %}{% load i18n admin_toolbar_tags admin_list_tags %}
 {% block title %}
-    {{verbose_name}}
+    {% trans "Add" %} {{verbose_name|lower}}
 {% endblock title %}
 
 {% block content_title %}{{verbose_name_plural}}{% endblock content_title %}
 {% block content_actions %}
     {% if add_view %}
-    <a href="{% get_admin_url app_label model_name 'add' %}" class="btn btn--create btn--small">
+    <a href="{% get_admin_url app_label model_name 'add' %}" class="btn btn--cancel btn--small" title="{% blocktrans with verbose_name|lower as verbose_name %}Add {{verbose_name}}{% endblocktrans %}">
         <span class="fa fa-plus"></span>
-        {% blocktrans with verbose_name as verbose_name %}
+        {% comment %}
+        {% blocktrans with verbose_name|lower as verbose_name %}
             Add {{verbose_name}}
         {% endblocktrans %}
+        {% endcomment %}
     </a>
     {% endif %}
 {% endblock content_actions %}
