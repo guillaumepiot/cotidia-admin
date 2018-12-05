@@ -169,7 +169,7 @@ class BaseFilter(object):
         if kwargs.get("label", False):
             self.label = kwargs["label"]
         else:
-            self.label = self.field_name.replace("__", " ").replace("_", " ").title()
+            self.label = self.field_name.replace("__", " ").replace("_", " ").capitalize()
         if kwargs.get("default_q_obj", False):
             self.default_q_obj = kwargs["default_q_obj"]
 

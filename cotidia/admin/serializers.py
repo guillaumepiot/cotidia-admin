@@ -113,7 +113,7 @@ class AdminModelSerializer(serializers.ModelSerializer):
                     iter([t for t in SUPPORTED_FIELDS_TYPES if isinstance(field, t)]),
                     None,
                 )
-                label = field_name.replace("__", " ").replace("_", " ").title()
+                label = field_name.replace("__", " ").replace("_", " ").capitalize()
                 if label_prefix:
                     label = label_prefix + " " + label
 
@@ -470,7 +470,7 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
                     iter([t for t in SUPPORTED_FIELDS_TYPES if isinstance(field, t)]),
                     None,
                 )
-                label = field_name.replace("__", " ").replace("_", " ").title()
+                label = field_name.replace("__", " ").replace("_", " ").capitalize()
                 if label_prefix:
                     label = label_prefix + " " + label
 
