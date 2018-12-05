@@ -41,7 +41,7 @@ export default class Number extends Component {
           <label className='form__label'>and at most</label>
           <div className='form__control'>
             <TextInput
-            controlOnly
+              controlOnly
               name='max'
               type='number'
               updateValue={this.updateMax}
