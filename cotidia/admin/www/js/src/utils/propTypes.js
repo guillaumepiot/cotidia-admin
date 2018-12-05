@@ -78,7 +78,12 @@ const config = PropTypes.shape({
   columnsConfigurable: PropTypes.boolean,
   dateFormat: PropTypes.string,
   datetimeFormat: PropTypes.string,
-  detailURLField: PropTypes.string,
+  detailConfig: PropTypes.shape({
+    mode: PropTypes.oneOf(['url', 'modal']).isRequired,
+    urlField: requiredIf('mode', 'url', PropTypes.string),
+    modalComponentReference: requiredIf('mode', 'modal', PropTypes.string),
+    modalComponentProps: PropTypes.object,
+  }),
   filterTagBarVisible: PropTypes.bool,
   listHandling,
   primaryColor: PropTypes.string,

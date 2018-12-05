@@ -10,17 +10,18 @@ export default class ResultsTableItem extends PureComponent {
   static propTypes = {
     checked: PropTypes.bool.isRequired,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-    detailURLField: PropTypes.string,
+    detailConfig: PropTypes.object,
     item: PropTypes.shape({
       uuid: PropTypes.string.isRequired,
     }).isRequired,
     showCheck: PropTypes.bool.isRequired,
+    showDetailModal: PropTypes.func.isRequired,
     toggleResultSelected: PropTypes.func.isRequired,
   }
 
   getItemURL (item) {
-    if (this.props.detailURLField) {
-      const url = item[this.props.detailURLField]
+    if (this.props.detailConfig?.urlField) {
+      const url = item[this.props.detailConfig.urlField]
 
       if (typeof url === 'string' && url.length) {
         return url
@@ -31,6 +32,10 @@ export default class ResultsTableItem extends PureComponent {
   }
 
   handleClickRow = (e) => {
+    if (this.props.detailConfig?.mode === 'modal') {
+      return this.props.showDetailModal(this.props.item)
+    }
+
     const url = this.getItemURL(this.props.item)
 
     if (url) {

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { toggleResultSelected } from '../../../redux/modules/search/actions'
+import { showDetailModal, toggleResultSelected } from '../../../redux/modules/search/actions'
 
 import SearchResultsList from '../../../components/results/list/SearchResultsList'
 
@@ -15,6 +15,7 @@ const mapStateToProps = (state) => ({
 })
 
 const actionCreators = {
+  showDetailModal,
   toggleResultSelected,
 }
 

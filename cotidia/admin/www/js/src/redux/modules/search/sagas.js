@@ -341,6 +341,19 @@ function * editField ({ payload: { item, column, value } }) {
   }
 }
 
+function * showDetailModal ({ payload: { item } }) {
+  yield call(showModal, {
+    component: 'ItemDetail',
+    componentProps: { item },
+    modalProps: {
+      title: 'Detail',
+      form: false,
+      noPadding: true,
+      size: 'full-width',
+    },
+  })
+}
+
 export default function * watcher () {
   yield takeEvery(types.CONFIGURE_FILTER, configureFilter)
   yield takeEvery(types.MANAGE_COLUMNS, manageColumns)
@@ -375,4 +388,5 @@ export default function * watcher () {
 
   yield takeEvery(types.HANDLE_DYNAMIC_LIST_MESSAGE, handleDynamicListMessage)
   yield takeEvery(types.EDIT_FIELD, editField)
+  yield takeEvery(types.SHOW_DETAIL_MODAL, showDetailModal)
 }

@@ -6,14 +6,15 @@ import Map from './Map'
 export default class SearchResultsMap extends Component {
   static propTypes = {
     defaultCoords: PropTypes.array.isRequired,
-    detailURLField: PropTypes.string,
+    detailConfig: PropTypes.object,
     marker: PropTypes.object.isRequired,
+    showDetailModal: PropTypes.func.isRequired,
     results: PropTypes.arrayOf(PropTypes.object),
   }
 
   getItemURL (item) {
-    if (this.props.detailURLField) {
-      const url = item[this.props.detailURLField]
+    if (this.props.detailConfig?.urlField) {
+      const url = item[this.props.detailConfig.urlField]
 
       if (typeof url === 'string' && url.length) {
         return url
@@ -24,6 +25,10 @@ export default class SearchResultsMap extends Component {
   }
 
   viewItem = (item) => {
+    if (this.props.detailConfig?.mode === 'modal') {
+      return this.props.showDetailModal(item)
+    }
+
     const url = this.getItemURL(item)
 
     if (! url) {

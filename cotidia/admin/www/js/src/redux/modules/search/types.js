@@ -49,3 +49,5 @@ export const TOGGLE_SIDEBAR = 'dynamic-list/search/TOGGLE_SIDEBAR'
 export const SHOW_SIDEBAR = 'dynamic-list/search/SHOW_SIDEBAR'
 
 export const MOVE_COLUMN = 'dynamic-list/search/MOVE_COLUMN'
+
+export const SHOW_DETAIL_MODAL = 'dynamic-list/search/SHOW_DETAIL_MODAL'

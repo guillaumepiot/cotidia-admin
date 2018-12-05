@@ -22,12 +22,25 @@ export default class SearchResultsList extends Component {
     loading: PropTypes.bool,
     results: PropTypes.arrayOf(PropTypes.object),
     selected: PropTypes.arrayOf(PropTypes.string),
+    showDetailModal: PropTypes.func.isRequired,
     toggleResultSelected: PropTypes.func.isRequired,
   }
 
+  canView (item) {
+    if (this.props.config.detailConfig?.mode === 'modal') {
+      return true
+    }
+
+    if (this.props.config.detailConfig?.mode === 'url') {
+      return Boolean(this.getItemURL(item))
+    }
+
+    return false
+  }
+
   getItemURL (item) {
-    if (this.props.config.detailURLField) {
-      const url = item[this.props.config.detailURLField]
+    if (this.props.config.detailConfig.urlField) {
+      const url = item[this.props.config.detailConfig.urlField]
 
       if (typeof url === 'string' && url.length) {
         return url
@@ -37,14 +50,18 @@ export default class SearchResultsList extends Component {
     return null
   }
 
-  viewItem = (item, newWindow) => {
+  viewItem = (item, hasModifier) => {
+    if (this.props.config.detailConfig?.mode === 'modal') {
+      return this.props.showDetailModal(item)
+    }
+
     const url = this.getItemURL(item)
 
     if (! url) {
       return
     }
 
-    if (newWindow) {
+    if (hasModifier) {
       window.open(url)
     } else {
       window.location = url
@@ -77,7 +94,7 @@ export default class SearchResultsList extends Component {
               item={item}
               showCheck={batchActions.length > 0}
               listFields={listFields}
-              viewItem={this.getItemURL(item) ? this.viewItem : null}
+              viewItem={this.canView(item) ? this.viewItem : null}
             />
           ))}
         </div>

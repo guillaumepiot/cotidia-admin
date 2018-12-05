@@ -44,6 +44,7 @@ export default class Modal extends Component {
     handleSubmit: PropTypes.func.isRequired,
     isOpen: PropTypes.bool,
     loading: PropTypes.bool,
+    noPadding: PropTypes.bool,
     noValidate: PropTypes.bool,
     otherButtons: PropTypes.node,
     size: PropTypes.string,
@@ -58,6 +59,7 @@ export default class Modal extends Component {
     form: false,
     isOpen: false,
     loading: false,
+    noPadding: false,
     noValidate: false,
   }
 
@@ -122,6 +124,7 @@ export default class Modal extends Component {
       errors,
       handleClose,
       isOpen,
+      noPadding,
       noValidate,
       otherButtons,
       size,
@@ -160,7 +163,7 @@ export default class Modal extends Component {
                 ) }
               </div>
             ) }
-            <div className='dialog__body dialog-section--padded'>
+            <div className={`dialog__body ${noPadding ? '' : 'dialog-section--padded'}`}>
               { bork ? (
                 <p>Sorry, there has been an error in this modal.</p>
               ) : (form ? (

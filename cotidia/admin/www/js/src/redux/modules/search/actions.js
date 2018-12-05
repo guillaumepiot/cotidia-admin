@@ -113,3 +113,8 @@ export const moveColumn = (from, to) => ({
   type: types.MOVE_COLUMN,
   payload: { from, to },
 })
+
+export const showDetailModal = (item) => ({
+  type: types.SHOW_DETAIL_MODAL,
+  payload: { item },
+})

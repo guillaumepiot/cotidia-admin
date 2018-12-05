@@ -72,7 +72,7 @@ export default class SearchResultsTable extends Component {
 
     // If the implementor is trying to give us a detail URL field, we have to assume that at least
     // one result may be clickable, so we set the whole table to clickable.
-    if (config.detailURLField) {
+    if (config.detailConfig?.mode) {
       tableClassName.push('table--clickable')
     }
 
