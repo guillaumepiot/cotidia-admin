@@ -68,7 +68,7 @@ export default class ResultsTableItem extends PureComponent {
       <tr className={checked ? 'table__row--active' : null} onClick={this.handleClickRow}>
         {showCheck && (
           <td onClick={this.checkItem}>
-            <input type='checkbox' checked={checked} />
+            <input type='checkbox' checked={checked} readOnly />
           </td>
         )}
         {columns.map((column) => {
