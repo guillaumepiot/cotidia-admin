@@ -44,6 +44,7 @@ export default class Modal extends Component {
     handleSubmit: PropTypes.func.isRequired,
     isOpen: PropTypes.bool,
     loading: PropTypes.bool,
+    noValidate: PropTypes.bool,
     otherButtons: PropTypes.node,
     size: PropTypes.string,
     submitButton: PropTypes.string,
@@ -57,6 +58,7 @@ export default class Modal extends Component {
     form: false,
     isOpen: false,
     loading: false,
+    noValidate: false,
   }
 
   state = initialState
@@ -120,6 +122,7 @@ export default class Modal extends Component {
       errors,
       handleClose,
       isOpen,
+      noValidate,
       otherButtons,
       size,
       submitButton,
@@ -161,7 +164,7 @@ export default class Modal extends Component {
               { bork ? (
                 <p>Sorry, there has been an error in this modal.</p>
               ) : (form ? (
-                <form id={id} onSubmit={this.submitModal}>
+                <form id={id} noValidate={noValidate} onSubmit={this.submitModal}>
                   { component }
                 </form>
               ) : component) }

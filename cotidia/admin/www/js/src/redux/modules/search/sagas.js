@@ -23,6 +23,7 @@ export function * configureFilter ({ payload: { filter } }) {
     modalProps: {
       title: title,
       form: true,
+      noValidate: true,
       submitButton: 'Update filter',
       otherButtons: <ClearFilterButton filter={filter} />,
     },
