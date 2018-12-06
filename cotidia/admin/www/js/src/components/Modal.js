@@ -78,6 +78,11 @@ export default class Modal extends Component {
     this.setState({
       id: `modal-${incrementingId++}`,
     })
+    document.addEventListener('keydown', this.handleKeyDown)
+  }
+
+  componentWillUnmount () {
+    document.removeEventListener('keydown', this.handleKeyDown)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -99,6 +104,29 @@ export default class Modal extends Component {
     // TODO: Test whether the error is still caught by Sentry or whether we need to explicitly
     // TODO: capture it here.
     this.setState({ bork: true })
+  }
+
+  handleKeyDown = (e) => {
+    switch (e.key) {
+      case 'ArrowLeft':
+        if (this.props.headerLeft?.action) {
+          e.preventDefault()
+          this.callHeaderLeftAction()
+        }
+        break
+      case 'ArrowRight':
+        if (this.props.headerRight?.action) {
+          e.preventDefault()
+          this.callHeaderRightAction()
+        }
+        break
+      case 'Escape':
+        if (this.props.close) {
+          e.preventDefault()
+          this.props.handleClose()
+        }
+        break
+    }
   }
 
   handleDialogueClick = (e) => {
