@@ -128,8 +128,8 @@
         {% if table_striped %}
             tableStriped: {{table_striped|json}},
         {% endif %}
-        {% if detail_url_field %}
-            detailURLField: '{{detail_url_field}}',
+        {% if detail_config %}
+            detailConfig: {{detail_config|json|safe}},
         {% endif %}
     },
     {% if batch_actions %}

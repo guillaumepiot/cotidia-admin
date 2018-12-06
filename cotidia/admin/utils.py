@@ -129,7 +129,7 @@ def get_field_representation(
     # Formats the label by changing _s to spaces and capitalising the first
     # letter of each word
     field_representation["label"] = (
-        field_name.replace("__", " ").replace("_", " ").title()
+        field_name.replace("__", " ").replace("_", " ").capitalize()
     )
 
     if hasattr(field, "choices"):

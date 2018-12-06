@@ -643,7 +643,28 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
         return self._columns
 
     def get_detail_url_field(self):
-        return self.get_option("detail_url_field", "_detail_url")
+        if not hasattr(self.SearchProvider, "detail_modal_component"):
+            return self.get_option("detail_url_field", "_detail_url")
+        else:
+            return None
+
+    def get_detail_config(self):
+        if hasattr(self.SearchProvider, "detail_modal_component"):
+            config = {
+                "mode": "modal",
+                "modalComponentReference": self.SearchProvider.detail_modal_component
+            }
+            if hasattr(self.SearchProvider, "detail_component_props"):
+                config["modalComponentProps"] = self.SearchProvider.detail_component_props
+            return config
+        else:
+            config = {
+                "mode": "url",
+                "urlField": self.get_detail_url_field()
+            }
+            return config
+
+
 
 
 def choose_filter(field, field_name, prefix):
