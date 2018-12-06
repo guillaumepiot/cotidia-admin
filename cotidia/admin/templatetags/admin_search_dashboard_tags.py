@@ -10,8 +10,9 @@ from django.utils.safestring import mark_safe
 register = template.Library()
 
 
-@register.inclusion_tag("admin/partials/dynamic_list_config.html", takes_context=False)
+@register.inclusion_tag("admin/partials/dynamic_list_config.html", takes_context=True)
 def render_search_dashboard_config(
+    context,
     app_label,
     model_name,
     auth_token,
@@ -22,7 +23,7 @@ def render_search_dashboard_config(
     default_filters=None,
     batch_actions=None,
 ):
-    context = {"app_label": app_label, "model_name": model_name}
+    context.update({"app_label": app_label, "model_name": model_name})
 
     # Get model class and its corresponding serializer class.
     model = ContentType.objects.get(app_label=app_label, model=model_name).model_class()
@@ -103,10 +104,12 @@ def render_search_dashboard_config(
     context["list_fields"] = serializer.get_option("list_fields")
     context["sidebar_starts_shown"] = serializer.get_option("sidebar_starts_shown")
     context["ignore_stored_config"] = serializer.get_option("ignore_stored_config")
-    context["detail_config"] = {
-        "mode": "url",
-        "urlField": serializer.get_detail_url_field(),
-    }
+    context["detail_mode"] = serializer.get_detail_mode()
+    context["detail_url_field"] = serializer.get_detail_url_field()
+    context["detail_component"] = serializer.get_detail_url_field()
+    context[
+        "detail_component_props_template"
+    ] = serializer.get_component_props_template()
 
     # Batch actions can be overridden by the caller, so allow for that.
     if batch_actions:
@@ -117,8 +120,9 @@ def render_search_dashboard_config(
     return context
 
 
-@register.inclusion_tag("admin/partials/dynamic_list_config.html", takes_context=False)
+@register.inclusion_tag("admin/partials/dynamic_list_config.html", takes_context=True)
 def render_dynamic_list_config(
+    context,
     app_label,
     model_name,
     auth_token,
@@ -129,7 +133,7 @@ def render_dynamic_list_config(
     default_filters=None,
     batch_actions=None,
 ):
-    context = {"app_label": app_label, "model_name": model_name}
+    context.update({"app_label": app_label, "model_name": model_name})
 
     # Get model class and its corresponding serializer class.
     model = ContentType.objects.get(app_label=app_label, model=model_name).model_class()
@@ -200,7 +204,12 @@ def render_dynamic_list_config(
     context["default_results_mode"] = serializer.get_option("default_results_mode")
     context["map_configuration"] = serializer.get_option("map_configuration")
     context["default_per_page"] = serializer.get_option("default_per_page")
-    context["detail_config"] = serializer.get_detail_config()
+    context["detail_mode"] = serializer.get_detail_mode()
+    context["detail_url_field"] = serializer.get_detail_url_field()
+    context["detail_modal_component"] = serializer.get_detail_modal_component()
+    context[
+        "detail_component_props_template"
+    ] = serializer.get_component_props_template()
 
     # Batch actions can be overridden by the caller, so allow for that.
     if batch_actions:

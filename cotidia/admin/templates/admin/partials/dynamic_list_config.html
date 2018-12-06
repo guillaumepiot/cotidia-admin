@@ -1,7 +1,6 @@
 {% load admin_search_dashboard_tags %}
 {
-    endpoint: '{{endpoint}}',
-    {% if title %}
+    endpoint: '{{endpoint}}', {% if title %}
         title: '{{title}}',
     {% endif %}
     columnConfiguration: {
@@ -128,6 +127,18 @@
         {% if table_striped %}
             tableStriped: {{table_striped|json}},
         {% endif %}
+            detailConfig: {
+                mode: "{{detail_mode}}",
+                {%  if detail_mode == "url"%}
+                urlField: "{{detail_url_field}}",
+                {% else %}
+                modalComponentReference: "{{detail_modal_component}}",
+                {% if detail_component_props_template %}
+                modalComponentProps: {% include detail_component_props_template %}
+                {% endif %}
+
+                {% endif %}
+            }
         {% if detail_config %}
             detailConfig: {{detail_config|json|safe}},
         {% endif %}

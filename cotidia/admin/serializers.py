@@ -648,22 +648,17 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
         else:
             return None
 
-    def get_detail_config(self):
+    def get_detail_mode(self):
         if hasattr(self.SearchProvider, "detail_modal_component"):
-            config = {
-                "mode": "modal",
-                "modalComponentReference": self.SearchProvider.detail_modal_component
-            }
-            if hasattr(self.SearchProvider, "detail_component_props"):
-                config["modalComponentProps"] = self.SearchProvider.detail_component_props
-            return config
+            return "modal"
         else:
-            config = {
-                "mode": "url",
-                "urlField": self.get_detail_url_field()
-            }
-            return config
+            return "url"
 
+    def get_detail_modal_component(self):
+        return self.get_option("detail_modal_component")
+
+    def get_component_props_template(self):
+        return self.get_option("detail_component_props_template")
 
 
 
