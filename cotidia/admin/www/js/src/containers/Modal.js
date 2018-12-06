@@ -1,3 +1,4 @@
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import Modal from '../components/Modal'
@@ -22,4 +23,9 @@ const actionCreators = {
   handleSubmit: submitModal,
 }
 
-export default connect(mapStateToProps, actionCreators)(Modal)
+const mapDispatchToProps = (dispatch) => ({
+  dispatch,
+  ...bindActionCreators(actionCreators, dispatch),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Modal)

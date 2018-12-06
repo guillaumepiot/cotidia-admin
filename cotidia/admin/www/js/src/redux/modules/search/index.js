@@ -13,7 +13,7 @@ const initialState = {
   sidebarFilters: [],
   filterSuggestConfiguration: {},
 
-  defaultColumns: [], // Actual default columns as specifed by config
+  defaultColumns: [], // Actual default columns as specified by config
   visibleColumns: [], // Current visible columns
 
   listFields: null,
@@ -49,6 +49,8 @@ const initialState = {
   selected: [],
 
   showSidebar: true,
+
+  detailItemShowing: null,
 }
 
 const resolveResultsMode = (requestedMode, allowedModes) => {
@@ -401,6 +403,12 @@ export default (state = initialState, { type, payload } = {}) => {
         visibleColumns,
       }
     }
+
+    case types.SHOW_DETAIL_MODAL:
+      return {
+        ...state,
+        detailItemShowing: state.results.findIndex((item) => item === payload.item),
+      }
 
     default:
       return state

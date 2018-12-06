@@ -38,10 +38,19 @@ export default class Modal extends Component {
     component: PropTypes.func,
     componentProps: PropTypes.object,
     data: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired,
     errors: PropTypes.object,
     form: PropTypes.bool,
     handleClose: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
+    headerLeft: PropTypes.shape({
+      action: PropTypes.func.isRequired,
+      label: PropTypes.node.isRequired,
+    }),
+    headerRight: PropTypes.shape({
+      action: PropTypes.func.isRequired,
+      label: PropTypes.node.isRequired,
+    }),
     isOpen: PropTypes.bool,
     loading: PropTypes.bool,
     noPadding: PropTypes.bool,
@@ -114,6 +123,14 @@ export default class Modal extends Component {
     }))
   }
 
+  callHeaderLeftAction = () => {
+    this.props.headerLeft.action(this.props.dispatch)
+  }
+
+  callHeaderRightAction = () => {
+    this.props.headerRight.action(this.props.dispatch)
+  }
+
   render () {
     const {
       cancelButton,
@@ -123,6 +140,8 @@ export default class Modal extends Component {
       form,
       errors,
       handleClose,
+      headerLeft,
+      headerRight,
       isOpen,
       noPadding,
       noValidate,
@@ -149,20 +168,36 @@ export default class Modal extends Component {
       <ModalContainer>
         <div className={`dialog dialog--modal ${isOpen ? 'dialog--modal-open' : ''} ${size ? `dialog--${size}` : ''}`} onClick={this.handleDialogueClick}>
           <div className='dialog__content'>
-            { (title || close) && (
+            { (title || close || headerLeft || headerRight) && (
               <div className='dialog__header dialog-header dialog-section--padded'>
-                { title && (
-                  <div className='dialog-header__title'>{ title }</div>
+                { headerLeft && (
+                  <div className='dialog-header__action dialog-header__action--left' key='header-left'>
+                    <button className='dialog-header__action-btn' onClick={this.callHeaderLeftAction}>
+                      { headerLeft.label }
+                    </button>
+                  </div>
                 ) }
-                { close && (
-                  <div className='dialog-header__action dialog-header__action--right'>
+                { title && (
+                  <div className={`dialog-header__title ${headerLeft ? 'dialog-header__title--center' : ''}`}>
+                    { title }
+                  </div>
+                ) }
+                { headerRight ? (
+                  <div className='dialog-header__action dialog-header__action--right' key='header-right'>
+                    <button className='dialog-header__action-btn' onClick={this.callHeaderRightAction}>
+                      { headerRight.label }
+                    </button>
+                  </div>
+                ) : (close && (
+                  <div className='dialog-header__action dialog-header__action--right' key='close-button'>
                     <button className='dialog-header__action-btn close-dialog' type='button' onClick={handleClose}>
                       <Icon icon='times' />
                     </button>
                   </div>
-                ) }
+                )) }
               </div>
             ) }
+
             <div className={`dialog__body ${noPadding ? '' : 'dialog-section--padded'}`}>
               { bork ? (
                 <p>Sorry, there has been an error in this modal.</p>
@@ -172,6 +207,7 @@ export default class Modal extends Component {
                 </form>
               ) : component) }
             </div>
+
             { form && (
               <div className='dialog__footer dialog-footer dialog-section--padded dialog-footer--reverse'>
                 { submitButton && (

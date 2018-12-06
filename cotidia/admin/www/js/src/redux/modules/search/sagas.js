@@ -11,6 +11,7 @@ import * as types from './types'
 import * as modalTypes from '../modal/types'
 
 import ClearFilterButton from '../../../containers/modals/_ClearFilterButton'
+import { Icon } from '../../../components/elements/global'
 
 export function * configureFilter ({ payload: { filter } }) {
   const { filterConfiguration, filters } = yield select((state) => state.search)
@@ -350,8 +351,52 @@ function * showDetailModal ({ payload: { item } }) {
       form: false,
       noPadding: true,
       size: 'full-width',
+      headerLeft: {
+        label: <Icon icon='chevron-left' />,
+        action: (dispatch) => dispatch({ type: types.DETAIL_MODAL_PREVIOUS }),
+      },
+      headerRight: {
+        label: <Icon icon='chevron-right' />,
+        action: (dispatch) => dispatch({ type: types.DETAIL_MODAL_NEXT }),
+      },
     },
   })
+}
+
+function * detailModalPrevious () {
+  const { search: { detailItemShowing: currentIndex, results } } = yield select()
+
+  if (currentIndex != null) {
+    let newIndex
+
+    if (currentIndex > 0) {
+      newIndex = currentIndex - 1
+    } else {
+      newIndex = results.length - 1
+    }
+
+    const item = results[newIndex]
+
+    yield put({ type: types.SHOW_DETAIL_MODAL, payload: { item } })
+  }
+}
+
+function * detailModalNext () {
+  const { search: { detailItemShowing: currentIndex, results } } = yield select()
+
+  if (currentIndex != null) {
+    let newIndex
+
+    if (currentIndex < results.length - 1) {
+      newIndex = currentIndex + 1
+    } else {
+      newIndex = 0
+    }
+
+    const item = results[newIndex]
+
+    yield put({ type: types.SHOW_DETAIL_MODAL, payload: { item } })
+  }
 }
 
 export default function * watcher () {
@@ -389,4 +434,6 @@ export default function * watcher () {
   yield takeEvery(types.HANDLE_DYNAMIC_LIST_MESSAGE, handleDynamicListMessage)
   yield takeEvery(types.EDIT_FIELD, editField)
   yield takeEvery(types.SHOW_DETAIL_MODAL, showDetailModal)
+  yield takeEvery(types.DETAIL_MODAL_PREVIOUS, detailModalPrevious)
+  yield takeEvery(types.DETAIL_MODAL_NEXT, detailModalNext)
 }

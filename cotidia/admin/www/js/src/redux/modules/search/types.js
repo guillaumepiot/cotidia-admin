@@ -51,3 +51,5 @@ export const SHOW_SIDEBAR = 'dynamic-list/search/SHOW_SIDEBAR'
 export const MOVE_COLUMN = 'dynamic-list/search/MOVE_COLUMN'
 
 export const SHOW_DETAIL_MODAL = 'dynamic-list/search/SHOW_DETAIL_MODAL'
+export const DETAIL_MODAL_PREVIOUS = 'dynamic-list/search/DETAIL_MODAL_PREVIOUS'
+export const DETAIL_MODAL_NEXT = 'dynamic-list/search/DETAIL_MODAL_NEXT'
