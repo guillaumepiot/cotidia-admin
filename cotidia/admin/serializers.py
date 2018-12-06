@@ -267,7 +267,22 @@ class AdminModelSerializer(serializers.ModelSerializer):
         return self._columns
 
     def get_detail_url_field(self):
-        return self.get_option("detail_url_field", "_detail_url")
+        if not hasattr(self.SearchProvider, "detail_modal_component"):
+            return self.get_option("detail_url_field", "_detail_url")
+        else:
+            return None
+
+    def get_detail_mode(self):
+        if hasattr(self.SearchProvider, "detail_modal_component"):
+            return "modal"
+        else:
+            return "url"
+
+    def get_detail_modal_component(self):
+        return self.get_option("detail_modal_component")
+
+    def get_component_props_template(self):
+        return self.get_option("detail_component_props_template")
 
 
 class SortSerializer(serializers.Serializer):
