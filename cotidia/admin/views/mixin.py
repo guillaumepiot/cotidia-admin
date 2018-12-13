@@ -51,8 +51,12 @@ class ContextMixin:
 
 class ChildMixin:
     def get_parent(self, *args, **kwargs):
-        parent_id = self.kwargs["parent_id"]
-        return get_object_or_404(self.parent_model, id=parent_id)
+        parent = self.get_object().get_parent()
+        # Keep this code as backward support for model without "parent_field" meta key
+        if parent is None:
+            parent_id = self.kwargs["parent_id"]
+            parent = get_object_or_404(self.parent_model, id=parent_id)
+        return parent
 
     def get(self, *args, **kwargs):
         self.parent = self.get_parent(*args, **kwargs)
