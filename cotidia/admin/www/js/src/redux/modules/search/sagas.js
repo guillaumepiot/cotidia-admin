@@ -185,15 +185,22 @@ function * refreshSingleResult ({ uuid }) {
   const { ok, data } = yield call(fetchAuthenticated, 'GET', url)
 
   if (ok && data.results?.length) {
-    yield put({
-      type: types.UPDATE_SINGLE_RESULT,
-      payload: {
-        uuid,
-        // There should only be one result, but it'll still be an array. Either
-        // way, we only care about one result.
-        data: data.results[0],
-      },
-    })
+    // There should only be one result, but it'll still be an array. So we can use `find` to
+    // effectively "filter" it down to our actual result. And we use `find` rather than `[0]`
+    // because at one point there was a bug in cotidia admin search whereby this feature no longer
+    // worked and we just got a regular page of results back. So `find` is an attempt to be more
+    // resilient against unexpected results.
+    const item = data.results.find((item) => item.uuid === uuid)
+
+    if (item) {
+      yield put({
+        type: types.UPDATE_SINGLE_RESULT,
+        payload: {
+          uuid,
+          data: item,
+        },
+      })
+    }
   }
 }
 
