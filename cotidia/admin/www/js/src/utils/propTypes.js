@@ -120,6 +120,7 @@ const filterList = PropTypes.arrayOf(
   PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.shape({
+      name: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       defaultOpen: PropTypes.bool,
       filters: stringList,
