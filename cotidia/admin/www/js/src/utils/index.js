@@ -94,7 +94,6 @@ export function getFilterLabel (filter, filterName, value, config) {
         )?.label
       } else {
         // Get label from local storage cache.
-        // TODO: prefix cache with endpoint
         return localStorage.getItem(`${filterName}:${value}`) || ''
       }
 
@@ -112,14 +111,6 @@ export function getFilterLabel (filter, filterName, value, config) {
   }
 
   return ''
-}
-
-// TODO: Turn this into a saga so we can:
-// TODO: 1. Detect whether the filter in question is a suggesting one, and only cache in those situations.
-// TODO: 2. Prefix the cache key with the endpoint/unique identifier for this DynamicList instance.
-export function cacheFilterLabel (filter, value, label) {
-  // TODO: prefix cache with endpoint
-  localStorage.setItem(`${filter}:${value}`, label)
 }
 
 const iconCache = {}

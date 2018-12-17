@@ -96,6 +96,15 @@ export function getFilterValue (value) {
   }
 }
 
+function * cacheFilterLabel ({ payload: { filter, value, label } }) {
+  const { search: { filterConfiguration } } = yield select()
+
+  // Only cache the label if the filter itself is a suggest type filter.
+  if (filterConfiguration[filter]?.configuration?.mode !== 'options') {
+    localStorage.setItem(`${filter}:${value}`, label)
+  }
+}
+
 function getSearchQueryString (data, page = null) {
   const queryString = {}
 
@@ -409,6 +418,7 @@ function * detailModalNext () {
 export default function * watcher () {
   yield takeEvery(types.CONFIGURE_FILTER, configureFilter)
   yield takeEvery(types.MANAGE_COLUMNS, manageColumns)
+  yield takeEvery(types.CACHE_FILTER_LABEL, cacheFilterLabel)
 
   yield takeEvery(types.PERFORM_SEARCH, performSearch)
   yield takeEvery(types.SET_SEARCH_TERM, performSearch)

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 
 import {
+  cacheFilterLabel,
   clearFilters,
   manageColumns,
   performBatchAction,
@@ -15,8 +16,6 @@ import {
   getToolbarFilters,
 } from '../redux/modules/search/selectors'
 
-import { cacheFilterLabel } from '../utils'
-
 import { getSuggestEngine } from '../utils/filterSuggestEngines'
 
 import ToolBar from '../components/ToolBar'
@@ -26,7 +25,6 @@ const mapStateToProps = (state) => {
     allowedResultsModes: state.search.allowedResultsModes,
     anyResultsSelected: anyResultsSelected(state),
     batchActions: state.search.batchActions,
-    cacheFilterLabel,
     columnsConfigurable: state.config.columnsConfigurable,
     filterConfiguration: state.search.filterConfiguration || {},
     filters: state.search.filters,
@@ -51,6 +49,7 @@ const mapStateToProps = (state) => {
 }
 
 const actionCreators = {
+  cacheFilterLabel,
   clearFilters,
   manageColumns,
   performBatchAction,

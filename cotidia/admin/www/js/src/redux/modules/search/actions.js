@@ -29,6 +29,11 @@ export const clearFilters = () => ({
   type: types.CLEAR_FILTERS,
 })
 
+export const cacheFilterLabel = (filter, value, label) => ({
+  type: types.CACHE_FILTER_LABEL,
+  payload: { filter, value, label },
+})
+
 export const setOrderColumn = (column) => ({
   type: types.SET_ORDER_COLUMN,
   payload: { column },
