@@ -169,7 +169,9 @@ class BaseFilter(object):
         if kwargs.get("label", False):
             self.label = kwargs["label"]
         else:
-            self.label = self.field_name.replace("__", " ").replace("_", " ").capitalize()
+            self.label = (
+                self.field_name.replace("__", " ").replace("_", " ").capitalize()
+            )
         if kwargs.get("default_q_obj", False):
             self.default_q_obj = kwargs["default_q_obj"]
 
@@ -415,7 +417,10 @@ class ForeignKeyFilter(ChoiceFilter):
         if model_class:
             self.model_class = model_class
         elif field:
-            self.model_class = field.Meta.model
+            try:
+                self.model_class = field.Meta.model
+            except AttributeError as e:
+                raise AttributeError(f"{self.field_name} is not serialised.") from e
         self.queryset = kwargs.get("queryset", None)
 
     def get_options(self):
