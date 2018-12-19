@@ -15,10 +15,14 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.33&amp;key={{ GOOGLE_API_KEY }}"></script>
     {% endif %}
     {{block.super}}
+    {% block dynamic_list_definition %}
     <script>
         // <![CDATA[
 
-            var dynamicListData = {% render_dynamic_list_config app_label model_name request.user.token.key serializer=serializer endpoint=endpoint default_columns=default_columns default_order_by=default_order_by default_filters=default_filters %}
+            var dynamicListData = {% render_dynamic_list_config app_label model_name request.user.token.key serializer=serializer endpoint=endpoint batch_actions=batch_actions default_columns=default_columns default_order_by=default_order_by default_filters=default_filters %}
+            {% block dynamic_list_data_transform %}
+
+            {% endblock dynamic_list_data_transform %}
 
             if (window.ReactDOM && window.React && window.DynamicList) {
                 ReactDOM.render(
@@ -28,4 +32,5 @@
             }
         // ]]>
     </script>
+    {% endblock dynamic_list_definition %}
 {% endblock footer_scripts %}
