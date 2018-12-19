@@ -246,7 +246,6 @@ class DynamicListView(StaffPermissionRequiredMixin, ContextMixin, TemplateView):
         context["add_view"] = self.kwargs.get("add_view", self.add_view)
 
         context["default_filters"] = filters
-        pprint(context)
 
         return context
 
