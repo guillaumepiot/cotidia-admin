@@ -12,6 +12,7 @@ const initialState = {
   id: null,
   data: {},
   bork: false,
+  title: null,
 }
 
 function ModalContainer ({ children }) {
@@ -77,6 +78,7 @@ export default class Modal extends Component {
   componentDidMount () {
     this.setState({
       id: `modal-${incrementingId++}`,
+      title: this.props.title,
     })
     document.addEventListener('keydown', this.handleKeyDown)
   }
@@ -96,7 +98,16 @@ export default class Modal extends Component {
 
     // If opening, and we have data, set it.
     if (this.props.isOpen === false && nextProps.isOpen === true) {
-      this.setState({ data: nextProps.data })
+      this.setState({
+        data: nextProps.data,
+        // Always reset the title when opening, as it gets reset to null on closing.
+        title: nextProps.title,
+      })
+    }
+
+    // If the title changes, update it in the state.
+    if (this.props.title !== nextProps.title) {
+      this.setState({ title: nextProps.title })
     }
   }
 
@@ -142,6 +153,8 @@ export default class Modal extends Component {
     this.props.handleSubmit(this.state.data)
   }
 
+  setTitle = (title) => this.setState({ title })
+
   updateFormDataField = (field, value) => {
     this.setState((state) => ({
       data: {
@@ -176,10 +189,9 @@ export default class Modal extends Component {
       otherButtons,
       size,
       submitButton,
-      title,
     } = this.props
 
-    const { bork, data, id } = this.state
+    const { bork, data, id, title } = this.state
 
     const component = Component && (
       <Component
@@ -188,6 +200,7 @@ export default class Modal extends Component {
         data={data}
         errors={errors}
         handleSubmit={this.submitModal}
+        setTitle={this.setTitle}
         updateField={this.updateFormDataField}
       />
     )

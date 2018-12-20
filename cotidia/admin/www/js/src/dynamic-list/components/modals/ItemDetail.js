@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 
 export default class Filter extends Component {
   static propTypes = {
-    item: PropTypes.object.isRequired,
     componentProps: PropTypes.object,
     componentReference: PropTypes.string.isRequired,
+    item: PropTypes.object.isRequired,
+    setTitle: PropTypes.func,
   }
 
   render () {
@@ -13,12 +14,13 @@ export default class Filter extends Component {
       componentProps,
       componentReference,
       item,
+      setTitle,
     } = this.props
 
     const Component = window[componentReference]
 
     return (
-      <Component {...componentProps} item={item} />
+      <Component {...componentProps} item={item} setTitle={setTitle} />
     )
   }
 }
