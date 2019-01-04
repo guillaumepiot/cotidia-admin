@@ -41,7 +41,7 @@ export const getValueFormatter = (config) => {
       } else if (type === 'tel') {
         link = `tel:${link}`
       } else if (type === 'field') {
-        label = item[fieldOrLabel]
+        link = item[fieldOrLabel]
       } else if (type === 'label') {
         label = fieldOrLabel
       }
