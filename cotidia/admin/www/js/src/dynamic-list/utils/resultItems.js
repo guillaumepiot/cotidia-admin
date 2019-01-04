@@ -28,7 +28,7 @@ export const getValueFormatter = (config) => {
     boolean: (value) => (
       value ? <Icon icon='check' /> : <Icon icon='times' />
     ),
-    link: (value, item, __, type, field) => {
+    link: (value, item, __, type, fieldOrLabel) => {
       if (! value) {
         return null
       }
@@ -41,7 +41,9 @@ export const getValueFormatter = (config) => {
       } else if (type === 'tel') {
         link = `tel:${link}`
       } else if (type === 'field') {
-        label = item[field]
+        label = item[fieldOrLabel]
+      } else if (type === 'label') {
+        label = fieldOrLabel
       }
 
       return <a href={link} onClick={(e) => e.stopPropagation()}>{label}</a>
