@@ -28,20 +28,23 @@ export const getValueFormatter = (config) => {
     boolean: (value) => (
       value ? <Icon icon='check' /> : <Icon icon='times' />
     ),
-    link: (value, _, __, type) => {
+    link: (value, item, __, type, field) => {
       if (! value) {
         return null
       }
 
       let link = value
+      let label = value
 
       if (type === 'mailto') {
         link = `mailto:${link}`
       } else if (type === 'tel') {
         link = `tel:${link}`
+      } else if (type === 'field') {
+        label = item[field]
       }
 
-      return <a href={link} onClick={(e) => e.stopPropagation()}>{value}</a>
+      return <a href={link} onClick={(e) => e.stopPropagation()}>{label}</a>
     },
     raw: (value) => ({ __html: value }),
     label: (value, _, __, type) => value && (
