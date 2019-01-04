@@ -10,13 +10,21 @@ import { Icon } from '../components/elements/global'
 export const getValueFormatter = (config) => {
   let globalListHandling = config.listHandling
 
+  const numberise = (func) => (value, ...args) => {
+    if (value == null || value === '') {
+      return null
+    }
+
+    return func(Number(value), ...args)
+  }
+
   const formatters = {
     verbatim: (value) => (value == null) ? '' : String(value),
-    number: (value) => (value && ! isNaN(Number(value))) ? Number(value).toLocaleString() : null,
-    percentage: (value) => (value && ! isNaN(Number(value))) ? Number(value).toLocaleString(undefined, { style: 'percent' }) : null,
-    currency: (value, _, __, currency) => (value && ! isNaN(Number(value))) ? Number(value).toLocaleString(undefined, { style: 'currency', currency }) : null,
-    date: (value) => value && moment(value).format(config.dateFormat),
-    datetime: (value) => value && moment(value).format(config.datetimeFormat),
+    number: numberise((number) => isNaN(number) ? null : number.toLocaleString()),
+    percentage: numberise((number) => isNaN(number) ? null : number.toLocaleString(undefined, { style: 'percent' })),
+    currency: numberise((number, _, __, currency) => isNaN(number) ? null : number.toLocaleString(undefined, { style: 'currency', currency })),
+    date: (value) => (value != null) && moment(value).format(config.dateFormat),
+    datetime: (value) => (value != null) && moment(value).format(config.datetimeFormat),
     boolean: (value) => (
       value ? <Icon icon='check' /> : <Icon icon='times' />
     ),
