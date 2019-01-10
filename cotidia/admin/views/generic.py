@@ -1,5 +1,3 @@
-from pprint import pprint
-
 import urllib
 
 from django.views.generic import (
@@ -13,7 +11,7 @@ from django.views.generic import (
 
 from django.contrib import messages
 from django.urls import reverse
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.contenttypes.models import ContentType
 from django.views.generic.base import TemplateView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -717,6 +715,8 @@ class AdminGenericExportView(StaffPermissionRequiredMixin, View):
         serializer_class = kwargs.get("serializer_class", None)
 
         fmt = kwargs["format"]
+        default_filename = "{} - {}".format(app_label, model)
+        filename = kwargs.get("filename", default_filename)
 
         model_class = ContentType.objects.get(
             app_label=app_label, model=model
@@ -732,9 +732,9 @@ class AdminGenericExportView(StaffPermissionRequiredMixin, View):
         data = serializer_class(qs, many=True).data
 
         if fmt == "csv":
-            return render_to_csv(data)
+            return render_to_csv(data, filename=filename)
         elif fmt == "pdf":
-            return render_to_pdf(data)
+            return render_to_pdf(data, filename=filename)
 
         response = HttpResponse("No format to render.")
 
