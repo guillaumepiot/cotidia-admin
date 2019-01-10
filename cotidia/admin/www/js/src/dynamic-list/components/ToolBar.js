@@ -163,31 +163,30 @@ export default class ToolBar extends Component {
       toolbarFilters,
     } = this.props
 
-    if (filterSuggest) {
-      return this.renderFilterSuggestToolbar()
-    }
-
     return (
       <>
-        {searchVisible && (
-          <div className='content-filter__item'>
-            <div className='form__group form__group--boxed'>
-              <label htmlFor='search' className='form__label'>Search</label>
-              <TextInput
-                controlOnly
-                id='search'
-                label='Search'
-                name='searchTerm'
-                placeholder='Search'
-                prefix={<Icon icon='search' />}
-                type='text'
-                updateValue={this.updateSearchTerm}
-                updateValueOnBlur={false}
-                value={searchTerm}
-              />
+        {filterSuggest
+          ? this.renderFilterSuggestToolbar()
+          : (searchVisible && (
+            <div className='content-filter__item'>
+              <div className='form__group form__group--boxed'>
+                <label htmlFor='search' className='form__label'>Search</label>
+                <TextInput
+                  controlOnly
+                  id='search'
+                  label='Search'
+                  name='searchTerm'
+                  placeholder='Search'
+                  prefix={<Icon icon='search' />}
+                  type='text'
+                  updateValue={this.updateSearchTerm}
+                  updateValueOnBlur={false}
+                  value={searchTerm}
+                />
+              </div>
             </div>
-          </div>
-        )}
+          ))
+        }
 
         {toolbarFilters && toolbarFilters.map((filter) => {
           const {
