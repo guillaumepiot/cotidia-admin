@@ -31,6 +31,7 @@ const mapStateToProps = (state) => {
     hasSidebar: state.search?.sidebarFilters.length > 0,
     getSuggestEngine,
     resultsMode: state.search.resultsMode,
+    toolbarFilters: getToolbarFilters(state),
   }
 
   if (state.search?.filterSuggestConfiguration?.mode) {
@@ -42,7 +43,6 @@ const mapStateToProps = (state) => {
   } else {
     props.searchVisible = state.config.searchVisible
     props.searchTerm = state.search.searchTerm
-    props.toolbarFilters = getToolbarFilters(state)
   }
 
   return props
