@@ -2501,7 +2501,7 @@ textarea {
           float: left;
           font-weight: 700;
           content: attr(data-header); } }
-  .table--striped > thead > tr:nth-child(odd) > td, .table--striped > tbody > tr:nth-child(odd) > td, .table--striped > tfoot > tr:nth-child(odd) > td {
+  .table--striped > thead > tr:nth-child(even) > td, .table--striped > tbody > tr:nth-child(even) > td, .table--striped > tfoot > tr:nth-child(even) > td {
     background-color: #f3f4f7; }
   .table > thead > tr, .table > tbody > tr, .table > tfoot > tr {
     background-color: #fff; }
