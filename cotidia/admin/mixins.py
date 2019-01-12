@@ -18,14 +18,19 @@ class UserCheckMixin(object):
 
 
 class StaffPermissionRequiredMixin(UserCheckMixin):
-    def get_permission_required(self):
-        if hasattr(self, "permission_required"):
-            return self.permission_required
 
-        return None
+    def get_permission_required(self, view=None):
+        obj = view or self
+        if obj.kwargs.get("permission_required"):
+            return obj.kwargs["permission_required"]
+        elif hasattr(obj, "permission_required"):
+            return obj.permission_required
+        else:
+            return None
 
-    def check_permissions(self, user):
-        permission_required = self.get_permission_required()
+    def check_permissions(self, user, view=None):
+
+        permission_required = self.get_permission_required(view)
 
         if type(permission_required) is list:
             for p in permission_required:
@@ -41,3 +46,10 @@ class StaffPermissionRequiredMixin(UserCheckMixin):
             return True
 
         return user.is_staff and self.check_permissions(user)
+
+    def has_permission(self, request, view):
+        """REST FRAMEWORK permission handling"""
+        if request.user.is_superuser:
+            return True
+
+        return request.user.is_staff and self.check_permissions(request.user, view)

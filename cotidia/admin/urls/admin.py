@@ -4,7 +4,6 @@ from cotidia.admin.views.generic import (
     AdminOrderableView,
     AdminGenericSearchView,
     AdminGenericExportView,
-    AdminGenericListView,
     DynamicListView,
 )
 
@@ -17,12 +16,9 @@ urlpatterns = [
         name="order",
     ),
     path(
-        "list/<str:app_label>/<str:model>", AdminGenericListView.as_view(), name="list"
-    ),
-    path(
         "dynamic-list/<str:app_label>/<str:model>",
         DynamicListView.as_view(),
-        name="dynamic-list",
+        name="list",
     ),
     path("search", AdminGenericSearchView.as_view(), name="search"),
     path(

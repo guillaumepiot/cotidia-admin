@@ -40,13 +40,15 @@ class AdminListView(StaffPermissionRequiredMixin, ContextMixin, ListView):
     group_by = False
     orderable = False  # 'arrow', 'drag'
 
-    def get_permission_required(self):
-        if hasattr(self, "permission_required"):
-            return self.permission_required
-        else:
-            return "{}.add_{}".format(
+    def get_permission_required(self, *args, **kwargs):
+        perms = super().get_permission_required(*args, **kwargs)
+
+        if perms is None:
+            perms = "{}.add_{}".format(
                 self.model._meta.app_label, self.model._meta.model_name
             )
+
+        return perms
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -160,15 +162,15 @@ class DynamicListView(StaffPermissionRequiredMixin, ContextMixin, TemplateView):
     template_type = "fluid"
     add_view = False
 
-    def get_permission_required(self):
-        if self.kwargs.get("permission_required"):
-            return self.kwargs["permission_required"]
-        elif hasattr(self, "permission_required"):
-            return self.permission_required
-        else:
-            return "{}.add_{}".format(
+    def get_permission_required(self, *args, **kwargs):
+        perms = super().get_permission_required(*args, **kwargs)
+
+        if perms is None:
+            perms = "{}.add_{}".format(
                 self.get_model()._meta.app_label, self.get_model()._meta.model_name
             )
+
+        return perms
 
     def get_model(self, *args, **kwargs):
         try:
@@ -189,11 +191,11 @@ class DynamicListView(StaffPermissionRequiredMixin, ContextMixin, TemplateView):
         elif self.template_name is not None:
             return [self.template_name]
 
-        template = "admin/{app}/{model}/dynamic-list-view.html".format(
+        template = "admin/{app}/{model}/dynamic-list.html".format(
             app=self.model._meta.app_label, model=self.model._meta.model_name
         )
 
-        return [template, "admin/generic/page/dynamic-list-view.html"]
+        return [template, "admin/generic/page/dynamic-list.html"]
 
     def get_context_data(self, *args, **kwargs):
         self.model = self.get_model(*args, **kwargs)
@@ -261,98 +263,6 @@ class DynamicListView(StaffPermissionRequiredMixin, ContextMixin, TemplateView):
         return value
 
 
-class AdminGenericListView(StaffPermissionRequiredMixin, ContextMixin, TemplateView):
-    group_by = False
-
-    model = None
-
-    template_type = "fluid"
-
-    def get_permission_required(self):
-        if self.kwargs.get("permission_required"):
-            return self.kwargs["permission_required"]
-        elif hasattr(self, "permission_required"):
-            return self.permission_required
-        else:
-            return "{}.add_{}".format(
-                self.get_model()._meta.app_label, self.get_model()._meta.model_name
-            )
-
-    def get_model(self, *args, **kwargs):
-        try:
-            return ContentType.objects.get(
-                app_label=self.kwargs["app_label"], model=self.kwargs["model"]
-            ).model_class()
-        except ContentType.DoesNotExist:
-            raise Exception(
-                "Model with app label {} and model name {} does not exist.".format(
-                    self.kwargs["app_label"], self.kwargs["model"]
-                )
-            )
-
-    def get_template_names(self):
-
-        if self.kwargs.get("template_name"):
-            return [self.kwargs["template_name"]]
-
-        if self.template_name is not None:
-            return [self.template_name]
-
-        template = "admin/{app}/{model}/dynamic-list.html".format(
-            app=self.model._meta.app_label, model=self.model._meta.model_name
-        )
-
-        return [template, "admin/generic/page/dynamic-list.html"]
-
-    def get_context_data(self, *args, **kwargs):
-        self.model = self.get_model(*args, **kwargs)
-
-        context = super().get_context_data(**kwargs)
-
-        context["app_label"] = self.model._meta.app_label
-        context["model_name"] = self.model._meta.model_name
-
-        # Even though the serailizer is passed into the view as
-        # `serializer_class` and is indeed a class when it's passed in, by
-        # this time this code is running, it's an instance of the
-        # serializer, so we'll call it `serializer` in the context.
-        if self.kwargs.get("serializer_class"):
-            context["serializer"] = self.kwargs["serializer_class"]
-
-        if self.kwargs.get("endpoint"):
-            context["endpoint"] = self.kwargs["endpoint"]
-
-        if self.request.GET.get("_column"):
-            context["default_columns"] = self.request.GET.getlist("_column")
-
-        if self.request.GET.get("_order"):
-            context["default_order_by"] = self.request.GET.getlist("_order")
-
-        # Generate list of all filters from GET parameters.
-        filters = {}
-
-        for key in self.request.GET:
-            if key[0] != "_":
-                filters[key] = self.parse_filter_values(self.request.GET.getlist(key))
-
-        context["default_filters"] = filters
-
-        return context
-
-    def parse_filter_values(self, value):
-        formatted = []
-        for v in value:
-            formatted.append(self.format_filter_value(v))
-        return formatted[0] if len(formatted) == 1 else formatted
-
-    def format_filter_value(self, value):
-        if value == "true":
-            value = True
-        elif value == "false":
-            value = False
-        return value
-
-
 class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):
     template_type = "centered"  # Options: fluid, centered
 
@@ -373,13 +283,15 @@ class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):
         except:
             return super().get_object(queryset)
 
-    def get_permission_required(self):
-        if hasattr(self, "permission_required"):
-            return self.permission_required
-        else:
-            return "{}.add_{}".format(
+    def get_permission_required(self, *args, **kwargs):
+        perms = super().get_permission_required(*args, **kwargs)
+
+        if perms is None:
+            perms = "{}.add_{}".format(
                 self.model._meta.app_label, self.model._meta.model_name
             )
+
+        return perms
 
     def get_fieldsets(self):
         return self.fieldsets
@@ -409,13 +321,15 @@ class AdminDetailView(StaffPermissionRequiredMixin, ContextMixin, DetailView):
 class AdminCreateView(StaffPermissionRequiredMixin, ContextMixin, CreateView):
     template_type = "centered"  # Options: fluid, centered
 
-    def get_permission_required(self):
-        if hasattr(self, "permission_required"):
-            return self.permission_required
-        else:
-            return "{}.add_{}".format(
+    def get_permission_required(self, *args, **kwargs):
+        perms = super().get_permission_required(*args, **kwargs)
+
+        if perms is None:
+            perms = "{}.add_{}".format(
                 self.model._meta.app_label, self.model._meta.model_name
             )
+
+        return perms
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -474,13 +388,15 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
         except:
             return super().get_object(queryset)
 
-    def get_permission_required(self):
-        if hasattr(self, "permission_required"):
-            return self.permission_required
-        else:
-            return "{}.change_{}".format(
+    def get_permission_required(self, *args, **kwargs):
+        perms = super().get_permission_required(*args, **kwargs)
+
+        if perms is None:
+            perms = "{}.change_{}".format(
                 self.model._meta.app_label, self.model._meta.model_name
             )
+
+        return perms
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -539,13 +455,15 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
 class AdminDeleteView(StaffPermissionRequiredMixin, ContextMixin, DeleteView):
     template_type = "centered"
 
-    def get_permission_required(self):
-        if hasattr(self, "permission_required"):
-            return self.permission_required
-        else:
-            return "{}.delete_{}".format(
+    def get_permission_required(self, *args, **kwargs):
+        perms = super().get_permission_required(*args, **kwargs)
+
+        if perms is None:
+            perms = "{}.delete_{}".format(
                 self.model._meta.app_label, self.model._meta.model_name
             )
+
+        return perms
 
     def build_success_url(self):
         if self.request.GET.get("next"):
@@ -707,6 +625,28 @@ class AdminGenericSearchView(StaffPermissionRequiredMixin, TemplateView):
 
 class AdminGenericExportView(StaffPermissionRequiredMixin, View):
     """Export serialized data to a file."""
+
+    def get_model(self, *args, **kwargs):
+        try:
+            return ContentType.objects.get(
+                app_label=self.kwargs["app_label"], model=self.kwargs["model"]
+            ).model_class()
+        except ContentType.DoesNotExist:
+            raise Exception(
+                "Model with app label {} and model name {} does not exist.".format(
+                    self.kwargs["app_label"], self.kwargs["model"]
+                )
+            )
+
+    def get_permission_required(self, *args, **kwargs):
+        perms = super().get_permission_required(*args, **kwargs)
+
+        if perms is None:
+            perms = "{}.change_{}".format(
+                self.get_model()._meta.app_label, self.get_model()._meta.model_name
+            )
+
+        return perms
 
     def get(self, *args, **kwargs):
         model = kwargs["model"]

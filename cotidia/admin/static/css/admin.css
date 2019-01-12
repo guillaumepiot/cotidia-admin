@@ -3939,6 +3939,9 @@ body.content--centered .tabs {
   padding-bottom: 0.5rem;
   padding-top: 0.5rem; }
 
+.dialog-header__logo {
+  max-width: 100%; }
+
 /*
  * Menu
  */

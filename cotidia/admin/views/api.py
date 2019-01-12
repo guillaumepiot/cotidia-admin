@@ -2,7 +2,7 @@ from collections import OrderedDict
 
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, UpdateAPIView
-from rest_framework import status, permissions
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
 from rest_framework.pagination import PageNumberPagination
@@ -19,14 +19,14 @@ from cotidia.admin.utils import (
     get_object_options,
     parse_ordering,
 )
-
+from cotidia.admin.mixins import StaffPermissionRequiredMixin
 from cotidia.admin.serializers import SortSerializer, AdminSearchLookupSerializer
 
 PAGE_SIZE = 50
 
 
 class AdminOrderableAPIView(APIView):
-    permission_classes = (permissions.IsAdminUser,)
+    permission_classes = (StaffPermissionRequiredMixin,)
 
     def post(self, *args, **kwargs):
         content_type_id = kwargs.get("content_type_id")
@@ -113,8 +113,9 @@ class AdminSearchDashboardUpdateView(UpdateAPIView):
 
 
 class DynamicListAPIView(ListAPIView):
-    permission_classis = (permissions.IsAdminUser,)
+    permission_classes = (StaffPermissionRequiredMixin,)
     pagination_class = GenericAdminPaginationStyle
+    permission_required = []
     _model_class = None
     _serializer_class = None
 
@@ -236,15 +237,20 @@ class DynamicListAPIView(ListAPIView):
         if not self._serializer_class:
             model_class = self.get_model_class()
 
-            self._serializer_class = (
-                model_class.SearchProvider.dynamic_list_serializer()
-            )
+            try:
+                self._serializer_class = (
+                    model_class.SearchProvider.dynamic_list_serializer()
+                )
+            except AttributeError:
+                raise Exception(
+                    "Model {} has no SearchProvider setup.".format(model_class.__name__)
+                )
 
         return self._serializer_class
 
 
 class AdminSearchDashboardAPIView(ListAPIView):
-    permission_classes = (permissions.IsAdminUser,)
+    permission_classes = (StaffPermissionRequiredMixin,)
 
     pagination_class = GenericAdminPaginationStyle
 
@@ -290,7 +296,7 @@ class AdminSearchDashboardAPIView(ListAPIView):
 
 
 class SortAPIView(APIView):
-    permission_classes = (permissions.IsAdminUser,)
+    permission_classes = (StaffPermissionRequiredMixin,)
 
     def post(self, request, *args, **kwargs):
         serializer = SortSerializer(data=request.data)
@@ -323,7 +329,7 @@ class SortAPIView(APIView):
 
 
 class AdminSearchLookupAPIView(ListAPIView):
-    permission_classes = (permissions.IsAdminUser,)
+    permission_classes = (StaffPermissionRequiredMixin,)
 
     serializer_class = AdminSearchLookupSerializer
 
@@ -336,7 +342,7 @@ class AdminSearchLookupAPIView(ListAPIView):
 
 
 class AdminMultipleSelectAPIView(ListAPIView):
-    permission_classes = (permissions.IsAdminUser,)
+    permission_classes = (StaffPermissionRequiredMixin,)
 
     serializer_class = AdminSearchLookupSerializer
 
@@ -351,7 +357,7 @@ class AdminMultipleSelectAPIView(ListAPIView):
 
 
 class AdminBatchActionAPIView(APIView):
-    permission_classes = (permissions.IsAdminUser,)
+    permission_classes = (StaffPermissionRequiredMixin,)
 
     def post(self, request, *args, **kwargs):
         app_label = kwargs["app_label"]

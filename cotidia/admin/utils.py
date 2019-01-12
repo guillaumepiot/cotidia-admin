@@ -18,7 +18,6 @@ from django.core.exceptions import ValidationError
 from rest_framework import fields, serializers
 
 from cotidia.admin.conf import settings
-from cotidia.admin.serializers import AdminModelSerializer
 from cotidia.admin.filters import FILTERS
 
 MAX_SUBSERIALIZER_DEPTH = settings.ADMIN_MAX_SUBSERIALIZER_DEPTH
@@ -45,7 +44,6 @@ SUPPORTED_FIELD_TYPES_SERIALIZER = [
     fields.ChoiceField,
     fields.BooleanField,
     fields.NullBooleanField,
-    AdminModelSerializer,
     serializers.ManyRelatedField,
     serializers.ListSerializer,
 ]
@@ -63,42 +61,11 @@ FIELD_MAPPING = {
     "NullBooleanField": (lambda: {"display": "boolean", "filter": "boolean"}),
     "TextField": (lambda: {"display": "verbatim", "filter": "text"}),
     "AutoField": (lambda: {"display": "verbatim", "filter": "number"}),
-    "AdminModelSerializer": (
-        lambda: {"display": "verbatim", "many": "True", "filter": "choice"}
-    ),
     "ManyRelatedField": (
         lambda: {"display": "verbatim", "many": "True", "filter": "text"}
     ),
     "ListSerializer": (lambda: {"display": "verbatim", "filter": "choice"}),
 }
-
-
-def get_model_serializer_class(model_class):
-    try:
-        return model_class.SearchProvider.serializer()
-    except AttributeError:
-        try:
-
-            class GenericSerializer(AdminModelSerializer):
-                class SearchProvider:
-                    field_representation = (
-                        model_class.SearchProvider.field_representation
-                    )
-
-                class Meta:
-                    model = model_class
-                    fields = "__all__"
-
-            return GenericSerializer
-
-        except AttributeError:
-
-            class GenericSerializer(AdminModelSerializer):
-                class Meta:
-                    model = model_class
-                    fields = "__all__"
-
-            return GenericSerializer
 
 
 def get_field_representation(
