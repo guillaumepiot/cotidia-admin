@@ -1,0 +1,22 @@
+.dashboard {
+    &__row {
+        display: flex;
+    }
+    &__widget {
+        flex: 1;
+        padding: 1rem;
+        margin: 1rem 0 0 0;
+        background-color: #fff;
+        border: 1px solid $toolbar-border-color;
+        canvas {
+            width: 100% !important;
+            height: 300px !important;
+        }
+
+        margin-right: 1rem;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
