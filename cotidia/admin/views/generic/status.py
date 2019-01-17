@@ -1,7 +1,17 @@
+import django_filters
+
 from django.contrib.contenttypes.models import ContentType
 
 from cotidia.admin.views.generic.list import AdminListView
 from cotidia.core.models import Status
+
+
+class StatusFilter(django_filters.FilterSet):
+    status = django_filters.CharFilter(lookup_expr="icontains", label="Status")
+
+    class Meta:
+        model = Status
+        fields = ["status"]
 
 
 class AdminGenericStatusHistoryView(AdminListView):
@@ -9,6 +19,7 @@ class AdminGenericStatusHistoryView(AdminListView):
 
     model = Status
     template_name = "admin/core/status/list.html"
+    filterset = StatusFilter
 
     def get_permission_required(self, *args, **kwargs):
         perms = "{}.change_{}".format(self.kwargs["app_label"], self.kwargs["model"])

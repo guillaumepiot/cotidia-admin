@@ -1,1 +1,61 @@
-Status list
+{% extends "admin/generic/page/list.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Status history" %}
+{% endblock title %}
+
+{% block content_title %}
+    {% trans "Status history" %}
+{% endblock content_title %}
+
+{% block content_actions %}
+
+{% endblock content_actions %}
+
+{% block page_content %}
+{% include 'admin/generic/utils/head-filter.html' %}
+<div class="content__body">
+    <div class="content__inner">
+        <div class="content__list">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{% trans "Date" %}</th>
+                        <th>{% trans "Status" %}</th>
+                        <th>{% trans "User" %}</th>
+                        <th>{% trans "Notes" %}</th>
+                    </tr>
+                </thead>
+                <tbody class="status-list">
+                {% for s in object_list %}
+                    <tr>
+                        <td>
+                            {{s.created_at}}
+                        <td>{{s.status}}</td>
+                        <td>
+                            {{s.user}}
+                        </td>
+                        <td>
+                            {{s.notes}}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4">{% trans "No status history." %}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="content__foot">
+    <div class="content__inner content-foot">
+        <div class="content-foot__left">
+            {% include 'admin/generic/pagination.html' %}
+        </div>
+        <div class="content-foot__right"></div>
+    </div>
+</div>
+{% endblock page_content %}
