@@ -5,6 +5,7 @@ from cotidia.admin.views.generic import (
     AdminGenericSearchView,
     AdminGenericExportView,
     DynamicListView,
+    AdminGenericStatusHistoryView,
 )
 
 app_name = "cotidia.admin"
@@ -32,5 +33,15 @@ urlpatterns = [
         AdminGenericExportView.as_view(),
         {"format": "pdf"},
         name="export-pdf",
+    ),
+    path(
+        "status/history/<str:app_label>/<str:model>/<int:object_id>/<str:taxonomy>",
+        AdminGenericStatusHistoryView.as_view(),
+        name="status-history",
+    ),
+    path(
+        "status/history/<str:app_label>/<str:model>/<int:object_id>",
+        AdminGenericStatusHistoryView.as_view(),
+        name="status-history",
     ),
 ]
