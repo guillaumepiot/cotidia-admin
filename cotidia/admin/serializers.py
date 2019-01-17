@@ -127,7 +127,10 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
                         key_name = "{}__{}".format(key, subkey)
                         if key_name not in repr.keys():
                             repr.update({key_name: subvalue})
-                    repr[key] = repr[key][display_field]
+                    try:
+                        repr[key] = repr[key][display_field]
+                    except KeyError:
+                        raise Exception(f'Key {display_field} not found in {key}. If your model has the property or method, it must be defined explicitly on the serializers.')
 
             # Add detail url automatically
             detail_url_field = self.get_detail_url_field()
@@ -424,7 +427,7 @@ def choose_filter(field, field_name, prefix):
         elif isinstance(field, serializers.SerializerMethodField):
             return None  # Don't generate filters for Serializer method
         else:
-            raise ValueError("Field {} not supported".format(field.__class__))
+            raise ValueError("Field {} for field \"{}\" not supported".format(field.__class__, field_name))
     filter_class = FILTER_MAPPING.get(field_type.__name__)
     if filter_class:
         return filter_class(field=field, field_name=field_name, prefix=prefix)

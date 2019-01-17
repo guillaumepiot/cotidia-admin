@@ -83,7 +83,9 @@
     </tr>
     {% empty %}
     <tr>
-        <td colspan="{{columns|length}}">{% trans "No items." %}</td>
+        <td colspan="{{columns|length}}">{% blocktrans with verbose_name_plural|lower as name %}
+            No {{name}}.
+        {% endblocktrans %}</td>
         {% if actions %}
         <td></td>
         {% endif %}

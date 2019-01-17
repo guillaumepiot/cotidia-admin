@@ -10,13 +10,13 @@ class {{model_name}}AddForm(BetterModelForm):
     class Meta:
         model = {{model_name}}
         fields = [
-            {% for f in fields %}"{{f.1}}",{% if not forloop.last %}
+            {% for f in fields %}{% if f.1 != "id" %}"{{f.1}}",{% endif %}{% if not forloop.last %}
             {% endif %}{% endfor %}
         ]
         fieldsets = (
             ('info', {
                 'fields': (
-                    {% for f in fields %}"{{f.1}}",{% if not forloop.last %}
+                    {% for f in fields %}{% if f.1 != "id" %}"{{f.1}}",{% endif %}{% if not forloop.last %}
                     {% endif %}{% endfor %}
                 ),
                 'legend': '{{model_verbose_name|title}} details'
@@ -24,20 +24,5 @@ class {{model_name}}AddForm(BetterModelForm):
         )
 
 
-class {{model_name}}UpdateForm(BetterModelForm):
-
-    class Meta:
-        model = {{model_name}}
-        fields = [
-            {% for f in fields %}"{{f.1}}",{% if not forloop.last %}
-            {% endif %}{% endfor %}
-        ]
-        fieldsets = (
-            ('info', {
-                'fields': (
-                    {% for f in fields %}"{{f.1}}",{% if not forloop.last %}
-                    {% endif %}{% endfor %}
-                ),
-                'legend': '{{model_verbose_name|title}} details'
-            }),
-        )
+class {{model_name}}UpdateForm({{model_name}}AddForm):
+    pass

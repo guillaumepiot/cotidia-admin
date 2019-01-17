@@ -4,7 +4,7 @@ from cotidia.admin.views.api import (
     AdminOrderableAPIView,
     SortAPIView,
     DynamicListAPIView,
-    AdminSearchDashboardAPIView,
+    # AdminSearchDashboardAPIView,
     AdminSearchLookupAPIView,
     AdminBatchActionAPIView,
     AdminMultipleSelectAPIView,
@@ -19,11 +19,11 @@ urlpatterns = [
         name="order",
     ),
     path("sort/<int:content_type_id>", SortAPIView.as_view(), name="sort"),
-    path(
-        "list/<str:app_label>/<str:model>",
-        AdminSearchDashboardAPIView.as_view(),
-        name="object-list",
-    ),
+    # path(
+    #     "list/<str:app_label>/<str:model>",
+    #     AdminSearchDashboardAPIView.as_view(),
+    #     name="object-list",
+    # ),
     path(
         "dynamic-list/<str:app_label>/<str:model>",
         DynamicListAPIView.as_view(),

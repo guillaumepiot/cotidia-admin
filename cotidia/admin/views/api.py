@@ -1,5 +1,12 @@
 from collections import OrderedDict
 
+from django.utils.module_loading import import_string
+from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ValidationError
+from django.http import Http404
+from django.apps import apps
+from django.db.models import Q, Count, Case, When, CharField
+
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, UpdateAPIView
 from rest_framework import status
@@ -7,11 +14,6 @@ from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
 from rest_framework.pagination import PageNumberPagination
 
-from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import ValidationError
-from django.http import Http404
-from django.apps import apps
-from django.db.models import Q, Count, Case, When, CharField
 
 from cotidia.admin.utils import (
     search_objects,
@@ -238,8 +240,8 @@ class DynamicListAPIView(ListAPIView):
             model_class = self.get_model_class()
 
             try:
-                self._serializer_class = (
-                    model_class.SearchProvider.dynamic_list_serializer()
+                self._serializer_class = import_string(
+                    model_class.SearchProvider.dynamic_list_serializer
                 )
             except AttributeError:
                 raise Exception(
@@ -249,50 +251,50 @@ class DynamicListAPIView(ListAPIView):
         return self._serializer_class
 
 
-class AdminSearchDashboardAPIView(ListAPIView):
-    permission_classes = (StaffPermissionRequiredMixin,)
+# class AdminSearchDashboardAPIView(ListAPIView):
+#     permission_classes = (StaffPermissionRequiredMixin,)
 
-    pagination_class = GenericAdminPaginationStyle
+#     pagination_class = GenericAdminPaginationStyle
 
-    _model_class = None
+#     _model_class = None
 
-    _serializer_class = None
+#     _serializer_class = None
 
-    def get_permissions(self):
-        if self.kwargs.get("permissions_classes"):
-            self.permission_classes = self.kwargs.get("permissions_classes")
+#     def get_permissions(self):
+#         if self.kwargs.get("permissions_classes"):
+#             self.permission_classes = self.kwargs.get("permissions_classes")
 
-        return super().get_permissions()
+#         return super().get_permissions()
 
-    def get_model_class(self):
-        if not self._model_class:
-            self._model_class = ContentType.objects.get(
-                app_label=self.kwargs["app_label"], model=self.kwargs["model"]
-            ).model_class()
+#     def get_model_class(self):
+#         if not self._model_class:
+#             self._model_class = ContentType.objects.get(
+#                 app_label=self.kwargs["app_label"], model=self.kwargs["model"]
+#             ).model_class()
 
-        return self._model_class
+#         return self._model_class
 
-    def get_serializer_class(self):
-        if self.kwargs.get("serializer_class", False):
-            return self.kwargs.get("serializer_class")
+#     def get_serializer_class(self):
+#         if self.kwargs.get("serializer_class", False):
+#             return self.kwargs.get("serializer_class")
 
-        if not self._serializer_class:
-            model_class = self.get_model_class()
+#         if not self._serializer_class:
+#             model_class = self.get_model_class()
 
-            self._serializer_class = model_class.SearchProvider.serializer()
+#             self._serializer_class = model_class.SearchProvider.serializer()
 
-        return self._serializer_class
+#         return self._serializer_class
 
-    def get_queryset(self):
-        model_class = self.get_model_class()
+#     def get_queryset(self):
+#         model_class = self.get_model_class()
 
-        serializer_class = self.get_serializer_class()
+#         serializer_class = self.get_serializer_class()
 
-        qs = get_queryset(
-            model_class, serializer_class=serializer_class, filter_args=self.request.GET
-        )
+#         qs = get_queryset(
+#             model_class, serializer_class=serializer_class, filter_args=self.request.GET
+#         )
 
-        return qs
+#         return qs
 
 
 class SortAPIView(APIView):
