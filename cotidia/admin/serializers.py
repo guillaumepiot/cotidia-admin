@@ -1,10 +1,9 @@
 from django.urls import reverse
 from rest_framework import serializers
 from cotidia.admin.search_dashboard_settings import (
-    SUPPORTED_FIELDS_TYPES,
     DYNAMIC_LIST_SUPPORTED_FIELDS_TYPES,
     DYNAMIC_LIST_FIELD_MAPPING,
-    FILTER_MAPPING,
+    DYNAMIC_LIST_FILTER_MAPPING,
 )
 from cotidia.admin.filters import DefaultGeneralQueryFilter
 
@@ -130,7 +129,9 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
                     try:
                         repr[key] = repr[key][display_field]
                     except KeyError:
-                        raise Exception(f'Key {display_field} not found in {key}. If your model has the property or method, it must be defined explicitly on the serializers.')
+                        raise Exception(
+                            f"Key {display_field} not found in {key}. If your model has the property or method, it must be defined explicitly on the serializers."
+                        )
 
             # Add detail url automatically
             detail_url_field = self.get_detail_url_field()
@@ -215,7 +216,13 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
 
                 # Gets the most specific class of we support for the given field type if not it return None
                 field_type = next(
-                    iter([t for t in SUPPORTED_FIELDS_TYPES if isinstance(field, t)]),
+                    iter(
+                        [
+                            t
+                            for t in DYNAMIC_LIST_SUPPORTED_FIELDS_TYPES
+                            if isinstance(field, t)
+                        ]
+                    ),
                     None,
                 )
                 label = field_name.replace("__", " ").replace("_", " ").capitalize()
@@ -417,7 +424,7 @@ def choose_filter(field, field_name, prefix):
     )
     if field_type is None:
         if isinstance(field, BaseDynamicListSerializer):
-            return FILTER_MAPPING["BaseDynamicListSerializer"](
+            return DYNAMIC_LIST_FILTER_MAPPING["BaseDynamicListSerializer"](
                 field=field, field_name=field_name, prefix=prefix
             )
         elif isinstance(field, serializers.ListSerializer):
@@ -427,8 +434,12 @@ def choose_filter(field, field_name, prefix):
         elif isinstance(field, serializers.SerializerMethodField):
             return None  # Don't generate filters for Serializer method
         else:
-            raise ValueError("Field {} for field \"{}\" not supported".format(field.__class__, field_name))
-    filter_class = FILTER_MAPPING.get(field_type.__name__)
+            raise ValueError(
+                'Field {} for field "{}" not supported'.format(
+                    field.__class__, field_name
+                )
+            )
+    filter_class = DYNAMIC_LIST_FILTER_MAPPING.get(field_type.__name__)
     if filter_class:
         return filter_class(field=field, field_name=field_name, prefix=prefix)
     return None

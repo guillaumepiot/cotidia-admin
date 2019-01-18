@@ -9,32 +9,7 @@ from cotidia.admin.filters import (
     ForeignKeyFilter,
 )
 
-
-SUPPORTED_FIELDS_TYPES = sorted(
-    [
-        fields.UUIDField,
-        fields.DateTimeField,
-        fields.DateField,
-        fields.TimeField,
-        fields.EmailField,
-        fields.CharField,
-        fields.UUIDField,
-        fields.IntegerField,
-        fields.FloatField,
-        fields.DecimalField,
-        fields.ChoiceField,
-        fields.BooleanField,
-        fields.NullBooleanField,
-        serializers.ListSerializer,
-        serializers.RelatedField,
-        serializers.ManyRelatedField,
-        serializers.SerializerMethodField,
-    ],
-    key=lambda x: len(x.mro()),
-    reverse=True,
-)
-
-FILTER_MAPPING = {
+DYNAMIC_LIST_FILTER_MAPPING = {
     "DateTimeField": DateTimeFilter,
     "EmailField": ContainsFilter,
     "DateField": DateTimeFilter,

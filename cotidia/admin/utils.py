@@ -1,5 +1,6 @@
 from functools import reduce
 
+from django.utils.module_loading import import_string
 from django.db.models.fields import (
     UUIDField,
     DateTimeField,
@@ -112,8 +113,8 @@ def get_field_representation(
     return {prefix + field_name: field_representation}
 
 
-def get_fields_from_model(model):
-    return get_fields_from_serializer(get_model_serializer_class(model)())
+# def get_fields_from_model(model):
+#     return get_fields_from_serializer(get_model_serializer_class(model)())
 
 
 def get_fields_from_serializer(
@@ -357,3 +358,10 @@ def parse_ordering(order_val):
         return F(order_val[1:]).desc(nulls_last=True)
     else:
         return F(order_val).asc(nulls_last=True)
+
+
+def get_model_serializer_class(model):
+    try:
+        return import_string(model.SearchProvider.dynamic_list_serializer)
+    except AttributeError:
+        raise Exception("Model {} has no SearchProvider setup.".format(model.__name__))

@@ -1,6 +1,5 @@
 from collections import OrderedDict
 
-from django.utils.module_loading import import_string
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.http import Http404
@@ -17,9 +16,9 @@ from rest_framework.pagination import PageNumberPagination
 
 from cotidia.admin.utils import (
     search_objects,
-    get_queryset,
     get_object_options,
     parse_ordering,
+    get_model_serializer_class,
 )
 from cotidia.admin.mixins import StaffPermissionRequiredMixin
 from cotidia.admin.serializers import SortSerializer, AdminSearchLookupSerializer
@@ -237,16 +236,8 @@ class DynamicListAPIView(ListAPIView):
             return self.kwargs.get("serializer_class")
 
         if not self._serializer_class:
-            model_class = self.get_model_class()
-
-            try:
-                self._serializer_class = import_string(
-                    model_class.SearchProvider.dynamic_list_serializer
-                )
-            except AttributeError:
-                raise Exception(
-                    "Model {} has no SearchProvider setup.".format(model_class.__name__)
-                )
+            model = self.get_model_class()
+            self._serializer_class = get_model_serializer_class(model)
 
         return self._serializer_class
 
