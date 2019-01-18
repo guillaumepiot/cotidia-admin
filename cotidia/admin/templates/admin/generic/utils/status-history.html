@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n core_tags%}
 <fieldset class="detail">
     <legend>{% trans "Status history" %}</legend>
     <table class="table">
@@ -11,13 +11,14 @@
             </tr>
         </thead>
         <tbody class="status-list">
-        {% for s in object.status_list %}
+        {% status_list_for_obj object as status_list %}
+        {% for s in status_list %}
             <tr>
                 <td>
                     {{s.created_at}}
                 <td>{{s.status}}</td>
                 <td>
-                    {{s.user}}
+                    {{s.author}}
                 </td>
                 <td>
                     {{s.notes}}
