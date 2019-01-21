@@ -28,11 +28,18 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
             self, "SearchProvider"
         ), "Serializer must have a SearchProvider defined"
 
+        if not hasattr(self.SearchProvider, "filters") and not hasattr(
+            self.SearchProvider, "exclude_filters"
+        ):
+            raise AssertionError(
+                "Serializer must have either filters or exclude_filters"
+            )
+
         # Serializer must have either filters or exclude filters defined,
         # not both
         assert hasattr(self.SearchProvider, "exclude_filters") != hasattr(
             self.SearchProvider, "filters"
-        )
+        ), "Serializer can have both filters and exclude_filters"
 
     def get_nested_serializers(self):
         return [
