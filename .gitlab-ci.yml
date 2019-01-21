@@ -7,7 +7,8 @@ before_script:
   ## (change apt-get to yum if you use an RPM-based image)
   ##
   # - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-
+  - apt-get update
+  - apt-get install -y binutils libproj-dev gdal-bin postgresql-client
   ##
   ## Run ssh-agent (inside the build environment)
   ##
