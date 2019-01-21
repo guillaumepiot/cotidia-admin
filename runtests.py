@@ -17,19 +17,18 @@ DEFAULT_SETTINGS = dict(
         "django.contrib.sites",
         "django.contrib.messages",
         "django.contrib.staticfiles",
-
         "django_otp",
         "django_otp.plugins.otp_static",
         "django_otp.plugins.otp_totp",
         "two_factor",
-
+        "cotidia.core",
         "cotidia.admin",
         "cotidia.account",
         "cotidia.mail",
         "cotidia.file",
         "rest_framework",
         "rest_framework.authtoken",
-        "cotidia.admin.tests"
+        "cotidia.admin.tests",
     ],
     MIDDLEWARE=[
         "django.middleware.common.CommonMiddleware",
@@ -48,40 +47,31 @@ DEFAULT_SETTINGS = dict(
                 "context_processors": [
                     "django.template.context_processors.request",
                     "django.contrib.auth.context_processors.auth",
-                ]
-            }
-        },
-    ],
-    DATABASES={
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": ":memory:"
+                ],
+            },
         }
-    },
+    ],
+    DATABASES={"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}},
     SITE_ID=1,
     SITE_URL="http://localhost:8000",
     APP_URL="http://localhost:8000",
     ROOT_URLCONF="cotidia.admin.tests.urls",
     SECRET_KEY="notasecret",
     AUTH_USER_MODEL="account.User",
-    STATIC_URL='/static/',
+    STATIC_URL="/static/",
     STATIC_ROOT=PACKAGE_ROOT,
     REST_FRAMEWORK={
-        'DEFAULT_AUTHENTICATION_CLASSES': (
-            'rest_framework.authentication.TokenAuthentication',
-            'rest_framework.authentication.SessionAuthentication',
+        "DEFAULT_AUTHENTICATION_CLASSES": (
+            "rest_framework.authentication.TokenAuthentication",
+            "rest_framework.authentication.SessionAuthentication",
         ),
-        'DEFAULT_PERMISSION_CLASSES': (
-            'rest_framework.permissions.IsAuthenticated',
-        ),
-        'DEFAULT_RENDERER_CLASSES': (
-            'rest_framework.renderers.JSONRenderer',
-        ),
-        'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-        'PAGE_SIZE': 10
+        "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+        "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
+        "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+        "PAGE_SIZE": 10,
     },
-    FILE_UPLOAD_PATH='test-uploads/',
-    PUBLIC_FILE_STORAGE='django.core.files.storage.DefaultStorage'
+    FILE_UPLOAD_PATH="test-uploads/",
+    PUBLIC_FILE_STORAGE="django.core.files.storage.DefaultStorage",
 )
 
 
@@ -91,9 +81,10 @@ def runtests():
     # Django >= 1.8
     django.setup()
     from django.test.runner import DiscoverRunner
+
     test_runner = DiscoverRunner(verbosity=1)
 
-    failures = test_runner.run_tests(['cotidia'])
+    failures = test_runner.run_tests(["cotidia"])
     if failures:
         sys.exit(failures)
 
