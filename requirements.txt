@@ -8,11 +8,11 @@ certifi==2017.7.27.1
 cffi==1.10.0
 chardet==3.0.4
 -e .
--e git+git@code.cotidia.com:cotidia/account.git@4ff66e9cb4d252783fe3243b9a79236d20a15276#egg=cotidia_account
+-e git+git@code.cotidia.com:cotidia/account.git@613be53ccff8591636bd8e311593f0cc1382ac91#egg=cotidia_account
 -e git+git@code.cotidia.com:cotidia/cms.git@b63a765671f065369ff60c9662134c840962b865#egg=cotidia_cms
--e git+git@code.cotidia.com:cotidia/core.git@8456d0490136fd0509cd3cf9abcda671fcc18b9f#egg=cotidia_core
--e git+git@code.cotidia.com:cotidia/file.git@41c37d5e70ee2d166cca5dcf7b6a557f0fd3792a#egg=cotidia_file
--e git+git@code.cotidia.com:cotidia/mail.git@22f0049a7a423341922817c4e83dc7add4bdd9ab#egg=cotidia_mail
+-e git+git@code.cotidia.com:cotidia/core.git@a780441fabfa51b3a9505bca49dab968271be1d1#egg=cotidia_core
+-e git+git@code.cotidia.com:cotidia/file.git@f8edef74a4fe27b909876b91873d19a576be1aa9#egg=cotidia_file
+-e git+git@code.cotidia.com:cotidia/mail.git@bcd9d2ce7ab337e618e3daebf228822de3faf8dc#egg=cotidia_mail
 -e git+git@code.cotidia.com:cotidia/meta-data.git@c0217a43a2f82186bc62375e08dceb507bed566a#egg=cotidia_meta_data
 -e git+git@code.cotidia.com:cotidia/stripe.git@c84ba4f9d8b64a184dcc7579a8eb7228046b898e#egg=cotidia_stripe
 -e git+git@code.cotidia.com:cotidia/team.git@7c89ca23e2b27d5b23b3ae754e0264200d07064a#egg=cotidia_team
