@@ -32,7 +32,7 @@ class DynamicListView(StaffPermissionRequiredMixin, ContextMixin, TemplateView):
     group_by = False
     model = None
     template_type = "fluid"
-    add_view = False
+    add_view = True
 
     def get_permission_required(self, *args, **kwargs):
         perms = super().get_permission_required(*args, **kwargs)
