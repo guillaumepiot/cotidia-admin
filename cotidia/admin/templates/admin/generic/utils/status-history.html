@@ -21,7 +21,9 @@
                     {{s.author}}
                 </td>
                 <td>
-                    {{s.notes}}
+                    {% if s.notes %}
+                        {{s.notes}}
+                    {% endif %}
                 </td>
             </tr>
         {% empty %}

@@ -293,9 +293,7 @@ class AdminUpdateView(StaffPermissionRequiredMixin, ContextMixin, UpdateView):
         if self.request.GET.get("next"):
             return self.request.GET["next"]
 
-        return get_admin_url(
-            self.model._meta.app_label, self.model._meta.model_name, "list"
-        )
+        return self.build_detail_url()
 
     def build_detail_url(self):
         url_name = "{}-admin:{}-detail".format(

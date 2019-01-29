@@ -134,9 +134,11 @@
                 {% else %}
                 modalComponentReference: "{{detail_modal_component}}",
                 {% if detail_component_props_template %}
-                modalComponentProps: {% include detail_component_props_template %}
+                modalComponentProps: {% include detail_component_props_template %},
                 {% endif %}
-
+                {% if detail_modal_configuration %}
+                modalConfiguration: {{detail_modal_configuration|json|safe}},
+                {% endif %}
                 {% endif %}
             }
         {% if detail_config %}

@@ -209,6 +209,7 @@ def render_dynamic_list_config(
     context[
         "detail_component_props_template"
     ] = serializer.get_component_props_template()
+    context["detail_modal_configuration"] = serializer.get_detail_modal_configuration()
 
     # Batch actions can be overridden by the caller, so allow for that.
     if batch_actions:

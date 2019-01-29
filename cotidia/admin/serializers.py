@@ -422,6 +422,9 @@ class BaseDynamicListSerializer(serializers.ModelSerializer):
     def get_component_props_template(self):
         return self.get_option("detail_component_props_template")
 
+    def get_detail_modal_configuration(self):
+        return self.get_option("detail_modal_configuration")
+
 
 def choose_filter(field, field_name, prefix):
     # Get the most specific class we suppport for each field
