@@ -359,14 +359,18 @@ function * editField ({ payload: { item, column, value } }) {
 }
 
 function * showDetailModal ({ payload: { item } }) {
+  const modalConfiguration = yield select(
+    (state) => state.config.detailConfig?.modalConfiguration || {}
+  )
+
   yield call(showModal, {
     component: 'ItemDetail',
     componentProps: { item },
     modalProps: {
       title: 'Detail',
       form: false,
-      noPadding: true,
-      size: 'full-width',
+      noPadding: ! modalConfiguration.padded,
+      size: modalConfiguration.size || 'full-width',
       headerLeft: {
         label: <Icon icon='chevron-left' />,
         action: (dispatch) => dispatch({ type: types.DETAIL_MODAL_PREVIOUS }),
