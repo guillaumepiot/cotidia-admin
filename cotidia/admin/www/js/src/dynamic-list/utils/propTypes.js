@@ -83,6 +83,10 @@ const config = PropTypes.shape({
     urlField: requiredIf('mode', 'url', PropTypes.string),
     modalComponentReference: requiredIf('mode', 'modal', PropTypes.string),
     modalComponentProps: PropTypes.object,
+    modalConfiguration: PropTypes.shape({
+      padded: PropTypes.bool,
+      size: PropTypes.string,
+    }),
   }),
   filterTagBarVisible: PropTypes.bool,
   listHandling,

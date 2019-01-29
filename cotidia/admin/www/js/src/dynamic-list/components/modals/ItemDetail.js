@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-export default class Filter extends Component {
+export default class ItemDetail extends Component {
   static propTypes = {
     componentProps: PropTypes.object,
     componentReference: PropTypes.string.isRequired,
