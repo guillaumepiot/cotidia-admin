@@ -2451,7 +2451,6 @@ Calendar = React.createClass({displayName: "Calendar",
               };
               eventList.push(React.createElement("a", {
                 "href": item.url,
-                "target": "_blank",
                 "className": "calendar-event",
                 "key": key,
                 "style": eventStyle
@@ -2459,7 +2458,6 @@ Calendar = React.createClass({displayName: "Calendar",
             } else {
               eventList.push(React.createElement("a", {
                 "href": item.url,
-                "target": "_blank",
                 "onClick": showAllEvents.bind(null, dateStr),
                 "className": "calendar-event calendar-event--more",
                 "key": key
