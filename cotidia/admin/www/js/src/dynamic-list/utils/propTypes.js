@@ -50,8 +50,10 @@ const categoriseBy = PropTypes.shape({
 })
 
 const columnConfigSingle = PropTypes.shape({
+  collationColumn: PropTypes.string,
   display: PropTypes.oneOfType([PropTypes.func, PropTypes.string, PropTypes.array]),
   filter: PropTypes.string,
+  footer: PropTypes.string,
   label: PropTypes.string.isRequired,
   allowWrap: PropTypes.bool,
   maxWidth: PropTypes.number,
