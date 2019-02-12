@@ -22,7 +22,7 @@ export default class ResultsTableFooter extends Component {
       // If we have already considered this value (as determined by the collationColumn), don't
       // count it again.
       if (collationColumn && collated.has(item[collationColumn])) {
-        return
+        return agg
       }
 
       // Ignore null/undefined values
@@ -48,7 +48,7 @@ export default class ResultsTableFooter extends Component {
       // If we have already considered this value (as determined by the collationColumn), don't
       // count it again.
       if (collationColumn && collated.has(item[collationColumn])) {
-        return
+        return agg
       }
 
       // Ignore null/undefined values
