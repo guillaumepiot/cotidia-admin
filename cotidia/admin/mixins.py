@@ -18,7 +18,6 @@ class UserCheckMixin(object):
 
 
 class StaffPermissionRequiredMixin(UserCheckMixin):
-
     def get_permission_required(self, view=None):
         obj = view or self
         if obj.kwargs.get("permission_required"):
