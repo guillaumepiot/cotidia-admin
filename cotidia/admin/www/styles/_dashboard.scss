@@ -4,7 +4,6 @@
     }
     &__widget {
         flex: 1;
-        padding: 1rem;
         margin: 1rem 0 0 0;
         background-color: #fff;
         border: 1px solid $toolbar-border-color;
@@ -18,5 +17,14 @@
         &:last-child {
             margin-right: 0;
         }
+    }
+}
+
+.dashboard-widget {
+    &__title {
+        padding: 1rem;
+    }
+    &__inner {
+        padding: 1rem;
     }
 }
