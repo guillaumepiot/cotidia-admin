@@ -420,7 +420,7 @@ class ForeignKeyFilter(ChoiceFilter):
             try:
                 self.model_class = field.Meta.model
             except AttributeError as e:
-                raise AttributeError(f"{self.field_name} is not serialised.") from e
+                raise AttributeError("{} is not serialised.".format(self.field_name)) from e
         self.queryset = kwargs.get("queryset", None)
 
     def get_options(self):
