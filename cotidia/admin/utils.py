@@ -203,7 +203,9 @@ def search_objects(query):
             results.append(
                 {
                     "type": model._meta.verbose_name,
-                    "label": item.__str__(),
+                    "label": item.search_repr()
+                    if hasattr(item, "search_repr")
+                    else item.__str__(),
                     "value": get_item_url(model, item),
                 }
             )
