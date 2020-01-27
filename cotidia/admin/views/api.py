@@ -114,9 +114,18 @@ class AdminSearchDashboardUpdateView(UpdateAPIView):
 
 
 class DynamicListAPIView(ListAPIView):
+    """
+    Permission required can be set for the class, using:
+
+    `permission_required = ['app.change_model']`
+
+    By default, it will construct the permission to update the app and model name.
+    See `StaffPermissionRequiredMixin` for logic.
+    """
+
+    permission_required = None
     permission_classes = (StaffPermissionRequiredMixin,)
     pagination_class = GenericAdminPaginationStyle
-    permission_required = []
     _model_class = None
     _serializer_class = None
 

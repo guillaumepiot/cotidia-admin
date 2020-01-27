@@ -22,15 +22,17 @@ class StaffPermissionRequiredMixin(UserCheckMixin):
         obj = view or self
         if obj.kwargs.get("permission_required"):
             return obj.kwargs["permission_required"]
-        elif hasattr(obj, "permission_required"):
+        elif (
+            hasattr(obj, "permission_required") and obj.permission_required is not None
+        ):
             return obj.permission_required
         else:
-            return None
+            return f"{obj.kwargs['app_label']}.change_{obj.kwargs['model']}"
 
     def check_permissions(self, user, view=None):
 
         permission_required = self.get_permission_required(view)
-
+        print("permission_required", permission_required)
         if type(permission_required) is list:
             for p in permission_required:
                 if user.has_perm(p):

@@ -180,7 +180,7 @@ class BaseFilter(object):
         return Q(**{query_field: value})
 
     def get_q_object(self, values):
-        assert (self.field_name is not None, "Need to include field name")
+        assert self.field_name is not None, "Need to include field name"
         if values:
             q_obj = reduce(
                 lambda x, y: x | y, [self.parse_value(val) for val in values], Q()
@@ -221,7 +221,7 @@ class ComparableFilter(BaseFilter):
         super().__init__(*args, **kwargs)
 
     def parse_value(self, value):
-        assert (self.field_regex is not None, "Please specify a regex for this field")
+        assert self.field_regex is not None, "Please specify a regex for this field"
 
         field_regex = self.field_regex
         match = re.match(api_patterns["equal"] % field_regex, value)
@@ -420,7 +420,9 @@ class ForeignKeyFilter(ChoiceFilter):
             try:
                 self.model_class = field.Meta.model
             except AttributeError as e:
-                raise AttributeError("{} is not serialised.".format(self.field_name)) from e
+                raise AttributeError(
+                    "{} is not serialised.".format(self.field_name)
+                ) from e
         self.queryset = kwargs.get("queryset", None)
 
     def get_options(self):
