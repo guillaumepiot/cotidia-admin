@@ -18,7 +18,7 @@ chardet==3.0.4
 -e git+git@code.cotidia.com:cotidia/team.git@7c89ca23e2b27d5b23b3ae754e0264200d07064a#egg=cotidia_team
 cssselect==1.0.1
 dj-database-url==0.4.2
-Django==2.0.1
+Django==2.2.24
 django-anymail==1.0
 django-appconf==1.0.2
 django-betterforms==1.1.4
