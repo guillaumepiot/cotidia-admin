@@ -32,7 +32,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "django-betterforms==1.1.*",
-        "django-filter==2.0.*",
+        "django-filter==2.4",
         "django-extensions==2.1.*",
     ],
     classifiers=[
