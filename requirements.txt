@@ -19,7 +19,7 @@ chardet==3.0.4
 cssselect==1.0.1
 dj-database-url==0.4.2
 Django==2.0.1
-django-anymail==1.0
+django-anymail==1.2.1
 django-appconf==1.0.2
 django-betterforms==1.1.4
 django-codemirror-widget==0.4.1
