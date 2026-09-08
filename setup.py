@@ -31,9 +31,7 @@ setup(
     namespace_packages=["cotidia"],
     include_package_data=True,
     install_requires=[
-        "django-betterforms==2.0",
-        "django-filter==2.4",
-        "django-extensions==2.1.*",
+        "django-betterforms==2.0.*",
     ],
     classifiers=[
         "Framework :: Django",

@@ -44,7 +44,6 @@ SUPPORTED_FIELD_TYPES_SERIALIZER = [
     fields.DecimalField,
     fields.ChoiceField,
     fields.BooleanField,
-    fields.NullBooleanField,
     serializers.ManyRelatedField,
     serializers.ListSerializer,
 ]
@@ -59,7 +58,6 @@ FIELD_MAPPING = {
     "IntegerField": (lambda: {"display": "verbatim", "filter": "number"}),
     "DecimalField": (lambda: {"display": "verbatim", "filter": "number"}),
     "BooleanField": (lambda: {"display": "boolean", "filter": "boolean"}),
-    "NullBooleanField": (lambda: {"display": "boolean", "filter": "boolean"}),
     "TextField": (lambda: {"display": "verbatim", "filter": "text"}),
     "AutoField": (lambda: {"display": "verbatim", "filter": "number"}),
     "ManyRelatedField": (
